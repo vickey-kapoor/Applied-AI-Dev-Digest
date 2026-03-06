@@ -4,8 +4,8 @@ name: Daily AI News Alert
 
 on:
   schedule:
-    # Run daily at 8:00 AM UTC (adjust timezone as needed)
-    - cron: '0 8 * * *'
+    # Run daily at 10:00 AM CST (16:00 UTC)
+    - cron: '0 16 * * *'
   workflow_dispatch: # Allow manual trigger
 
 jobs:

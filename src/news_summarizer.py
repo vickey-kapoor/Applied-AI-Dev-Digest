@@ -50,7 +50,7 @@ Now write the summary:"""
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=300,
+            max_tokens=500,
             temperature=0.7,
         )
 

@@ -7,7 +7,6 @@ Automated daily AI research digest that fetches academic papers (focusing on AI 
 ```
 main.py                  # Entry point - orchestrates the workflow
 src/
-├── news_fetcher.py      # [DEPRECATED - not used]
 ├── research_fetcher.py  # Aggregates research from all sources (parallel)
 ├── news_ranker.py       # Ranks research using GPT-4o-mini
 ├── news_summarizer.py   # Generates ELI5 summaries

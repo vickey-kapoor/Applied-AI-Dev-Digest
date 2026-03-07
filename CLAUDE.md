@@ -1,4 +1,6 @@
-# AI Research WhatsApp Digest - Development Reference
+# AI Research WhatsApp Digest
+
+**Repo:** github.com/vickey-kapoor/ai-research-whatsapp-digest
 
 ## Project Overview
 Automated daily AI research digest that fetches academic papers (focusing on AI Agents & Reasoning), ranks by importance using AI, generates **simple ELI5-style summaries** (explain like talking to a kid or grandma), and sends the top research to WhatsApp.

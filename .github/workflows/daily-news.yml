@@ -36,12 +36,13 @@ jobs:
           TWILIO_WHATSAPP_NUMBER: ${{ secrets.TWILIO_WHATSAPP_NUMBER }}
           YOUR_WHATSAPP_NUMBER: ${{ secrets.YOUR_WHATSAPP_NUMBER }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
         run: python main.py
 
-      - name: Commit and push PDF reports
+      - name: Commit and push reports and data
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add reports/
-          git diff --staged --quiet || git commit -m "Add daily research PDF report for $(date +'%d-%b-%Y')"
+          git add reports/ data/
+          git diff --staged --quiet || git commit -m "Add daily research digest for $(date +'%d-%b-%Y')"
           git push

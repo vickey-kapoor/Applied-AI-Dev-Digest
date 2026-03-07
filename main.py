@@ -11,6 +11,7 @@ from src.news_ranker import rank_research
 from src.news_summarizer import summarize_research, summarize_research_detailed
 from src.whatsapp_sender import format_research_message, send_whatsapp_message
 from src.pdf_generator import generate_research_pdf
+from src.json_exporter import export_papers, export_digest
 
 logger = get_logger(__name__)
 
@@ -67,6 +68,15 @@ def main():
         logger.error("Error ranking research: %s", e)
         top_research = research_items[0]
 
+    # Export papers to JSON for dashboard
+    logger.info("Exporting papers to JSON...")
+    top_paper_id = None
+    try:
+        top_paper_id = export_papers(research_items, top_research)
+        logger.info("Papers exported to data/papers.json")
+    except Exception as e:
+        logger.warning("Could not export papers to JSON: %s", e)
+
     # Generate short summary for WhatsApp
     logger.info("Generating WhatsApp summary...")
     try:
@@ -87,6 +97,7 @@ def main():
 
     # Generate PDF report
     logger.info("Generating PDF report...")
+    pdf_path = None
     try:
         pdf_path = generate_research_pdf(top_research)
         logger.info("PDF saved: %s", pdf_path)
@@ -95,6 +106,7 @@ def main():
 
     # Send WhatsApp message
     logger.info("Sending WhatsApp message...")
+    whatsapp_sent = False
     try:
         message = format_research_message(top_research)
         message_sid = send_whatsapp_message(
@@ -105,8 +117,26 @@ def main():
             message,
         )
         logger.info("Message sent successfully! SID: %s", message_sid)
+        whatsapp_sent = True
     except Exception as e:
         logger.error("Error sending WhatsApp message: %s", e)
+
+    # Export digest entry to JSON for dashboard
+    logger.info("Exporting digest to JSON...")
+    try:
+        workflow_run_id = os.getenv("GITHUB_RUN_ID", "")
+        export_digest(
+            top_paper_id=top_paper_id,
+            papers_fetched=len(research_items),
+            pdf_path=pdf_path,
+            whatsapp_sent=whatsapp_sent,
+            workflow_run_id=workflow_run_id
+        )
+        logger.info("Digest exported to data/digests.json")
+    except Exception as e:
+        logger.warning("Could not export digest to JSON: %s", e)
+
+    if not whatsapp_sent:
         sys.exit(1)
 
 

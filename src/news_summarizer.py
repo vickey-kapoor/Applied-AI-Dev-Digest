@@ -29,18 +29,20 @@ Paper: {research['title']}
 Authors: {authors}
 Abstract: {research['description']}
 
-Write 2-3 simple sentences explaining:
-1. What did the scientists/researchers build or discover? (use simple analogies)
-2. Why should a regular person care? How might this affect their life someday?
+Write 4-5 simple sentences explaining:
+1. What problem were the researchers trying to solve?
+2. What did they build or discover? (use simple analogies)
+3. How does it work in simple terms?
+4. Why should a regular person care? How might this affect their life someday?
 
 RULES:
-- NO jargon (no "transformer", "architecture", "benchmark", "SOTA", "LLM", "neural network")
-- Use everyday analogies (like teaching, cooking, organizing, etc.)
-- Write like you're texting a friend who knows nothing about AI
-- Keep it friendly and conversational
+- NO jargon (no "transformer", "architecture", "benchmark", "SOTA", "LLM", "neural network", "model", "parameters")
+- Use everyday analogies (like teaching, cooking, organizing, finding things, etc.)
+- Write like you're explaining to a curious grandma over coffee
+- Be warm and conversational
 
 Example good summary:
-"Scientists taught an AI to solve tricky math problems by breaking them into smaller steps - like how a teacher shows their work. This could help future AI assistants explain their thinking instead of just giving answers."
+"You know how it's hard to find exactly what you're looking for when you have a messy desk? Researchers figured out a way to help AI organize information better so it can find the right answer faster. They taught it to sort through piles of information like a librarian who knows exactly where every book is. This could make future AI assistants much quicker at answering your questions - no more waiting around!"
 
 Now write the summary:"""
 
@@ -48,7 +50,7 @@ Now write the summary:"""
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=150,
+            max_tokens=300,
             temperature=0.7,
         )
 

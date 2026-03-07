@@ -59,10 +59,10 @@ def format_research_message(research: dict) -> str:
     source = research.get("source", "Unknown")
     url = research.get("url", "")
 
-    # ELI5 summary is the star - give it more space
+    # ELI5 summary is the star - give it plenty of space
     summary = research.get("summary", "")
     if summary:
-        summary = _truncate(summary, 280)
+        summary = _truncate(summary, 600)
 
     # Build message
     message = f"""*Daily AI Research*

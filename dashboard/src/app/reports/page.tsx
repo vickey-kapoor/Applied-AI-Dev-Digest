@@ -15,13 +15,14 @@ export default function ReportsPage({
   const selectedDate = searchParams.date || reportDates[0];
 
   // Find corresponding digest info
-  const selectedDigest = digests.find(d => {
-    // Convert date formats if needed
+  const selectedDigest = digests.find((d) => {
     const digestDate = d.date;
     return digestDate === selectedDate || d.pdf_path?.includes(selectedDate);
   });
 
   const pdfApiPath = selectedDigest?.pdf_path
+    ? `/api/reports/${selectedDigest.pdf_path.replace(/^reports\//, "")}`
+    : undefined;
     ? `/api/reports/${selectedDigest.pdf_path.replace(/^reports\//, '')}`
     : selectedDate
       ? `/api/reports/${selectedDate}/ai_research_digest.pdf`
@@ -79,9 +80,7 @@ export default function ReportsPage({
           {selectedDigest && (
             <Card className="mt-4">
               <CardHeader>
-                <CardTitle className="text-sm font-medium">
-                  Digest Info
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">Digest Info</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div>
@@ -122,7 +121,7 @@ export default function ReportsPage({
                   <FileText className="h-5 w-5 text-blue-600" />
                   {selectedDate ? `Report: ${selectedDate}` : "Select a Report"}
                 </CardTitle>
-                {selectedDate && (
+                {pdfApiPath && (
                   <a
                     href={pdfApiPath}
                     download
@@ -134,6 +133,9 @@ export default function ReportsPage({
               </div>
             </CardHeader>
             <CardContent>
+              {pdfApiPath ? (
+                <div className="bg-gray-100 rounded-lg overflow-hidden" style={{ height: "700px" }}>
+                  <iframe src={pdfApiPath} className="w-full h-full" title={`Report for ${selectedDate}`} />
               {selectedDate ? (
                 <div className="bg-gray-100 rounded-lg overflow-hidden" style={{ height: '700px' }}>
                   <iframe
@@ -144,7 +146,11 @@ export default function ReportsPage({
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg">
-                  <p className="text-gray-500">Select a report from the list to view</p>
+                  <p className="text-gray-500">
+                    {selectedDate
+                      ? "This report is listed but no PDF path was found in digest data."
+                      : "Select a report from the list to view"}
+                  </p>
                 </div>
               )}
             </CardContent>

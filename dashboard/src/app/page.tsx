@@ -17,6 +17,9 @@ export default function DashboardPage() {
   const papers = getPapers();
   const digests = getDigests();
 
+  // Debug: Log at render time
+  console.log('[PAGE] DashboardPage render - papers:', papers.length, 'digests:', digests.length);
+
   // Get latest digest
   const latestDigest = digests[0];
 
@@ -28,6 +31,11 @@ export default function DashboardPage() {
 
   return (
     <div className="p-8">
+      {/* Debug Banner - Remove after fixing */}
+      <div className="mb-4 p-3 bg-yellow-100 border border-yellow-400 rounded text-sm">
+        <strong>Debug:</strong> papers.length={papers.length}, digests.length={digests.length}, stats.totalPapers={stats.totalPapers}
+      </div>
+
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>

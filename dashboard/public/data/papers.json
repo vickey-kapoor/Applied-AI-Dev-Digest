@@ -1,0 +1,151 @@
+{
+  "papers": [
+    {
+      "id": "188557b2-8ba2-4533-8fc1-3df007d9566a",
+      "title": "The latest AI news we announced in February",
+      "description": "an MP4 of a carousel with images reading \"Gemini 3.1 Pro\" and \"Nano Banana 2\"",
+      "source": "Google AI",
+      "url": "https://blog.google/innovation-and-ai/products/google-ai-updates-february-2026/",
+      "published_at": "2026-03-05T16:30:00",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "Google AI",
+      "topics": [
+        "Vision"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "62b22d72-fedf-4bb0-bc0b-c619a7bcbd7f",
+      "title": "Interactive Benchmarks",
+      "description": "Standard benchmarks have become increasingly unreliable due to saturation, subjectivity, and poor generalization. We argue that evaluating model's ability to acquire information actively is important to assess model's intelligence. We propose Interactive Benchmarks, a unified evaluation paradigm that assesses model's reasoning ability in an interactive process under budget constraints. We instantiate this framework across two settings: Interactive Proofs, where models interact with a judge to...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.04737",
+      "published_at": "2026-03-05T02:18:26+00:00",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "Baoqing Yue, Zihan Zhu, Yifan Zhang, Jichen Feng, Hufei Yang et al. (6 authors)",
+      "topics": [
+        "Reasoning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "254bc6b2-9f96-46ab-92b1-4181850a5d28",
+      "title": "Reasoning Theater: Disentangling Model Beliefs from Chain-of-Thought",
+      "description": "We provide evidence of performative chain-of-thought (CoT) in reasoning models, where a model becomes strongly confident in its final answer, but continues generating tokens without revealing its internal belief. Our analysis compares activation probing, early forced answering, and a CoT monitor across two large models (DeepSeek-R1 671B & GPT-OSS 120B) and find task difficulty-specific differences: The model's final answer is decodable from activations far earlier in CoT than a monitor is abl...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.05488v1",
+      "published_at": "2026-03-05T00:00:00",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "Siddharth Boppana, Annabel Ma, Max Loeffler, Raphael Sarfati, Eric Bigelow, Atticus Geiger, Owen ...",
+      "topics": [
+        "Reasoning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "1deff0a4-3280-4433-b510-e22e8d34276b",
+      "title": "DEBISS: a Corpus of Individual, Semi-structured and Spoken Debates",
+      "description": "The process of debating is essential in our daily lives, whether in studying, work activities, simple everyday discussions, political debates on TV, or online discussions on social networks. The range of uses for debates is broad. Due to the diverse applications, structures, and formats of debates, developing corpora that account for these variations can be challenging, and the scarcity of debate corpora in the state of the art is notable. For this reason, the current research proposes the DE...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.05459v1",
+      "published_at": "2026-03-05T00:00:00",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "Klaywert Danillo Ferreira de Souza, David Eduardo Pereira, Cláudio E. C. Campelo, Larissa Lucena ...",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7229f7b0-721c-41e1-a4bd-30c91275173e",
+      "title": "Distributed Partial Information Puzzles: Examining Common Ground Construction Under Epistemic Asymmetry",
+      "description": "Establishing common ground, a shared set of beliefs and mutually recognized facts, is fundamental to collaboration, yet remains a challenge for current AI systems, especially in multimodal, multiparty settings, where the collaborators bring different information to the table. We introduce the Distributed Partial Information Puzzle (DPIP), a collaborative construction task that elicits rich multimodal communication under epistemic asymmetry. We present a multimodal dataset of these interaction...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.05450v1",
+      "published_at": "2026-03-05T00:00:00",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "Yifan Zhu, Mariah Bradford, Kenneth Lai, Timothy Obiso, Videep Venkatesha, James Pustejovsky, Nik...",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "aea96302-6b8e-4ee8-80f5-e1c1ff72d170",
+      "title": "On-Policy Self-Distillation for Reasoning Compression",
+      "description": "Reasoning models think out loud, but much of what they say is noise. We introduce OPSDC (On-Policy Self-Distillation for Reasoning Compression), a method that teaches models to reason more concisely by   distilling their own concise behavior back into themselves. The entire approach reduces to one idea: condition the same model on a \"be concise\" instruction to obtain teacher logits, and minimize per-token   reverse KL on the student's own rollouts. No ground-truth answers, no token budgets, n...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.05433v1",
+      "published_at": "2026-03-05T00:00:00",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "Hejian Sang, Yuanda Xu, Zhengze Zhou, Ran He, Zhipeng Wang, Jiachen Sun",
+      "topics": [
+        "Reasoning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "df9601e6-4947-40e1-9eb4-5716efcedc4e",
+      "title": "An interpretable prototype parts-based neural network for medical tabular data",
+      "description": "The ability to interpret machine learning model decisions is critical in such domains as healthcare, where trust in model predictions is as important as their accuracy. Inspired by the development of prototype parts-based deep neural networks in computer vision, we propose a new model for tabular data, specifically tailored to medical records, that requires discretization of diagnostic result norms. Unlike the original vision models that rely on the spatial structure, our method employs train...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.05423v1",
+      "published_at": "2026-03-05T00:00:00",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "Jacek Karolczak, Jerzy Stefanowski",
+      "topics": [
+        "cs.LG",
+        "Vision"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d1f6e38e-66d2-4400-9310-fc529fb378a3",
+      "title": "Latent Particle World Models: Self-supervised Object-centric Stochastic Dynamics Modeling",
+      "description": "We introduce Latent Particle World Model (LPWM), a self-supervised object-centric world model scaled to real-world multi-object datasets and applicable in decision-making. LPWM autonomously discovers keypoints, bounding boxes, and object masks directly from video data, enabling it to learn rich scene decompositions without supervision. Our architecture is trained end-to-end purely from videos and supports flexible conditioning on actions, language, and image goals. LPWM models stochastic part...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.04553",
+      "published_at": "2026-03-04T19:36:08+00:00",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "Tal Daniel, Carl Qi, Dan Haramati, Amir Zadeh, Chuan Li et al. (8 authors)",
+      "topics": [
+        "Vision"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "6c3eeda9-af41-4553-b389-4e1c65d17504",
+      "title": "Lightweight Visual Reasoning for Socially-Aware Robots",
+      "description": "Robots operating in shared human environments must not only navigate, interact, and detect their surroundings, they must also interpret and respond to dynamic, and often unpredictable, human behaviours. Although recent advances have shown promise in enhancing robotic perception and instruction-following using Vision-Language Models (VLMs), they remain limited in addressing the complexities of multimodal human-robot interactions (HRI). Motivated by this challenge, we introduce a lightweight la...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.03942",
+      "published_at": "2026-03-04T11:08:44+00:00",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "Alessio Galatolo, Ronald Cumbal, Alexandros Rouchitsas, Katie Winkle, Didem Gürdür Broo et al. (6 authors)",
+      "topics": [
+        "Reasoning",
+        "LLM",
+        "Vision"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d21e7fd9-237e-4b23-bdbc-1cf35c063aae",
+      "title": "Gemini 3.1 Flash-Lite: Built for intelligence at scale",
+      "description": "Gemini 3.1 Flash-Lite is our fastest and most cost-efficient Gemini 3 series model yet.",
+      "source": "DeepMind",
+      "url": "https://deepmind.google/blog/gemini-3-1-flash-lite-built-for-intelligence-at-scale/",
+      "published_at": "2026-03-03T16:35:55",
+      "fetched_at": "2026-03-08T00:21:13.285469Z",
+      "authors": "DeepMind",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    }
+  ]
+}

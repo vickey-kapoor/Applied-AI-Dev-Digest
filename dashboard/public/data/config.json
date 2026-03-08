@@ -1,0 +1,22 @@
+{
+  "keywords": [
+    "AI agent",
+    "autonomous agent",
+    "reasoning",
+    "chain of thought",
+    "CoT",
+    "ReAct",
+    "tool use",
+    "planning",
+    "multi-agent",
+    "agentic"
+  ],
+  "sources": {
+    "arxiv": true,
+    "huggingface": true,
+    "pwc": true,
+    "blogs": true
+  },
+  "schedule": "0 16 * * *",
+  "whatsapp_enabled": true
+}

@@ -34,59 +34,29 @@ export interface Config {
   whatsapp_enabled: boolean;
 }
 
-// GitHub raw content URL for fetching data
-const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/vickey-kapoor/ai-research-whatsapp-digest/master/data';
-
-async function fetchJsonFile(filename: string): Promise<unknown | null> {
-  try {
-    const response = await fetch(`${GITHUB_RAW_BASE}/${filename}`, {
-      cache: 'no-store' // Always fetch fresh data
-    });
-    if (response.ok) {
-      return await response.json();
-    }
-  } catch (error) {
-    console.error(`Failed to fetch ${filename}:`, error);
-  }
-  return null;
-}
+// Import data directly from public folder
+import papersData from '../../public/data/papers.json';
+import digestsData from '../../public/data/digests.json';
+import configData from '../../public/data/config.json';
 
 export async function getPapers(): Promise<Paper[]> {
-  const data = await fetchJsonFile('papers.json') as { papers?: Paper[] } | null;
-  return data?.papers || [];
+  return (papersData as { papers: Paper[] }).papers || [];
 }
 
 export async function getDigests(): Promise<Digest[]> {
-  const data = await fetchJsonFile('digests.json') as { digests?: Digest[] } | null;
-  return data?.digests || [];
+  return (digestsData as { digests: Digest[] }).digests || [];
 }
 
 export async function getConfig(): Promise<Config> {
-  const data = await fetchJsonFile('config.json') as Config | null;
-
-  return data || {
-    keywords: [
-      'AI agent', 'autonomous agent', 'reasoning', 'chain of thought',
-      'CoT', 'ReAct', 'tool use', 'planning', 'multi-agent', 'agentic'
-    ],
-    sources: {
-      arxiv: true,
-      huggingface: true,
-      pwc: true,
-      blogs: true
-    },
-    schedule: '0 16 * * *',
-    whatsapp_enabled: true
-  };
+  return configData as Config;
 }
 
 export async function getReportDates(): Promise<string[]> {
-  // Derive report dates from digests
   const digests = await getDigests();
   const dates = digests
     .filter(d => d.pdf_path)
     .map(d => {
-      const match = d.pdf_path.match(/reports\/([^/]+)\//);
+      const match = d.pdf_path.match(/reports[\/\\]([^\/\\]+)[\/\\]/);
       return match ? match[1] : null;
     })
     .filter((date): date is string => date !== null);
@@ -118,4 +88,3 @@ export async function getStats() {
     starredCount: papers.filter(p => p.status === 'starred').length,
   };
 }
-// Trigger redeploy Sat, Mar  7, 2026  6:24:18 PM

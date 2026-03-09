@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-03-09",
+      "top_paper_id": "b25e85b1-4c01-45ee-99fd-7aa7bba7d03e",
+      "papers_fetched": 10,
+      "pdf_path": "reports/09-Mar/SUREON_A_Benchmark_and_Vision-Language-Model_for.pdf",
+      "whatsapp_sent": true,
+      "workflow_run_id": "22865002136"
+    },
+    {
       "date": "2026-03-08",
       "top_paper_id": null,
       "papers_fetched": 10,

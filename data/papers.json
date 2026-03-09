@@ -1,6 +1,135 @@
 {
   "papers": [
     {
+      "id": "f5c0cd7a-aa60-46a0-a66f-64df2f5fd9f5",
+      "title": "EffectMaker: Unifying Reasoning and Generation for Customized Visual Effect Creation",
+      "description": "Visual effects (VFX) are essential for enhancing the expressiveness and creativity of video content, yet producing high-quality effects typically requires expert knowledge and costly production pipelines. Existing AIGC systems face significant challenges in VFX generation due to the scarcity of effect-specific data and the inherent difficulty of modeling supernatural or stylized effects. Moreover, these approaches often require per-effect fine-tuning, which severely limits their scalability a...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.06014",
+      "published_at": "2026-03-06T08:09:14+00:00",
+      "fetched_at": "2026-03-09T17:01:50.677348Z",
+      "authors": "Shiyuan Yang, Ruihuang Li, Jiale Tao, Shuai Shao, Qinglin Lu et al. (6 authors)",
+      "topics": [
+        "Reasoning",
+        "Vision"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "5b9cb638-b4cb-4eab-befd-8c7cb0dc75d2",
+      "title": "BEVLM: Distilling Semantic Knowledge from LLMs into Bird's-Eye View Representations",
+      "description": "The integration of Large Language Models (LLMs) into autonomous driving has attracted growing interest for their strong reasoning and semantic understanding abilities, which are essential for handling complex decision-making and long-tail scenarios. However, existing methods typically feed LLMs with tokens from multi-view and multi-frame images independently, leading to redundant computation and limited spatial consistency. This separation in visual processing hinders accurate 3D spatial reas...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.06576v1",
+      "published_at": "2026-03-06T00:00:00",
+      "fetched_at": "2026-03-09T17:01:50.677348Z",
+      "authors": "Thomas Monninger, Shaoyuan Xie, Qi Alfred Chen, Sihao Ding",
+      "topics": [
+        "cs.CL",
+        "Reasoning",
+        "LLM",
+        "Vision"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b25e85b1-4c01-45ee-99fd-7aa7bba7d03e",
+      "title": "SUREON: A Benchmark and Vision-Language-Model for Surgical Reasoning",
+      "description": "Surgeons don't just see -- they interpret. When an expert observes a surgical scene, they understand not only what instrument is being used, but why it was chosen, what risk it poses, and what comes next. Current surgical AI cannot answer such questions, largely because training data that explicitly encodes surgical reasoning is immensely difficult to annotate at scale. Yet surgical video lectures already contain exactly this -- explanations of intent, rationale, and anticipation, narrated by...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.06570v1",
+      "published_at": "2026-03-06T00:00:00",
+      "fetched_at": "2026-03-09T17:01:50.677348Z",
+      "authors": "Alejandra Perez, Anita Rau, Lee White, Busisiwe Mlambo, Chinedu Nwoye, Muhammad Abdullah Jamal, O...",
+      "topics": [
+        "Reasoning",
+        "Vision"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "9025169f-7b0f-4565-946f-d56ac683013d",
+      "title": "LiveSense: A Real-Time Wi-Fi Sensing Platform for Range-Doppler on COTS Laptop",
+      "description": "We present LiveSense - a cross-platform that transforms a commercial off-the-shelf (COTS) Wi-Fi Network Interface Card (NIC) on a laptop into a centimeter-level Range-Doppler sensor while preserving simultaneous communication capability. The laptops are equipped with COTS Intel AX211 (Wi-Fi 6E) or Intel BE201 (Wi-Fi 7) NICs. LiveSense can (i) Extract fully-synchronized channel state information (CSI) at >= 40 Hz, (ii) Perform time-phase alignment and self-interference cancellation on-device, ...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.06545v1",
+      "published_at": "2026-03-06T00:00:00",
+      "fetched_at": "2026-03-09T17:01:50.677348Z",
+      "authors": "Jessica Sanson, Rahul C. Shah, Maximilian Pinaroc, Cagri Tanriover, Valerio Frascolla",
+      "topics": [
+        "Reasoning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ef9ad47a-1f87-4bb6-8407-de1c42443c67",
+      "title": "Semantics-Aware Caching for Concept Learning",
+      "description": "Concept learning is a form of supervised machine learning that operates on knowledge bases in description logics. State-of-the-art concept learners often rely on an iterative search through a countably infinite concept space. In each iteration, they retrieve instances of candidate solutions to select the best concept for the next iteration. While simple learning problems might require a few dozen instance retrieval calls to find a fitting solution, complex learning problems might necessitate ...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.06506v1",
+      "published_at": "2026-03-06T00:00:00",
+      "fetched_at": "2026-03-09T17:01:50.677348Z",
+      "authors": "Louis Mozart Kamdem Teyou, Caglar Demir, Axel-Cyrille Ngonga Ngomo",
+      "topics": [
+        "cs.LG"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0b90b836-54cb-4b35-96cf-76cce90c5033",
+      "title": "Beyond Rows to Reasoning: Agentic Retrieval for Multimodal Spreadsheet Understanding and Editing",
+      "description": "Recent advances in multimodal Retrieval-Augmented Generation (RAG) enable Large Language Models (LLMs) to analyze enterprise spreadsheet workbooks containing millions of cells, cross-sheet dependencies, and embedded visual artifacts. However, state-of-the-art approaches exclude critical context through single-pass retrieval, lose data resolution through compression, and exceed LLM context windows through naive full-context injection, preventing reliable multi-step reasoning over complex enter...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.06503v1",
+      "published_at": "2026-03-06T00:00:00",
+      "fetched_at": "2026-03-09T17:01:50.677348Z",
+      "authors": "Anmol Gulati, Sahil Sen, Waqar Sarguroh, Kevin Paul",
+      "topics": [
+        "cs.CL",
+        "AI Agent",
+        "Reasoning",
+        "LLM",
+        "Vision"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "321bbf9c-5aa1-4139-81cb-0ce90b6c362e",
+      "title": "Censored LLMs as a Natural Testbed for Secret Knowledge Elicitation",
+      "description": "Large language models sometimes produce false or misleading responses. Two approaches to this problem are honesty elicitation -- modifying prompts or weights so that the model answers truthfully -- and lie detection -- classifying whether a given response is false. Prior work evaluates such methods on models specifically trained to lie or conceal information, but these artificial constructions may not resemble naturally-occurring dishonesty. We instead study open-weights LLMs from Chinese dev...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.05494",
+      "published_at": "2026-03-05T18:58:14+00:00",
+      "fetched_at": "2026-03-09T17:01:50.677348Z",
+      "authors": "Helena Casademunt, Bartosz Cywiński, Khoi Tran, Arya Jakkli, Samuel Marks et al. (6 authors)",
+      "topics": [
+        "LLM"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "9d9a0638-bfa0-47c6-a4bc-f49a483c3afc",
+      "title": "IF-RewardBench: Benchmarking Judge Models for Instruction-Following Evaluation",
+      "description": "Instruction-following is a foundational capability of large language models (LLMs), with its improvement hinging on scalable and accurate feedback from judge models. However, the reliability of current judge models in instruction-following remains underexplored due to several deficiencies of existing meta-evaluation benchmarks, such as their insufficient data coverage and oversimplified pairwise evaluation paradigms that misalign with model optimization scenarios. To this end, we propose IF-R...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.04738",
+      "published_at": "2026-03-05T02:21:17+00:00",
+      "fetched_at": "2026-03-09T17:01:50.677348Z",
+      "authors": "Bosi Wen, Yilin Niu, Cunxiang Wang, Xiaoying Ling, Ying Zhang et al. (8 authors)",
+      "topics": [
+        "LLM"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "188557b2-8ba2-4533-8fc1-3df007d9566a",
       "title": "The latest AI news we announced in February",
       "description": "an MP4 of a carousel with images reading \"Gemini 3.1 Pro\" and \"Nano Banana 2\"",

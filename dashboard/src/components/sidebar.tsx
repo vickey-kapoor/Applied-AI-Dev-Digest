@@ -10,11 +10,13 @@ import {
   BarChart3,
   Settings,
   Brain,
+  ListTodo,
 } from "lucide-react";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "Updates", href: "/papers", icon: FileText },
+  { name: "Backlog", href: "/backlog", icon: ListTodo },
   { name: "Reports", href: "/reports", icon: FolderOpen },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
   { name: "Settings", href: "/settings", icon: Settings },

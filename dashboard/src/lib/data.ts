@@ -78,6 +78,28 @@ export function getConfig(): Config {
   };
 }
 
+export async function getBacklog() {
+  const papers = await getPapers();
+
+  // Only unread/starred items go into the backlog (things to try)
+  const backlogItems = papers.filter(p => p.status === 'unread' || p.status === 'starred');
+
+  // Group by lab (source)
+  const grouped = backlogItems.reduce((acc, paper) => {
+    const lab = paper.source || 'Unknown';
+    if (!acc[lab]) acc[lab] = [];
+    acc[lab].push(paper);
+    return acc;
+  }, {} as Record<string, Paper[]>);
+
+  // Sort each lab's items by date descending
+  for (const lab of Object.keys(grouped)) {
+    grouped[lab].sort((a, b) => (b.published_at || '').localeCompare(a.published_at || ''));
+  }
+
+  return grouped;
+}
+
 export async function getReportDates(): Promise<string[]> {
   const digests = await getDigests();
   const dates = digests

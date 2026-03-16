@@ -43,9 +43,9 @@ export default async function PapersPage({
     <div className="p-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Research Papers</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Product Updates</h1>
         <p className="text-gray-500 mt-1">
-          Browse and filter all fetched research papers
+          Browse and filter developer product updates from AI labs
         </p>
       </div>
 
@@ -154,7 +154,7 @@ export default async function PapersPage({
 
       {/* Papers Count */}
       <div className="mb-4 text-sm text-gray-500">
-        Showing {filteredPapers.length} of {papers.length} papers
+        Showing {filteredPapers.length} of {papers.length} updates
       </div>
 
       {/* Papers List */}
@@ -210,8 +210,8 @@ export default async function PapersPage({
             <CardContent className="p-12 text-center">
               <p className="text-gray-500">
                 {papers.length === 0
-                  ? "No papers fetched yet. Run the daily workflow to get started."
-                  : "No papers match the selected filters."}
+                  ? "No updates fetched yet. Run the daily workflow to get started."
+                  : "No updates match the selected filters."}
               </p>
             </CardContent>
           </Card>

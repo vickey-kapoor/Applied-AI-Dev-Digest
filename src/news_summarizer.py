@@ -1,4 +1,4 @@
-"""Generate ELI5 (Explain Like I'm 5) summaries for research papers."""
+"""Generate developer-focused summaries for AI product updates."""
 
 import re
 
@@ -48,16 +48,14 @@ def _sanitize_text(text: str, max_length: int = 500) -> str:
 
 def summarize_research(research: dict, api_key: str) -> dict:
     """
-    Generate a simple, jargon-free summary for a research paper.
-
-    Summaries are written so a kid or grandma could understand them.
+    Generate a concise developer-focused summary for a product update.
 
     Args:
-        research: Research paper dictionary with title, description, source, url, authors
+        research: Product update dictionary with title, description, source, url
         api_key: OpenAI API key
 
     Returns:
-        Research dictionary with added 'summary' field
+        Update dictionary with added 'summary' field
     """
     if not api_key:
         return research
@@ -66,29 +64,25 @@ def summarize_research(research: dict, api_key: str) -> dict:
 
     # Sanitize inputs to prevent prompt injection
     title = _sanitize_text(research.get("title", ""), 200)
-    authors = _sanitize_text(research.get("authors", "Unknown"), 100)
-    abstract = _sanitize_text(research.get("description", ""), 500)
+    lab = _sanitize_text(research.get("source", "Unknown"), 100)
+    description = _sanitize_text(research.get("description", ""), 500)
 
-    prompt = f"""You explain AI research to someone with NO technical background - like a grandma or a kid.
+    prompt = f"""You summarize AI product announcements for busy developers.
 
-Paper: {title}
-Authors: {authors}
-Abstract: {abstract}
+Update: {title}
+From: {lab}
+Details: {description}
 
-Write 4-5 simple sentences explaining:
-1. What problem were the researchers trying to solve?
-2. What did they build or discover? (use simple analogies)
-3. How does it work in simple terms?
-4. Why should a regular person care? How might this affect their life someday?
+Write 3-4 concise sentences covering:
+1. What was launched or updated?
+2. What can developers do with this that they couldn't before?
+3. How to get started (API key, SDK install, pricing tier if known)?
 
 RULES:
-- NO jargon (no "transformer", "architecture", "benchmark", "SOTA", "LLM", "neural network", "model", "parameters")
-- Use everyday analogies (like teaching, cooking, organizing, finding things, etc.)
-- Write like you're explaining to a curious grandma over coffee
-- Be warm and conversational
-
-Example good summary:
-"You know how it's hard to find exactly what you're looking for when you have a messy desk? Researchers figured out a way to help AI organize information better so it can find the right answer faster. They taught it to sort through piles of information like a librarian who knows exactly where every book is. This could make future AI assistants much quicker at answering your questions - no more waiting around!"
+- Be concise and practical
+- Include specific technical details (model names, API endpoints, pricing)
+- Focus on "what can I try today"
+- No hype, no marketing speak
 
 Now write the summary:"""
 
@@ -112,16 +106,14 @@ Now write the summary:"""
 
 def summarize_research_detailed(research: dict, api_key: str) -> dict:
     """
-    Generate a detailed, comprehensive summary for PDF reports.
-
-    Much longer than Telegram summary - full grandma-friendly explanation.
+    Generate a detailed developer-focused summary for PDF reports.
 
     Args:
-        research: Research paper dictionary with title, description, source, url, authors
+        research: Product update dictionary with title, description, source, url
         api_key: OpenAI API key
 
     Returns:
-        Research dictionary with added 'detailed_summary' field
+        Update dictionary with added 'detailed_summary' field
     """
     if not api_key:
         return research
@@ -130,47 +122,43 @@ def summarize_research_detailed(research: dict, api_key: str) -> dict:
 
     # Sanitize inputs
     title = _sanitize_text(research.get("title", ""), 200)
-    authors = _sanitize_text(research.get("authors", "Unknown"), 100)
-    abstract = _sanitize_text(research.get("description", ""), 800)
+    lab = _sanitize_text(research.get("source", "Unknown"), 100)
+    description = _sanitize_text(research.get("description", ""), 800)
 
-    prompt = f"""You are a patient, warm science communicator explaining cutting-edge AI research to someone with NO technical background - like explaining to your curious grandma who wants to understand what her grandkid is working on.
+    prompt = f"""You are a technical writer creating an in-depth developer briefing on an AI product update.
 
-Paper: {title}
-Authors: {authors}
-Abstract: {abstract}
+Update: {title}
+From: {lab}
+Details: {description}
 
-Write a DETAILED explanation (8-12 paragraphs) covering:
+Write a DETAILED explanation (6-10 paragraphs) covering:
 
-1. **The Big Picture** (2-3 paragraphs)
-   - What area of AI is this about? Explain it simply.
-   - Why are scientists working on this problem?
-   - What was missing or broken before this research?
+1. **What Was Announced** (1-2 paragraphs)
+   - What is the product, feature, or model?
+   - What problem does it solve for developers?
 
-2. **What They Did** (2-3 paragraphs)
-   - What did the researchers actually build or discover?
-   - Use a vivid everyday analogy (cooking, gardening, teaching kids, organizing a closet, etc.)
-   - Walk through how it works step by step, like explaining a recipe
+2. **Technical Capabilities** (2-3 paragraphs)
+   - Key technical specs (context window, speed, pricing, limits)
+   - What APIs or SDKs are available?
+   - What can you build with this?
 
-3. **Why It's Clever** (1-2 paragraphs)
-   - What makes this approach special or different?
-   - What's the "aha!" moment?
+3. **Getting Started** (1-2 paragraphs)
+   - How to access it (sign up, API key, install SDK)
+   - Quick example of how to use it
 
-4. **Real World Impact** (2-3 paragraphs)
-   - How might this affect regular people's lives in 5-10 years?
-   - Give concrete examples (your phone, your car, your doctor, shopping, etc.)
-   - What problems could this help solve?
+4. **How It Compares** (1-2 paragraphs)
+   - How does this compare to alternatives from other labs?
+   - What's unique about this offering?
 
-5. **The Bottom Line** (1 paragraph)
-   - Summarize in 2-3 sentences what grandma should remember
+5. **Bottom Line for Developers** (1 paragraph)
+   - Is this worth trying today?
+   - Who benefits most?
 
 RULES:
-- NO jargon whatsoever
-- NO technical terms (no "model", "algorithm", "neural network", "training", "parameters", "architecture", "benchmark")
-- Use analogies from everyday life
-- Write like you're having coffee with grandma
-- Be warm, patient, and encouraging
-- Use "you" and "your" to make it personal
-- It's OK to be longer - grandma has time and wants to understand!
+- Be technical but clear
+- Include concrete details (model names, pricing, endpoints)
+- Focus on practical developer value
+- No marketing fluff
 
 Now write the detailed explanation:"""
 

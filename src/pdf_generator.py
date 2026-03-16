@@ -1,4 +1,4 @@
-"""Generate grandma-friendly PDF reports for AI research."""
+"""Generate developer-focused PDF reports for AI product updates."""
 
 import os
 import re
@@ -48,7 +48,7 @@ class ResearchPDF(FPDF):
         """Add header to each page."""
         self.set_font("Helvetica", "B", 16)
         self.set_text_color(50, 50, 50)
-        self.cell(0, 10, "Daily AI Research Digest", align="C", new_x="LMARGIN", new_y="NEXT")
+        self.cell(0, 10, "Daily AI Dev Digest", align="C", new_x="LMARGIN", new_y="NEXT")
         self.set_font("Helvetica", "I", 10)
         self.set_text_color(100, 100, 100)
         self.cell(0, 6, datetime.now().strftime("%A, %B %d, %Y"), align="C", new_x="LMARGIN", new_y="NEXT")
@@ -64,10 +64,10 @@ class ResearchPDF(FPDF):
 
 def generate_research_pdf(research: dict, output_dir: str = "reports") -> str:
     """
-    Generate a grandma-friendly PDF report for research.
+    Generate a developer-focused PDF report for a product update.
 
     Args:
-        research: Research dictionary with title, authors, description, summary, url, source
+        research: Update dictionary with title, source, description, summary, url
         output_dir: Base directory for saving reports
 
     Returns:
@@ -119,7 +119,7 @@ def generate_research_pdf(research: dict, output_dir: str = "reports") -> str:
     # "What's This About?" section - the main detailed explanation
     pdf.set_font("Helvetica", "B", 14)
     pdf.set_text_color(50, 100, 50)
-    pdf.cell(0, 10, "What's This About? (In Simple Terms)", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 10, "What's New", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
 
     # Detailed explanation (ELI5 summary) - use readable font size
@@ -137,7 +137,7 @@ def generate_research_pdf(research: dict, output_dir: str = "reports") -> str:
     if description:
         pdf.set_font("Helvetica", "B", 11)
         pdf.set_text_color(100, 100, 100)
-        pdf.cell(0, 8, "Original Research Abstract (Technical)", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 8, "Full Announcement Details", new_x="LMARGIN", new_y="NEXT")
         pdf.ln(2)
 
         pdf.set_font("Helvetica", "I", 9)
@@ -159,7 +159,7 @@ def generate_research_pdf(research: dict, output_dir: str = "reports") -> str:
     pdf.ln(5)
     pdf.set_font("Helvetica", "I", 11)
     pdf.set_text_color(100, 100, 100)
-    pdf.multi_cell(0, 7, "This digest is created to help you stay informed about AI research in simple, everyday language. No technical background needed!")
+    pdf.multi_cell(0, 7, "This digest tracks the latest developer-facing product features from top AI labs. Stay ahead by trying new APIs, models, and tools as they launch.")
 
     # Generate filename
     safe_title = "".join(c if c.isalnum() or c in " -_" else "" for c in title[:50])

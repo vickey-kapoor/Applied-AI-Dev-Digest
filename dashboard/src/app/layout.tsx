@@ -6,8 +6,8 @@ import { Sidebar } from "@/components/sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AI Research Command Center",
-  description: "Dashboard for AI Research Telegram Digest",
+  title: "AI Dev Digest",
+  description: "Dashboard for tracking developer product updates from AI labs",
 };
 
 export default function RootLayout({

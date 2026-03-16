@@ -1,11 +1,11 @@
-"""Fetch AI research posts from major AI lab blogs."""
+"""Fetch developer product updates from major AI lab blogs."""
 
 from datetime import datetime
 import socket
 
 import feedparser
 
-from src.constants import BLOG_FEEDS, FILTER_KEYWORDS, REQUEST_TIMEOUT
+from src.constants import BLOG_FEEDS, REQUEST_TIMEOUT
 from src.logger import get_logger
 from src.utils.retry import retry_with_backoff
 
@@ -25,12 +25,6 @@ def _parse_blog_feed(url: str):
         return feedparser.parse(url)
     finally:
         socket.setdefaulttimeout(old_timeout)
-
-
-def _matches_keywords(text: str) -> bool:
-    """Check if text contains any agent/reasoning keywords."""
-    text_lower = text.lower()
-    return any(kw.lower() in text_lower for kw in FILTER_KEYWORDS)
 
 
 def _parse_date(entry: dict) -> str:
@@ -63,10 +57,6 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int) -> list[dict]
             title = entry.get("title", "")
             summary = entry.get("summary", "") or entry.get("description", "")
 
-            # Filter for agent/reasoning relevance (be more lenient for major labs)
-            if not _matches_keywords(title) and not _matches_keywords(summary):
-                continue
-
             # Clean summary (remove HTML tags if present)
             summary = summary.replace("<p>", "").replace("</p>", " ")
             summary = summary.replace("<br>", " ").replace("<br/>", " ")
@@ -78,11 +68,12 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int) -> list[dict]
                 "title": title.strip(),
                 "description": summary.strip(),
                 "source": source,
+                "lab": source,
                 "url": entry.get("link", ""),
                 "published_at": _parse_date(entry),
-                "type": "research",
-                "authors": source,  # Blog posts typically don't list individual authors
-                "topics": ["AI Agents", "Reasoning"],
+                "type": "product_update",
+                "authors": source,
+                "topics": [],
             }
             posts.append(post)
 
@@ -101,7 +92,7 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int) -> list[dict]
 
 def fetch_blog_posts(max_results: int = 5) -> list[dict]:
     """
-    Fetch recent AI Agents & Reasoning posts from major AI lab blogs.
+    Fetch recent developer product updates from Tier 1 AI lab blogs.
 
     Args:
         max_results: Maximum total number of posts to return

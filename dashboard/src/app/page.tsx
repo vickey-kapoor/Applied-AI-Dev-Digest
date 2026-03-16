@@ -32,7 +32,7 @@ export default async function DashboardPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
         <p className="text-gray-500 mt-1">
-          Your AI research digest overview
+          Your AI dev digest overview
         </p>
       </div>
 
@@ -41,7 +41,7 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">
-              Total Papers
+              Total Updates
             </CardTitle>
             <FileText className="h-4 w-4 text-gray-400" />
           </CardHeader>
@@ -78,7 +78,7 @@ export default async function DashboardPage() {
           <CardContent>
             <div className="text-2xl font-bold">{stats.unreadCount}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Papers to review
+              Updates to review
             </p>
           </CardContent>
         </Card>
@@ -93,7 +93,7 @@ export default async function DashboardPage() {
           <CardContent>
             <div className="text-2xl font-bold">{stats.starredCount}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Important papers
+              Important updates
             </p>
           </CardContent>
         </Card>
@@ -107,7 +107,7 @@ export default async function DashboardPage() {
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-blue-600" />
-                  Top Paper Today
+                  Top Update Today
                 </CardTitle>
                 {topPaper && (
                   <Badge variant="secondary">{topPaper.source}</Badge>
@@ -137,7 +137,7 @@ export default async function DashboardPage() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
                     >
-                      Read paper
+                      Read more
                       <ExternalLink className="h-3 w-3" />
                     </a>
                   </div>
@@ -159,7 +159,7 @@ export default async function DashboardPage() {
                   )}
                 </div>
               ) : (
-                <p className="text-gray-500">No papers fetched yet. Run the workflow to get started.</p>
+                <p className="text-gray-500">No updates fetched yet. Run the workflow to get started.</p>
               )}
             </CardContent>
           </Card>
@@ -213,7 +213,7 @@ export default async function DashboardPage() {
       <Card className="mt-8">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Recent Papers</CardTitle>
+            <CardTitle>Recent Updates</CardTitle>
             <Link
               href="/papers"
               className="text-sm text-blue-600 hover:underline"
@@ -254,7 +254,7 @@ export default async function DashboardPage() {
             </div>
           ) : (
             <p className="text-gray-500 py-4 text-center">
-              No papers yet. Run the daily workflow to fetch research papers.
+              No updates yet. Run the daily workflow to fetch product updates.
             </p>
           )}
         </CardContent>

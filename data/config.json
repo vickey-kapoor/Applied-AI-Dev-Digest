@@ -1,22 +1,27 @@
 {
   "keywords": [
-    "AI agent",
-    "autonomous agent",
-    "reasoning",
-    "chain of thought",
-    "CoT",
-    "ReAct",
-    "tool use",
-    "planning",
-    "multi-agent",
-    "agentic"
+    "API",
+    "SDK",
+    "model release",
+    "new feature",
+    "changelog",
+    "launch",
+    "developer tools",
+    "fine-tuning",
+    "embeddings",
+    "function calling",
+    "multimodal",
+    "context window"
   ],
   "sources": {
-    "arxiv": true,
-    "huggingface": true,
-    "pwc": true,
     "blogs": true
   },
+  "labs": [
+    "OpenAI",
+    "Anthropic",
+    "Google DeepMind",
+    "Meta AI"
+  ],
   "schedule": "0 16 * * *",
   "telegram_enabled": true
 }

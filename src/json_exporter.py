@@ -102,35 +102,22 @@ def export_papers(research_items: list[dict], ranked_paper: dict = None) -> str:
 
 
 def extract_topics(item: dict) -> list[str]:
-    """Extract topic tags from research item."""
+    """Extract topic tags from a product update item."""
     topics = []
 
-    # Add source-specific categories
-    source = item.get("source", "")
-    if source == "arXiv":
-        # arXiv items often have categories in the description
-        desc = item.get("description", "").lower()
-        if "cs.ai" in desc or "artificial intelligence" in desc:
-            topics.append("cs.AI")
-        if "cs.lg" in desc or "machine learning" in desc:
-            topics.append("cs.LG")
-        if "cs.cl" in desc or "language" in desc:
-            topics.append("cs.CL")
-        if "cs.ma" in desc or "multi-agent" in desc:
-            topics.append("cs.MA")
-
-    # Add keyword-based topics
+    # Add keyword-based topics for developer product features
     text = f"{item.get('title', '')} {item.get('description', '')}".lower()
 
     topic_keywords = {
-        "AI Agent": ["ai agent", "autonomous agent", "agentic"],
-        "Reasoning": ["reasoning", "chain of thought", "cot"],
-        "LLM": ["llm", "large language model", "language model"],
-        "Multi-Agent": ["multi-agent", "multiagent"],
-        "Tool Use": ["tool use", "tool calling", "function calling"],
-        "Planning": ["planning", "task planning"],
-        "Vision": ["vision", "visual", "image"],
-        "Transformer": ["transformer", "attention"],
+        "Model Release": ["model", "gpt", "claude", "gemini", "llama", "mistral", "command"],
+        "API Update": ["api", "endpoint", "rest"],
+        "SDK/Library": ["sdk", "library", "package", "client"],
+        "Fine-tuning": ["fine-tun", "custom model", "training"],
+        "Embeddings": ["embedding"],
+        "Multimodal": ["vision", "image", "audio", "video", "multimodal"],
+        "Developer Tools": ["playground", "cli", "console", "dashboard"],
+        "Pricing": ["pricing", "cost", "token", "rate limit"],
+        "Function Calling": ["function calling", "tool use", "tool calling"],
     }
 
     for topic, keywords in topic_keywords.items():

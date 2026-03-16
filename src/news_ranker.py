@@ -1,4 +1,4 @@
-"""Rank AI research by importance using OpenAI."""
+"""Rank AI product updates by developer usefulness using OpenAI."""
 
 import re
 
@@ -48,16 +48,14 @@ def _sanitize_text(text: str, max_length: int = 500) -> str:
 
 def rank_research(research: list[dict], api_key: str) -> dict:
     """
-    Use OpenAI to select the most important AI research paper.
-
-    Focuses on AI Agents and Reasoning research.
+    Use OpenAI to select the most important AI product update for developers.
 
     Args:
-        research: List of research paper dictionaries
+        research: List of product update dictionaries
         api_key: OpenAI API key
 
     Returns:
-        The most important research paper
+        The most important product update
     """
     if not research:
         raise ValueError("No research to rank")
@@ -67,23 +65,23 @@ def rank_research(research: list[dict], api_key: str) -> dict:
 
     client = OpenAI(api_key=api_key)
 
-    # Prepare research summary for the prompt (with sanitization)
+    # Prepare update summary for the prompt (with sanitization)
     research_text = "\n\n".join(
-        f"[{i+1}] Title: {_sanitize_text(r.get('title', ''), 200)}\nSource: {_sanitize_text(r.get('source', ''), 50)}\nAuthors: {_sanitize_text(r.get('authors', 'Unknown'), 100)}\nAbstract: {_sanitize_text(r.get('description', ''), 400)}"
+        f"[{i+1}] Title: {_sanitize_text(r.get('title', ''), 200)}\nLab: {_sanitize_text(r.get('source', ''), 50)}\nDescription: {_sanitize_text(r.get('description', ''), 400)}"
         for i, r in enumerate(research)
     )
 
-    prompt = f"""You are an AI research curator specializing in AI Agents and Reasoning.
+    prompt = f"""You are a developer tools curator tracking AI lab product announcements.
 
-Select the ONE most important paper that would be most interesting to explain to a non-technical person.
+Select the ONE most important update that a software developer should know about today.
 
 Consider:
-1. Relevance to AI Agents, autonomous systems, or reasoning
-2. How groundbreaking or novel the approach is
-3. Real-world impact potential (will regular people eventually feel this?)
-4. How "explainable" the concept is to a general audience
+1. Can a developer try this RIGHT NOW? (new API, SDK, model, tool)
+2. How significant is the new capability? (new model > minor update)
+3. Breadth of developer impact (affects many developers vs. niche use case)
+4. Novelty (first-of-its-kind vs. incremental improvement)
 
-Research Papers:
+Product Updates:
 {research_text}
 
 Respond with ONLY the number (e.g., "1" or "3"). No explanation."""

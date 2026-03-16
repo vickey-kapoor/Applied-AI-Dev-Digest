@@ -56,32 +56,30 @@ def _truncate(text: str, max_len: int) -> str:
 
 def format_research_message(research: dict) -> str:
     """
-    Format research into a message with ELI5 summary.
+    Format product update into a Telegram message.
 
     Args:
-        research: Research paper dictionary with title, authors, description, url, summary
+        research: Product update dictionary with title, source, description, url, summary
 
     Returns:
         Formatted message string with Markdown
     """
     if not research:
-        return "*Daily AI Research*\n\nNo research found today."
+        return "*Daily AI Dev Digest*\n\nNo updates found today."
 
     title = research.get("title", "Untitled")
-    authors = _truncate(research.get("authors", "Unknown"), 60)
     source = research.get("source", "Unknown")
     url = _validate_url(research.get("url", ""))
     summary = research.get("summary", "")
 
-    message = f"""*Daily AI Research*
+    message = f"""*Daily AI Dev Digest*
 
 *{title}*
-_{authors}_
 
 {summary}
 
 {url}
-_Source: {source}_"""
+_Lab: {source}_"""
 
     return message
 

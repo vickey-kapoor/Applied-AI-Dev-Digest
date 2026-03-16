@@ -1,4 +1,4 @@
-"""Main entry point for AI Research Telegram Digest."""
+"""Main entry point for AI Dev Digest."""
 
 import os
 import sys
@@ -17,7 +17,7 @@ logger = get_logger(__name__)
 
 
 def main():
-    """Fetch AI research, select the most important, and send to Telegram."""
+    """Fetch AI product updates, select the most important, and send to Telegram."""
     # Load environment variables
     load_dotenv()
 
@@ -39,31 +39,31 @@ def main():
         logger.error("Missing required environment variables: %s", ", ".join(missing))
         sys.exit(1)
 
-    # Fetch AI research
-    logger.info("Fetching AI research...")
+    # Fetch product updates from AI labs
+    logger.info("Fetching product updates from AI labs...")
     research_items = []
     try:
         research_items = fetch_ai_research(max_results=10)
-        logger.info("Found %d research items", len(research_items))
+        logger.info("Found %d product updates", len(research_items))
     except Exception as e:
-        logger.error("Error fetching research: %s", e)
+        logger.error("Error fetching updates: %s", e)
 
     # Check if we have any content
     if not research_items:
-        logger.info("No AI research found today")
+        logger.info("No product updates found today")
         sys.exit(0)
 
-    # Rank and select top research
-    logger.info("Selecting most important research...")
+    # Rank and select top update
+    logger.info("Selecting most important update...")
     try:
         top_research = rank_research(research_items, openai_key)
         logger.info("Selected: %s", top_research["title"])
     except Exception as e:
-        logger.error("Error ranking research: %s", e)
+        logger.error("Error ranking updates: %s", e)
         top_research = research_items[0]
 
-    # Export papers to JSON for dashboard
-    logger.info("Exporting papers to JSON...")
+    # Export updates to JSON for dashboard
+    logger.info("Exporting updates to JSON...")
     top_paper_id = None
     try:
         top_paper_id = export_papers(research_items, top_research)

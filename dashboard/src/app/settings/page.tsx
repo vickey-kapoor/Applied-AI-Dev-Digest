@@ -20,7 +20,7 @@ export default function SettingsPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
         <p className="text-gray-500 mt-1">
-          View and manage your research digest configuration
+          View and manage your dev digest configuration
         </p>
       </div>
 
@@ -33,7 +33,7 @@ export default function SettingsPage() {
               Search Keywords
             </CardTitle>
             <CardDescription>
-              Keywords used to filter AI research papers
+              Keywords used to filter developer product updates
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -58,34 +58,26 @@ export default function SettingsPage() {
               Data Sources
             </CardTitle>
             <CardDescription>
-              Research paper sources being monitored
+              AI lab blogs being monitored for product updates
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <span className="font-medium">arXiv</span>
-                <Badge variant={config.sources.arxiv ? "success" : "secondary"}>
-                  {config.sources.arxiv ? "Enabled" : "Disabled"}
-                </Badge>
-              </div>
-              <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <span className="font-medium">Hugging Face Daily Papers</span>
-                <Badge variant={config.sources.huggingface ? "success" : "secondary"}>
-                  {config.sources.huggingface ? "Enabled" : "Disabled"}
-                </Badge>
-              </div>
-              <div className="flex items-center justify-between py-2 border-b border-gray-100">
-                <span className="font-medium">Papers With Code</span>
-                <Badge variant={config.sources.pwc ? "success" : "secondary"}>
-                  {config.sources.pwc ? "Enabled" : "Disabled"}
-                </Badge>
-              </div>
-              <div className="flex items-center justify-between py-2">
                 <span className="font-medium">AI Lab Blogs</span>
                 <Badge variant={config.sources.blogs ? "success" : "secondary"}>
                   {config.sources.blogs ? "Enabled" : "Disabled"}
                 </Badge>
+              </div>
+            </div>
+            <div className="mt-4">
+              <p className="text-sm text-gray-500 mb-2">Tracked Labs</p>
+              <div className="flex flex-wrap gap-2">
+                {config.labs.map((lab) => (
+                  <Badge key={lab} variant="secondary" className="text-sm">
+                    {lab}
+                  </Badge>
+                ))}
               </div>
             </div>
           </CardContent>
@@ -99,7 +91,7 @@ export default function SettingsPage() {
               Schedule
             </CardTitle>
             <CardDescription>
-              When the research digest runs
+              When the dev digest runs
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -152,7 +144,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Message Format</p>
-                <p className="font-medium">ELI5 Summary with Markdown</p>
+                <p className="font-medium">Developer Summary with Markdown</p>
               </div>
             </div>
           </CardContent>

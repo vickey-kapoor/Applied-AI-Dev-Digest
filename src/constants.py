@@ -1,10 +1,10 @@
-"""Centralized constants for AI Research Telegram Digest."""
+"""Centralized constants for AI Dev Digest."""
 
 import os
 
 # Application info
-APP_NAME = "AI Research Telegram Digest"
-APP_VERSION = "1.0.0"
+APP_NAME = "AI Dev Digest"
+APP_VERSION = "2.0.0"
 USER_AGENT = f"{APP_NAME}/{APP_VERSION} (https://github.com/vickey-kapoor/ai-research-digest)"
 
 # Network settings
@@ -17,52 +17,57 @@ DEDUP_SIMILARITY_THRESHOLD = float(os.getenv("DEDUP_SIMILARITY_THRESHOLD", "0.85
 # Digest settings
 DIGEST_MAX_RESULTS = int(os.getenv("DIGEST_MAX_RESULTS", "10"))
 
-# Keywords for AI Agents & Reasoning research
-AGENT_REASONING_KEYWORDS = [
-    "AI agent",
-    "autonomous agent",
-    "reasoning",
-    "chain of thought",
-    "CoT",
-    "ReAct",
+# Keywords for developer-facing product features
+PRODUCT_FEATURE_KEYWORDS = [
+    "API",
+    "SDK",
+    "model release",
+    "new feature",
+    "changelog",
+    "launch",
+    "developer tools",
+    "fine-tuning",
+    "embeddings",
+    "function calling",
     "tool use",
-    "planning",
-    "multi-agent",
-    "agentic",
-    "llm",
-    "language model",
+    "multimodal",
+    "context window",
+    "CLI",
+    "pricing",
+    "general availability",
+    "beta",
 ]
 
 # Simplified keywords for filtering (lowercase)
 FILTER_KEYWORDS = [
-    "agent",
-    "reasoning",
-    "chain of thought",
-    "cot",
-    "react",
+    "api",
+    "sdk",
+    "model",
+    "release",
+    "launch",
+    "new",
+    "developer",
+    "fine-tuning",
+    "fine-tune",
+    "embeddings",
+    "function calling",
     "tool use",
-    "tool-use",
-    "planning",
-    "multi-agent",
-    "agentic",
-    "autonomous",
-    "llm",
-    "language model",
-    "gemini",
-    "llama",
+    "multimodal",
+    "context window",
+    "cli",
+    "pricing",
+    "generally available",
+    "beta",
+    "endpoint",
+    "playground",
+    "library",
+    "integration",
 ]
 
-# arXiv categories
-ARXIV_CATEGORIES = ["cs.AI", "cs.LG", "cs.CL", "cs.MA"]
-
-# Blog RSS feeds
+# Blog RSS feeds for Tier 1 AI Labs
 BLOG_FEEDS = {
-    "Google AI": "https://blog.google/technology/ai/rss/",
-    "DeepMind": "https://deepmind.google/blog/rss.xml",
+    "OpenAI": "https://openai.com/blog/rss.xml",
+    "Anthropic": "https://www.anthropic.com/rss.xml",
+    "Google DeepMind": "https://deepmind.google/blog/rss.xml",
     "Meta AI": "https://ai.meta.com/blog/rss/",
 }
-
-# API URLs
-ARXIV_API_URL = "https://export.arxiv.org/api/query"
-HF_DAILY_PAPERS_URL = "https://huggingface.co/api/daily_papers"
-PWC_API_URL = "https://paperswithcode.com/api/v1/papers/"

@@ -1,4 +1,4 @@
-"""Shared pytest fixtures for AI Research Telegram Digest tests."""
+"""Shared pytest fixtures for AI Dev Digest tests."""
 
 import pytest
 from unittest.mock import Mock, patch
@@ -6,78 +6,81 @@ from unittest.mock import Mock, patch
 
 @pytest.fixture
 def sample_paper():
-    """Sample research paper dictionary."""
+    """Sample product update dictionary."""
     return {
-        "title": "Autonomous AI Agents with Chain-of-Thought Reasoning",
-        "description": "We present a novel approach to autonomous AI agents using chain-of-thought reasoning for complex task planning.",
-        "source": "arXiv",
-        "url": "https://arxiv.org/abs/2401.12345",
-        "published_at": "2024-01-15T00:00:00",
-        "type": "research",
-        "authors": "Alice Smith, Bob Jones",
-        "topics": ["cs.AI", "cs.LG"],
+        "title": "GPT-4o mini now available in the API",
+        "description": "OpenAI launches GPT-4o mini with 128K context, function calling, and JSON mode at $0.15/1M input tokens.",
+        "source": "OpenAI",
+        "lab": "OpenAI",
+        "url": "https://openai.com/blog/gpt-4o-mini",
+        "published_at": "2024-07-18T00:00:00",
+        "type": "product_update",
+        "authors": "OpenAI",
+        "topics": ["Model Release", "API Update"],
     }
 
 
 @pytest.fixture
 def sample_papers(sample_paper):
-    """List of sample research papers."""
+    """List of sample product updates."""
     return [
         sample_paper,
         {
-            "title": "Multi-Agent Systems for Collaborative Problem Solving",
-            "description": "A study on multi-agent collaboration in complex environments.",
-            "source": "Hugging Face",
-            "url": "https://huggingface.co/papers/2401.54321",
-            "published_at": "2024-01-14T00:00:00",
-            "type": "research",
-            "authors": "Carol White, David Brown",
-            "topics": ["AI Agents", "Reasoning"],
+            "title": "Claude 3.5 Sonnet launches with tool use support",
+            "description": "Anthropic releases Claude 3.5 Sonnet with improved tool use and 200K context window.",
+            "source": "Anthropic",
+            "lab": "Anthropic",
+            "url": "https://www.anthropic.com/news/claude-3-5-sonnet",
+            "published_at": "2024-06-20T00:00:00",
+            "type": "product_update",
+            "authors": "Anthropic",
+            "topics": ["Model Release", "Function Calling"],
         },
         {
-            "title": "ReAct: Reasoning and Acting in Language Models",
-            "description": "Combining reasoning and acting capabilities in language models.",
-            "source": "Papers With Code",
-            "url": "https://paperswithcode.com/paper/react",
-            "published_at": "2024-01-13T00:00:00",
-            "type": "research",
-            "authors": "Eve Green",
-            "topics": ["AI Agents", "Reasoning"],
+            "title": "Gemini 1.5 Pro available with 1M token context",
+            "description": "Google DeepMind launches Gemini 1.5 Pro with a 1 million token context window via API.",
+            "source": "Google DeepMind",
+            "lab": "Google DeepMind",
+            "url": "https://deepmind.google/technologies/gemini/pro/",
+            "published_at": "2024-05-14T00:00:00",
+            "type": "product_update",
+            "authors": "Google DeepMind",
+            "topics": ["Model Release", "API Update"],
         },
     ]
 
 
 @pytest.fixture
 def sample_paper_with_summary(sample_paper):
-    """Sample paper with generated summary."""
+    """Sample update with generated summary."""
     paper = sample_paper.copy()
-    paper["summary"] = "Scientists created a smarter AI that can plan tasks step by step, like how you might plan your day. This could make future AI assistants much better at helping with complex tasks."
+    paper["summary"] = "OpenAI released GPT-4o mini, a cost-effective model with 128K context and function calling at $0.15/1M input tokens. Developers can access it via the API immediately."
     return paper
 
 
 @pytest.fixture
 def sample_paper_with_detailed_summary(sample_paper_with_summary):
-    """Sample paper with detailed summary for PDF."""
+    """Sample update with detailed summary for PDF."""
     paper = sample_paper_with_summary.copy()
-    paper["detailed_summary"] = """**The Big Picture**
+    paper["detailed_summary"] = """**What Was Announced**
 
-Imagine you have a really clever assistant who not only follows your instructions but actually thinks through problems step by step, just like you would. That's what these researchers are trying to create.
+OpenAI launched GPT-4o mini, a smaller and more affordable version of GPT-4o designed for high-volume developer use cases.
 
-**What They Did**
+**Technical Capabilities**
 
-The team built a new kind of AI that plans its actions before taking them. Think of it like a chess player who thinks several moves ahead instead of just reacting to what's in front of them.
+The model supports a 128K context window, function calling, and JSON mode. Pricing is set at $0.15 per million input tokens and $0.60 per million output tokens, making it significantly cheaper than GPT-4o.
 
-**Why It's Clever**
+**Getting Started**
 
-Most AIs just respond quickly without much thought. This one actually reasons through problems, which makes it much better at handling unexpected situations.
+Developers can access GPT-4o mini immediately through the OpenAI API using the model ID 'gpt-4o-mini'. No waitlist or special access required.
 
-**Real World Impact**
+**How It Compares**
 
-In a few years, your phone assistant might be able to plan your whole day, book appointments, and handle complex tasks without you having to give step-by-step instructions.
+GPT-4o mini competes directly with Claude 3 Haiku and Gemini 1.5 Flash in the fast-and-cheap model tier, offering strong performance at a competitive price point.
 
-**The Bottom Line**
+**Bottom Line for Developers**
 
-Scientists taught AI to think before it acts, making it much smarter at handling real-world tasks."""
+If you need a fast, affordable model for production workloads, GPT-4o mini is worth testing immediately. It's ideal for classification, extraction, and high-volume chat applications."""
     return paper
 
 
@@ -95,59 +98,8 @@ def mock_openai_summary_response():
     """Mock OpenAI API response for summarization."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = "Scientists created a smarter AI that can plan tasks step by step, like how you might plan your day."
+    mock_response.choices[0].message.content = "OpenAI released GPT-4o mini, a cost-effective model with 128K context and function calling."
     return mock_response
-
-
-@pytest.fixture
-def mock_arxiv_feed():
-    """Mock arXiv feed response."""
-    return {
-        "bozo": False,
-        "entries": [
-            {
-                "title": "Test Paper on AI Agents",
-                "summary": "This paper presents a novel approach to AI agents.",
-                "link": "https://arxiv.org/abs/2401.00001",
-                "published": "2024-01-15T00:00:00Z",
-                "authors": [{"name": "Test Author"}],
-                "tags": [{"term": "cs.AI"}, {"term": "cs.LG"}],
-            }
-        ],
-    }
-
-
-@pytest.fixture
-def mock_huggingface_response():
-    """Mock Hugging Face API response."""
-    return [
-        {
-            "paper": {
-                "id": "2401.00001",
-                "title": "Agent-Based AI Research",
-                "summary": "A paper about AI agents and reasoning.",
-                "publishedAt": "2024-01-15T00:00:00Z",
-                "authors": [{"name": "HF Author"}],
-            }
-        }
-    ]
-
-
-@pytest.fixture
-def mock_pwc_response():
-    """Mock Papers With Code API response."""
-    return {
-        "results": [
-            {
-                "id": "test-paper",
-                "title": "Planning in Multi-Agent Systems",
-                "abstract": "Research on planning and reasoning in multi-agent environments.",
-                "published": "2024-01-15",
-                "authors": ["PWC Author"],
-                "url_abs": "https://paperswithcode.com/paper/test-paper",
-            }
-        ]
-    }
 
 
 @pytest.fixture
@@ -157,11 +109,11 @@ def mock_blog_feed():
         "bozo": False,
         "entries": [
             {
-                "title": "New Developments in AI Agents",
-                "summary": "Google AI announces new agent capabilities.",
-                "link": "https://blog.google/technology/ai/test-post",
-                "published": "2024-01-15T00:00:00Z",
-                "published_parsed": (2024, 1, 15, 0, 0, 0, 0, 15, 0),
+                "title": "Introducing GPT-4o mini API",
+                "summary": "OpenAI launches a new affordable model for developers.",
+                "link": "https://openai.com/blog/gpt-4o-mini",
+                "published": "2024-07-18T00:00:00Z",
+                "published_parsed": (2024, 7, 18, 0, 0, 0, 0, 200, 0),
             }
         ],
     }

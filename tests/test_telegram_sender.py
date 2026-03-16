@@ -76,18 +76,18 @@ class TestFormatResearchMessage:
 
     def test_basic_formatting(self, sample_paper_with_summary):
         message = format_research_message(sample_paper_with_summary)
-        assert "*Daily AI Research*" in message
+        assert "*Daily AI Dev Digest*" in message
         assert sample_paper_with_summary["title"] in message
         assert sample_paper_with_summary["summary"] in message
         assert sample_paper_with_summary["source"] in message
 
     def test_empty_research(self):
         message = format_research_message({})
-        assert "No research found today" in message
+        assert "No updates found today" in message
 
     def test_none_research(self):
         message = format_research_message(None)
-        assert "No research found today" in message
+        assert "No updates found today" in message
 
     def test_url_validation_in_message(self, sample_paper_with_summary):
         paper = sample_paper_with_summary.copy()
@@ -95,12 +95,11 @@ class TestFormatResearchMessage:
         message = format_research_message(paper)
         assert "javascript:" not in message
 
-    def test_author_truncation(self, sample_paper):
+    def test_lab_shown_in_message(self, sample_paper):
         paper = sample_paper.copy()
-        paper["authors"] = "A" * 100
         paper["summary"] = "Test summary"
         message = format_research_message(paper)
-        assert "..." in message or len(paper["authors"]) <= 60
+        assert "Lab: OpenAI" in message
 
 
 class TestSendTelegramMessage:

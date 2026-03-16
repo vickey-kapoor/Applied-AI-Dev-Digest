@@ -1,6 +1,147 @@
 {
   "papers": [
     {
+      "id": "17ae4fbb-e1b6-452d-94e0-704a642220df",
+      "title": "Can Fairness Be Prompted? Prompt-Based Debiasing Strategies in High-Stakes Recommendations",
+      "description": "Large Language Models (LLMs) can infer sensitive attributes such as gender or age from indirect cues like names and pronouns, potentially biasing recommendations. While several debiasing methods exist, they require access to the LLMs' weights, are computationally costly, and cannot be used by lay users. To address this gap, we investigate implicit biases in LLM Recommenders (LLMRecs) and explore whether prompt-based strategies can serve as a lightweight and easy-to-use debiasing approach. We ...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.12935",
+      "published_at": "2026-03-13T12:30:42+00:00",
+      "fetched_at": "2026-03-16T17:10:14.801024Z",
+      "authors": "Mihaela Rotar, Theresia Veronika Rampisela, Maria Maistro",
+      "topics": [
+        "LLM"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "df426c6b-d09e-490a-8ed1-0cbfc105d54b",
+      "title": "Surprised by Attention: Predictable Query Dynamics for Time Series Anomaly Detection",
+      "description": "Multivariate time series anomalies often manifest as shifts in cross-channel dependencies rather than simple amplitude excursions. In autonomous driving, for instance, a steering command might be internally consistent but decouple from the resulting lateral acceleration. Residual-based detectors can miss such anomalies when flexible sequence models still reconstruct signals plausibly despite altered coordination. We introduce AxonAD, an unsupervised detector that treats multi-head attention q...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.12916",
+      "published_at": "2026-03-13T11:40:51+00:00",
+      "fetched_at": "2026-03-16T17:10:14.801024Z",
+      "authors": "Kadir-Kaan Özer, René Ebeling, Markus Enzweiler",
+      "topics": [
+        "Transformer"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f78eac23-0930-4cce-85ea-98f3cd33832b",
+      "title": "Do You See What I Am Pointing At? Gesture-Based Egocentric Video Question Answering",
+      "description": "Understanding and answering questions based on a user's pointing gesture is essential for next-generation egocentric AI assistants. However, current Multimodal Large Language Models (MLLMs) struggle with such tasks due to the lack of gesture-rich data and their limited ability to infer fine-grained pointing intent from egocentric video. To address this, we introduce EgoPointVQA, a dataset and benchmark for gesture-grounded egocentric question answering, comprising 4000 synthetic and 400 real-...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.12533",
+      "published_at": "2026-03-13T00:23:38+00:00",
+      "fetched_at": "2026-03-16T17:10:14.801024Z",
+      "authors": "Yura Choi, Roy Miles, Rolandos Alexandros Potamias, Ismail Elezi, Jiankang Deng et al. (6 authors)",
+      "topics": [
+        "LLM"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ceeaedb5-bcfa-4db5-bd8a-5cfbd6c1d55b",
+      "title": "Neuron-Aware Data Selection In Instruction Tuning For Large Language Models",
+      "description": "Instruction Tuning (IT) has been proven to be an effective approach to unlock the powerful capabilities of large language models (LLMs). Recent studies indicate that excessive IT data can degrade LLMs performance, while carefully selecting a small subset of high-quality IT data can significantly enhance their capabilities. Therefore, identifying the most efficient subset data from the IT dataset to effectively develop either specific or general abilities in LLMs has become a critical challeng...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.13201v1",
+      "published_at": "2026-03-13T00:00:00",
+      "fetched_at": "2026-03-16T17:10:14.801024Z",
+      "authors": "Xin Chen, Junchao Wu, Shu Yang, Runzhe Zhan, Zeyu Wu, Min Yang, Shujian Huang, Lidia S. Chao, Der...",
+      "topics": [
+        "cs.CL",
+        "LLM"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a729aba9-4799-4408-a3d6-b816063c709b",
+      "title": "From Experiments to Expertise: Scientific Knowledge Consolidation for AI-Driven Computational Research",
+      "description": "While large language models (LLMs) have transformed AI agents into proficient executors of computational materials science, performing a hundred simulations does not make a researcher. What distinguishes research from routine execution is the progressive accumulation of knowledge -- learning which approaches fail, recognizing patterns across systems, and applying understanding to new problems. However, the prevailing paradigm in AI-driven computational science treats each execution in isolati...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.13191v1",
+      "published_at": "2026-03-13T00:00:00",
+      "fetched_at": "2026-03-16T17:10:14.801024Z",
+      "authors": "Haonan Huang",
+      "topics": [
+        "cs.CL",
+        "AI Agent",
+        "LLM"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "31494efa-434d-4f07-96bb-dcd76e36f5f0",
+      "title": "Semantic Invariance in Agentic AI",
+      "description": "Large Language Models (LLMs) increasingly serve as autonomous reasoning agents in decision support, scientific problem-solving, and multi-agent coordination systems. However, deploying LLM agents in consequential applications requires assurance that their reasoning remains stable under semantically equivalent input variations, a property we term semantic invariance.Standard benchmark evaluations, which assess accuracy on fixed, canonical problem formulations, fail to capture this critical rel...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.13173v1",
+      "published_at": "2026-03-13T00:00:00",
+      "fetched_at": "2026-03-16T17:10:14.801024Z",
+      "authors": "I. de Zarzà, J. de Curtò, Jordi Cabot, Pietro Manzoni, Carlos T. Calafate",
+      "topics": [
+        "cs.CL",
+        "cs.MA",
+        "AI Agent",
+        "Reasoning",
+        "LLM"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f943aa6d-f3ff-4287-b262-b73264c6ca7b",
+      "title": "ESG-Bench: Benchmarking Long-Context ESG Reports for Hallucination Mitigation",
+      "description": "As corporate responsibility increasingly incorporates environmental, social, and governance (ESG) criteria, ESG reporting is becoming a legal requirement in many regions and a key channel for documenting sustainability practices and assessing firms' long-term and ethical performance. However, the length and complexity of ESG disclosures make them difficult to interpret and automate the analysis reliably. To support scalable and trustworthy analysis, this paper introduces ESG-Bench, a benchmar...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.13154v1",
+      "published_at": "2026-03-13T00:00:00",
+      "fetched_at": "2026-03-16T17:10:14.801024Z",
+      "authors": "Siqi Sun, Ben Peng Wu, Mali Jin, Peizhen Bai, Hanpei Zhang, Xingyi Song",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "fe472a89-d32f-4bd9-94fd-383aeeb7992d",
+      "title": "When Right Meets Wrong: Bilateral Context Conditioning with Reward-Confidence Correction for GRPO",
+      "description": "Group Relative Policy Optimization (GRPO) has emerged as an effective method for training reasoning models. While it computes advantages based on group mean, GRPO treats each output as an independent sample during the optimization and overlooks a vital structural signal: the natural contrast between correct and incorrect solutions within the same group, thus ignoring the rich, comparative data that could be leveraged by explicitly pitting successful reasoning traces against failed ones. To ca...",
+      "source": "arXiv",
+      "url": "https://arxiv.org/abs/2603.13134v1",
+      "published_at": "2026-03-13T00:00:00",
+      "fetched_at": "2026-03-16T17:10:14.801024Z",
+      "authors": "Yu Li, Tian Lan, Zhengling Qi",
+      "topics": [
+        "Reasoning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "69942394-25f7-457f-8a87-44cb89d1fba6",
+      "title": "Compression Favors Consistency, Not Truth: When and Why Language Models Prefer Correct Information",
+      "description": "Why do language models sometimes prefer correct statements even when trained on mixed-quality data? We introduce the Compression--Consistency Principle: next-token prediction favors hypotheses that allow shorter and more internally consistent descriptions of the training data. Truth bias emerges only when false alternatives are structurally harder to compress. We test this using small GPT-2-style character-level transformers (3.5M--86M parameters) on synthetic math corpora with controlled mix...",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2603.11749",
+      "published_at": "2026-03-12T09:52:38+00:00",
+      "fetched_at": "2026-03-16T17:10:14.801024Z",
+      "authors": "Konstantin Krestnikov",
+      "topics": [
+        "LLM",
+        "Transformer"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "0d3a5d63-304e-4ab3-8d52-89d8f866c038",
       "title": "Meta-Reinforcement Learning with Self-Reflection for Agentic Search",
       "description": "This paper introduces MR-Search, an in-context meta reinforcement learning (RL) formulation for agentic search with self-reflection. Instead of optimizing a policy within a single independent episode with sparse rewards, MR-Search trains a policy that conditions on past episodes and adapts its search strategy across episodes. MR-Search learns to learn a search strategy with self-reflection, allowing search agents to improve in-context exploration at test-time. Specifically, MR-Search performs...",

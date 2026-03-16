@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-03-16",
+      "top_paper_id": "17ae4fbb-e1b6-452d-94e0-704a642220df",
+      "papers_fetched": 10,
+      "pdf_path": "reports/16-Mar/Can_Fairness_Be_Prompted_Prompt-Based_Debiasing_S.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "23156242026"
+    },
+    {
       "date": "2026-03-15",
       "top_paper_id": "",
       "papers_fetched": 10,

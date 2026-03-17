@@ -1,6 +1,79 @@
 {
   "papers": [
     {
+      "id": "7b812e6c-119e-5161-983e-06649e86c372",
+      "title": "Introducing GPT-5.4 mini and nano",
+      "description": "GPT-5.4 mini and nano are smaller, faster versions of GPT-5.4 optimized for coding, tool use, multimodal reasoning, and high-volume API and sub-agent workloads.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-gpt-5-4-mini-and-nano",
+      "published_at": "2026-03-17T10:00:00",
+      "fetched_at": "2026-03-17T17:10:39.792444Z",
+      "authors": "OpenAI",
+      "topics": [
+        "Model Release",
+        "API Update",
+        "Multimodal",
+        "Function Calling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "1809058d-d384-5301-81ef-06bfb72a3976",
+      "title": "Why Codex Security Doesn’t Include a SAST Report",
+      "description": "A deep dive into why Codex Security doesn’t rely on traditional SAST, instead using AI-driven constraint reasoning and validation to find real vulnerabilities with fewer false positives.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/why-codex-security-doesnt-include-sast",
+      "published_at": "2026-03-16T00:00:00",
+      "fetched_at": "2026-03-17T17:10:39.792444Z",
+      "authors": "OpenAI",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "273f5d2e-c2c8-5ef3-b084-030b83b73786",
+      "title": "Rakuten fixes issues twice as fast with Codex",
+      "description": "Rakuten uses Codex, the coding agent from OpenAI, to ship software faster and safer, reducing MTTR 50%, automating CI/CD reviews, and delivering full-stack builds in weeks.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/rakuten",
+      "published_at": "2026-03-11T13:00:00",
+      "fetched_at": "2026-03-17T17:10:39.792444Z",
+      "authors": "OpenAI",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "5cfebf09-0ae1-5ef9-a04b-885ca5ba269d",
+      "title": "From games to biology and beyond: 10 years of AlphaGo’s impact",
+      "description": "Ten years since AlphaGo, we explore how it is catalyzing scientific discovery and paving a path to AGI.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/10-years-of-alphago/",
+      "published_at": "2026-03-09T13:52:36",
+      "fetched_at": "2026-03-17T17:10:39.792444Z",
+      "authors": "Google DeepMind",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "5f33dd8f-1019-5d07-9de7-c34eca21119b",
+      "title": "Nano Banana 2: Combining Pro capabilities with lightning-fast speed",
+      "description": "Our latest image generation model offers advanced world knowledge, production ready specs, subject consistency and more, all at Flash speed.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/nano-banana-2-combining-pro-capabilities-with-lightning-fast-speed/",
+      "published_at": "2026-02-26T16:01:50",
+      "fetched_at": "2026-03-17T17:10:39.792444Z",
+      "authors": "Google DeepMind",
+      "topics": [
+        "Model Release",
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "17ae4fbb-e1b6-452d-94e0-704a642220df",
       "title": "Can Fairness Be Prompted? Prompt-Based Debiasing Strategies in High-Stakes Recommendations",
       "description": "Large Language Models (LLMs) can infer sensitive attributes such as gender or age from indirect cues like names and pronouns, potentially biasing recommendations. While several debiasing methods exist, they require access to the LLMs' weights, are computationally costly, and cannot be used by lay users. To address this gap, we investigate implicit biases in LLM Recommenders (LLMRecs) and explore whether prompt-based strategies can serve as a lightweight and easy-to-use debiasing approach. We ...",

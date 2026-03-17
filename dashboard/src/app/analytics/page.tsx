@@ -4,10 +4,40 @@ import { BarChart3, TrendingUp, PieChart, Calendar } from "lucide-react";
 import { SourceChart } from "@/components/charts/source-chart";
 import { TrendsChart } from "@/components/charts/trends-chart";
 import { TopicsChart } from "@/components/charts/topics-chart";
+import Link from "next/link";
 
-export default async function AnalyticsPage() {
-  const papers = await getPapers();
-  const digests = await getDigests();
+const RANGE_OPTIONS = [
+  { key: "7d", label: "7 days", days: 7 },
+  { key: "14d", label: "14 days", days: 14 },
+  { key: "30d", label: "30 days", days: 30 },
+  { key: "all", label: "All time", days: Infinity },
+] as const;
+
+export default async function AnalyticsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string }>;
+}) {
+  const allPapers = await getPapers();
+  const allDigests = await getDigests();
+  const params = await searchParams;
+
+  const rangeKey = params.range || "14d";
+  const rangeOption = RANGE_OPTIONS.find((r) => r.key === rangeKey) || RANGE_OPTIONS[1];
+
+  // Filter by date range
+  const now = new Date();
+  const cutoff =
+    rangeOption.days === Infinity
+      ? ""
+      : new Date(now.getTime() - rangeOption.days * 86400000).toISOString();
+
+  const papers = cutoff
+    ? allPapers.filter((p) => (p.fetched_at || "") >= cutoff)
+    : allPapers;
+  const digests = cutoff
+    ? allDigests.filter((d) => (d.date || "") >= cutoff.split("T")[0])
+    : allDigests;
 
   // Calculate source distribution
   const sourceCounts = papers.reduce((acc, p) => {
@@ -21,50 +51,74 @@ export default async function AnalyticsPage() {
   }));
 
   // Calculate topic frequency
-  const topicCounts = papers.flatMap(p => p.topics).reduce((acc, topic) => {
-    acc[topic] = (acc[topic] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const topicCounts = papers
+    .flatMap((p) => p.topics)
+    .reduce((acc, topic) => {
+      acc[topic] = (acc[topic] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
 
   const topTopics = Object.entries(topicCounts)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10)
     .map(([name, count]) => ({ name, count }));
 
-  // Calculate daily trends (last 14 days)
+  // Calculate daily trends
   const dailyCounts: Record<string, number> = {};
-  papers.forEach(p => {
-    const date = p.fetched_at.split('T')[0];
+  papers.forEach((p) => {
+    const date = p.fetched_at.split("T")[0];
     dailyCounts[date] = (dailyCounts[date] || 0) + 1;
   });
 
   const trendsData = Object.entries(dailyCounts)
     .sort((a, b) => a[0].localeCompare(b[0]))
-    .slice(-14)
+    .slice(-rangeOption.days === Infinity ? -30 : -rangeOption.days)
     .map(([date, papers]) => ({
       date: date.slice(5), // MM-DD format
       papers,
     }));
 
   // Calculate average ranking score
-  const avgScore = papers.length > 0
-    ? papers.reduce((acc, p) => acc + (p.ranking_score || 0), 0) / papers.length
-    : 0;
+  const avgScore =
+    papers.length > 0
+      ? papers.reduce((acc, p) => acc + (p.ranking_score || 0), 0) /
+        papers.length
+      : 0;
 
   // Success rate of Telegram sends
-  const sentDigests = digests.filter(d => d.telegram_sent).length;
-  const successRate = digests.length > 0
-    ? Math.round((sentDigests / digests.length) * 100)
-    : 0;
+  const sentDigests = digests.filter((d) => d.telegram_sent).length;
+  const successRate =
+    digests.length > 0
+      ? Math.round((sentDigests / digests.length) * 100)
+      : 0;
 
   return (
     <div className="p-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
-        <p className="text-gray-500 mt-1">
-          Insights and trends from your research digest
-        </p>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
+          <p className="text-gray-500 mt-1">
+            Insights and trends from your research digest
+          </p>
+        </div>
+
+        {/* Date range picker */}
+        <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1" role="group" aria-label="Date range">
+          {RANGE_OPTIONS.map((opt) => (
+            <Link
+              key={opt.key}
+              href={`/analytics?range=${opt.key}`}
+              className={`px-3 py-1.5 rounded-md text-sm transition-colors ${
+                rangeKey === opt.key
+                  ? "bg-white text-gray-900 shadow-sm font-medium"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              {opt.label}
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* Summary Stats */}
@@ -187,24 +241,37 @@ export default async function AnalyticsPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 font-medium text-gray-500">Date</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-500">Papers</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-500">Telegram</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-500">PDF</th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-500">
+                      Date
+                    </th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-500">
+                      Papers
+                    </th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-500">
+                      Telegram
+                    </th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-500">
+                      PDF
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {digests.slice(0, 10).map((digest) => (
-                    <tr key={digest.date} className="border-b border-gray-100">
+                    <tr
+                      key={digest.date}
+                      className="border-b border-gray-100"
+                    >
                       <td className="py-3 px-4 font-medium">{digest.date}</td>
                       <td className="py-3 px-4">{digest.papers_fetched}</td>
                       <td className="py-3 px-4">
-                        <span className={`inline-flex px-2 py-1 rounded-full text-xs ${
-                          digest.telegram_sent
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-gray-100 text-gray-600'
-                        }`}>
-                          {digest.telegram_sent ? 'Sent' : 'Not Sent'}
+                        <span
+                          className={`inline-flex px-2 py-1 rounded-full text-xs ${
+                            digest.telegram_sent
+                              ? "bg-green-100 text-green-700"
+                              : "bg-gray-100 text-gray-600"
+                          }`}
+                        >
+                          {digest.telegram_sent ? "Sent" : "Not Sent"}
                         </span>
                       </td>
                       <td className="py-3 px-4">
@@ -221,7 +288,7 @@ export default async function AnalyticsPage() {
             </div>
           ) : (
             <div className="py-8 text-center text-gray-500">
-              No digest history yet. Run the daily workflow to generate digests.
+              No digest history for this period.
             </div>
           )}
         </CardContent>

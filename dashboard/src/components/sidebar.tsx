@@ -15,6 +15,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
@@ -97,6 +98,10 @@ export function Sidebar() {
 
       {/* Footer */}
       <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-xs text-gray-500 dark:text-gray-400">Theme</span>
+          <ThemeToggle />
+        </div>
         <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-3">
           <p className="text-xs text-gray-500 dark:text-gray-400">
             Daily updates at 10:00 AM CST

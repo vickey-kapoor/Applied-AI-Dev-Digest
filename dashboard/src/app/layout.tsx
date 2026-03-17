@@ -18,9 +18,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg"
+        >
+          Skip to main content
+        </a>
         <div className="flex h-screen">
           <Sidebar />
-          <main className="flex-1 overflow-auto bg-gray-50">
+          <main id="main-content" className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-950 pt-14 md:pt-0">
             {children}
           </main>
         </div>

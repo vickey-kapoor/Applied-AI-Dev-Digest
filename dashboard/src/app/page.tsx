@@ -245,6 +245,7 @@ export default async function DashboardPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-400 hover:text-blue-600"
+                      aria-label={`Open ${paper.title} in new tab`}
                     >
                       <ExternalLink className="h-4 w-4" />
                     </a>

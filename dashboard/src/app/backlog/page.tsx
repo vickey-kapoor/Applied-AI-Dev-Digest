@@ -1,5 +1,5 @@
 import { getBacklog, getConfig } from "@/lib/data";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   ExternalLink,
@@ -119,7 +119,7 @@ export default async function BacklogPage() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex-shrink-0 p-2 rounded-lg bg-gray-50 hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors"
-                            title="Open update"
+                            aria-label={`Open ${item.title} in new tab`}
                           >
                             <ExternalLink className="h-5 w-5" />
                           </a>

@@ -1,7 +1,8 @@
 import { getPapers } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Filter, Star, BookOpen, CheckCircle } from "lucide-react";
+import { ExternalLink, Filter, Star, BookOpen, CheckCircle, FileText } from "lucide-react";
+import Link from "next/link";
 
 export default async function PapersPage({
   searchParams,
@@ -62,19 +63,20 @@ export default async function PapersPage({
             {/* Source Filter */}
             <div>
               <label className="text-sm text-gray-500 block mb-2">Source</label>
-              <div className="flex flex-wrap gap-2">
-                <a
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by source">
+                <Link
                   href="/papers"
                   className={`px-3 py-1 rounded-full text-sm ${
                     !params.source
                       ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
+                  role="button"
                 >
                   All
-                </a>
+                </Link>
                 {sources.map((s) => (
-                  <a
+                  <Link
                     key={s}
                     href={`/papers?source=${encodeURIComponent(s)}`}
                     className={`px-3 py-1 rounded-full text-sm ${
@@ -82,9 +84,10 @@ export default async function PapersPage({
                         ? "bg-blue-600 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
+                    role="button"
                   >
                     {s}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -92,19 +95,20 @@ export default async function PapersPage({
             {/* Topic Filter */}
             <div>
               <label className="text-sm text-gray-500 block mb-2">Topic</label>
-              <div className="flex flex-wrap gap-2">
-                <a
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by topic">
+                <Link
                   href="/papers"
                   className={`px-3 py-1 rounded-full text-sm ${
                     !params.topic
                       ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
+                  role="button"
                 >
                   All
-                </a>
+                </Link>
                 {topics.map((t) => (
-                  <a
+                  <Link
                     key={t}
                     href={`/papers?topic=${encodeURIComponent(t)}`}
                     className={`px-3 py-1 rounded-full text-sm ${
@@ -112,9 +116,10 @@ export default async function PapersPage({
                         ? "bg-blue-600 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
+                    role="button"
                   >
                     {t}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -122,19 +127,20 @@ export default async function PapersPage({
             {/* Status Filter */}
             <div>
               <label className="text-sm text-gray-500 block mb-2">Status</label>
-              <div className="flex flex-wrap gap-2">
-                <a
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by status">
+                <Link
                   href="/papers"
                   className={`px-3 py-1 rounded-full text-sm ${
                     !params.status
                       ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
+                  role="button"
                 >
                   All
-                </a>
+                </Link>
                 {['unread', 'read', 'starred'].map((s) => (
-                  <a
+                  <Link
                     key={s}
                     href={`/papers?status=${s}`}
                     className={`px-3 py-1 rounded-full text-sm capitalize ${
@@ -142,9 +148,10 @@ export default async function PapersPage({
                         ? "bg-blue-600 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
+                    role="button"
                   >
                     {s}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -198,6 +205,7 @@ export default async function PapersPage({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-shrink-0 p-2 rounded-lg bg-gray-50 hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors"
+                    aria-label={`Open ${paper.title} in new tab`}
                   >
                     <ExternalLink className="h-5 w-5" />
                   </a>
@@ -208,10 +216,16 @@ export default async function PapersPage({
         ) : (
           <Card>
             <CardContent className="p-12 text-center">
-              <p className="text-gray-500">
+              <FileText className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 text-lg">
                 {papers.length === 0
-                  ? "No updates fetched yet. Run the daily workflow to get started."
-                  : "No updates match the selected filters."}
+                  ? "No updates fetched yet"
+                  : "No updates match the selected filters"}
+              </p>
+              <p className="text-gray-400 text-sm mt-2">
+                {papers.length === 0
+                  ? "Run the daily workflow to fetch product updates from AI labs."
+                  : "Try adjusting your filters to see more results."}
               </p>
             </CardContent>
           </Card>

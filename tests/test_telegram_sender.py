@@ -6,6 +6,7 @@ from unittest.mock import Mock, patch
 from src.telegram_sender import (
     _validate_url,
     _truncate,
+    _escape_markdown,
     format_research_message,
     send_telegram_message,
 )
@@ -71,6 +72,15 @@ class TestTruncate:
         assert result == "This is a..."
 
 
+class TestEscapeMarkdown:
+    """Tests for Telegram Markdown escaping."""
+
+    def test_escapes_special_characters(self):
+        text = "Paper_[v2] *draft*"
+        result = _escape_markdown(text)
+        assert result == "Paper\\_\\[v2\\] \\*draft\\*"
+
+
 class TestFormatResearchMessage:
     """Tests for research message formatting."""
 
@@ -100,6 +110,14 @@ class TestFormatResearchMessage:
         paper["summary"] = "Test summary"
         message = format_research_message(paper)
         assert "Lab: OpenAI" in message
+
+    def test_markdown_is_escaped_in_message(self, sample_paper):
+        paper = sample_paper.copy()
+        paper["title"] = "Paper_[v2]"
+        paper["summary"] = "Uses *special* syntax"
+        message = format_research_message(paper)
+        assert "*Paper\\_\\[v2\\]*" in message
+        assert "Uses \\*special\\* syntax" in message
 
 
 class TestSendTelegramMessage:

@@ -32,16 +32,47 @@ export interface Config {
   telegram_enabled: boolean;
 }
 
-const REPO = 'vickey-kapoor/ai-research-digest';
-const BRANCH = 'master';
-const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
+const DEFAULT_REPO = 'vickey-kapoor/ai-research-digest';
+const DEFAULT_BRANCHES = ['master', 'main'];
+
+function splitBranches(value: string | undefined): string[] {
+  if (!value) return DEFAULT_BRANCHES;
+
+  const branches = value
+    .split(',')
+    .map((branch) => branch.trim())
+    .filter(Boolean);
+
+  return branches.length > 0 ? [...new Set(branches)] : DEFAULT_BRANCHES;
+}
+
+export function getRepoConfig() {
+  const repo =
+    process.env.AI_RESEARCH_REPO ||
+    process.env.NEXT_PUBLIC_AI_RESEARCH_REPO ||
+    DEFAULT_REPO;
+
+  const branches = splitBranches(
+    process.env.AI_RESEARCH_BRANCHES ||
+    process.env.NEXT_PUBLIC_AI_RESEARCH_BRANCHES
+  );
+
+  return { repo, branches };
+}
 
 async function fetchJSON(path: string): Promise<unknown> {
-  const res = await fetch(`${RAW_BASE}/${path}`, {
-    next: { revalidate: 300 }, // ISR: refresh every 5 minutes
-  });
-  if (!res.ok) return null;
-  return res.json();
+  const { repo, branches } = getRepoConfig();
+
+  for (const branch of branches) {
+    const res = await fetch(`https://raw.githubusercontent.com/${repo}/${branch}/${path}`, {
+      next: { revalidate: 300 }, // ISR: refresh every 5 minutes
+    });
+    if (res.ok) {
+      return res.json();
+    }
+  }
+
+  return null;
 }
 
 export async function getPapers(): Promise<Paper[]> {

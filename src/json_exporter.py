@@ -2,6 +2,7 @@
 
 import json
 import os
+import tempfile
 import uuid
 from datetime import datetime
 from typing import Any
@@ -36,9 +37,44 @@ def save_json(filename: str, data: dict):
     """Save JSON file to data directory."""
     ensure_data_dir()
     filepath = os.path.join(DATA_DIR, filename)
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    fd, temp_path = tempfile.mkstemp(
+        prefix=f".{filename}.",
+        suffix=".tmp",
+        dir=DATA_DIR,
+        text=True,
+    )
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(temp_path, filepath)
+    except Exception:
+        if os.path.exists(temp_path):
+            os.unlink(temp_path)
+        raise
     logger.info("Saved %s", filepath)
+
+
+def _normalize_title(title: str) -> str:
+    """Normalize titles for identity and deduplication checks."""
+    return " ".join((title or "").strip().lower().split())
+
+
+def _paper_identity(item: dict) -> str:
+    """Build a stable identity key for a paper."""
+    url = (item.get("url") or "").strip().lower()
+    if url:
+        return f"url:{url}"
+
+    source = (item.get("source") or "unknown").strip().lower()
+    title = _normalize_title(item.get("title", ""))
+    return f"title:{source}:{title}"
+
+
+def _paper_id_for_item(item: dict) -> str:
+    """Generate a deterministic ID for new papers."""
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, _paper_identity(item)))
 
 
 def export_papers(research_items: list[dict], ranked_paper: dict = None) -> str:
@@ -56,19 +92,29 @@ def export_papers(research_items: list[dict], ranked_paper: dict = None) -> str:
     if "papers" not in data:
         data["papers"] = []
 
-    existing_titles = {p["title"] for p in data["papers"]}
+    existing_by_identity = {
+        _paper_identity(paper): paper
+        for paper in data["papers"]
+    }
+    existing_by_title = {
+        _normalize_title(paper.get("title", "")): paper
+        for paper in data["papers"]
+    }
     top_paper_id = None
     now = datetime.utcnow().isoformat() + "Z"
 
     for item in research_items:
-        # Skip if already exists
-        if item.get("title") in existing_titles:
+        identity = _paper_identity(item)
+        normalized_title = _normalize_title(item.get("title", ""))
+        existing_paper = existing_by_identity.get(identity) or existing_by_title.get(normalized_title)
+
+        is_top = ranked_paper and identity == _paper_identity(ranked_paper)
+        if existing_paper:
+            if is_top:
+                top_paper_id = existing_paper.get("id")
             continue
 
-        paper_id = str(uuid.uuid4())
-
-        # Check if this is the ranked paper
-        is_top = ranked_paper and item.get("title") == ranked_paper.get("title")
+        paper_id = _paper_id_for_item(item)
         if is_top:
             top_paper_id = paper_id
 
@@ -87,7 +133,8 @@ def export_papers(research_items: list[dict], ranked_paper: dict = None) -> str:
         }
 
         data["papers"].append(paper)
-        existing_titles.add(paper["title"])
+        existing_by_identity[identity] = paper
+        existing_by_title[normalized_title] = paper
 
     # Sort by fetched_at descending
     data["papers"].sort(key=lambda x: x.get("fetched_at", ""), reverse=True)

@@ -1,50 +1,12 @@
 """Generate developer-focused summaries for AI product updates."""
 
-import re
-
 from openai import OpenAI
 
+from src.ai_text import sanitize_prompt_text
 from src.logger import get_logger
 
 logger = get_logger(__name__)
-
-
-def _sanitize_text(text: str, max_length: int = 500) -> str:
-    """
-    Sanitize text to prevent prompt injection.
-
-    - Removes potential injection patterns
-    - Limits length
-    - Strips control characters
-    """
-    if not text:
-        return ""
-
-    # Remove control characters except newlines and tabs
-    text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', text)
-
-    # Remove potential prompt injection patterns
-    injection_patterns = [
-        r'ignore\s+(previous|above|all)\s+instructions?',
-        r'disregard\s+(previous|above|all)',
-        r'forget\s+(everything|previous|above)',
-        r'new\s+instructions?:',
-        r'system\s*:',
-        r'assistant\s*:',
-        r'user\s*:',
-        r'\[INST\]',
-        r'\[/INST\]',
-        r'<\|.*?\|>',
-    ]
-    for pattern in injection_patterns:
-        text = re.sub(pattern, '[FILTERED]', text, flags=re.IGNORECASE)
-
-    # Truncate to max length
-    if len(text) > max_length:
-        text = text[:max_length] + "..."
-
-    return text.strip()
-
+_sanitize_text = sanitize_prompt_text
 
 def summarize_research(research: dict, api_key: str) -> dict:
     """
@@ -177,4 +139,77 @@ Now write the detailed explanation:"""
 
     except Exception:
         logger.warning("Could not generate detailed summary")
+        return research
+
+
+def summarize_research_bundle(research: dict, api_key: str) -> dict:
+    """
+    Generate both short and detailed summaries in a single model call.
+
+    Returns the original paper unchanged if the request fails.
+    """
+    if not api_key:
+        return research
+
+    client = OpenAI(api_key=api_key)
+
+    title = sanitize_prompt_text(research.get("title", ""), 200)
+    authors = sanitize_prompt_text(research.get("authors", "Unknown"), 100)
+    abstract = sanitize_prompt_text(research.get("description", ""), 800)
+
+    prompt = f"""You explain AI research to people with no technical background.
+
+Paper: {title}
+Authors: {authors}
+Abstract: {abstract}
+
+Write two outputs:
+
+SHORT_SUMMARY:
+- 4-5 simple sentences
+- explain the problem, what they built, how it works in everyday terms, and why a regular person should care
+
+DETAILED_SUMMARY:
+- 8-12 paragraphs
+- explain the big picture, what they did, why it is clever, real-world impact, and the bottom line
+
+RULES:
+- No jargon
+- No technical terms like model, algorithm, neural network, training, parameters, architecture, benchmark, transformer, LLM
+- Use everyday analogies
+- Be warm and conversational
+
+Respond in exactly this format:
+SHORT_SUMMARY:
+<text>
+
+DETAILED_SUMMARY:
+<text>"""
+
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=1800,
+            temperature=0.7,
+        )
+
+        content = response.choices[0].message.content.strip()
+        parts = content.split("DETAILED_SUMMARY:", maxsplit=1)
+        if len(parts) != 2 or "SHORT_SUMMARY:" not in parts[0]:
+            return research
+
+        short_summary = parts[0].split("SHORT_SUMMARY:", maxsplit=1)[1].strip()
+        detailed_summary = parts[1].strip()
+        if not short_summary and not detailed_summary:
+            return research
+
+        research_with_summaries = research.copy()
+        if short_summary:
+            research_with_summaries["summary"] = short_summary
+        if detailed_summary:
+            research_with_summaries["detailed_summary"] = detailed_summary
+        return research_with_summaries
+    except Exception:
+        logger.warning("Could not generate summaries")
         return research

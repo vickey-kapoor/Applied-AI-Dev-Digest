@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from src.logger import get_logger
 from src.research_fetcher import fetch_ai_research
 from src.news_ranker import rank_research
-from src.news_summarizer import summarize_research, summarize_research_detailed
+from src.news_summarizer import summarize_research_bundle
 from src.telegram_sender import format_research_message, send_telegram_message
 from src.pdf_generator import generate_research_pdf
 from src.json_exporter import export_papers, export_digest
@@ -71,23 +71,16 @@ def main():
     except Exception as e:
         logger.warning("Could not export papers to JSON: %s", e)
 
-    # Generate short summary
-    logger.info("Generating summary...")
+    # Generate summaries in one model call
+    logger.info("Generating summaries...")
     try:
-        top_research = summarize_research(top_research, openai_key)
+        top_research = summarize_research_bundle(top_research, openai_key)
         if "summary" in top_research:
             logger.info("Generated short summary")
-    except Exception:
-        logger.warning("Could not generate summary")
-
-    # Generate detailed summary for PDF
-    logger.info("Generating detailed PDF summary...")
-    try:
-        top_research = summarize_research_detailed(top_research, openai_key)
         if "detailed_summary" in top_research:
             logger.info("Generated detailed summary for PDF")
     except Exception:
-        logger.warning("Could not generate detailed summary")
+        logger.warning("Could not generate summaries")
 
     # Generate PDF report
     logger.info("Generating PDF report...")

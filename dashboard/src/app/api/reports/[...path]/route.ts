@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const DEFAULT_REPO = 'vickey-kapoor/ai-research-digest';
+import { getRepoConfig } from '@/lib/data';
 
 async function fetchReportFromGithub(path: string): Promise<Response | null> {
-  const base = `https://raw.githubusercontent.com/${DEFAULT_REPO}`;
-  const branchesToTry = ['master', 'main'];
+  const { repo, branches } = getRepoConfig();
+  const base = `https://raw.githubusercontent.com/${repo}`;
 
-  for (const branch of branchesToTry) {
+  for (const branch of branches) {
     const githubUrl = `${base}/${branch}/reports/${path}`;
     const response = await fetch(githubUrl, {
       next: { revalidate: 3600 },

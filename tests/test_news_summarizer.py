@@ -5,6 +5,7 @@ from unittest.mock import Mock, patch
 
 from src.news_summarizer import (
     summarize_research,
+    summarize_research_bundle,
     summarize_research_detailed,
     _sanitize_text,
 )
@@ -153,3 +154,46 @@ class TestSummarizeResearchDetailed:
             # Check max_tokens in the API call
             call_args = mock_client.chat.completions.create.call_args
             assert call_args[1]["max_tokens"] == 1500  # Detailed uses 1500
+
+
+class TestSummarizeResearchBundle:
+    """Tests for the bundled summary generation path."""
+
+    def test_no_api_key_returns_original(self, sample_paper):
+        """Missing API key should skip the bundled summary request."""
+        result = summarize_research_bundle(sample_paper, "")
+        assert result == sample_paper
+
+    def test_bundle_adds_both_summaries(self, sample_paper):
+        """The bundled call should populate both summary fields."""
+        with patch("src.news_summarizer.OpenAI") as mock_openai:
+            mock_response = Mock()
+            mock_response.choices = [Mock()]
+            mock_response.choices[0].message.content = (
+                "SHORT_SUMMARY:\nShort summary text\n\n"
+                "DETAILED_SUMMARY:\nDetailed summary text"
+            )
+
+            mock_client = Mock()
+            mock_client.chat.completions.create.return_value = mock_response
+            mock_openai.return_value = mock_client
+
+            result = summarize_research_bundle(sample_paper, "test_api_key")
+
+            assert result["summary"] == "Short summary text"
+            assert result["detailed_summary"] == "Detailed summary text"
+
+    def test_bundle_handles_bad_response(self, sample_paper):
+        """Unexpected response formats should preserve the original paper."""
+        with patch("src.news_summarizer.OpenAI") as mock_openai:
+            mock_response = Mock()
+            mock_response.choices = [Mock()]
+            mock_response.choices[0].message.content = "Not parseable"
+
+            mock_client = Mock()
+            mock_client.chat.completions.create.return_value = mock_response
+            mock_openai.return_value = mock_client
+
+            result = summarize_research_bundle(sample_paper, "test_api_key")
+
+            assert result == sample_paper

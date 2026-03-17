@@ -10,6 +10,7 @@ from src.logger import get_logger
 logger = get_logger(__name__)
 
 TELEGRAM_API = "https://api.telegram.org/bot{token}/sendMessage"
+MARKDOWN_SPECIAL_CHARS = "\\_*[]()`"
 
 
 def _validate_url(url: str) -> str:
@@ -54,6 +55,17 @@ def _truncate(text: str, max_len: int) -> str:
     return text[: max_len - 3].rsplit(" ", 1)[0] + "..."
 
 
+def _escape_markdown(text: str) -> str:
+    """Escape Telegram Markdown special characters in user-controlled text."""
+    if not text:
+        return ""
+
+    escaped = text
+    for char in MARKDOWN_SPECIAL_CHARS:
+        escaped = escaped.replace(char, f"\\{char}")
+    return escaped
+
+
 def format_research_message(research: dict) -> str:
     """
     Format product update into a Telegram message.
@@ -67,10 +79,10 @@ def format_research_message(research: dict) -> str:
     if not research:
         return "*Daily AI Dev Digest*\n\nNo updates found today."
 
-    title = research.get("title", "Untitled")
-    source = research.get("source", "Unknown")
+    title = _escape_markdown(research.get("title", "Untitled"))
+    source = _escape_markdown(research.get("source", "Unknown"))
     url = _validate_url(research.get("url", ""))
-    summary = research.get("summary", "")
+    summary = _escape_markdown(research.get("summary", ""))
 
     message = f"""*Daily AI Dev Digest*
 

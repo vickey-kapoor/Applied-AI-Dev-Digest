@@ -1,33 +1,31 @@
-# AI Research Telegram Digest
+# AI Dev Digest
 
-Get the latest AI research delivered to your Telegram daily - explained simply, like talking to a friend.
+Daily developer-focused updates from Tier 1 AI labs — delivered to your Telegram, explained simply.
 
-## Features
+## What It Does
 
-- Fetches AI research from multiple sources (arXiv, Hugging Face, Papers With Code, AI lab blogs)
-- Focuses on **AI Agents & Reasoning** research
-- Uses AI to select the most impactful paper
-- Generates **ELI5 summaries** (simple explanations anyone can understand)
-- Sends to Telegram via Bot API
-- Runs automatically via GitHub Actions (10:00 AM CST daily)
+- Monitors blog feeds from **OpenAI, Anthropic, Google DeepMind, and Meta AI**
+- Filters for **developer-facing product updates** (API changes, SDK releases, new models, pricing, tool launches)
+- Uses AI to rank and select the most impactful update
+- Generates **ELI5 summaries** anyone can understand
+- Sends a daily Telegram message + PDF report
+- Includes a **Next.js dashboard** for browsing updates, analytics, and backlog
 
 ## Example Message
 
 ```
-*Daily AI Research*
+*Daily AI Dev Digest*
 
-*Training Language Models to Reason Step by Step*
-_Smith et al._
+*Anthropic launches tool use API for Claude*
 
-You know how it's easier to solve a math problem when you
-write out each step? Researchers taught AI to do the same
-thing - break down hard problems into smaller pieces. This
-makes AI better at explaining its thinking, which could
-help future assistants tutor kids or help you understand
-complex topics.
+You know how apps can look things up or do math for you?
+Anthropic just gave Claude the ability to use external
+tools — like a calculator or search engine — right inside
+API calls. If you're building with Claude, this means your
+app can now do way more without extra plumbing.
 
-https://arxiv.org/abs/...
-_Source: arXiv_
+https://www.anthropic.com/blog/...
+_Source: Anthropic_
 ```
 
 ## Setup
@@ -41,7 +39,7 @@ _Source: arXiv_
 
 **OpenAI:**
 - Sign up at [platform.openai.com](https://platform.openai.com/)
-- Create an API key
+- Create an API key (used for ranking & summaries)
 
 ### 2. Configure GitHub Secrets
 
@@ -51,7 +49,7 @@ Go to your repository Settings > Secrets and variables > Actions, and add:
 |--------|-------------|
 | `TELEGRAM_BOT_TOKEN` | Telegram Bot Token from BotFather |
 | `TELEGRAM_CHAT_ID` | Target Telegram chat ID |
-| `OPENAI_API_KEY` | OpenAI API key (required for ranking & summaries) |
+| `OPENAI_API_KEY` | OpenAI API key for ranking & summaries |
 
 ### 3. Adjust Schedule (Optional)
 
@@ -87,35 +85,55 @@ echo "OPENAI_API_KEY=your_openai_key" >> .env
 python main.py
 ```
 
+### Dashboard
+
+```bash
+cd dashboard
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view updates, analytics, reports, and backlog.
+
 ## Project Structure
 
 ```
 ai-research-digest/
 ├── .github/workflows/
-│   └── daily-news.yml        # GitHub Actions (10 AM CST daily)
+│   └── daily-news.yml          # GitHub Actions (10 AM CST daily)
 ├── src/
-│   ├── research_fetcher.py   # Aggregates research from all sources
-│   ├── news_ranker.py        # AI-powered research ranking
-│   ├── news_summarizer.py    # ELI5 summary generator
-│   ├── telegram_sender.py    # Telegram Bot API integration
+│   ├── constants.py            # Keywords, blog feeds, settings
+│   ├── research_fetcher.py     # Aggregates updates from all sources
+│   ├── news_ranker.py          # AI-powered update ranking
+│   ├── news_summarizer.py      # ELI5 summary generator
+│   ├── telegram_sender.py      # Telegram Bot API integration
+│   ├── pdf_generator.py        # PDF report generation
+│   ├── json_exporter.py        # JSON export for dashboard
 │   └── fetchers/
-│       ├── arxiv_fetcher.py      # arXiv API
-│       ├── huggingface_fetcher.py # Hugging Face Daily Papers
-│       ├── pwc_fetcher.py        # Papers With Code
-│       └── blog_fetcher.py       # AI lab blogs (Google, DeepMind, Meta)
-├── main.py                   # Entry point
+│       └── blog_fetcher.py     # RSS feed fetcher for AI lab blogs
+├── dashboard/                  # Next.js dashboard
+│   └── src/app/
+│       ├── page.tsx            # Home — latest digest
+│       ├── papers/             # Browse all updates
+│       ├── backlog/            # Updates grouped by AI lab
+│       ├── analytics/          # Charts and stats
+│       ├── reports/            # PDF reports
+│       └── settings/           # Configuration
+├── data/                       # JSON data + daily digests
+├── reports/                    # Generated PDF reports
+├── main.py                     # Entry point
 ├── requirements.txt
 └── README.md
 ```
 
-## Research Sources
+## Sources
 
-| Source | What it fetches |
-|--------|-----------------|
-| arXiv | Papers from cs.AI, cs.LG, cs.CL, cs.MA |
-| Hugging Face | Daily trending papers |
-| Papers With Code | Latest ML papers |
-| AI Lab Blogs | Google AI, DeepMind, Meta AI |
+| Lab | Feed |
+|-----|------|
+| OpenAI | openai.com/blog |
+| Anthropic | anthropic.com |
+| Google DeepMind | deepmind.google/blog |
+| Meta AI | ai.meta.com/blog |
 
 ## License
 

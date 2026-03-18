@@ -290,7 +290,6 @@ export default async function PapersPage({
                       rel="noopener noreferrer"
                       className="flex-shrink-0 p-2 rounded-lg bg-gray-50 hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors"
                       aria-label={`Open ${paper.title} in new tab`}
-                      onClick={(e) => e.stopPropagation()}
                     >
                       <ExternalLink className="h-5 w-5" />
                     </a>

@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-03-18",
+      "top_paper_id": "7b812e6c-119e-5161-983e-06649e86c372",
+      "papers_fetched": 6,
+      "pdf_path": "reports/18-Mar/Introducing_GPT-54_mini_and_nano.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "23257304056"
+    },
+    {
       "date": "2026-03-17",
       "top_paper_id": "7b812e6c-119e-5161-983e-06649e86c372",
       "papers_fetched": 6,

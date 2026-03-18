@@ -1,6 +1,34 @@
 {
   "papers": [
     {
+      "id": "ad9f23f1-659a-5080-a0d4-e6ff442fac5e",
+      "title": "Measuring progress toward AGI: A cognitive framework",
+      "description": "We’re introducing a framework to measure progress toward AGI, and launching a Kaggle hackathon to build the relevant evaluations.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/measuring-progress-toward-agi-a-cognitive-framework/",
+      "published_at": "2026-03-17T16:03:47",
+      "fetched_at": "2026-03-18T17:10:29.002678Z",
+      "authors": "Google DeepMind",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b729235c-49fe-5325-9209-ee944e5cbf4c",
+      "title": "Equipping workers with insights about compensation",
+      "description": "New research shows Americans send nearly 3 million daily messages to ChatGPT asking about compensation and earnings, helping close the wage information gap.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/equipping-workers-with-insights-about-compensation",
+      "published_at": "2026-03-17T00:00:00",
+      "fetched_at": "2026-03-18T17:10:29.002678Z",
+      "authors": "OpenAI",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "7b812e6c-119e-5161-983e-06649e86c372",
       "title": "Introducing GPT-5.4 mini and nano",
       "description": "GPT-5.4 mini and nano are smaller, faster versions of GPT-5.4 optimized for coding, tool use, multimodal reasoning, and high-volume API and sub-agent workloads.",

@@ -56,6 +56,7 @@ Consider:
 2. How significant is the new capability? (new model > minor update)
 3. Breadth of developer impact (affects many developers vs. niche use case)
 4. Novelty (first-of-its-kind vs. incremental improvement)
+5. SKIP corporate announcements (partnerships, policy, hiring, leadership, funding) — only pick developer-facing product updates.
 
 Product Updates:
 {research_text}

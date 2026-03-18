@@ -2,91 +2,11 @@
   "digests": [
     {
       "date": "2026-03-18",
-      "top_paper_id": "7b812e6c-119e-5161-983e-06649e86c372",
-      "papers_fetched": 6,
-      "pdf_path": "reports/18-Mar/Introducing_GPT-54_mini_and_nano.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23257304056"
-    },
-    {
-      "date": "2026-03-17",
-      "top_paper_id": "7b812e6c-119e-5161-983e-06649e86c372",
-      "papers_fetched": 6,
-      "pdf_path": "reports/17-Mar/Introducing_GPT-54_mini_and_nano.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23206781282"
-    },
-    {
-      "date": "2026-03-16",
-      "top_paper_id": "17ae4fbb-e1b6-452d-94e0-704a642220df",
-      "papers_fetched": 10,
-      "pdf_path": "reports/16-Mar/Can_Fairness_Be_Prompted_Prompt-Based_Debiasing_S.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23156242026"
-    },
-    {
-      "date": "2026-03-15",
-      "top_paper_id": "",
-      "papers_fetched": 10,
-      "pdf_path": "reports/15-Mar/Simple_Recipe_Works_Vision-Language-Action_Models.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23114642040"
-    },
-    {
-      "date": "2026-03-14",
-      "top_paper_id": "",
-      "papers_fetched": 10,
-      "pdf_path": "reports/14-Mar/Simple_Recipe_Works_Vision-Language-Action_Models.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23091980816"
-    },
-    {
-      "date": "2026-03-13",
-      "top_paper_id": "713d9eee-82dd-4c5d-8f96-2d6d856b6d4e",
-      "papers_fetched": 10,
-      "pdf_path": "reports/13-Mar/XSkill_Continual_Learning_from_Experience_and_Ski.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23061264608"
-    },
-    {
-      "date": "2026-03-12",
-      "top_paper_id": "9989eaa3-7887-44de-b6f8-b60083dc3837",
-      "papers_fetched": 10,
-      "pdf_path": "reports/12-Mar/A_Hybrid_Knowledge-Grounded_Framework_for_Safety_a.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23014050241"
-    },
-    {
-      "date": "2026-03-11",
-      "top_paper_id": "18d9cdfe-a5fc-4fae-b635-400991da0b98",
-      "papers_fetched": 10,
-      "pdf_path": "reports/11-Mar/Do_What_I_Say_A_Spoken_Prompt_Dataset_for_Instruc.pdf",
-      "workflow_run_id": "22964538201",
-      "telegram_sent": true
-    },
-    {
-      "date": "2026-03-10",
-      "top_paper_id": "c1bd5944-1840-4f04-abdd-1a4b573df328",
-      "papers_fetched": 10,
-      "pdf_path": "reports/10-Mar/Agentic_Critical_Training.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "22914378486"
-    },
-    {
-      "date": "2026-03-09",
-      "top_paper_id": "b25e85b1-4c01-45ee-99fd-7aa7bba7d03e",
-      "papers_fetched": 10,
-      "pdf_path": "reports/09-Mar/SUREON_A_Benchmark_and_Vision-Language-Model_for.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "22865002136"
-    },
-    {
-      "date": "2026-03-08",
-      "top_paper_id": null,
-      "papers_fetched": 10,
-      "pdf_path": "reports/08-Mar/Distributed_Partial_Information_Puzzles_Examining.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "22825242443"
+      "top_paper_id": "ad9f23f1-659a-5080-a0d4-e6ff442fac5e",
+      "papers_fetched": 3,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "local-refresh"
     }
   ]
 }

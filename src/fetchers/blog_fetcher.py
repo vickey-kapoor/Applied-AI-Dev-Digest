@@ -6,7 +6,7 @@ import socket
 
 import feedparser
 
-from src.constants import BLOG_FEEDS, REQUEST_TIMEOUT
+from src.constants import BLOG_FEEDS, EXCLUDE_KEYWORDS, FILTER_KEYWORDS, REQUEST_TIMEOUT
 from src.logger import get_logger
 from src.utils.retry import retry_with_backoff
 
@@ -25,6 +25,14 @@ class _HTMLTextExtractor(HTMLParser):
 
     def get_text(self) -> str:
         return " ".join("".join(self._parts).split())
+
+
+def _is_dev_relevant(post: dict) -> bool:
+    """Check if a post is developer-relevant based on keyword matching."""
+    text = f"{post.get('title', '')} {post.get('description', '')}".lower()
+    if any(kw in text for kw in EXCLUDE_KEYWORDS):
+        return False
+    return any(kw in text for kw in FILTER_KEYWORDS)
 
 
 def _strip_html(text: str) -> str:
@@ -100,7 +108,8 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int) -> list[dict]
             if len(posts) >= max_per_source:
                 break
 
-        return posts
+        filtered = [p for p in posts if _is_dev_relevant(p)]
+        return filtered if filtered else posts
 
     except socket.timeout:
         logger.error("%s blog request timed out", source)

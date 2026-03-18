@@ -64,7 +64,8 @@ FILTER_KEYWORDS = [
     "model",
     "release",
     "launch",
-    "new",
+    "new model",
+    "new feature",
     "developer",
     "fine-tuning",
     "fine-tune",
@@ -81,6 +82,23 @@ FILTER_KEYWORDS = [
     "playground",
     "library",
     "integration",
+]
+
+# Keywords to exclude non-developer content (lowercase)
+EXCLUDE_KEYWORDS = [
+    "partnership",
+    "partners with",
+    "policy",
+    "regulation",
+    "safety board",
+    "advisory",
+    "hiring",
+    "careers",
+    "joins",
+    "leadership",
+    "appointed",
+    "raises",
+    "funding round",
 ]
 
 # Blog RSS feeds for Tier 1 AI Labs

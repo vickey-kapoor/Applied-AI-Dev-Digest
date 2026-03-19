@@ -1,6 +1,19 @@
 {
   "papers": [
     {
+      "id": "681f674d-b176-561d-bdb7-fa9f1939d6bf",
+      "title": "OpenAI to acquire Astral",
+      "description": "Accelerates Codex growth to power the next generation of Python developer tools",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/openai-to-acquire-astral",
+      "published_at": "2026-03-19T00:00:00",
+      "fetched_at": "2026-03-19T17:03:54.228387Z",
+      "authors": "OpenAI",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "ad9f23f1-659a-5080-a0d4-e6ff442fac5e",
       "title": "Measuring progress toward AGI: A cognitive framework",
       "description": "We’re introducing a framework to measure progress toward AGI, and launching a Kaggle hackathon to build the relevant evaluations.",

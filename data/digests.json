@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-03-23",
+      "top_paper_id": "3a892c81-87d9-563b-a138-b50f2a85c770",
+      "papers_fetched": 4,
+      "pdf_path": "reports/23-Mar/Gemini_31_Flash-Lite_Built_for_intelligence_at_s.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "23449705276"
+    },
+    {
       "date": "2026-03-22",
       "top_paper_id": "7b812e6c-119e-5161-983e-06649e86c372",
       "papers_fetched": 4,

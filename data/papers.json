@@ -1,6 +1,22 @@
 {
   "papers": [
     {
+      "id": "863bb8fc-14ae-533d-9a07-3fee09e222df",
+      "title": "Creating with Sora Safely",
+      "description": "To address the novel safety challenges posed by a state-of-the-art video model as well as a new social creation platform, we’ve built Sora 2 and the Sora app with safety at the foundation. Our approach is anchored in concrete protections.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/creating-with-sora-safely",
+      "published_at": "2026-03-23T00:00:00",
+      "fetched_at": "2026-03-23T17:00:57.343087Z",
+      "authors": "OpenAI",
+      "topics": [
+        "Model Release",
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "681f674d-b176-561d-bdb7-fa9f1939d6bf",
       "title": "OpenAI to acquire Astral",
       "description": "Accelerates Codex growth to power the next generation of Python developer tools",

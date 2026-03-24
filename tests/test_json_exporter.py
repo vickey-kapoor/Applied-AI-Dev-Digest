@@ -70,6 +70,39 @@ class TestExportPapers:
         assert temp_files == []
 
 
+class TestGetSentTopPaperIds:
+    """Tests for get_sent_top_paper_ids."""
+
+    def test_returns_ids_of_sent_digests(self, data_dir):
+        digests = {
+            "digests": [
+                {"date": "2026-03-24", "top_paper_id": "id-a", "telegram_sent": True},
+                {"date": "2026-03-23", "top_paper_id": "id-b", "telegram_sent": True},
+                {"date": "2026-03-22", "top_paper_id": "id-c", "telegram_sent": False},
+            ]
+        }
+        (data_dir / "digests.json").write_text(json.dumps(digests), encoding="utf-8")
+
+        result = json_exporter.get_sent_top_paper_ids()
+        assert result == {"id-a", "id-b"}
+
+    def test_returns_empty_set_when_no_digests(self, data_dir):
+        result = json_exporter.get_sent_top_paper_ids()
+        assert result == set()
+
+    def test_skips_empty_paper_ids(self, data_dir):
+        digests = {
+            "digests": [
+                {"date": "2026-03-24", "top_paper_id": "", "telegram_sent": True},
+                {"date": "2026-03-23", "top_paper_id": "id-x", "telegram_sent": True},
+            ]
+        }
+        (data_dir / "digests.json").write_text(json.dumps(digests), encoding="utf-8")
+
+        result = json_exporter.get_sent_top_paper_ids()
+        assert result == {"id-x"}
+
+
 class TestExportDigest:
     """Tests for digest export behavior."""
 

@@ -12,7 +12,7 @@ from src.news_ranker import rank_research
 from src.news_summarizer import summarize_research_bundle
 from src.telegram_sender import format_research_message, send_telegram_message
 from src.pdf_generator import generate_research_pdf
-from src.json_exporter import export_papers, export_digest
+from src.json_exporter import export_papers, export_digest, get_sent_top_paper_ids, _paper_id_for_item
 
 logger = get_logger(__name__)
 
@@ -54,10 +54,20 @@ def main():
         logger.info("No product updates found today")
         sys.exit(0)
 
+    # Filter out papers already sent as top pick
+    recent_ids = get_sent_top_paper_ids()
+    filtered_items = [item for item in research_items if _paper_id_for_item(item) not in recent_ids]
+    if filtered_items:
+        logger.info("Filtered out %d already-sent papers", len(research_items) - len(filtered_items))
+        items_for_ranking = filtered_items
+    else:
+        logger.info("All papers were previously sent, ranking full list")
+        items_for_ranking = research_items
+
     # Rank and select top update
     logger.info("Selecting most important update...")
     try:
-        top_research = rank_research(research_items, openai_key)
+        top_research = rank_research(items_for_ranking, openai_key)
         logger.info("Selected: %s", top_research["title"])
     except Exception as e:
         logger.error("Error ranking updates: %s", e)

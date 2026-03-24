@@ -4,7 +4,7 @@ import json
 import os
 import tempfile
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from src.constants import PAPERS_CAP, DIGEST_CAP_DAYS
@@ -76,6 +76,16 @@ def _paper_identity(item: dict) -> str:
 def _paper_id_for_item(item: dict) -> str:
     """Generate a deterministic ID for new papers."""
     return str(uuid.uuid5(uuid.NAMESPACE_URL, _paper_identity(item)))
+
+
+def get_sent_top_paper_ids() -> set[str]:
+    """Return all top_paper_ids that have been sent in past digests."""
+    data = load_json("digests.json")
+    return {
+        d["top_paper_id"]
+        for d in data.get("digests", [])
+        if d.get("top_paper_id") and d.get("telegram_sent", False)
+    }
 
 
 def export_papers(research_items: list[dict], ranked_paper: dict = None) -> str:

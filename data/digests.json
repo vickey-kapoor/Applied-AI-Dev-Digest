@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-03-25",
+      "top_paper_id": "25fa011e-1f03-5709-96b5-6f0235527960",
+      "papers_fetched": 4,
+      "pdf_path": "reports/25-Mar/Helping_developers_build_safer_AI_experiences_for.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "23554054091"
+    },
+    {
       "date": "2026-03-24",
       "top_paper_id": "3a892c81-87d9-563b-a138-b50f2a85c770",
       "papers_fetched": 4,

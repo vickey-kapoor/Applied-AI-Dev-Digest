@@ -1,6 +1,22 @@
 {
   "papers": [
     {
+      "id": "e57284bb-7634-569d-8ab8-b1b6b0e69a06",
+      "title": "Gemini 3.1 Flash Live: Making audio AI more natural and reliable",
+      "description": "Our latest voice model has improved precision and lower latency to make voice interactions more fluid, natural and precise.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/gemini-3-1-flash-live-making-audio-ai-more-natural-and-reliable/",
+      "published_at": "2026-03-26T15:23:35",
+      "fetched_at": "2026-03-26T17:11:34.444376Z",
+      "authors": "Google DeepMind",
+      "topics": [
+        "Model Release",
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "0cd57e38-78de-5ed0-8934-6e660a41ac3a",
       "title": "Inside our approach to the Model Spec",
       "description": "Learn how OpenAI’s Model Spec serves as a public framework for model behavior, balancing safety, user freedom, and accountability as AI systems advance.",

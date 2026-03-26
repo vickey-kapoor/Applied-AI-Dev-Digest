@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-03-26",
+      "top_paper_id": "e57284bb-7634-569d-8ab8-b1b6b0e69a06",
+      "papers_fetched": 4,
+      "pdf_path": "reports/26-Mar/Gemini_31_Flash_Live_Making_audio_AI_more_natura.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "23607824203"
+    },
+    {
       "date": "2026-03-25",
       "top_paper_id": "25fa011e-1f03-5709-96b5-6f0235527960",
       "papers_fetched": 4,

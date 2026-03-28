@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-03-28",
+      "top_paper_id": "fb6be8c8-5e47-51f3-92ce-45673d35e5a6",
+      "papers_fetched": 3,
+      "pdf_path": "reports/28-Mar/Introducing_the_OpenAI_Safety_Bug_Bounty_program.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "23689605544"
+    },
+    {
       "date": "2026-03-27",
       "top_paper_id": "0cd57e38-78de-5ed0-8934-6e660a41ac3a",
       "papers_fetched": 4,

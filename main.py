@@ -55,62 +55,72 @@ def main():
         sys.exit(0)
 
     # Filter out papers already sent as top pick
-    recent_ids = get_sent_top_paper_ids()
-    filtered_items = [item for item in research_items if _paper_id_for_item(item) not in recent_ids]
-    if filtered_items:
-        logger.info("Filtered out %d already-sent papers", len(research_items) - len(filtered_items))
-        items_for_ranking = filtered_items
+    sent_ids = get_sent_top_paper_ids()
+    new_items = [item for item in research_items if _paper_id_for_item(item) not in sent_ids]
+    if new_items:
+        logger.info("Filtered out %d already-sent papers", len(research_items) - len(new_items))
     else:
-        logger.info("All papers were previously sent, ranking full list")
-        items_for_ranking = research_items
+        logger.info("All %d papers were previously sent, skipping digest", len(research_items))
 
-    # Rank and select top update
-    logger.info("Selecting most important update...")
-    try:
-        top_research = rank_research(items_for_ranking, openai_key)
-        logger.info("Selected: %s", top_research["title"])
-    except Exception as e:
-        logger.error("Error ranking updates: %s", e)
-        top_research = research_items[0]
-
-    # Export updates to JSON for dashboard
+    # Export all fetched papers to JSON (even if already sent)
     logger.info("Exporting updates to JSON...")
     top_paper_id = None
-    try:
-        top_paper_id = export_papers(research_items, top_research)
-        logger.info("Papers exported to data/papers.json")
-    except Exception as e:
-        logger.warning("Could not export papers to JSON: %s", e)
+    top_research = None
 
-    # Generate summaries in one model call
-    logger.info("Generating summaries...")
-    try:
-        top_research = summarize_research_bundle(top_research, openai_key)
-        if "summary" in top_research:
-            logger.info("Generated short summary")
-        if "detailed_summary" in top_research:
-            logger.info("Generated detailed summary for PDF")
-    except Exception:
-        logger.warning("Could not generate summaries")
+    if new_items:
+        # Rank and select top update from unsent papers only
+        logger.info("Selecting most important update...")
+        try:
+            top_research = rank_research(new_items, openai_key)
+            logger.info("Selected: %s", top_research["title"])
+        except Exception as e:
+            logger.error("Error ranking updates: %s", e)
+            top_research = new_items[0]
+
+        try:
+            top_paper_id = export_papers(research_items, top_research)
+            logger.info("Papers exported to data/papers.json")
+        except Exception as e:
+            logger.warning("Could not export papers to JSON: %s", e)
+
+        # Generate summaries in one model call
+        logger.info("Generating summaries...")
+        try:
+            top_research = summarize_research_bundle(top_research, openai_key)
+            if "summary" in top_research:
+                logger.info("Generated short summary")
+            if "detailed_summary" in top_research:
+                logger.info("Generated detailed summary for PDF")
+        except Exception:
+            logger.warning("Could not generate summaries")
+    else:
+        # Still export papers for the dashboard, but no top pick
+        try:
+            export_papers(research_items)
+            logger.info("Papers exported to data/papers.json")
+        except Exception as e:
+            logger.warning("Could not export papers to JSON: %s", e)
 
     # Generate PDF report
-    logger.info("Generating PDF report...")
     pdf_path = None
-    try:
-        pdf_path = generate_research_pdf(top_research)
-        logger.info("PDF saved: %s", pdf_path)
-    except Exception:
-        logger.warning("Could not generate PDF")
+    if top_research:
+        logger.info("Generating PDF report...")
+        try:
+            pdf_path = generate_research_pdf(top_research)
+            logger.info("PDF saved: %s", pdf_path)
+        except Exception:
+            logger.warning("Could not generate PDF")
 
-    # Send Telegram message
-    logger.info("Sending Telegram message...")
+    # Send Telegram message (only if we have a new paper to send)
     telegram_sent = False
-    try:
-        message = format_research_message(top_research)
-        send_telegram_message(telegram_token, telegram_chat_id, message)
-        telegram_sent = True
-    except Exception as e:
-        logger.error("Error sending Telegram message: %s", e)
+    if top_research:
+        logger.info("Sending Telegram message...")
+        try:
+            message = format_research_message(top_research)
+            send_telegram_message(telegram_token, telegram_chat_id, message)
+            telegram_sent = True
+        except Exception as e:
+            logger.error("Error sending Telegram message: %s", e)
 
     # Export digest entry to JSON for dashboard
     logger.info("Exporting digest to JSON...")
@@ -126,9 +136,6 @@ def main():
         logger.info("Digest exported to data/digests.json")
     except Exception as e:
         logger.warning("Could not export digest to JSON: %s", e)
-
-    if not telegram_sent:
-        sys.exit(1)
 
 
 if __name__ == "__main__":

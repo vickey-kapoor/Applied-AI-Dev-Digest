@@ -1,6 +1,49 @@
 {
   "papers": [
     {
+      "id": "832df1b1-8c64-5e65-b025-b5598f377fa3",
+      "title": "Gradient Labs gives every bank customer an AI account manager",
+      "description": "Gradient Labs uses GPT-4.1 and GPT-5.4 mini and nano to power AI agents that automate banking support workflows with low latency and high reliability.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/gradient-labs",
+      "published_at": "2026-04-01T02:00:00",
+      "fetched_at": "2026-04-01T17:03:46.280000Z",
+      "authors": "OpenAI",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2e7d386c-f5ca-5f82-a40e-79106270a6c4",
+      "title": "Accelerating the next phase of AI",
+      "description": "OpenAI raises $122 billion in new funding to expand frontier AI globally, invest in next-generation compute, and meet growing demand for ChatGPT, Codex, and enterprise AI.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/accelerating-the-next-phase-ai",
+      "published_at": "2026-03-31T13:00:00",
+      "fetched_at": "2026-04-01T17:03:46.280000Z",
+      "authors": "OpenAI",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "6bf45690-852a-52ba-b89e-d7d59667475b",
+      "title": "Helping disaster response teams turn AI into action across Asia",
+      "description": "AI for Disaster Response in Asia: OpenAI Workshop with Gates Foundation",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/helping-disaster-response-teams-asia",
+      "published_at": "2026-03-29T22:15:00",
+      "fetched_at": "2026-04-01T17:03:46.280000Z",
+      "authors": "OpenAI",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "e57284bb-7634-569d-8ab8-b1b6b0e69a06",
       "title": "Gemini 3.1 Flash Live: Making audio AI more natural and reliable",
       "description": "Our latest voice model has improved precision and lower latency to make voice interactions more fluid, natural and precise.",

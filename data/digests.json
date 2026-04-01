@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-01",
+      "top_paper_id": "832df1b1-8c64-5e65-b025-b5598f377fa3",
+      "papers_fetched": 4,
+      "pdf_path": "reports/01-Apr/Gradient_Labs_gives_every_bank_customer_an_AI_acco.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "23860764325"
+    },
+    {
       "date": "2026-03-31",
       "top_paper_id": "e57284bb-7634-569d-8ab8-b1b6b0e69a06",
       "papers_fetched": 2,

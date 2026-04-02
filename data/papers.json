@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "b45d5eee-a970-5e5c-9fd2-d5b067dca420",
+      "title": "Gemma 4: Byte for byte, the most capable open models",
+      "description": "Gemma 4: Our most intelligent open models to date, purpose-built for advanced reasoning and agentic workflows.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/gemma-4-byte-for-byte-the-most-capable-open-models/",
+      "published_at": "2026-04-02T16:00:49",
+      "fetched_at": "2026-04-02T17:02:40.612267Z",
+      "authors": "Google DeepMind",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "832df1b1-8c64-5e65-b025-b5598f377fa3",
       "title": "Gradient Labs gives every bank customer an AI account manager",
       "description": "Gradient Labs uses GPT-4.1 and GPT-5.4 mini and nano to power AI agents that automate banking support workflows with low latency and high reliability.",

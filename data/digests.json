@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-02",
+      "top_paper_id": "b45d5eee-a970-5e5c-9fd2-d5b067dca420",
+      "papers_fetched": 5,
+      "pdf_path": "reports/02-Apr/Gemma_4_Byte_for_byte_the_most_capable_open_mode.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "23912198746"
+    },
+    {
       "date": "2026-04-01",
       "top_paper_id": "832df1b1-8c64-5e65-b025-b5598f377fa3",
       "papers_fetched": 4,

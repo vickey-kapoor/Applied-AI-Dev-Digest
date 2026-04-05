@@ -54,8 +54,8 @@ class TestBlogFetcher:
 
             posts = fetch_blog_posts(max_results=5)
 
-            # Should be called for each blog feed (4 Tier 1 labs)
-            assert mock_fetch.call_count == 4  # OpenAI, Anthropic, Google DeepMind, Meta AI
+            # Should be called for each blog feed (3 active feeds)
+            assert mock_fetch.call_count == 3  # OpenAI, Google DeepMind, Meta AI
 
     def test_fetch_single_feed_parse_error(self):
         """Test single feed handles parse errors gracefully."""

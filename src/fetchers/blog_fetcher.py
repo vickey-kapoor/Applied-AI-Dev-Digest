@@ -27,12 +27,13 @@ class _HTMLTextExtractor(HTMLParser):
         return " ".join("".join(self._parts).split())
 
 
-def _is_dev_relevant(post: dict) -> bool:
+def _is_dev_relevant(post: dict, filter_keywords: list[str] | None = None) -> bool:
     """Check if a post is developer-relevant based on keyword matching."""
     text = f"{post.get('title', '')} {post.get('description', '')}".lower()
     if any(kw in text for kw in EXCLUDE_KEYWORDS):
         return False
-    return any(kw in text for kw in FILTER_KEYWORDS)
+    keywords = filter_keywords if filter_keywords is not None else FILTER_KEYWORDS
+    return any(kw in text for kw in keywords)
 
 
 def _strip_html(text: str) -> str:
@@ -73,7 +74,7 @@ def _parse_date(entry: dict) -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def _fetch_single_feed(source: str, url: str, max_per_source: int) -> list[dict]:
+def _fetch_single_feed(source: str, url: str, max_per_source: int, filter_keywords: list[str] | None = None) -> list[dict]:
     """Fetch posts from a single RSS feed."""
     try:
         feed = _parse_blog_feed(url)
@@ -108,7 +109,7 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int) -> list[dict]
             if len(posts) >= max_per_source:
                 break
 
-        filtered = [p for p in posts if _is_dev_relevant(p)]
+        filtered = [p for p in posts if _is_dev_relevant(p, filter_keywords)]
         return filtered if filtered else posts
 
     except socket.timeout:
@@ -119,12 +120,13 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int) -> list[dict]
         return []
 
 
-def fetch_blog_posts(max_results: int = 5) -> list[dict]:
+def fetch_blog_posts(max_results: int = 5, filter_keywords: list[str] | None = None) -> list[dict]:
     """
     Fetch recent developer product updates from Tier 1 AI lab blogs.
 
     Args:
         max_results: Maximum total number of posts to return
+        filter_keywords: Optional keyword list for relevance filtering (defaults to FILTER_KEYWORDS)
 
     Returns:
         List of normalized post dictionaries
@@ -133,7 +135,7 @@ def fetch_blog_posts(max_results: int = 5) -> list[dict]:
     max_per_source = max(1, max_results // len(BLOG_FEEDS) + 1)
 
     for source, url in BLOG_FEEDS.items():
-        posts = _fetch_single_feed(source, url, max_per_source)
+        posts = _fetch_single_feed(source, url, max_per_source, filter_keywords)
         all_posts.extend(posts)
 
     # Sort by published date (most recent first)

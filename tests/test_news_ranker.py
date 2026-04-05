@@ -66,7 +66,8 @@ class TestRankResearch:
         result = rank_research([sample_paper], "test_api_key")
         assert result == sample_paper
 
-    def test_ranking_selects_paper(self, sample_papers, mock_openai_response):
+    @patch("src.news_ranker.get_feedback_weights", return_value={})
+    def test_ranking_selects_paper(self, mock_weights, sample_papers, mock_openai_response):
         """Test that ranking selects a paper based on AI response."""
         with patch("src.news_ranker.OpenAI") as mock_openai:
             mock_client = Mock()
@@ -78,7 +79,8 @@ class TestRankResearch:
             # AI returned "1", so first paper should be selected
             assert result == sample_papers[0]
 
-    def test_ranking_handles_ai_error(self, sample_papers):
+    @patch("src.news_ranker.get_feedback_weights", return_value={})
+    def test_ranking_handles_ai_error(self, mock_weights, sample_papers):
         """Test that ranking falls back to first paper on AI error."""
         with patch("src.news_ranker.OpenAI") as mock_openai:
             mock_client = Mock()
@@ -90,7 +92,8 @@ class TestRankResearch:
             # Should fall back to first paper
             assert result == sample_papers[0]
 
-    def test_ranking_handles_invalid_response(self, sample_papers):
+    @patch("src.news_ranker.get_feedback_weights", return_value={})
+    def test_ranking_handles_invalid_response(self, mock_weights, sample_papers):
         """Test that ranking handles invalid AI response."""
         with patch("src.news_ranker.OpenAI") as mock_openai:
             mock_response = Mock()
@@ -106,7 +109,8 @@ class TestRankResearch:
             # Should fall back to first paper
             assert result == sample_papers[0]
 
-    def test_ranking_handles_out_of_range(self, sample_papers):
+    @patch("src.news_ranker.get_feedback_weights", return_value={})
+    def test_ranking_handles_out_of_range(self, mock_weights, sample_papers):
         """Test that ranking handles out-of-range AI response."""
         with patch("src.news_ranker.OpenAI") as mock_openai:
             mock_response = Mock()
@@ -122,7 +126,8 @@ class TestRankResearch:
             # Should fall back to first paper
             assert result == sample_papers[0]
 
-    def test_ranking_sanitizes_input(self, mock_openai_response):
+    @patch("src.news_ranker.get_feedback_weights", return_value={})
+    def test_ranking_sanitizes_input(self, mock_weights, mock_openai_response):
         """Test that paper content is sanitized before sending to AI."""
         # Need at least 2 papers since single paper returns directly without API call
         paper_with_injection = {

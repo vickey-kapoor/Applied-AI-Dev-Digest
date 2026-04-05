@@ -104,7 +104,7 @@ EXCLUDE_KEYWORDS = [
 # Blog RSS feeds for Tier 1 AI Labs
 BLOG_FEEDS = {
     "OpenAI": "https://openai.com/blog/rss.xml",
-    "Anthropic": "https://www.anthropic.com/rss.xml",
+    # Anthropic removed their RSS feed (returns 404 since ~March 2026)
     "Google DeepMind": "https://deepmind.google/blog/rss.xml",
-    "Meta AI": "https://ai.meta.com/blog/rss/",
+    "Meta AI": "https://engineering.fb.com/feed/",
 }

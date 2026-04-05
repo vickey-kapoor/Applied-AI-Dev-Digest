@@ -21,6 +21,14 @@ class TestMain:
 
         assert exc_info.value.code == 1
 
+    @patch("main.is_paused", return_value=True)
+    def test_main_exits_early_when_paused(self, mock_paused):
+        """The app should exit cleanly when digest is paused."""
+        with pytest.raises(SystemExit) as exc_info:
+            main.main()
+
+        assert exc_info.value.code == 0
+
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_research_message")
@@ -29,8 +37,14 @@ class TestMain:
     @patch("main.export_papers")
     @patch("main.rank_research")
     @patch("main.fetch_ai_research")
+    @patch("main.increment_topic_stat")
+    @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
+    @patch("main.is_paused", return_value=False)
     def test_main_uses_summary_bundle(
         self,
+        mock_paused,
+        mock_get_active_keywords,
+        mock_increment_stat,
         mock_fetch_ai_research,
         mock_rank_research,
         mock_export_papers,
@@ -78,8 +92,14 @@ class TestMain:
     @patch("main.export_papers")
     @patch("main.rank_research")
     @patch("main.fetch_ai_research")
+    @patch("main.increment_topic_stat")
+    @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
+    @patch("main.is_paused", return_value=False)
     def test_main_exits_when_telegram_send_fails(
         self,
+        mock_paused,
+        mock_get_active_keywords,
+        mock_increment_stat,
         mock_fetch_ai_research,
         mock_rank_research,
         mock_export_papers,

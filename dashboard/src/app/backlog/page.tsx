@@ -39,7 +39,7 @@ export default async function BacklogPage() {
     <div className="p-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
           <ListTodo className="h-6 w-6 text-blue-600" />
           Backlog
         </h1>
@@ -73,7 +73,7 @@ export default async function BacklogPage() {
                 {/* Lab Header */}
                 <div className="flex items-center gap-3 mb-4">
                   <div className={`h-3 w-3 rounded-full ${dotColor}`} />
-                  <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                     <Building2 className="h-5 w-5 text-gray-400" />
                     {lab}
                   </h2>
@@ -96,7 +96,7 @@ export default async function BacklogPage() {
                               ) : (
                                 <BookOpen className="h-4 w-4 text-gray-400 flex-shrink-0" />
                               )}
-                              <h3 className="font-medium text-gray-900 truncate">
+                              <h3 className="font-medium text-gray-900 dark:text-gray-100 truncate">
                                 {item.title}
                               </h3>
                             </div>
@@ -118,7 +118,7 @@ export default async function BacklogPage() {
                             href={item.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-shrink-0 p-2 rounded-lg bg-gray-50 hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors"
+                            className="flex-shrink-0 p-2 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-gray-500 hover:text-blue-600 transition-colors"
                             aria-label={`Open ${item.title} in new tab`}
                           >
                             <ExternalLink className="h-5 w-5" />

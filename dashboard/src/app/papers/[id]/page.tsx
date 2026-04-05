@@ -51,7 +51,7 @@ export default async function PaperDetailPage({
       {/* Back navigation */}
       <Link
         href="/papers"
-        className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 mb-6"
+        className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to updates
@@ -113,7 +113,7 @@ export default async function PaperDetailPage({
           <CardTitle className="text-base">Description</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
             {paper.description || "No description available."}
           </p>
         </CardContent>

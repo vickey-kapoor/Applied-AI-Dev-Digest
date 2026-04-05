@@ -30,7 +30,7 @@ export default async function AnalyticsPage({
   const cutoff =
     rangeOption.days === Infinity
       ? ""
-      : new Date(now.getTime() - rangeOption.days * 86400000).toISOString();
+      : new Date(now.getFullYear(), now.getMonth(), now.getDate() - rangeOption.days).toISOString();
 
   const papers = cutoff
     ? allPapers.filter((p) => (p.fetched_at || "") >= cutoff)
@@ -97,22 +97,22 @@ export default async function AnalyticsPage({
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Analytics</h1>
           <p className="text-gray-500 mt-1">
             Insights and trends from your research digest
           </p>
         </div>
 
         {/* Date range picker */}
-        <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1" role="group" aria-label="Date range">
+        <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1" role="group" aria-label="Date range">
           {RANGE_OPTIONS.map((opt) => (
             <Link
               key={opt.key}
               href={`/analytics?range=${opt.key}`}
               className={`px-3 py-1.5 rounded-md text-sm transition-colors ${
                 rangeKey === opt.key
-                  ? "bg-white text-gray-900 shadow-sm font-medium"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm font-medium"
+                  : "text-gray-600 hover:text-gray-900 dark:text-gray-100"
               }`}
             >
               {opt.label}
@@ -240,7 +240,7 @@ export default async function AnalyticsPage({
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-200">
+                  <tr className="border-b border-gray-200 dark:border-gray-700">
                     <th className="text-left py-3 px-4 font-medium text-gray-500">
                       Date
                     </th>
@@ -259,7 +259,7 @@ export default async function AnalyticsPage({
                   {digests.slice(0, 10).map((digest) => (
                     <tr
                       key={digest.date}
-                      className="border-b border-gray-100"
+                      className="border-b border-gray-100 dark:border-gray-700"
                     >
                       <td className="py-3 px-4 font-medium">{digest.date}</td>
                       <td className="py-3 px-4">{digest.papers_fetched}</td>
@@ -268,7 +268,7 @@ export default async function AnalyticsPage({
                           className={`inline-flex px-2 py-1 rounded-full text-xs ${
                             digest.telegram_sent
                               ? "bg-green-100 text-green-700"
-                              : "bg-gray-100 text-gray-600"
+                              : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
                           }`}
                         >
                           {digest.telegram_sent ? "Sent" : "Not Sent"}

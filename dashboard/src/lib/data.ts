@@ -103,7 +103,7 @@ export function getConfig(): Config {
       "function calling", "multimodal", "context window"
     ],
     sources: { blogs: true },
-    labs: ["OpenAI", "Anthropic", "Google DeepMind", "Meta AI"],
+    labs: ["OpenAI", "Google DeepMind", "Meta AI"],
     schedule: "0 16 * * *",
     telegram_enabled: true,
   };

@@ -31,7 +31,7 @@ export default async function ReportsPage({
     <div className="p-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">PDF Reports</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">PDF Reports</h1>
         <p className="text-gray-500 mt-1">
           View and download daily research digest reports
         </p>
@@ -56,8 +56,8 @@ export default async function ReportsPage({
                       href={`/reports?date=${encodeURIComponent(date)}`}
                       className={`block px-3 py-2 rounded-lg text-sm transition-colors ${
                         selectedDate === date
-                          ? "bg-blue-50 text-blue-700 font-medium"
-                          : "text-gray-600 hover:bg-gray-50"
+                          ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-medium"
+                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -133,15 +133,23 @@ export default async function ReportsPage({
             </CardHeader>
             <CardContent>
               {pdfApiPath ? (
-                <div className="bg-gray-100 rounded-lg overflow-hidden" style={{ height: "700px" }}>
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden" style={{ height: "700px" }}>
                   <iframe
                     src={pdfApiPath}
-                    className="w-full h-full"
+                    className="w-full h-full border-0"
                     title={`Report for ${selectedDate}`}
                   />
+                  <noscript>
+                    <p className="p-4 text-center text-gray-600">
+                      Unable to display the PDF inline.{" "}
+                      <a href={pdfApiPath} download className="text-blue-600 hover:underline">
+                        Download it instead
+                      </a>.
+                    </p>
+                  </noscript>
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg">
+                <div className="flex items-center justify-center h-96 bg-gray-50 dark:bg-gray-800 rounded-lg">
                   <p className="text-gray-500">
                     Select a report from the list to view
                   </p>

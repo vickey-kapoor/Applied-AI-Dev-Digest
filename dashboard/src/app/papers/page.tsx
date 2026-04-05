@@ -106,7 +106,7 @@ export default async function PapersPage({
     <div className="p-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Product Updates</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Product Updates</h1>
         <p className="text-gray-500 mt-1">
           Browse and filter developer product updates from AI labs
         </p>
@@ -132,7 +132,7 @@ export default async function PapersPage({
                 <Link
                   href={buildUrl({ source: undefined })}
                   className={`px-3 py-1 rounded-full text-sm ${
-                    !source ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    !source ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                   }`}
                   role="button"
                 >
@@ -143,7 +143,7 @@ export default async function PapersPage({
                     key={s}
                     href={buildUrl({ source: s, page: undefined })}
                     className={`px-3 py-1 rounded-full text-sm ${
-                      source === s ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      source === s ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                     }`}
                     role="button"
                   >
@@ -160,7 +160,7 @@ export default async function PapersPage({
                 <Link
                   href={buildUrl({ topic: undefined })}
                   className={`px-3 py-1 rounded-full text-sm ${
-                    !topic ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    !topic ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                   }`}
                   role="button"
                 >
@@ -171,7 +171,7 @@ export default async function PapersPage({
                     key={t}
                     href={buildUrl({ topic: t, page: undefined })}
                     className={`px-3 py-1 rounded-full text-sm ${
-                      topic === t ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      topic === t ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                     }`}
                     role="button"
                   >
@@ -188,7 +188,7 @@ export default async function PapersPage({
                 <Link
                   href={buildUrl({ status: undefined })}
                   className={`px-3 py-1 rounded-full text-sm ${
-                    !status ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    !status ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                   }`}
                   role="button"
                 >
@@ -199,7 +199,7 @@ export default async function PapersPage({
                     key={s}
                     href={buildUrl({ status: s, page: undefined })}
                     className={`px-3 py-1 rounded-full text-sm capitalize ${
-                      status === s ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      status === s ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                     }`}
                     role="button"
                   >
@@ -234,8 +234,8 @@ export default async function PapersPage({
               })}
               className={`px-2 py-1 rounded text-sm ${
                 (sort || "date") === key
-                  ? "bg-blue-100 text-blue-700 font-medium"
-                  : "text-gray-600 hover:bg-gray-100"
+                  ? "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-medium"
+                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
               }`}
             >
               {label}
@@ -258,7 +258,7 @@ export default async function PapersPage({
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
                         {getStatusIcon(paper.status)}
-                        <h3 className="font-semibold text-gray-900">
+                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">
                           {paper.title}
                         </h3>
                       </div>
@@ -288,7 +288,7 @@ export default async function PapersPage({
                       href={paper.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-shrink-0 p-2 rounded-lg bg-gray-50 hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors"
+                      className="flex-shrink-0 p-2 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-gray-500 hover:text-blue-600 transition-colors"
                       aria-label={`Open ${paper.title} in new tab`}
                     >
                       <ExternalLink className="h-5 w-5" />
@@ -323,14 +323,14 @@ export default async function PapersPage({
           {safePage > 1 ? (
             <Link
               href={buildUrl({ page: String(safePage - 1) })}
-              className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm hover:bg-gray-50"
+              className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700"
             >
               Previous
             </Link>
           ) : (
-            <span className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-400 cursor-not-allowed">
+            <button disabled className="px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg text-sm text-gray-400 cursor-not-allowed">
               Previous
-            </span>
+            </button>
           )}
           <span className="text-sm text-gray-600">
             Page {safePage} of {totalPages}
@@ -338,14 +338,14 @@ export default async function PapersPage({
           {safePage < totalPages ? (
             <Link
               href={buildUrl({ page: String(safePage + 1) })}
-              className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm hover:bg-gray-50"
+              className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700"
             >
               Next
             </Link>
           ) : (
-            <span className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-400 cursor-not-allowed">
+            <button disabled className="px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg text-sm text-gray-400 cursor-not-allowed">
               Next
-            </span>
+            </button>
           )}
         </div>
       )}

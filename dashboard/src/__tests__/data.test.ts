@@ -100,7 +100,7 @@ describe("getConfig", () => {
   it("returns static config with expected fields", () => {
     const config = getConfig();
     expect(config.labs).toContain("OpenAI");
-    expect(config.labs).toContain("Anthropic");
+    expect(config.labs).toContain("Google DeepMind");
     expect(config.schedule).toBe("0 16 * * *");
     expect(config.telegram_enabled).toBe(true);
   });

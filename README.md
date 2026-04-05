@@ -1,33 +1,34 @@
 # AI Research Telegram Digest
 
-Get the latest AI research delivered to your Telegram daily - explained simply, like talking to a friend.
+Get the latest AI developer product updates delivered to your Telegram daily - explained simply, like talking to a friend.
 
 ## Features
 
-- Fetches AI research from multiple sources (arXiv, Hugging Face, Papers With Code, AI lab blogs)
-- Focuses on **AI Agents & Reasoning** research
-- Uses AI to select the most impactful paper
+- Fetches developer product updates from Tier 1 AI lab blogs (OpenAI, Google DeepMind, Meta AI)
+- Filters for **developer-relevant** content (API launches, model releases, SDK updates)
+- Uses GPT-4o-mini to select the most impactful update
 - Generates **ELI5 summaries** (simple explanations anyone can understand)
 - Sends to Telegram via Bot API
+- Produces a PDF report for each digest
+- Exports structured data to JSON (papers + digests)
 - Runs automatically via GitHub Actions (10:00 AM CST daily)
+- Next.js dashboard on Vercel for browsing historical data
 
 ## Example Message
 
 ```
 *Daily AI Research*
 
-*Training Language Models to Reason Step by Step*
-_Smith et al._
+*Introducing GPT-5.4 mini and nano*
+_OpenAI_
 
-You know how it's easier to solve a math problem when you
-write out each step? Researchers taught AI to do the same
-thing - break down hard problems into smaller pieces. This
-makes AI better at explaining its thinking, which could
-help future assistants tutor kids or help you understand
-complex topics.
+Think of it like a restaurant that just added an express counter.
+You still get the same quality food, but there's now a faster,
+cheaper option for when you just need a quick bite. Developers
+can now build apps that respond quicker and cost less to run.
 
-https://arxiv.org/abs/...
-_Source: arXiv_
+https://openai.com/index/introducing-gpt-5-4-mini-and-nano
+_Source: OpenAI_
 ```
 
 ## Setup
@@ -79,12 +80,25 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # Create .env file with your keys
-echo "TELEGRAM_BOT_TOKEN=your_bot_token" >> .env
-echo "TELEGRAM_CHAT_ID=your_chat_id" >> .env
-echo "OPENAI_API_KEY=your_openai_key" >> .env
+cp .env.example .env
+# Edit .env with your API keys
 
-# Run
+# Run the pipeline
 python main.py
+
+# Run tests
+pytest
+```
+
+### Dashboard
+
+```bash
+cd dashboard
+npm install
+npm run dev       # Dev server
+npm run build     # Production build
+npm run lint      # ESLint
+npm test          # Vitest unit tests
 ```
 
 ## Project Structure
@@ -92,30 +106,36 @@ python main.py
 ```
 ai-research-digest/
 ├── .github/workflows/
-│   └── daily-news.yml        # GitHub Actions (10 AM CST daily)
+│   └── daily-news.yml          # GitHub Actions (10 AM CST daily)
 ├── src/
-│   ├── research_fetcher.py   # Aggregates research from all sources
-│   ├── news_ranker.py        # AI-powered research ranking
-│   ├── news_summarizer.py    # ELI5 summary generator
-│   ├── telegram_sender.py    # Telegram Bot API integration
-│   └── fetchers/
-│       ├── arxiv_fetcher.py      # arXiv API
-│       ├── huggingface_fetcher.py # Hugging Face Daily Papers
-│       ├── pwc_fetcher.py        # Papers With Code
-│       └── blog_fetcher.py       # AI lab blogs (Google, DeepMind, Meta)
-├── main.py                   # Entry point
-├── requirements.txt
-└── README.md
+│   ├── fetchers/
+│   │   └── blog_fetcher.py     # RSS fetch from AI lab blogs
+│   ├── utils/
+│   │   └── retry.py            # Retry with exponential backoff
+│   ├── ai_text.py              # Prompt sanitization
+│   ├── constants.py            # All config constants
+│   ├── json_exporter.py        # Atomic JSON export (papers + digests)
+│   ├── logger.py               # Centralized logging
+│   ├── news_ranker.py          # GPT-4o-mini ranking
+│   ├── news_summarizer.py      # ELI5 summary generation
+│   ├── pdf_generator.py        # PDF report generation
+│   ├── research_fetcher.py     # Aggregation + deduplication
+│   └── telegram_sender.py      # Telegram Bot API
+├── dashboard/                  # Next.js dashboard (Vercel)
+├── data/                       # papers.json + digests.json
+├── reports/                    # Generated PDF reports
+├── tests/                      # Pytest test suite
+├── main.py                     # Pipeline entry point
+└── requirements.txt
 ```
 
-## Research Sources
+## Blog Sources
 
-| Source | What it fetches |
-|--------|-----------------|
-| arXiv | Papers from cs.AI, cs.LG, cs.CL, cs.MA |
-| Hugging Face | Daily trending papers |
-| Papers With Code | Latest ML papers |
-| AI Lab Blogs | Google AI, DeepMind, Meta AI |
+| Source | Feed |
+|--------|------|
+| OpenAI | openai.com/blog/rss.xml |
+| Google DeepMind | deepmind.google/blog/rss.xml |
+| Meta AI | engineering.fb.com/feed/ |
 
 ## License
 

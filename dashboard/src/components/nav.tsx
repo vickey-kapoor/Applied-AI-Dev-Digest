@@ -18,7 +18,6 @@ import {
   Check,
   AlertCircle,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const navigation = [
   { name: "Topics", href: "/topics", icon: Layers },
@@ -87,11 +86,11 @@ export function Nav() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 border-b border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-950/95 backdrop-blur">
-        <div className="flex items-center h-14 px-4 md:px-6 gap-4">
+      <header className="fixed top-0 left-0 right-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+        <div className="flex items-center h-14 gap-4" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px' }}>
           {/* Mobile menu */}
           <button
-            className="md:hidden p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="md:hidden p-1.5 rounded-lg hover:bg-card"
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
           >
@@ -100,8 +99,8 @@ export function Nav() {
 
           {/* Brand */}
           <Link href="/topics" className="flex items-center gap-2 shrink-0">
-            <Brain className="h-6 w-6 text-blue-600" />
-            <span className="font-display font-bold text-sm text-gray-900 dark:text-gray-100 hidden sm:block">
+            <Brain className="h-6 w-6 text-primary" />
+            <span className="font-display font-bold text-sm text-foreground hidden sm:block">
               AI Dev Digest
             </span>
           </Link>
@@ -117,8 +116,8 @@ export function Nav() {
                   className={cn(
                     "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-800"
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-card"
                   )}
                 >
                   <item.icon className="h-4 w-4" />
@@ -137,10 +136,10 @@ export function Nav() {
               className={cn(
                 "hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors",
                 sendStatus === "sent"
-                  ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                  ? "bg-green-900/30 text-green-400"
                   : sendStatus === "error"
-                  ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                  ? "bg-red-900/30 text-red-400"
+                  : "bg-card text-muted-foreground hover:bg-border hover:text-foreground"
               )}
             >
               {sendStatus === "sending" ? (
@@ -168,14 +167,13 @@ export function Nav() {
               className={cn(
                 "flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-colors",
                 paused
-                  ? "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400"
-                  : "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                  ? "bg-amber-900/30 text-amber-400"
+                  : "bg-green-900/30 text-green-400"
               )}
             >
               <span className={cn("h-2 w-2 rounded-full", paused ? "bg-amber-500" : "bg-green-500")} />
               {paused ? "Paused" : "Active"}
             </button>
-            <ThemeToggle />
           </div>
         </div>
       </header>
@@ -184,13 +182,13 @@ export function Nav() {
       {mobileOpen && (
         <>
           <div className="fixed inset-0 z-50 bg-black/50 md:hidden" onClick={closeMobile} aria-hidden="true" />
-          <div className="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-900 shadow-xl md:hidden p-4">
+          <div className="fixed inset-y-0 left-0 z-50 w-64 bg-card shadow-xl md:hidden p-4">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
-                <Brain className="h-6 w-6 text-blue-600" />
-                <span className="font-display font-bold text-sm">AI Dev Digest</span>
+                <Brain className="h-6 w-6 text-primary" />
+                <span className="font-display font-bold text-sm text-foreground">AI Dev Digest</span>
               </div>
-              <button onClick={closeMobile} aria-label="Close menu" className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+              <button onClick={closeMobile} aria-label="Close menu" className="p-1 rounded-lg hover:bg-border">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -204,8 +202,8 @@ export function Nav() {
                     className={cn(
                       "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                       isActive
-                        ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
-                        : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:bg-border hover:text-foreground"
                     )}
                   >
                     <item.icon className="h-5 w-5" />
@@ -215,11 +213,11 @@ export function Nav() {
               })}
             </nav>
             {/* Mobile send test */}
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="mt-4 pt-4 border-t border-border">
               <button
                 onClick={() => { sendTest(); closeMobile(); }}
                 disabled={sendStatus === "sending"}
-                className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-border hover:text-foreground transition-colors"
               >
                 <Send className="h-5 w-5" />
                 Send test message

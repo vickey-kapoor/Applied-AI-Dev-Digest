@@ -44,6 +44,10 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      fontFamily: {
+        mono: ["var(--font-dm-mono)", "ui-monospace", "monospace"],
+        display: ["var(--font-syne)", "ui-sans-serif", "sans-serif"],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

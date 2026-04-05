@@ -5,14 +5,18 @@ import sys
 
 from dotenv import load_dotenv
 
+from datetime import datetime, timezone
+
 from src.constants import DIGEST_MAX_RESULTS
 from src.logger import get_logger
+from src.topic_config import get_active_keywords, is_paused, increment_topic_stat
 from src.research_fetcher import fetch_ai_research
 from src.news_ranker import rank_research
 from src.news_summarizer import summarize_research_bundle
 from src.telegram_sender import format_research_message, send_telegram_message
 from src.pdf_generator import generate_research_pdf
 from src.json_exporter import export_papers, export_digest, get_sent_top_paper_ids, _paper_id_for_item
+from src.kv_client import kv_append, kv_set
 
 logger = get_logger(__name__)
 
@@ -21,6 +25,11 @@ def main():
     """Fetch AI product updates, select the most important, and send to Telegram."""
     # Load environment variables
     load_dotenv()
+
+    # Check if digest is paused
+    if is_paused():
+        logger.info("Digest is paused — exiting")
+        sys.exit(0)
 
     # Get required environment variables
     openai_key = os.getenv("OPENAI_API_KEY")
@@ -40,11 +49,15 @@ def main():
         logger.error("Missing required environment variables: %s", ", ".join(missing))
         sys.exit(1)
 
+    # Load active topic keywords
+    active_keywords = get_active_keywords()
+    logger.info("Active topic keywords: %d", len(active_keywords))
+
     # Fetch product updates from AI labs
     logger.info("Fetching product updates from AI labs...")
     research_items = []
     try:
-        research_items = fetch_ai_research(max_results=DIGEST_MAX_RESULTS)
+        research_items = fetch_ai_research(max_results=DIGEST_MAX_RESULTS, filter_keywords=active_keywords)
         logger.info("Found %d product updates", len(research_items))
     except Exception as e:
         logger.error("Error fetching updates: %s", e)
@@ -72,6 +85,29 @@ def main():
     except Exception as e:
         logger.error("Error ranking updates: %s", e)
         top_research = research_items[0]
+
+    # Track topic stats in KV
+    try:
+        topic_id = top_research.get("topic_id")
+        if topic_id:
+            increment_topic_stat(topic_id)
+    except Exception as e:
+        logger.warning("Could not update topic stats: %s", e)
+
+    # Append top paper to weekly KV list for Sunday digest
+    try:
+        kv_append("digest:weekly", {
+            "title": top_research.get("title", ""),
+            "authors": top_research.get("authors", ""),
+            "institution": top_research.get("institution"),
+            "topic_id": top_research.get("topic_id"),
+            "url": top_research.get("url", ""),
+            "why_it_matters": top_research.get("summary", ""),
+            "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        })
+        logger.info("Appended top paper to weekly KV list")
+    except Exception as e:
+        logger.warning("Could not append to weekly KV: %s", e)
 
     # Export updates to JSON for dashboard
     logger.info("Exporting updates to JSON...")
@@ -111,6 +147,21 @@ def main():
         telegram_sent = True
     except Exception as e:
         logger.error("Error sending Telegram message: %s", e)
+
+    # Store last sent paper payload in KV for test-send
+    if telegram_sent:
+        try:
+            kv_set("digest:last", {
+                "title": top_research.get("title", ""),
+                "authors": top_research.get("authors", ""),
+                "source": top_research.get("source", ""),
+                "url": top_research.get("url", ""),
+                "summary": top_research.get("summary", ""),
+                "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            })
+            logger.info("Stored last digest payload in KV")
+        except Exception as e:
+            logger.warning("Could not store digest:last in KV: %s", e)
 
     # Export digest entry to JSON for dashboard
     logger.info("Exporting digest to JSON...")

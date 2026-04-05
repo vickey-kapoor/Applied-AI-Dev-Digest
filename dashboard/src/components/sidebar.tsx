@@ -12,6 +12,7 @@ import {
   Settings,
   Brain,
   ListTodo,
+  Layers,
   Menu,
   X,
 } from "lucide-react";
@@ -23,6 +24,7 @@ const navigation = [
   { name: "Backlog", href: "/backlog", icon: ListTodo },
   { name: "Reports", href: "/reports", icon: FolderOpen },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
+  { name: "Topics", href: "/topics", icon: Layers },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 
@@ -32,14 +34,9 @@ export function Sidebar() {
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
-  // Close on route change — track previous pathname to avoid calling setState unconditionally
-  const [prevPathname, setPrevPathname] = useState(pathname);
-  if (pathname !== prevPathname) {
-    setPrevPathname(pathname);
-    if (mobileOpen) {
-      setMobileOpen(false);
-    }
-  }
+  // Close on route change — intentional for nav UX
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   // Close on Escape key
   useEffect(() => {

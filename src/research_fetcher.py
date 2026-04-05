@@ -3,6 +3,7 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from difflib import SequenceMatcher
+from functools import partial
 from typing import Callable
 
 from src.constants import DEDUP_SIMILARITY_THRESHOLD, THREAD_POOL_WORKERS
@@ -52,18 +53,20 @@ def _deduplicate_papers(papers: list[dict], threshold: float = DEDUP_SIMILARITY_
     return unique_papers
 
 
-def fetch_ai_research(max_results: int = 5) -> list[dict]:
+def fetch_ai_research(max_results: int = 5, filter_keywords: list[str] | None = None) -> list[dict]:
     """
     Fetch developer product updates from all AI lab sources in parallel.
 
     Args:
         max_results: Maximum number of items to return
+        filter_keywords: Optional keyword list for relevance filtering
 
     Returns:
         Combined, deduplicated, and sorted list of product updates
     """
+    blog_fn = partial(fetch_blog_posts, filter_keywords=filter_keywords) if filter_keywords else fetch_blog_posts
     fetchers: list[tuple[str, Callable, int]] = [
-        ("Blogs", fetch_blog_posts, 10),
+        ("Blogs", blog_fn, 10),
     ]
 
     all_research = []

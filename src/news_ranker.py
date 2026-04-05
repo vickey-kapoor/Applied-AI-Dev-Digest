@@ -5,6 +5,7 @@ from openai import OpenAI
 from src.ai_text import sanitize_prompt_text
 from src.constants import OPENAI_MODEL, OPENAI_MAX_TOKENS_RANKING
 from src.logger import get_logger
+from src.topic_config import get_feedback_weights
 from src.utils.retry import retry_with_backoff
 
 logger = get_logger(__name__)
@@ -38,6 +39,19 @@ def rank_research(research: list[dict], api_key: str) -> dict:
 
     if len(research) == 1:
         return research[0]
+
+    # Load feedback weights and reorder by preference before sending to LLM
+    try:
+        weights = get_feedback_weights()
+        if weights:
+            # Sort papers so preferred topics come first (higher weight = earlier)
+            research = sorted(
+                research,
+                key=lambda r: weights.get(r.get("topic_id", ""), 1.0),
+                reverse=True,
+            )
+    except Exception:
+        pass  # Non-critical — proceed with original order
 
     client = OpenAI(api_key=api_key)
 

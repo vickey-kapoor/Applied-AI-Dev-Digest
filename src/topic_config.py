@@ -2,6 +2,7 @@
 
 import json
 import os
+import urllib.parse
 import urllib.request
 
 from src.logger import get_logger
@@ -72,9 +73,15 @@ _SUPPLEMENTAL_KEYWORDS = [
 
 def _kv_get(key: str):
     """Fetch a value from Vercel KV REST API. Returns None on any failure."""
-    url = os.environ.get("KV_REST_API_URL")
-    token = os.environ.get("KV_REST_API_TOKEN")
+    url = os.environ.get("KV_REST_API_URL", "").strip()
+    token = os.environ.get("KV_REST_API_TOKEN", "").strip()
     if not url or not token:
+        return None
+
+    # Validate URL scheme to prevent SSRF
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme not in ("https", "http") or not parsed.hostname:
+        logger.warning("Invalid KV_REST_API_URL scheme or hostname")
         return None
 
     try:

@@ -25,10 +25,9 @@ export function requireAuth(request: NextRequest): NextResponse | null {
   const host = request.headers.get("host");
 
   if (host && (origin || referer)) {
-    const requestOrigin = origin || new URL(referer!).origin;
-    const expectedOrigin = `https://${host}`;
-    const expectedOriginHttp = `http://${host}`;
-    if (requestOrigin === expectedOrigin || requestOrigin === expectedOriginHttp) {
+    const requestOrigin = (origin || new URL(referer!).origin).toLowerCase();
+    const hostLower = host.toLowerCase();
+    if (requestOrigin === `https://${hostLower}` || requestOrigin === `http://${hostLower}`) {
       return null; // Same-origin browser request — allow
     }
   }

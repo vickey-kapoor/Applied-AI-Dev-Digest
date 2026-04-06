@@ -89,7 +89,7 @@ export default function PreviewPage() {
       {fetchStatus !== "loading" && (
         <button
           onClick={fetchPreview}
-          className="mb-6 inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/80 transition-colors"
+          className="mb-6 inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <RefreshCw className="h-4 w-4" />
           {paper ? "Refresh preview" : "Generate preview"}
@@ -111,7 +111,7 @@ export default function PreviewPage() {
 
       {/* Error state */}
       {fetchStatus === "error" && (
-        <Card className="mb-6 border-red-200 dark:border-red-800">
+        <Card className="mb-6 border-red-200 dark:border-red-800" role="alert">
           <CardContent className="flex items-center gap-3 py-4">
             <AlertCircle className="h-5 w-5 text-red-500 shrink-0" />
             <div>
@@ -153,9 +153,9 @@ export default function PreviewPage() {
             <button
               onClick={sendToTelegram}
               disabled={sendStatus === "sending" || sendStatus === "sent"}
-              className={`inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+              className={`inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                 sendStatus === "sent"
-                  ? "bg-green-600 text-white"
+                  ? "bg-green-600 dark:bg-green-700 text-white"
                   : "bg-primary text-white hover:bg-primary/80 disabled:opacity-50"
               }`}
             >
@@ -170,7 +170,7 @@ export default function PreviewPage() {
             </button>
             <button
               onClick={fetchPreview}
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:bg-card hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <RefreshCw className="h-4 w-4" />
               Refresh

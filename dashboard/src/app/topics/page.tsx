@@ -182,7 +182,7 @@ export default function TopicsPage() {
                           aria-label={`Toggle ${topic.name}`}
                           onClick={() => toggle(topic.id)}
                           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ${
-                            enabled ? "bg-primary" : "bg-gray-300 dark:bg-gray-600"
+                            enabled ? "bg-primary" : "bg-muted-foreground/30"
                           }`}
                         >
                           <span
@@ -246,7 +246,7 @@ export default function TopicsPage() {
                           />
                           <button
                             onClick={() => addCustomKeyword(topic.id)}
-                            className="p-1.5 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+                            className="p-1.5 rounded-md bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                           >
                             <Plus className="h-4 w-4" />
                           </button>
@@ -262,7 +262,7 @@ export default function TopicsPage() {
       })}
 
       {/* Sticky save bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-30">
+      <div className="fixed bottom-0 left-0 right-0 z-30 pb-[env(safe-area-inset-bottom)]">
         <div
           className={`border-t border-border bg-background/95 backdrop-blur px-8 py-4 flex items-center justify-between transition-opacity ${
             isDirty || saveStatus !== "idle" ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -276,7 +276,7 @@ export default function TopicsPage() {
               </span>
             )}
             {saveStatus === "error" && (
-              <span className="flex items-center gap-1 text-red-600 dark:text-red-400">
+              <span role="alert" className="flex items-center gap-1 text-red-600 dark:text-red-400">
                 <AlertCircle className="h-4 w-4" /> Failed to save — is Vercel KV configured?
               </span>
             )}
@@ -284,7 +284,7 @@ export default function TopicsPage() {
           <button
             onClick={save}
             disabled={!isDirty || saveStatus === "saving"}
-            className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {saveStatus === "saving" ? (
               <Loader2 className="h-4 w-4 animate-spin" />

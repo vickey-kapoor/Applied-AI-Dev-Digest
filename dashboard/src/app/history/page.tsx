@@ -135,7 +135,7 @@ export default function HistoryPage() {
             const voted = votes[entry.url];
             return (
               <Card key={`${entry.date}-${i}`}>
-                <CardHeader className="pb-2">
+                <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-1.5">
                       <p className="text-xs font-mono text-muted-foreground/70">
@@ -149,7 +149,7 @@ export default function HistoryPage() {
                         onClick={() => submitFeedback(entry, 1)}
                         disabled={!!voted}
                         aria-label="Thumbs up"
-                        className={`p-1.5 rounded-md transition-colors ${
+                        className={`p-1.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                           voted === 1
                             ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
                             : voted
@@ -163,7 +163,7 @@ export default function HistoryPage() {
                         onClick={() => submitFeedback(entry, -1)}
                         disabled={!!voted}
                         aria-label="Thumbs down"
-                        className={`p-1.5 rounded-md transition-colors ${
+                        className={`p-1.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                           voted === -1
                             ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"
                             : voted

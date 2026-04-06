@@ -91,7 +91,7 @@ export function Nav() {
         <div className="flex items-center h-14 gap-4 max-w-[1100px] mx-auto px-6">
           {/* Mobile menu */}
           <button
-            className="md:hidden p-1.5 rounded-lg hover:bg-muted"
+            className="md:hidden p-1.5 rounded-lg hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
           >
@@ -135,7 +135,7 @@ export function Nav() {
               onClick={sendTest}
               disabled={sendStatus === "sending"}
               className={cn(
-                "hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors",
+                "hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 sendStatus === "sent"
                   ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
                   : sendStatus === "error"
@@ -166,7 +166,7 @@ export function Nav() {
               onClick={togglePause}
               disabled={pauseLoading}
               className={cn(
-                "flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-colors",
+                "flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 paused
                   ? "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400"
                   : "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
@@ -190,7 +190,7 @@ export function Nav() {
                 <Brain className="h-6 w-6 text-primary" />
                 <span className="font-display font-bold text-sm text-foreground">AI Dev Digest</span>
               </div>
-              <button onClick={closeMobile} aria-label="Close menu" className="p-1 rounded-lg hover:bg-muted">
+              <button onClick={closeMobile} aria-label="Close menu" className="p-1 rounded-lg hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -219,7 +219,7 @@ export function Nav() {
               <button
                 onClick={() => { sendTest(); closeMobile(); }}
                 disabled={sendStatus === "sending"}
-                className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <Send className="h-5 w-5" />
                 Send test message

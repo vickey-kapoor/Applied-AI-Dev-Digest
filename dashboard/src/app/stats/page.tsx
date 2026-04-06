@@ -44,7 +44,7 @@ export default function StatsPage() {
 
   if (loading) {
     return (
-      <div className="py-8">
+      <div className="py-8 max-w-3xl mx-auto">
         <div className="h-8 w-48 bg-muted rounded animate-pulse mb-8" />
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="h-12 bg-muted rounded animate-pulse mb-3" />
@@ -54,7 +54,7 @@ export default function StatsPage() {
   }
 
   return (
-    <div className="py-8">
+    <div className="py-8 max-w-3xl mx-auto">
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-1">
           <BarChart3 className="h-7 w-7 text-primary" />

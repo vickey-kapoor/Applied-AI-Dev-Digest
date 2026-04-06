@@ -40,13 +40,13 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+      className="p-1.5 rounded-lg hover:bg-muted transition-colors"
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
     >
       {dark ? (
-        <Sun className="h-4 w-4 text-gray-400" />
+        <Sun className="h-4 w-4 text-muted-foreground" />
       ) : (
-        <Moon className="h-4 w-4 text-gray-400" />
+        <Moon className="h-4 w-4 text-muted-foreground" />
       )}
     </button>
   );

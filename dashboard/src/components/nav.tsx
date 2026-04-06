@@ -87,7 +87,7 @@ export function Nav() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-40 border-b border-border bg-background/95 backdrop-blur">
-        <div className="flex items-center h-14 gap-4" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px' }}>
+        <div className="flex items-center h-14 gap-4" style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px' }}>
           {/* Mobile menu */}
           <button
             className="md:hidden p-1.5 rounded-lg hover:bg-card"

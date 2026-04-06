@@ -27,7 +27,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Nav />
-        <main id="main-content" className="min-h-screen pt-14" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px' }}>
+        <main id="main-content" className="min-h-screen pt-14" style={{ maxWidth: '1100px', margin: '0 auto', paddingLeft: '24px', paddingRight: '24px' }}>
           {children}
         </main>
       </body>

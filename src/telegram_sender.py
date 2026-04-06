@@ -76,32 +76,63 @@ def _escape_markdown(text: str) -> str:
 
 def format_research_message(research: dict) -> str:
     """
-    Format product update into a Telegram message.
+    Format item into a Telegram message using the structured dev digest format.
 
     Args:
-        research: Product update dictionary with title, source, description, url, summary
+        research: Item dictionary with title, source, url, and structured summary fields
 
     Returns:
         Formatted message string with Markdown
     """
     if not research:
-        return "*Daily AI Dev Digest*\n\nNo updates found today."
+        return "*Applied AI Dev Digest*\n\nNo updates found today."
 
     title = _escape_markdown(research.get("title", "Untitled"))
     source = _escape_markdown(research.get("source", "Unknown"))
     url = _validate_url(research.get("url", ""))
-    summary = _escape_markdown(research.get("summary", ""))
+    item_type = research.get("type", "announcement")
 
-    message = f"""*Daily AI Dev Digest*
+    # Build topic tag from type
+    type_tags = {
+        "announcement": "#Announcement",
+        "release": "#Release",
+        "discussion": "#Discussion",
+    }
+    tag = type_tags.get(item_type, "#Update")
+
+    # Structured summary fields
+    why = _escape_markdown(research.get("why_it_matters", ""))
+    what = _escape_markdown(research.get("what_it_is", ""))
+    how = _escape_markdown(research.get("how_to_use_it", ""))
+    take = _escape_markdown(research.get("dev_take", ""))
+
+    # Fall back to flat summary if structured fields are missing
+    if not why and not what:
+        summary = _escape_markdown(research.get("summary", ""))
+        message = f"""{tag} \u00b7 {source}
 
 *{title}*
 
 {summary}
 
-{url}
-_Lab: {source}_"""
+{url}"""
+        return message
 
-    return message
+    lines = [f"{tag} \u00b7 {source}", "", f"*{title}*"]
+
+    if why:
+        lines += ["", f"*Why it matters*", why]
+    if what:
+        lines += ["", f"*What it is*", what]
+    if how:
+        lines += ["", f"*How to use it*", how]
+    if take:
+        lines += ["", f"*Dev take*", take]
+
+    if url:
+        lines += ["", url]
+
+    return "\n".join(lines)
 
 
 @retry_with_backoff(max_retries=2, base_delay=1.0, exceptions=(requests.RequestException,))

@@ -1,13 +1,15 @@
-# AI Research Telegram Digest
+# Applied AI Dev Digest
 
-Get the latest AI developer product updates delivered to your Telegram daily - explained simply, like talking to a friend.
+Daily digest of what's shipping in AI/ML — delivered to Telegram. Tracks blog announcements, GitHub releases, and Hacker News discussions relevant to working ML/AI engineers.
 
 ## Features
 
-- Fetches developer product updates from Tier 1 AI lab blogs (OpenAI, Google DeepMind, Meta AI)
-- **13 configurable topics** (Core / Applied Domains / Emerging) with toggle UI and custom keywords
-- Uses GPT-4o-mini to select the most impactful update, influenced by **user feedback weights**
-- Generates **ELI5 summaries** (simple explanations anyone can understand)
+- Fetches from **8 AI lab/platform blogs** via RSS (OpenAI, Anthropic, Google DeepMind, Meta AI, Mistral, Microsoft AI, AWS AI, Hugging Face)
+- Tracks **10 key GitHub repos** for new releases (transformers, LangChain, vLLM, Ollama, etc.)
+- Monitors **Hacker News** for top AI/ML discussions (score > 100, last 24h)
+- **10 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords
+- Uses GPT-4o-mini to select the most impactful item, influenced by **user feedback weights**
+- Generates **structured dev summaries** (Why it matters / What it is / How to use it / Dev take)
 - Sends to Telegram via Bot API
 - Produces a PDF report and weekly digest roundup
 - Exports structured data to JSON (papers + digests)
@@ -22,29 +24,86 @@ Next.js app deployed on Vercel with top nav: **Topics · Preview · History · S
 
 | Page | Description |
 |------|-------------|
-| **Topics** | Toggle 13 research topics on/off, add custom keywords per topic |
+| **Topics** | Toggle 10 dev-focused topics on/off, add custom keywords per topic |
 | **Preview** | Run the pipeline on-demand, preview the Telegram message, send it |
-| **History** | Weekly list of sent papers with 👍/👎 feedback buttons |
+| **History** | Weekly list of sent items with feedback buttons |
 | **Stats** | Bar chart showing which topics win the daily ranking most often |
-| **Settings** | Data sources, schedule, Telegram config, GitHub Actions link |
+| **Settings** | Blog sources, GitHub repos, HN config, schedule, Telegram, Actions link |
 
 All state (topics, pause, feedback, stats) stored in **Vercel KV** (Upstash Redis).
 
 ## Example Message
 
 ```
-*Daily AI Dev Digest*
+#Announcement · OpenAI
 
 *Introducing GPT-5.4 mini and nano*
 
-Think of it like a restaurant that just added an express counter.
-You still get the same quality food, but there's now a faster,
-cheaper option for when you just need a quick bite. Developers
-can now build apps that respond quicker and cost less to run.
+*Why it matters*
+Major price drop for high-volume API users with no quality regression.
+
+*What it is*
+GPT-5.4 mini and nano are smaller, cheaper versions of GPT-5.4.
+Mini supports 256K context at $0.10/1M input tokens.
+Nano is optimized for classification and extraction at $0.03/1M.
+
+*How to use it*
+pip install --upgrade openai; use model IDs gpt-5.4-mini or gpt-5.4-nano.
+
+*Dev take*
+Worth testing immediately for production workloads where cost matters.
 
 https://openai.com/index/introducing-gpt-5-4-mini-and-nano
-_Lab: OpenAI_
 ```
+
+## Data Sources
+
+### Blog Feeds
+
+| Source | Feed |
+|--------|------|
+| OpenAI | openai.com/blog/rss.xml |
+| Anthropic | anthropic.com/rss.xml |
+| Google DeepMind | deepmind.google/blog/rss.xml |
+| Meta AI | ai.meta.com/blog/rss/ |
+| Mistral | mistral.ai/news/rss |
+| Microsoft AI | blogs.microsoft.com/ai/feed/ |
+| AWS AI | aws.amazon.com/blogs/machine-learning/feed/ |
+| Hugging Face | huggingface.co/blog/feed.xml |
+
+### GitHub Releases
+
+| Repo | Why |
+|------|-----|
+| huggingface/transformers | Core ML library |
+| langchain-ai/langchain | Agent framework |
+| run-llama/llama_index | RAG framework |
+| vllm-project/vllm | Inference engine |
+| ollama/ollama | Local model runner |
+| openai/openai-python | OpenAI SDK |
+| anthropics/anthropic-sdk-python | Anthropic SDK |
+| microsoft/autogen | Multi-agent framework |
+| unsloth/unsloth | Fine-tuning |
+| ggerganov/llama.cpp | Local inference |
+
+### Hacker News
+
+Top 100 stories filtered by AI/ML keywords, score > 100, last 24 hours. Top 5 returned.
+
+## Topics
+
+| ID | Name | Category | Keywords |
+|----|------|----------|----------|
+| models | New Model Releases | Core | GPT, Claude, Gemini, Llama, Mistral, model release |
+| apis | API & SDK Updates | Core | API, SDK, endpoint, breaking change, deprecation |
+| frameworks | Dev Frameworks | Core | LangChain, LlamaIndex, AutoGen, CrewAI, framework |
+| inference | Inference & Deployment | Applied | vLLM, Ollama, TensorRT, quantization, serving, deployment |
+| finetuning | Fine-tuning & Training | Applied | fine-tuning, LoRA, QLoRA, Unsloth, training, PEFT |
+| rag | RAG & Memory | Applied | RAG, retrieval, vector database, embedding, memory |
+| agents | AI Agents | Applied | agent, tool use, multi-agent, autonomous, agentic |
+| opensource | Open Source Releases | Applied | open source, open weights, Apache, MIT license |
+| safety | Safety & Alignment | Emerging | safety, alignment, jailbreak, red-teaming, guardrails |
+| hardware | Hardware & Efficiency | Emerging | GPU, TPU, chip, CUDA, inference cost, hardware |
 
 ## Setup
 
@@ -75,9 +134,13 @@ _Lab: OpenAI_
 | `KV_REST_API_URL` | Upstash Redis REST URL (optional — enables dynamic topics) |
 | `KV_REST_API_TOKEN` | Upstash Redis REST token (optional — enables dynamic topics) |
 
+`GITHUB_TOKEN` is automatically provided by GitHub Actions — no manual secret needed for release tracking.
+
 **Vercel Environment Variables** (Project Settings > Environment Variables):
 
-Add the same `KV_REST_API_URL`, `KV_REST_API_TOKEN`, `TELEGRAM_BOT_TOKEN`, and `TELEGRAM_CHAT_ID` to enable dashboard features (send test, pause, feedback, stats).
+Add `KV_REST_API_URL`, `KV_REST_API_TOKEN`, `TELEGRAM_BOT_TOKEN`, and `TELEGRAM_CHAT_ID` to enable dashboard features (send test, pause, feedback, stats).
+
+**For local development:** Set `GITHUB_TOKEN` in `.env` to a personal access token for GitHub release fetching. This is optional — the fetcher works without auth but has lower rate limits.
 
 ### 3. Adjust Schedule (Optional)
 
@@ -137,18 +200,20 @@ ai-research-digest/
 │   └── daily-news.yml            # GitHub Actions (daily + weekly)
 ├── src/
 │   ├── fetchers/
-│   │   └── blog_fetcher.py       # RSS fetch from AI lab blogs
+│   │   ├── blog_fetcher.py       # RSS fetch from 8 AI lab/platform blogs
+│   │   ├── github_fetcher.py     # GitHub release tracking (10 repos)
+│   │   └── hackernews_fetcher.py # HN top stories filtered to AI/ML
 │   ├── utils/
 │   │   └── retry.py              # Retry with exponential backoff
 │   ├── ai_text.py                # Prompt sanitization
 │   ├── constants.py              # All config constants
+│   ├── fetcher.py                # Source aggregation + URL deduplication
 │   ├── json_exporter.py          # Atomic JSON export (papers + digests)
 │   ├── kv_client.py              # Vercel KV (Upstash Redis) client
 │   ├── logger.py                 # Centralized logging
 │   ├── news_ranker.py            # GPT-4o-mini ranking + feedback weights
-│   ├── news_summarizer.py        # ELI5 summary generation
+│   ├── news_summarizer.py        # Structured dev summary generation
 │   ├── pdf_generator.py          # PDF report generation
-│   ├── research_fetcher.py       # Aggregation + deduplication
 │   ├── telegram_sender.py        # Telegram Bot API
 │   └── topic_config.py           # Dynamic topic config from KV
 ├── dashboard/                    # Next.js dashboard (Vercel)
@@ -167,20 +232,12 @@ ai-research-digest/
 │           └── kv.ts             # Shared Redis client
 ├── data/                         # papers.json + digests.json
 ├── reports/                      # Generated PDF reports
-├── tests/                        # Pytest test suite (160+ tests)
+├── tests/                        # Pytest test suite (150+ tests)
 ├── main.py                       # Pipeline entry point
 ├── preview.py                    # Preview pipeline (no Telegram send)
 ├── weekly_digest.py              # Sunday weekly roundup
 └── requirements.txt
 ```
-
-## Blog Sources
-
-| Source | Feed |
-|--------|------|
-| OpenAI | openai.com/blog/rss.xml |
-| Google DeepMind | deepmind.google/blog/rss.xml |
-| Meta AI | engineering.fb.com/feed/ |
 
 ## License
 

@@ -80,13 +80,13 @@ def generate_research_pdf(research: dict, output_dir: str = "reports") -> str:
 
     # Sanitize all text inputs
     title = _sanitize_text_for_pdf(research.get("title", "Today's AI Discovery"))
-    authors = _sanitize_text_for_pdf(research.get("authors", "Unknown researchers"))
+    authors = _sanitize_text_for_pdf(research.get("source", "Unknown"))
     source = _sanitize_text_for_pdf(research.get("source", "Unknown"))
     # Use detailed_summary for PDF if available, fallback to short summary
     summary = _sanitize_text_for_pdf(
         research.get("detailed_summary", "") or research.get("summary", "")
     )
-    description = _sanitize_text_for_pdf(research.get("description", ""))
+    description = _sanitize_text_for_pdf(research.get("summary", ""))
     url = research.get("url", "")
 
     # Create PDF

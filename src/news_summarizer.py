@@ -1,4 +1,6 @@
-"""Generate developer-focused summaries for AI product updates."""
+"""Generate structured dev-focused summaries for AI/dev news items."""
+
+import json
 
 from openai import OpenAI
 
@@ -11,11 +13,11 @@ logger = get_logger(__name__)
 
 
 def _prepare_inputs(research: dict) -> tuple[str, str, str]:
-    """Sanitize and extract title, authors, and description from a research item."""
+    """Sanitize and extract title, source, and summary from an item."""
     title = sanitize_prompt_text(research.get("title", ""), 200)
-    authors = sanitize_prompt_text(research.get("authors", "Unknown"), 100)
-    description = sanitize_prompt_text(research.get("description", ""), 800)
-    return title, authors, description
+    source = sanitize_prompt_text(research.get("source", "Unknown"), 100)
+    summary = sanitize_prompt_text(research.get("summary", ""), 800)
+    return title, source, summary
 
 
 @retry_with_backoff(max_retries=2, base_delay=1.0, exceptions=(Exception,))
@@ -31,62 +33,74 @@ def _call_openai(client: OpenAI, prompt: str) -> str:
 
 
 def summarize_research_bundle(research: dict, api_key: str) -> dict:
-    """
-    Generate both short and detailed summaries in a single model call.
+    """Generate a structured dev-focused summary in a single model call.
 
-    Returns the original paper unchanged if the request fails.
+    Returns the original item unchanged if the request fails.
     """
     if not api_key:
         return research
 
     client = OpenAI(api_key=api_key)
-    title, authors, abstract = _prepare_inputs(research)
+    title, source, description = _prepare_inputs(research)
 
-    prompt = f"""You explain AI research to people with no technical background.
+    prompt = f"""You are explaining AI/dev news to a senior ML engineer.
+Be direct and technical. No hype.
 
-Paper: {title}
-Authors: {authors}
-Abstract: {abstract}
+Item title: {title}
+Source: {source}
+Description: {description}
 
-Write two outputs:
-
-SHORT_SUMMARY:
-- 4-5 simple sentences
-- explain the problem, what they built, how it works in everyday terms, and why a regular person should care
-
-DETAILED_SUMMARY:
-- 8-12 paragraphs
-- explain the big picture, what they did, why it is clever, real-world impact, and the bottom line
-
-RULES:
-- No jargon
-- No technical terms like model, algorithm, neural network, training, parameters, architecture, benchmark, transformer, LLM
-- Use everyday analogies
-- Be warm and conversational
-
-Respond in exactly this format:
-SHORT_SUMMARY:
-<text>
-
-DETAILED_SUMMARY:
-<text>"""
+Return JSON (no markdown fences):
+{{
+  "why_it_matters": "One sentence — what changed and why a dev should care",
+  "what_it_is": "2-3 sentences — what exactly was released/announced, key specs or capabilities",
+  "how_to_use_it": "1-2 sentences — how to get started or what to watch (pip install, API endpoint, repo link)",
+  "dev_take": "One honest sentence — is this worth your time or just noise?"
+}}"""
 
     try:
         content = _call_openai(client, prompt)
-        parts = content.split("DETAILED_SUMMARY:", maxsplit=1)
-        if len(parts) != 2 or "SHORT_SUMMARY:" not in parts[0]:
-            return research
+        # Strip markdown fences if model adds them
+        content = content.strip()
+        if content.startswith("```"):
+            content = content.split("\n", 1)[-1]
+        if content.endswith("```"):
+            content = content.rsplit("```", 1)[0]
+        content = content.strip()
 
-        short_summary = parts[0].split("SHORT_SUMMARY:", maxsplit=1)[1].strip()
-        detailed_summary = parts[1].strip()
-        if not short_summary and not detailed_summary:
+        parsed = json.loads(content)
+        if not isinstance(parsed, dict):
             return research
 
         research_with_summaries = research.copy()
-        if short_summary:
-            research_with_summaries["summary"] = short_summary
-        if detailed_summary:
-            research_with_summaries["detailed_summary"] = detailed_summary
+
+        # Store structured fields
+        for key in ("why_it_matters", "what_it_is", "how_to_use_it", "dev_take"):
+            if parsed.get(key):
+                research_with_summaries[key] = parsed[key]
+
+        # Build short summary for backward compat (Telegram, KV, etc.)
+        parts = []
+        if parsed.get("why_it_matters"):
+            parts.append(parsed["why_it_matters"])
+        if parsed.get("what_it_is"):
+            parts.append(parsed["what_it_is"])
+        if parts:
+            research_with_summaries["summary"] = " ".join(parts)
+
+        # Build detailed summary for PDF
+        detail_parts = []
+        for key, label in [
+            ("why_it_matters", "Why it matters"),
+            ("what_it_is", "What it is"),
+            ("how_to_use_it", "How to use it"),
+            ("dev_take", "Dev take"),
+        ]:
+            if parsed.get(key):
+                detail_parts.append(f"**{label}**\n{parsed[key]}")
+        if detail_parts:
+            research_with_summaries["detailed_summary"] = "\n\n".join(detail_parts)
+
         return research_with_summaries
     except Exception:
         logger.warning("Could not generate summaries")

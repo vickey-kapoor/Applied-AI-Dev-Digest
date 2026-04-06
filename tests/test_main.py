@@ -36,7 +36,7 @@ class TestMain:
     @patch("main.summarize_research_bundle")
     @patch("main.export_papers")
     @patch("main.rank_research")
-    @patch("main.fetch_ai_research")
+    @patch("main.fetch_all")
     @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
     @patch("main.is_paused", return_value=False)
@@ -45,7 +45,7 @@ class TestMain:
         mock_paused,
         mock_get_active_keywords,
         mock_increment_stat,
-        mock_fetch_ai_research,
+        mock_fetch_all,
         mock_rank_research,
         mock_export_papers,
         mock_summarize_research_bundle,
@@ -59,10 +59,11 @@ class TestMain:
         """The app should generate both summaries through the bundled call."""
         paper = {
             "title": "Test Paper",
-            "description": "Test description",
-            "source": "arXiv",
-            "url": "https://arxiv.org/abs/1234.5678",
-            "authors": "Test Author",
+            "summary": "Test summary",
+            "url": "https://openai.com/blog/test",
+            "source": "OpenAI",
+            "published": "2024-07-18T00:00:00",
+            "type": "announcement",
         }
         enriched_paper = {
             **paper,
@@ -70,7 +71,7 @@ class TestMain:
             "detailed_summary": "Detailed summary",
         }
 
-        mock_fetch_ai_research.return_value = [paper]
+        mock_fetch_all.return_value = [paper]
         mock_rank_research.return_value = paper
         mock_export_papers.return_value = "paper-1"
         mock_summarize_research_bundle.return_value = enriched_paper
@@ -91,7 +92,7 @@ class TestMain:
     @patch("main.export_digest")
     @patch("main.export_papers")
     @patch("main.rank_research")
-    @patch("main.fetch_ai_research")
+    @patch("main.fetch_all")
     @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
     @patch("main.is_paused", return_value=False)
@@ -100,7 +101,7 @@ class TestMain:
         mock_paused,
         mock_get_active_keywords,
         mock_increment_stat,
-        mock_fetch_ai_research,
+        mock_fetch_all,
         mock_rank_research,
         mock_export_papers,
         mock_export_digest,
@@ -113,13 +114,14 @@ class TestMain:
         """The app should log error but continue if Telegram send fails."""
         paper = {
             "title": "Test Paper",
-            "description": "Test description",
-            "source": "arXiv",
-            "url": "https://arxiv.org/abs/1234.5678",
-            "authors": "Test Author",
+            "summary": "Test summary",
+            "url": "https://openai.com/blog/test",
+            "source": "OpenAI",
+            "published": "2024-07-18T00:00:00",
+            "type": "announcement",
         }
 
-        mock_fetch_ai_research.return_value = [paper]
+        mock_fetch_all.return_value = [paper]
         mock_rank_research.return_value = paper
         mock_export_papers.return_value = "paper-1"
         mock_summarize_research_bundle.return_value = paper

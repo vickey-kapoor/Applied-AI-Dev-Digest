@@ -11,93 +11,62 @@ logger = get_logger(__name__)
 # Mirror of dashboard/src/lib/topics.ts — canonical topic definitions
 DEFAULT_TOPICS = [
     {
+        "id": "models",
+        "keywords": ["GPT", "Claude", "Gemini", "Llama", "Mistral", "model release"],
+        "default_enabled": True,
+    },
+    {
+        "id": "apis",
+        "keywords": ["API", "SDK", "endpoint", "breaking change", "deprecation"],
+        "default_enabled": True,
+    },
+    {
+        "id": "frameworks",
+        "keywords": ["LangChain", "LlamaIndex", "AutoGen", "CrewAI", "framework"],
+        "default_enabled": True,
+    },
+    {
+        "id": "inference",
+        "keywords": ["vLLM", "Ollama", "TensorRT", "quantization", "serving", "deployment"],
+        "default_enabled": True,
+    },
+    {
+        "id": "finetuning",
+        "keywords": ["fine-tuning", "LoRA", "QLoRA", "Unsloth", "training", "PEFT"],
+        "default_enabled": True,
+    },
+    {
+        "id": "rag",
+        "keywords": ["RAG", "retrieval", "vector database", "embedding", "memory"],
+        "default_enabled": True,
+    },
+    {
         "id": "agents",
-        "keywords": ["agent", "tool use", "multi-agent", "agentic", "function calling"],
-        "arxiv_categories": ["cs.AI", "cs.MA"],
+        "keywords": ["agent", "tool use", "multi-agent", "autonomous", "agentic"],
         "default_enabled": True,
     },
     {
-        "id": "reasoning",
-        "keywords": ["reasoning", "chain-of-thought", "planning"],
-        "arxiv_categories": ["cs.AI", "cs.LG"],
+        "id": "opensource",
+        "keywords": ["open source", "open weights", "Apache", "MIT license"],
         "default_enabled": True,
-    },
-    {
-        "id": "alignment",
-        "keywords": ["rlhf", "dpo", "instruction tuning", "alignment", "fine-tuning", "fine-tune"],
-        "arxiv_categories": ["cs.CL", "cs.LG"],
-        "default_enabled": True,
-    },
-    {
-        "id": "codegen",
-        "keywords": [
-            "code generation", "program synthesis", "coding assistant",
-            "developer tools", "cli", "sdk", "api", "endpoint", "playground", "library",
-        ],
-        "arxiv_categories": ["cs.SE", "cs.PL"],
-        "default_enabled": True,
-    },
-    {
-        "id": "science",
-        "keywords": ["drug discovery", "materials science", "protein", "molecular"],
-        "arxiv_categories": ["cs.LG", "q-bio"],
-        "default_enabled": True,
-    },
-    {
-        "id": "multimodal",
-        "keywords": ["multimodal", "vision-language", "vlm", "audio"],
-        "arxiv_categories": ["cs.CV", "cs.CL"],
-        "default_enabled": False,
-    },
-    {
-        "id": "robotics",
-        "keywords": ["robotics", "embodied", "manipulation", "sim-to-real"],
-        "arxiv_categories": ["cs.RO"],
-        "default_enabled": False,
-    },
-    {
-        "id": "healthcare",
-        "keywords": ["healthcare", "medical", "clinical", "diagnostics"],
-        "arxiv_categories": ["cs.AI", "cs.LG"],
-        "default_enabled": True,
-    },
-    {
-        "id": "finance",
-        "keywords": ["finance", "trading", "forecasting", "risk"],
-        "arxiv_categories": ["cs.LG", "q-fin"],
-        "default_enabled": False,
-    },
-    {
-        "id": "nlp",
-        "keywords": ["nlp", "summarization", "translation", "dialogue"],
-        "arxiv_categories": ["cs.CL"],
-        "default_enabled": False,
     },
     {
         "id": "safety",
-        "keywords": ["safety", "interpretability", "mechanistic", "red-teaming"],
-        "arxiv_categories": ["cs.AI", "cs.LG"],
+        "keywords": ["safety", "alignment", "jailbreak", "red-teaming", "guardrails"],
         "default_enabled": True,
     },
     {
-        "id": "efficient",
-        "keywords": ["quantization", "distillation", "speculative decoding", "moe"],
-        "arxiv_categories": ["cs.LG", "cs.AR"],
-        "default_enabled": False,
-    },
-    {
-        "id": "synthetic",
-        "keywords": ["synthetic data", "self-play", "self-improvement"],
-        "arxiv_categories": ["cs.LG", "cs.AI"],
+        "id": "hardware",
+        "keywords": ["GPU", "TPU", "chip", "CUDA", "inference cost", "hardware"],
         "default_enabled": False,
     },
 ]
 
-# Additional keywords from original FILTER_KEYWORDS that supplement topic-based filtering
+# Additional keywords that supplement topic-based filtering
 _SUPPLEMENTAL_KEYWORDS = [
-    "model", "release", "launch", "new model", "new feature",
-    "developer", "embeddings", "context window", "pricing",
-    "generally available", "beta", "integration",
+    "model", "release", "launch", "new feature",
+    "developer", "inference", "pricing",
+    "generally available", "beta", "open source",
 ]
 
 
@@ -170,15 +139,6 @@ def get_active_keywords() -> list[str]:
                 keywords.update(kw for kw in kw_list if isinstance(kw, str))
 
     return sorted(keywords)
-
-
-def get_active_arxiv_categories() -> list[str]:
-    """Get deduplicated arXiv categories from all active topics."""
-    topics = get_active_topics()
-    categories = set()
-    for topic in topics:
-        categories.update(topic["arxiv_categories"])
-    return sorted(categories)
 
 
 def is_paused() -> bool:

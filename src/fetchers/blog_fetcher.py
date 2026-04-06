@@ -29,7 +29,7 @@ class _HTMLTextExtractor(HTMLParser):
 
 def _is_dev_relevant(post: dict, filter_keywords: list[str] | None = None) -> bool:
     """Check if a post is developer-relevant based on keyword matching."""
-    text = f"{post.get('title', '')} {post.get('description', '')}".lower()
+    text = f"{post.get('title', '')} {post.get('summary', '')}".lower()
     if any(kw in text for kw in EXCLUDE_KEYWORDS):
         return False
     keywords = filter_keywords if filter_keywords is not None else FILTER_KEYWORDS
@@ -95,14 +95,11 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int, filter_keywor
 
             post = {
                 "title": title.strip(),
-                "description": summary.strip(),
-                "source": source,
-                "lab": source,
+                "summary": summary.strip(),
                 "url": entry.get("link", ""),
-                "published_at": _parse_date(entry),
-                "type": "product_update",
-                "authors": source,
-                "topics": [],
+                "source": source,
+                "published": _parse_date(entry),
+                "type": "announcement",
             }
             posts.append(post)
 
@@ -140,7 +137,7 @@ def fetch_blog_posts(max_results: int = 5, filter_keywords: list[str] | None = N
 
     # Sort by published date (most recent first)
     all_posts.sort(
-        key=lambda x: x.get("published_at", ""),
+        key=lambda x: x.get("published", ""),
         reverse=True,
     )
 

@@ -37,12 +37,12 @@ class TestPapersCapEnforcement:
             existing_papers.append({
                 "id": f"paper-{i}",
                 "title": f"Existing Paper {i}",
-                "description": f"Description {i}",
+                "summary": f"Summary {i}",
                 "source": "Test",
                 "url": f"https://example.com/paper-{i}",
                 "published_at": f"2026-01-{i % 28 + 1:02d}",
                 "fetched_at": f"2026-01-{i % 28 + 1:02d}T00:00:00Z",
-                "authors": "Author",
+                "type": "announcement",
                 "topics": [],
                 "ranking_score": 0,
                 "status": "unread",
@@ -55,11 +55,11 @@ class TestPapersCapEnforcement:
         # Add one more paper
         new_paper = {
             "title": "Brand New Paper",
-            "description": "New description",
-            "source": "Test",
+            "summary": "New description",
             "url": "https://example.com/brand-new",
-            "published_at": "2026-03-17",
-            "authors": "New Author",
+            "source": "Test",
+            "published": "2026-03-17",
+            "type": "announcement",
         }
         export_papers([new_paper])
 
@@ -121,7 +121,7 @@ class TestFullPipelineFlow:
     @patch("main.summarize_research_bundle")
     @patch("main.export_papers")
     @patch("main.rank_research")
-    @patch("main.fetch_ai_research")
+    @patch("main.fetch_all")
     def test_pipeline_runs_end_to_end(
         self,
         mock_fetch,
@@ -139,10 +139,11 @@ class TestFullPipelineFlow:
 
         paper = {
             "title": "Test Paper",
-            "description": "Test",
-            "source": "OpenAI",
+            "summary": "Test",
             "url": "https://openai.com/test",
-            "authors": "Test Author",
+            "source": "OpenAI",
+            "published": "2024-07-18T00:00:00",
+            "type": "announcement",
         }
         enriched = {**paper, "summary": "Short", "detailed_summary": "Detailed"}
 

@@ -10,26 +10,26 @@ from weekly_digest import _deduplicate, _format_weekly_message, main
 SAMPLE_PAPERS = [
     {
         "title": "Paper Alpha",
-        "authors": "Alice et al",
-        "institution": "Lab A",
-        "topic_id": "LLM",
+        "source": "OpenAI",
+        "type": "announcement",
+        "topic_id": "models",
         "url": "https://example.com/alpha",
         "why_it_matters": "Breakthrough in reasoning.",
         "date": "2026-04-01",
     },
     {
         "title": "Paper Beta",
-        "authors": "Bob et al",
-        "institution": None,
-        "topic_id": "Vision",
+        "source": "GitHub",
+        "type": "release",
+        "topic_id": "frameworks",
         "url": "https://example.com/beta",
         "why_it_matters": "New multimodal approach.",
         "date": "2026-04-02",
     },
     {
         "title": "Paper Gamma",
-        "authors": "Charlie",
-        "institution": "Lab C",
+        "source": "Hacker News",
+        "type": "discussion",
         "topic_id": None,
         "url": "https://example.com/gamma",
         "why_it_matters": "",
@@ -76,17 +76,18 @@ class TestFormatWeeklyMessage:
         assert "2\\." in msg
         assert "3\\." in msg
 
-    def test_includes_authors(self):
+    def test_includes_source(self):
         msg = _format_weekly_message(SAMPLE_PAPERS)
-        assert "Alice et al" in msg
+        assert "OpenAI" in msg
 
-    def test_includes_institution_when_present(self):
+    def test_includes_type_when_present(self):
         msg = _format_weekly_message(SAMPLE_PAPERS)
-        assert "Lab A" in msg
+        assert "announcement" in msg
 
-    def test_skips_institution_when_none(self):
-        msg = _format_weekly_message([SAMPLE_PAPERS[1]])
-        assert "\u00b7 Lab" not in msg
+    def test_skips_type_when_empty(self):
+        paper = {**SAMPLE_PAPERS[0], "type": ""}
+        msg = _format_weekly_message([paper])
+        assert "\u00b7 _\n" not in msg
 
     def test_includes_footer(self):
         msg = _format_weekly_message(SAMPLE_PAPERS)
@@ -128,7 +129,7 @@ class TestMain:
     def test_deduplicates_before_sending(self, mock_get, mock_send, mock_del, monkeypatch):
         monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "token")
         monkeypatch.setenv("TELEGRAM_CHAT_ID", "123")
-        papers = SAMPLE_PAPERS + [{"title": "Paper Alpha", "authors": "Dupe"}]
+        papers = SAMPLE_PAPERS + [{"title": "Paper Alpha", "source": "Dupe"}]
         mock_get.return_value = papers
 
         main()

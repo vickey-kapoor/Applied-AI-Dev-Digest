@@ -1,4 +1,4 @@
-name: Daily AI Research Digest
+name: Daily Applied AI Dev Digest
 
 # Sends daily AI research digest to Telegram
 
@@ -43,11 +43,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run news alert
+      - name: Run Applied AI dev digest
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_RUN_ID: ${{ github.run_id }}
           KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
           KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
@@ -64,7 +65,7 @@ jobs:
       - name: Annotate on failure
         if: failure()
         run: |
-          echo "::error::Daily AI Research Digest pipeline failed. Check the logs above for details."
+          echo "::error::Applied AI Dev Digest pipeline failed. Check the logs above for details."
 
   weekly-digest:
     runs-on: ubuntu-latest

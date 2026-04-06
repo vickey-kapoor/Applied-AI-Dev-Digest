@@ -20,7 +20,7 @@ DIGEST_MAX_RESULTS = int(os.getenv("DIGEST_MAX_RESULTS", "10"))
 # OpenAI model settings
 OPENAI_MODEL = "gpt-4o-mini"
 OPENAI_TEMPERATURE = 0.7
-OPENAI_MAX_TOKENS_RANKING = 10
+OPENAI_MAX_TOKENS_RANKING = 150
 OPENAI_MAX_TOKENS_SUMMARY = 500
 OPENAI_MAX_TOKENS_DETAILED = 1500
 OPENAI_MAX_TOKENS_BUNDLE = 1800
@@ -101,10 +101,37 @@ EXCLUDE_KEYWORDS = [
     "funding round",
 ]
 
-# Blog RSS feeds for Tier 1 AI Labs
+# Blog RSS feeds for AI labs and platforms
 BLOG_FEEDS = {
     "OpenAI": "https://openai.com/blog/rss.xml",
-    # Anthropic removed their RSS feed (returns 404 since ~March 2026)
+    "Anthropic": "https://www.anthropic.com/rss.xml",
     "Google DeepMind": "https://deepmind.google/blog/rss.xml",
-    "Meta AI": "https://engineering.fb.com/feed/",
+    "Meta AI": "https://ai.meta.com/blog/rss/",
+    "Mistral": "https://mistral.ai/news/rss",
+    "Microsoft AI": "https://blogs.microsoft.com/ai/feed/",
+    "AWS AI": "https://aws.amazon.com/blogs/machine-learning/feed/",
+    "Hugging Face": "https://huggingface.co/blog/feed.xml",
 }
+
+# GitHub repos to track for releases
+GITHUB_REPOS = [
+    "huggingface/transformers",
+    "langchain-ai/langchain",
+    "run-llama/llama_index",
+    "vllm-project/vllm",
+    "ollama/ollama",
+    "openai/openai-python",
+    "anthropics/anthropic-sdk-python",
+    "microsoft/autogen",
+    "unsloth/unsloth",
+    "ggerganov/llama.cpp",
+]
+
+# Hacker News AI/ML filter keywords (case-insensitive match on title)
+HN_KEYWORDS = [
+    "AI", "LLM", "GPT", "Claude", "Gemini", "ML", "machine learning",
+    "neural", "model", "fine-tun", "inference", "RAG", "agent",
+    "transformer", "open source model",
+]
+HN_MIN_SCORE = 100
+HN_MAX_STORIES = 5

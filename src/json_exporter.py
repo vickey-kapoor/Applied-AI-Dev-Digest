@@ -132,12 +132,12 @@ def export_papers(research_items: list[dict], ranked_paper: dict = None) -> str:
         paper = {
             "id": paper_id,
             "title": item.get("title", "Untitled"),
-            "description": item.get("description", "")[:1000],  # Truncate long descriptions
+            "summary": (item.get("summary", "") or "")[:1000],
             "source": item.get("source", "Unknown"),
             "url": item.get("url", ""),
-            "published_at": item.get("published_at", now.split("T")[0]),
+            "published_at": item.get("published", item.get("published_at", now.split("T")[0])),
             "fetched_at": now,
-            "authors": item.get("authors", ""),
+            "type": item.get("type", "announcement"),
             "topics": extract_topics(item),
             "ranking_score": ranked_paper.get("ranking_score", 0) if is_top else 0,
             "status": "unread"
@@ -164,7 +164,7 @@ def extract_topics(item: dict) -> list[str]:
     topics = []
 
     # Add keyword-based topics for developer product features
-    text = f"{item.get('title', '')} {item.get('description', '')}".lower()
+    text = f"{item.get('title', '')} {item.get('summary', '')}".lower()
 
     topic_keywords = {
         "Model Release": ["model", "gpt", "claude", "gemini", "llama", "mistral", "command"],

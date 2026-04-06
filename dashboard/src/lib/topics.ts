@@ -4,7 +4,6 @@ export interface Topic {
   description: string;
   category: "core" | "applied" | "emerging";
   keywords: string[];
-  arxivCategories: string[];
   defaultEnabled: boolean;
 }
 
@@ -13,129 +12,92 @@ export type TopicConfig = Record<string, boolean>;
 export const TOPICS: Topic[] = [
   // Core
   {
+    id: "models",
+    name: "New Model Releases",
+    description: "New models from major labs — GPT, Claude, Gemini, Llama, Mistral",
+    category: "core",
+    keywords: ["GPT", "Claude", "Gemini", "Llama", "Mistral", "model release"],
+    defaultEnabled: true,
+  },
+  {
+    id: "apis",
+    name: "API & SDK Updates",
+    description: "API changes, new SDK versions, breaking changes, deprecations",
+    category: "core",
+    keywords: ["API", "SDK", "endpoint", "breaking change", "deprecation"],
+    defaultEnabled: true,
+  },
+  {
+    id: "frameworks",
+    name: "Dev Frameworks",
+    description: "Updates to LangChain, LlamaIndex, AutoGen, CrewAI, and other frameworks",
+    category: "core",
+    keywords: ["LangChain", "LlamaIndex", "AutoGen", "CrewAI", "framework"],
+    defaultEnabled: true,
+  },
+  // Applied
+  {
+    id: "inference",
+    name: "Inference & Deployment",
+    description: "vLLM, Ollama, TensorRT, quantization, model serving, deployment",
+    category: "applied",
+    keywords: ["vLLM", "Ollama", "TensorRT", "quantization", "serving", "deployment"],
+    defaultEnabled: true,
+  },
+  {
+    id: "finetuning",
+    name: "Fine-tuning & Training",
+    description: "Fine-tuning techniques, LoRA, QLoRA, Unsloth, PEFT, training tools",
+    category: "applied",
+    keywords: ["fine-tuning", "LoRA", "QLoRA", "Unsloth", "training", "PEFT"],
+    defaultEnabled: true,
+  },
+  {
+    id: "rag",
+    name: "RAG & Memory",
+    description: "Retrieval-augmented generation, vector databases, embeddings, memory systems",
+    category: "applied",
+    keywords: ["RAG", "retrieval", "vector database", "embedding", "memory"],
+    defaultEnabled: true,
+  },
+  {
     id: "agents",
-    name: "AI Agents & Tool Use",
-    description: "Autonomous agents, tool integration, and multi-agent collaboration",
-    category: "core",
-    keywords: ["agent", "tool use", "multi-agent", "agentic", "function calling"],
-    arxivCategories: ["cs.AI", "cs.MA"],
+    name: "AI Agents",
+    description: "Agent frameworks, tool use, multi-agent systems, autonomous agents",
+    category: "applied",
+    keywords: ["agent", "tool use", "multi-agent", "autonomous", "agentic"],
     defaultEnabled: true,
   },
   {
-    id: "reasoning",
-    name: "Reasoning & Planning",
-    description: "Chain-of-thought, step-by-step reasoning, and planning capabilities",
-    category: "core",
-    keywords: ["reasoning", "chain-of-thought", "planning"],
-    arxivCategories: ["cs.AI", "cs.LG"],
+    id: "opensource",
+    name: "Open Source Releases",
+    description: "Notable open source and open weight model releases",
+    category: "applied",
+    keywords: ["open source", "open weights", "Apache", "MIT license"],
     defaultEnabled: true,
-  },
-  {
-    id: "alignment",
-    name: "LLM Fine-tuning & Alignment",
-    description: "RLHF, DPO, instruction tuning, and model alignment techniques",
-    category: "core",
-    keywords: ["rlhf", "dpo", "instruction tuning", "alignment", "fine-tuning", "fine-tune"],
-    arxivCategories: ["cs.CL", "cs.LG"],
-    defaultEnabled: true,
-  },
-  // Applied Domains
-  {
-    id: "codegen",
-    name: "Code Generation & Dev Tools",
-    description: "AI-powered code generation, program synthesis, and developer tooling",
-    category: "applied",
-    keywords: ["code generation", "program synthesis", "coding assistant", "developer tools", "cli", "sdk", "api", "endpoint", "playground", "library"],
-    arxivCategories: ["cs.SE", "cs.PL"],
-    defaultEnabled: true,
-  },
-  {
-    id: "science",
-    name: "AI for Science",
-    description: "Drug discovery, materials science, protein folding, and molecular research",
-    category: "applied",
-    keywords: ["drug discovery", "materials science", "protein", "molecular"],
-    arxivCategories: ["cs.LG", "q-bio"],
-    defaultEnabled: true,
-  },
-  {
-    id: "multimodal",
-    name: "Multimodal AI",
-    description: "Vision-language models, audio processing, and cross-modal reasoning",
-    category: "applied",
-    keywords: ["multimodal", "vision-language", "vlm", "audio"],
-    arxivCategories: ["cs.CV", "cs.CL"],
-    defaultEnabled: false,
-  },
-  {
-    id: "robotics",
-    name: "Robotics & Embodied AI",
-    description: "Robot learning, manipulation, sim-to-real transfer, and embodied agents",
-    category: "applied",
-    keywords: ["robotics", "embodied", "manipulation", "sim-to-real"],
-    arxivCategories: ["cs.RO"],
-    defaultEnabled: false,
-  },
-  {
-    id: "healthcare",
-    name: "AI in Healthcare",
-    description: "Medical AI, clinical decision support, and diagnostic systems",
-    category: "applied",
-    keywords: ["healthcare", "medical", "clinical", "diagnostics"],
-    arxivCategories: ["cs.AI", "cs.LG"],
-    defaultEnabled: true,
-  },
-  {
-    id: "finance",
-    name: "AI for Finance",
-    description: "Trading algorithms, financial forecasting, and risk assessment",
-    category: "applied",
-    keywords: ["finance", "trading", "forecasting", "risk"],
-    arxivCategories: ["cs.LG", "q-fin"],
-    defaultEnabled: false,
-  },
-  {
-    id: "nlp",
-    name: "NLP & Language Understanding",
-    description: "Summarization, translation, dialogue systems, and text understanding",
-    category: "applied",
-    keywords: ["nlp", "summarization", "translation", "dialogue"],
-    arxivCategories: ["cs.CL"],
-    defaultEnabled: false,
   },
   // Emerging
   {
     id: "safety",
-    name: "AI Safety & Interpretability",
-    description: "Mechanistic interpretability, red-teaming, and AI safety research",
+    name: "Safety & Alignment",
+    description: "AI safety research, alignment techniques, red-teaming, guardrails",
     category: "emerging",
-    keywords: ["safety", "interpretability", "mechanistic", "red-teaming"],
-    arxivCategories: ["cs.AI", "cs.LG"],
+    keywords: ["safety", "alignment", "jailbreak", "red-teaming", "guardrails"],
     defaultEnabled: true,
   },
   {
-    id: "efficient",
-    name: "Efficient Inference",
-    description: "Quantization, distillation, speculative decoding, and MoE architectures",
+    id: "hardware",
+    name: "Hardware & Efficiency",
+    description: "GPU, TPU, custom chips, CUDA updates, inference cost optimization",
     category: "emerging",
-    keywords: ["quantization", "distillation", "speculative decoding", "moe"],
-    arxivCategories: ["cs.LG", "cs.AR"],
-    defaultEnabled: false,
-  },
-  {
-    id: "synthetic",
-    name: "Synthetic Data & Self-play",
-    description: "Synthetic data generation, self-play training, and self-improvement loops",
-    category: "emerging",
-    keywords: ["synthetic data", "self-play", "self-improvement"],
-    arxivCategories: ["cs.LG", "cs.AI"],
+    keywords: ["GPU", "TPU", "chip", "CUDA", "inference cost", "hardware"],
     defaultEnabled: false,
   },
 ];
 
 const CATEGORY_LABELS: Record<Topic["category"], string> = {
   core: "Core",
-  applied: "Applied Domains",
+  applied: "Applied",
   emerging: "Emerging",
 };
 
@@ -161,16 +123,4 @@ export function getActiveKeywords(config: TopicConfig): string[] {
     }
   }
   return [...keywords].sort();
-}
-
-export function getActiveArxivCategories(config: TopicConfig): string[] {
-  const categories = new Set<string>();
-  for (const topic of TOPICS) {
-    if (config[topic.id]) {
-      for (const cat of topic.arxivCategories) {
-        categories.add(cat);
-      }
-    }
-  }
-  return [...categories].sort();
 }

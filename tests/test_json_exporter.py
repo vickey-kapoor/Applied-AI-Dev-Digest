@@ -32,13 +32,13 @@ class TestExportPapers:
                 {
                     "id": "paper-123",
                     "title": sample_paper["title"],
-                    "description": sample_paper["description"],
+                    "summary": sample_paper["summary"],
                     "source": sample_paper["source"],
                     "url": sample_paper["url"],
-                    "published_at": sample_paper["published_at"],
+                    "published_at": sample_paper["published"],
                     "fetched_at": "2026-03-13T00:00:00Z",
-                    "authors": sample_paper["authors"],
-                    "topics": sample_paper["topics"],
+                    "type": sample_paper["type"],
+                    "topics": [],
                     "ranking_score": 0,
                     "status": "unread",
                 }

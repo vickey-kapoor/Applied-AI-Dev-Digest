@@ -7,7 +7,32 @@ import {
   Send,
   Github,
   ExternalLink,
+  Newspaper,
 } from "lucide-react";
+
+const BLOG_SOURCES = [
+  "OpenAI",
+  "Anthropic",
+  "Google DeepMind",
+  "Meta AI",
+  "Mistral",
+  "Microsoft AI",
+  "AWS AI",
+  "Hugging Face",
+];
+
+const GITHUB_REPOS = [
+  "huggingface/transformers",
+  "langchain-ai/langchain",
+  "run-llama/llama_index",
+  "vllm-project/vllm",
+  "ollama/ollama",
+  "openai/openai-python",
+  "anthropics/anthropic-sdk-python",
+  "microsoft/autogen",
+  "unsloth/unsloth",
+  "ggerganov/llama.cpp",
+];
 
 export default function SettingsPage() {
   return (
@@ -21,18 +46,18 @@ export default function SettingsPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Data Sources */}
+        {/* Blog Sources */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Database className="h-5 w-5 text-green-600" />
-              Data Sources
+              Blog Sources
             </CardTitle>
-            <CardDescription>AI lab blogs being monitored</CardDescription>
+            <CardDescription>AI lab and platform blogs being monitored</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {["OpenAI", "Google DeepMind", "Meta AI"].map((lab) => (
+              {BLOG_SOURCES.map((lab) => (
                 <Badge key={lab} variant="secondary" className="text-sm">
                   {lab}
                 </Badge>
@@ -41,6 +66,64 @@ export default function SettingsPage() {
             <p className="text-xs text-muted-foreground/70 mt-4">
               Configured in <code className="bg-secondary px-1 rounded font-mono">src/constants.py</code>
             </p>
+          </CardContent>
+        </Card>
+
+        {/* GitHub Repos */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Github className="h-5 w-5 text-foreground" />
+              GitHub Releases
+            </CardTitle>
+            <CardDescription>Repos tracked for new releases</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              {GITHUB_REPOS.map((repo) => (
+                <a
+                  key={repo}
+                  href={`https://github.com/${repo}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1"
+                >
+                  <Badge variant="outline" className="text-sm hover:bg-secondary transition-colors cursor-pointer">
+                    {repo.split("/")[1]}
+                  </Badge>
+                </a>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground/70 mt-4">
+              Releases fetched via GitHub API (skips pre-releases, 48h window)
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Hacker News */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Newspaper className="h-5 w-5 text-orange-600" />
+              Hacker News
+            </CardTitle>
+            <CardDescription>AI/ML discussions from HN</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Min score</span>
+                <span className="font-mono font-medium">100+</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Max stories</span>
+                <span className="font-mono font-medium">5</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Recency</span>
+                <span className="font-mono font-medium">Last 24h</span>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -93,7 +176,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Format</p>
-                <p className="font-medium">Developer Summary with Markdown</p>
+                <p className="font-medium">Structured Dev Summary (Why / What / How / Take)</p>
               </div>
             </div>
           </CardContent>

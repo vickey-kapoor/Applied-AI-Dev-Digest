@@ -23,8 +23,7 @@ class TestBlogFetcher:
 
             assert len(posts) == 1
             assert posts[0]["source"] == "OpenAI"
-            assert posts[0]["lab"] == "OpenAI"
-            assert posts[0]["type"] == "product_update"
+            assert posts[0]["type"] == "announcement"
 
     def test_fetch_single_feed_timeout(self):
         """Test single feed handles timeout gracefully."""
@@ -41,21 +40,18 @@ class TestBlogFetcher:
             mock_fetch.return_value = [
                 {
                     "title": "Test Post",
-                    "description": "Test description about new API launch",
-                    "source": "Test Blog",
-                    "lab": "Test Blog",
+                    "summary": "Test description about new API launch",
                     "url": "https://test.com/post",
-                    "published_at": "2024-01-15T00:00:00",
-                    "type": "product_update",
-                    "authors": "Test Blog",
-                    "topics": [],
+                    "source": "Test Blog",
+                    "published": "2024-01-15T00:00:00",
+                    "type": "announcement",
                 }
             ]
 
             posts = fetch_blog_posts(max_results=5)
 
-            # Should be called for each blog feed (3 active feeds)
-            assert mock_fetch.call_count == 3  # OpenAI, Google DeepMind, Meta AI
+            # Should be called for each blog feed (8 active feeds)
+            assert mock_fetch.call_count == 8
 
     def test_fetch_single_feed_parse_error(self):
         """Test single feed handles parse errors gracefully."""
@@ -88,22 +84,22 @@ class TestDevRelevanceFilter:
 
     def test_is_dev_relevant_accepts_api_post(self):
         """Post with 'API' keyword in title is accepted."""
-        post = {"title": "New API for developers", "description": "Check it out"}
+        post = {"title": "New API for developers", "summary": "Check it out"}
         assert _is_dev_relevant(post) is True
 
     def test_is_dev_relevant_rejects_partnership(self):
         """Post about partnership is rejected."""
-        post = {"title": "We announce a partnership with Acme", "description": "Exciting news"}
+        post = {"title": "We announce a partnership with Acme", "summary": "Exciting news"}
         assert _is_dev_relevant(post) is False
 
     def test_exclude_takes_precedence_over_include(self):
         """Post with both include and exclude keywords is rejected."""
-        post = {"title": "API partnership announcement", "description": "New API via partnership"}
+        post = {"title": "API partnership announcement", "summary": "New API via partnership"}
         assert _is_dev_relevant(post) is False
 
     def test_no_keyword_match_rejected(self):
         """Generic post with no matching keywords is rejected."""
-        post = {"title": "Our company vision for the future", "description": "Thoughts on progress"}
+        post = {"title": "Our company vision for the future", "summary": "Thoughts on progress"}
         assert _is_dev_relevant(post) is False
 
     def test_filter_fallback_when_all_filtered(self, mock_blog_feed):
@@ -116,7 +112,7 @@ class TestDevRelevanceFilter:
             entry.get = lambda k, d="": {
                 "title": "Our company culture",
                 "summary": "A day in the life",
-                "description": "",
+                "summary": "",
                 "link": "https://test.com/post",
             }.get(k, d)
             entry.__contains__ = lambda self, k: k in ["title", "summary"]

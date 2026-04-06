@@ -112,9 +112,9 @@ class TestFormatResearchMessage:
 
     def test_basic_formatting(self, sample_paper_with_summary):
         message = format_research_message(sample_paper_with_summary)
-        assert "*Daily AI Dev Digest*" in message
         assert sample_paper_with_summary["title"] in message
-        assert sample_paper_with_summary["summary"] in message
+        assert "Why it matters" in message
+        assert "What it is" in message
         assert sample_paper_with_summary["source"] in message
 
     def test_empty_research(self):
@@ -131,16 +131,22 @@ class TestFormatResearchMessage:
         message = format_research_message(paper)
         assert "javascript:" not in message
 
-    def test_lab_shown_in_message(self, sample_paper):
+    def test_source_shown_in_message(self, sample_paper_with_summary):
+        message = format_research_message(sample_paper_with_summary)
+        assert "OpenAI" in message
+
+    def test_fallback_to_flat_summary(self, sample_paper):
+        """Items without structured fields fall back to flat summary display."""
         paper = sample_paper.copy()
-        paper["summary"] = "Test summary"
+        paper["summary"] = "Flat summary text"
         message = format_research_message(paper)
-        assert "Lab: OpenAI" in message
+        assert "Flat summary text" in message
 
     def test_markdown_is_escaped_in_message(self, sample_paper):
         paper = sample_paper.copy()
         paper["title"] = "Paper_[v2]"
-        paper["summary"] = "Uses *special* syntax"
+        paper["why_it_matters"] = "Uses *special* syntax"
+        paper["what_it_is"] = "Technical details"
         message = format_research_message(paper)
         assert "*Paper\\_\\[v2\\]*" in message
         assert "Uses \\*special\\* syntax" in message

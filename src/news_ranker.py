@@ -1,4 +1,6 @@
-"""Rank AI product updates by developer usefulness using OpenAI."""
+"""Rank AI/dev news by relevance to working ML engineers using OpenAI."""
+
+import json
 
 from openai import OpenAI
 
@@ -55,40 +57,47 @@ def rank_research(research: list[dict], api_key: str) -> dict:
 
     client = OpenAI(api_key=api_key)
 
-    # Prepare update summary for the prompt (with sanitization)
+    # Prepare item summary for the prompt (with sanitization)
     research_text = "\n\n".join(
-        f"[{i+1}] Title: {_sanitize_text(r.get('title', ''), 200)}\nLab: {_sanitize_text(r.get('source', ''), 50)}\nDescription: {_sanitize_text(r.get('description', ''), 400)}"
+        f"[{i+1}] Title: {_sanitize_text(r.get('title', ''), 200)}\nSource: {_sanitize_text(r.get('source', ''), 50)}\nType: {r.get('type', 'announcement')}\nSummary: {_sanitize_text(r.get('summary', ''), 400)}"
         for i, r in enumerate(research)
     )
 
-    prompt = f"""You are a developer tools curator tracking AI lab product announcements.
+    prompt = f"""You are a senior ML engineer reviewing today's AI/dev news.
+Rank the following items by relevance to a working ML/AI engineer.
+Prioritize:
+1. New model releases or major version updates to widely-used tools
+2. API changes, new capabilities, or breaking changes that affect production code
+3. Significant open-source releases the community will adopt
+4. Practical techniques or benchmarks that change how engineers work
 
-Select the ONE most important update that a software developer should know about today.
+Deprioritize:
+- Pure academic research with no near-term practical application
+- Marketing announcements with no technical substance
+- Incremental updates to niche tools
 
-Consider:
-1. Can a developer try this RIGHT NOW? (new API, SDK, model, tool)
-2. How significant is the new capability? (new model > minor update)
-3. Breadth of developer impact (affects many developers vs. niche use case)
-4. Novelty (first-of-its-kind vs. incremental improvement)
-5. SKIP corporate announcements (partnerships, policy, hiring, leadership, funding) — only pick developer-facing product updates.
-
-Product Updates:
+Items:
 {research_text}
 
-Respond with ONLY the number (e.g., "1" or "3"). No explanation."""
+Return the single most important item as JSON: {{"index": N, "reason": "one sentence why this matters to a dev"}}"""
 
     try:
         response = _call_openai_ranking(client, prompt)
 
         content = response.choices[0].message.content
         if content:
-            selected_index = int(content.strip()) - 1
+            # Try JSON parse first, fall back to plain number
+            try:
+                result = json.loads(content.strip())
+                selected_index = int(result["index"]) - 1
+            except (json.JSONDecodeError, KeyError):
+                selected_index = int(content.strip()) - 1
             if 0 <= selected_index < len(research):
                 return research[selected_index]
     except (ValueError, IndexError, TypeError, AttributeError):
         pass
     except Exception:
-        logger.error("Failed to rank research with AI")
+        logger.error("Failed to rank items with AI")
 
     # Fallback to first paper if parsing fails
     return research[0]

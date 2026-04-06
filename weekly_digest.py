@@ -38,10 +38,10 @@ def _format_weekly_message(papers):
 
     for i, p in enumerate(papers, 1):
         title = _escape_markdown(p.get("title", "Untitled"))
-        authors = _escape_markdown(p.get("authors", "Unknown"))
-        institution = p.get("institution") or ""
-        if institution:
-            institution = f" \u00b7 {_escape_markdown(institution)}"
+        source = _escape_markdown(p.get("source", "Unknown"))
+        item_type = p.get("type", "")
+        if item_type:
+            item_type = f" \u00b7 {_escape_markdown(item_type)}"
         topic = p.get("topic_id") or ""
         if topic:
             topic = f"#{_escape_markdown(topic)}"
@@ -49,7 +49,7 @@ def _format_weekly_message(papers):
         url = p.get("url", "")
 
         entry = f"{i}\\. *{title}*\n"
-        entry += f"_{authors}{institution}_\n"
+        entry += f"_{source}{item_type}_\n"
         parts = []
         if topic:
             parts.append(topic)

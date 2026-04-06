@@ -17,7 +17,7 @@ Daily digest of what's shipping in AI/ML — delivered to Telegram. Tracks blog 
 - Runs automatically via GitHub Actions (10:00 AM CST daily)
 - **Pause/resume** digest from the dashboard
 - **Send test** button re-sends the last digest to Telegram
-- **Digest preview** page runs the pipeline on-demand and shows a Telegram message mockup
+- **Digest preview** page loads the last sent digest from KV and shows a Telegram message mockup
 
 ## Dashboard
 
@@ -26,7 +26,7 @@ Next.js app deployed on Vercel with top nav: **Topics · Preview · History · S
 | Page | Description |
 |------|-------------|
 | **Topics** | Toggle 10 dev-focused topics on/off, add custom keywords per topic |
-| **Preview** | Run the pipeline on-demand, preview the Telegram message, send it |
+| **Preview** | Load the last sent digest from KV, preview as Telegram message, re-send it |
 | **History** | Weekly list of sent items with feedback buttons |
 | **Stats** | Bar chart showing which topics win the daily ranking most often |
 | **Settings** | Blog sources, GitHub repos, HN config, schedule, Telegram, Actions link |

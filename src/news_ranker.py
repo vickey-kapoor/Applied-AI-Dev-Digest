@@ -67,14 +67,19 @@ def rank_research(research: list[dict], api_key: str) -> dict:
 Rank the following items by relevance to a working ML/AI engineer.
 Prioritize:
 1. New model releases or major version updates to widely-used tools
-2. API changes, new capabilities, or breaking changes that affect production code
-3. Significant open-source releases the community will adopt
-4. Practical techniques or benchmarks that change how engineers work
+2. Major or minor version releases (v1.0, v2.3) with new features or capabilities
+3. Model releases with benchmark numbers or capability descriptions
+4. API announcements that add new endpoints or change pricing/limits
+5. Significant open-source releases the community will adopt
+6. Practical techniques or benchmarks that change how engineers work
 
 Deprioritize:
 - Pure academic research with no near-term practical application
 - Marketing announcements with no technical substance
 - Incremental updates to niche tools
+- Patch releases, hotfixes, or build-number releases (e.g. b8671, v0.1.3-patch)
+- Releases with only bug fixes and no new capabilities
+- Any item where the only change is a minor dependency update or platform fix
 
 Items:
 {research_text}

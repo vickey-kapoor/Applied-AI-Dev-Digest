@@ -90,6 +90,14 @@ https://openai.com/index/introducing-gpt-5-4-mini-and-nano
 
 Top 100 stories filtered by AI/ML keywords, score > 100, last 24 hours. Top 5 returned.
 
+### GitHub Release Filters
+
+Releases are skipped if any of these apply:
+- Pre-release flag set
+- Older than 24 hours
+- Build-number tag (e.g. `b8671`) — incremental builds, not real releases
+- Release body under 200 characters — too thin to be meaningful
+
 ## Topics
 
 | ID | Name | Category | Keywords |

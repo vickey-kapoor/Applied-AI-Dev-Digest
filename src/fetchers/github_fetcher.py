@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import urllib.request
 from datetime import datetime, timedelta, timezone
 
@@ -28,7 +29,7 @@ def _fetch_latest_release(repo: str, headers: dict) -> dict | None:
     if data.get("prerelease"):
         return None
 
-    # Skip releases older than 48 hours
+    # Skip releases older than 24 hours
     published_str = data.get("published_at", "")
     if not published_str:
         return None
@@ -38,13 +39,23 @@ def _fetch_latest_release(repo: str, headers: dict) -> dict | None:
     except (ValueError, TypeError):
         return None
 
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=48)
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
     if published_dt < cutoff:
         return None
 
-    repo_name = repo.split("/")[-1]
     tag_name = data.get("tag_name", "")
+
+    # Skip build-number releases (e.g. b8671, b8672) — these are incremental builds
+    if re.fullmatch(r"b\d+", tag_name):
+        return None
+
     body = data.get("body", "") or ""
+
+    # Skip releases with thin descriptions (< 200 chars) — not meaningful
+    if len(body.strip()) < 200:
+        return None
+
+    repo_name = repo.split("/")[-1]
 
     return {
         "title": f"{repo_name} {tag_name} released",

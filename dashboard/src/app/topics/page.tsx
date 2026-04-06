@@ -110,14 +110,14 @@ export default function TopicsPage() {
 
   if (loading) {
     return (
-      <div className="p-8">
+      <div className="py-8">
         <div className="mb-8">
-          <div className="h-8 w-48 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
-          <div className="h-4 w-96 bg-gray-100 dark:bg-gray-800 rounded animate-pulse mt-2" />
+          <div className="h-8 w-48 bg-card rounded animate-pulse" />
+          <div className="h-4 w-96 bg-card rounded animate-pulse mt-2" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-48 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
+            <div key={i} className="h-48 bg-card rounded-lg animate-pulse" />
           ))}
         </div>
       </div>
@@ -125,18 +125,18 @@ export default function TopicsPage() {
   }
 
   return (
-    <div className="p-8 pb-28">
+    <div className="py-8 pb-28">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-1">
-          <Layers className="h-7 w-7 text-blue-600" />
-          <h1 className="text-2xl font-display font-bold text-gray-900 dark:text-gray-100">
+          <Layers className="h-7 w-7 text-primary" />
+          <h1 className="text-2xl font-display font-bold text-foreground">
             Topics
           </h1>
         </div>
-        <p className="text-gray-500 mt-1">
+        <p className="text-muted-foreground mt-1">
           Choose which AI research topics appear in your daily digest.{" "}
-          <span className="font-mono text-sm text-gray-400">
+          <span className="font-mono text-sm text-muted-foreground/70">
             {enabledCount} of {TOPICS.length} active
           </span>
         </p>
@@ -148,10 +148,10 @@ export default function TopicsPage() {
         return (
           <section key={category} className="mb-10">
             <div className="mb-4">
-              <h2 className="text-lg font-display font-semibold text-gray-800 dark:text-gray-200">
+              <h2 className="text-lg font-display font-semibold text-foreground">
                 {getCategoryLabel(category)}
               </h2>
-              <p className="text-sm text-gray-400">{CATEGORY_DESCRIPTIONS[category]}</p>
+              <p className="text-sm text-muted-foreground/70">{CATEGORY_DESCRIPTIONS[category]}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {topics.map((topic) => {
@@ -164,7 +164,7 @@ export default function TopicsPage() {
                     key={topic.id}
                     className={`transition-all ${
                       enabled
-                        ? "ring-2 ring-blue-500/40 dark:ring-blue-400/30"
+                        ? "ring-2 ring-primary/30"
                         : "opacity-60 hover:opacity-80"
                     }`}
                   >
@@ -182,7 +182,7 @@ export default function TopicsPage() {
                           aria-label={`Toggle ${topic.name}`}
                           onClick={() => toggle(topic.id)}
                           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ${
-                            enabled ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-600"
+                            enabled ? "bg-primary" : "bg-border"
                           }`}
                         >
                           <span
@@ -208,7 +208,7 @@ export default function TopicsPage() {
                         {topicCustom.map((kw) => (
                           <Badge
                             key={`custom-${kw}`}
-                            className="text-xs font-mono bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 gap-1 cursor-pointer hover:bg-emerald-200 dark:hover:bg-emerald-900/60"
+                            className="text-xs font-mono bg-emerald-900/40 text-emerald-300 gap-1 cursor-pointer hover:bg-emerald-900/60"
                             onClick={() => removeCustomKeyword(topic.id, kw)}
                           >
                             {kw}
@@ -220,7 +220,7 @@ export default function TopicsPage() {
                       {/* Expand toggle */}
                       <button
                         onClick={() => toggleExpand(topic.id)}
-                        className="mt-3 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                        className="mt-3 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
                       >
                         <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
                         {isExpanded ? "Hide" : "Add keywords"}
@@ -242,7 +242,7 @@ export default function TopicsPage() {
                             onKeyDown={(e) => {
                               if (e.key === "Enter") addCustomKeyword(topic.id);
                             }}
-                            className="flex-1 px-2.5 py-1.5 text-sm font-mono rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                            className="flex-1 px-2.5 py-1.5 text-sm font-mono rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                           />
                           <button
                             onClick={() => addCustomKeyword(topic.id)}
@@ -264,19 +264,19 @@ export default function TopicsPage() {
       {/* Sticky save bar */}
       <div className="fixed bottom-0 left-0 right-0 z-30">
         <div
-          className={`border-t bg-white/95 dark:bg-gray-900/95 backdrop-blur px-8 py-4 flex items-center justify-between transition-opacity ${
+          className={`border-t border-border bg-background/95 backdrop-blur px-8 py-4 flex items-center justify-between transition-opacity ${
             isDirty || saveStatus !== "idle" ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-muted-foreground">
             {isDirty && "You have unsaved changes"}
             {saveStatus === "saved" && (
-              <span className="flex items-center gap-1 text-green-600">
+              <span className="flex items-center gap-1 text-green-400">
                 <Check className="h-4 w-4" /> Changes saved
               </span>
             )}
             {saveStatus === "error" && (
-              <span className="flex items-center gap-1 text-red-600">
+              <span className="flex items-center gap-1 text-red-400">
                 <AlertCircle className="h-4 w-4" /> Failed to save — is Vercel KV configured?
               </span>
             )}
@@ -284,7 +284,7 @@ export default function TopicsPage() {
           <button
             onClick={save}
             disabled={!isDirty || saveStatus === "saving"}
-            className="inline-flex items-center gap-2 px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {saveStatus === "saving" ? (
               <Loader2 className="h-4 w-4 animate-spin" />

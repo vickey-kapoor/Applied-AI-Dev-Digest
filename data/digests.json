@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-06",
+      "top_paper_id": "b36617b3-f647-5c78-a16b-45798d26ee36",
+      "papers_fetched": 10,
+      "pdf_path": "reports/06-Apr/llamacpp_b8671_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24014189868"
+    },
+    {
       "date": "2026-04-05",
       "top_paper_id": "007a4f70-6324-5eea-8408-9fcd93affd10",
       "papers_fetched": 8,

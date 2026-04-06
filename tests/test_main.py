@@ -110,7 +110,7 @@ class TestMain:
         mock_send_telegram_message,
         env_vars,
     ):
-        """The app should exit non-zero if the digest cannot be sent."""
+        """The app should log error but continue if Telegram send fails."""
         paper = {
             "title": "Test Paper",
             "description": "Test description",
@@ -127,7 +127,9 @@ class TestMain:
         mock_format_research_message.return_value = "formatted"
         mock_send_telegram_message.side_effect = RuntimeError("send failed")
 
-        with pytest.raises(SystemExit) as exc_info:
-            main.main()
+        # Pipeline continues despite Telegram failure (no sys.exit)
+        main.main()
 
-        assert exc_info.value.code == 1
+        mock_send_telegram_message.assert_called_once()
+        # Digest still exported even on send failure
+        mock_export_digest.assert_called_once()

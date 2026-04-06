@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRedis } from "@/lib/kv";
-import { requireAuth, requireJson, isValidUrl } from "@/lib/auth";
+import { requireAuth, requireJson, isValidUrl, rateLimit } from "@/lib/auth";
 
 const KV_KEY = "feedback:log";
 const MAX_ENTRIES = 90;
@@ -15,6 +15,9 @@ interface FeedbackEntry {
 export async function POST(request: NextRequest) {
   const authError = requireAuth(request);
   if (authError) return authError;
+
+  const rateLimitError = await rateLimit(request);
+  if (rateLimitError) return rateLimitError;
 
   const jsonError = requireJson(request);
   if (jsonError) return jsonError;

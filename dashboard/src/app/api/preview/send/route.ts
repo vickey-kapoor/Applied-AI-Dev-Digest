@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAuth, requireJson, isValidUrl } from "@/lib/auth";
+import { requireAuth, requireJson, isValidUrl, rateLimit } from "@/lib/auth";
 
 function escapeMarkdown(text: string): string {
   return text.replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, "\\$1");
@@ -8,6 +8,9 @@ function escapeMarkdown(text: string): string {
 export async function POST(request: NextRequest) {
   const authError = requireAuth(request);
   if (authError) return authError;
+
+  const rateLimitError = await rateLimit(request);
+  if (rateLimitError) return rateLimitError;
 
   const jsonError = requireJson(request);
   if (jsonError) return jsonError;

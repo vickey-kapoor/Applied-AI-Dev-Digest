@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRedis } from "@/lib/kv";
 import { TOPICS, getDefaultTopicConfig, type TopicConfig } from "@/lib/topics";
-import { requireAuth, requireJson } from "@/lib/auth";
+import { requireAuth, requireJson, rateLimit } from "@/lib/auth";
 
 const KV_KEY = "topics:config";
 const KV_CUSTOM_KEYWORDS = "topics:custom_keywords";
@@ -36,6 +36,9 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const authError = requireAuth(request);
   if (authError) return authError;
+
+  const rateLimitError = await rateLimit(request);
+  if (rateLimitError) return rateLimitError;
 
   const jsonError = requireJson(request);
   if (jsonError) return jsonError;

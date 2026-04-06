@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRedis } from "@/lib/kv";
-import { requireAuth } from "@/lib/auth";
+import { requireAuth, rateLimit } from "@/lib/auth";
 
 const KV_KEY = "digest:last";
 
@@ -29,6 +29,9 @@ function formatTelegramMessage(paper: LastPaper): string {
 export async function POST(request: NextRequest) {
   const authError = requireAuth(request);
   if (authError) return authError;
+
+  const rateLimitError = await rateLimit(request);
+  if (rateLimitError) return rateLimitError;
 
   const redis = getRedis();
   if (!redis) {

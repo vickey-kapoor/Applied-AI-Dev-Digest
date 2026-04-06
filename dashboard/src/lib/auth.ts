@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { getRedis } from "@/lib/kv";
 
 /**
  * Validate that the request carries a valid API secret.
@@ -57,6 +59,45 @@ export function requireJson(request: NextRequest): NextResponse | null {
 /**
  * Validate that a URL is safe (http/https only, no javascript/data URIs).
  */
+let _ratelimit: Ratelimit | null | undefined;
+
+function getRatelimit(): Ratelimit | null {
+  if (_ratelimit !== undefined) return _ratelimit;
+  const redis = getRedis();
+  if (!redis) {
+    _ratelimit = null;
+    return null;
+  }
+  _ratelimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(20, "1 m"), // 20 requests per minute
+    prefix: "ratelimit:api",
+  });
+  return _ratelimit;
+}
+
+/**
+ * Rate-limit requests by IP. Returns 429 if limit exceeded.
+ * No-ops if Redis is not configured.
+ */
+export async function rateLimit(request: NextRequest): Promise<NextResponse | null> {
+  const limiter = getRatelimit();
+  if (!limiter) return null; // No Redis — skip rate limiting
+
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || request.headers.get("x-real-ip")
+    || "unknown";
+
+  const { success, remaining } = await limiter.limit(ip);
+  if (!success) {
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "X-RateLimit-Remaining": String(remaining) } }
+    );
+  }
+  return null;
+}
+
 export function isValidUrl(url: string): boolean {
   if (!url || typeof url !== "string") return false;
   try {

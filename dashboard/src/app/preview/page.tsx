@@ -6,13 +6,15 @@ import { Eye, RefreshCw, Send, Loader2, Check, AlertCircle } from "lucide-react"
 
 interface PreviewPaper {
   title: string;
-  authors: string;
   source: string;
   url: string;
+  type: string;
   summary: string;
-  detailed_summary: string;
-  description: string;
-  topic_id: string;
+  why_it_matters: string;
+  what_it_is: string;
+  how_to_use_it: string;
+  dev_take: string;
+  date: string;
 }
 
 type FetchStatus = "idle" | "loading" | "done" | "error";
@@ -34,7 +36,7 @@ export default function PreviewPage() {
       const data = await res.json();
       if (!res.ok || data.error) {
         setFetchStatus("error");
-        setFetchError(data.error || "Preview failed");
+        setFetchError(data.error || "Failed to load digest");
         return;
       }
       setPaper(data);
@@ -71,6 +73,15 @@ export default function PreviewPage() {
     }
   }, [paper]);
 
+  const typeTag =
+    paper?.type === "release"
+      ? "#Release"
+      : paper?.type === "discussion"
+        ? "#Discussion"
+        : paper?.type === "paper"
+          ? "#Paper"
+          : "#Announcement";
+
   return (
     <div className="py-8">
       <div className="mb-8">
@@ -81,18 +92,18 @@ export default function PreviewPage() {
           </h1>
         </div>
         <p className="text-muted-foreground mt-1">
-          Run the pipeline and preview today&apos;s top paper before sending.
+          View the last digest the pipeline sent to Telegram.
         </p>
       </div>
 
-      {/* Generate button */}
+      {/* Load button */}
       {fetchStatus !== "loading" && (
         <button
           onClick={fetchPreview}
           className="mb-6 inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <RefreshCw className="h-4 w-4" />
-          {paper ? "Refresh preview" : "Generate preview"}
+          {paper ? "Refresh" : "Load last digest"}
         </button>
       )}
 
@@ -101,10 +112,7 @@ export default function PreviewPage() {
         <Card className="mb-6">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <Loader2 className="h-8 w-8 text-primary animate-spin mb-4" />
-            <p className="text-foreground font-medium">
-              Fetching today&apos;s top paper...
-            </p>
-            <p className="text-sm text-muted-foreground mt-1">This takes ~15s</p>
+            <p className="text-foreground font-medium">Loading last digest...</p>
           </CardContent>
         </Card>
       )}
@@ -116,7 +124,7 @@ export default function PreviewPage() {
             <AlertCircle className="h-5 w-5 text-red-500 shrink-0" />
             <div>
               <p className="text-sm font-medium text-red-700 dark:text-red-400">{fetchError}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">Check that OPENAI_API_KEY is set and the pipeline is working.</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Trigger a manual workflow run to generate a digest first.</p>
             </div>
           </CardContent>
         </Card>
@@ -130,20 +138,45 @@ export default function PreviewPage() {
             <div className="flex items-center gap-2 px-4 py-2 border-b border-border">
               <div className="h-2.5 w-2.5 rounded-full bg-primary" />
               <span className="text-xs text-muted-foreground font-mono">Telegram Preview</span>
+              {paper.date && (
+                <span className="text-xs text-muted-foreground/50 font-mono ml-auto">{paper.date}</span>
+              )}
             </div>
             {/* Message bubble */}
             <div className="p-4">
               <div className="bg-background rounded-xl p-4 max-w-md font-mono text-sm leading-relaxed text-foreground space-y-3">
-                <p className="font-bold text-foreground">Daily AI Dev Digest</p>
+                <p className="text-muted-foreground/70">{typeTag} · {paper.source}</p>
                 <p className="font-bold text-foreground">{paper.title}</p>
-                {paper.summary && <p className="text-muted-foreground">{paper.summary}</p>}
-                {!paper.summary && paper.description && (
-                  <p className="text-muted-foreground">{paper.description}</p>
+                {paper.why_it_matters && (
+                  <>
+                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Why it matters</p>
+                    <p className="text-muted-foreground">{paper.why_it_matters}</p>
+                  </>
+                )}
+                {paper.what_it_is && (
+                  <>
+                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">What it is</p>
+                    <p className="text-muted-foreground">{paper.what_it_is}</p>
+                  </>
+                )}
+                {paper.how_to_use_it && (
+                  <>
+                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">How to use it</p>
+                    <p className="text-muted-foreground">{paper.how_to_use_it}</p>
+                  </>
+                )}
+                {paper.dev_take && (
+                  <>
+                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Dev take</p>
+                    <p className="text-muted-foreground">{paper.dev_take}</p>
+                  </>
+                )}
+                {!paper.why_it_matters && paper.summary && (
+                  <p className="text-muted-foreground">{paper.summary}</p>
                 )}
                 {paper.url && (
                   <p className="text-primary break-all">{paper.url}</p>
                 )}
-                <p className="text-muted-foreground/70 italic">Lab: {paper.source}</p>
               </div>
             </div>
           </div>
@@ -176,7 +209,7 @@ export default function PreviewPage() {
               Refresh
             </button>
             {sendStatus === "error" && (
-              <span className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+              <span role="alert" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
                 <AlertCircle className="h-4 w-4" />
                 {sendError}
               </span>
@@ -190,9 +223,9 @@ export default function PreviewPage() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <Eye className="h-12 w-12 text-muted-foreground/40 mb-4" />
-            <p className="text-muted-foreground font-medium">No preview generated yet</p>
+            <p className="text-muted-foreground font-medium">No preview loaded yet</p>
             <p className="text-sm text-muted-foreground/70 mt-1">
-              Click the button above to run the pipeline and see today&apos;s top paper.
+              Click the button above to load the last digest sent by the pipeline.
             </p>
           </CardContent>
         </Card>

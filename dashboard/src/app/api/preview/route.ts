@@ -1,41 +1,25 @@
 import { NextResponse } from "next/server";
-import { exec } from "child_process";
-import { promisify } from "util";
-import path from "path";
+import { getRedis } from "@/lib/kv";
 
-export const maxDuration = 60;
-
-const execAsync = promisify(exec);
+const KV_KEY = "digest:last";
 
 export async function GET() {
-  const projectRoot = path.resolve(process.cwd(), "..");
+  const redis = getRedis();
+  if (!redis) {
+    return NextResponse.json({ error: "KV not configured" }, { status: 503 });
+  }
 
   try {
-    const { stdout, stderr } = await execAsync("python preview.py", {
-      cwd: projectRoot,
-      timeout: 55_000,
-      env: { ...process.env },
-    });
-
-    if (stderr) {
-      console.error("[PREVIEW] stderr:", stderr);
+    const paper = await redis.get(KV_KEY);
+    if (!paper) {
+      return NextResponse.json(
+        { error: "No digest sent yet \u2014 trigger a manual run first" },
+        { status: 404 }
+      );
     }
-
-    try {
-      const result = JSON.parse(stdout);
-      if (result.error) {
-        return NextResponse.json(result, { status: 502 });
-      }
-      return NextResponse.json(result);
-    } catch {
-      return NextResponse.json({ error: "Failed to parse preview output" }, { status: 500 });
-    }
-  } catch (e: unknown) {
-    const err = e as { killed?: boolean; message?: string };
-    if (err.killed) {
-      return NextResponse.json({ error: "Preview timed out — try again" }, { status: 504 });
-    }
-    console.error("[PREVIEW] exec failed:", err.message);
-    return NextResponse.json({ error: "Preview generation failed" }, { status: 500 });
+    return NextResponse.json(paper);
+  } catch (e) {
+    console.error("[PREVIEW] KV read failed:", e);
+    return NextResponse.json({ error: "Failed to read from KV" }, { status: 500 });
   }
 }

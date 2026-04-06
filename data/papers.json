@@ -1,6 +1,101 @@
 {
   "papers": [
     {
+      "id": "23b5270a-aa6c-5611-863c-1e2126c70abb",
+      "title": "Connecting MCP servers to Amazon Bedrock AgentCore Gateway using Authorization Code flow",
+      "summary": "Amazon Bedrock AgentCore Gateway provides a centralized layer for managing how AI agents connect to tools and MCP servers across your organization. In this post, we walk through how to configure AgentCore Gateway to connect to an OAuth-protected MCP server using the Authorization Code flow.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/connecting-mcp-servers-to-amazon-bedrock-agentcore-gateway-using-authorization-code-flow/",
+      "published_at": "2026-04-06T14:41:46",
+      "fetched_at": "2026-04-06T16:57:35.921791Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "bccfcecb-bbdd-5c84-afe5-561f85d82e72",
+      "title": "France pulls last gold held in US for $15B gain",
+      "summary": "462 points · 253 comments",
+      "source": "Hacker News",
+      "url": "https://www.mining.com/france-pulls-last-gold-held-in-us-for-15b-gain/",
+      "published_at": "2026-04-06T08:03:43+00:00",
+      "fetched_at": "2026-04-06T16:57:35.921791Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0207b38c-feb2-5a00-84d5-8f0d1fc09124",
+      "title": "Industrial policy for the Intelligence Age",
+      "summary": "Explore our ambitious, people-first industrial policy ideas for the AI era—focused on expanding opportunity, sharing prosperity, and building resilient institutions as advanced intelligence evolves.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/industrial-policy-for-the-intelligence-age",
+      "published_at": "2026-04-06T02:30:00",
+      "fetched_at": "2026-04-06T16:57:35.921791Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8660881a-25f7-51d6-bef6-d3d38a849b2c",
+      "title": "Show HN: I built a tiny LLM to demystify how language models work",
+      "summary": "754 points · 114 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/arman-bd/guppylm",
+      "published_at": "2026-04-06T00:20:12+00:00",
+      "fetched_at": "2026-04-06T16:57:35.921791Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0f479a21-5041-59a8-ae30-f6975c5a1a44",
+      "title": "OpenAI's fall from grace as investors race to Anthropic",
+      "summary": "192 points · 132 comments",
+      "source": "Hacker News",
+      "url": "https://www.latimes.com/business/story/2026-04-01/openais-shocking-fall-from-grace-as-investors-race-to-anthropic",
+      "published_at": "2026-04-05T23:33:01+00:00",
+      "fetched_at": "2026-04-06T16:57:35.921791Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3ab57047-6b26-55f9-8c57-1b448683d307",
+      "title": "Show HN: Real-time AI (audio/video in, voice out) on an M3 Pro with Gemma E2B",
+      "summary": "212 points · 21 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/fikrikarim/parlor",
+      "published_at": "2026-04-05T17:53:19+00:00",
+      "fetched_at": "2026-04-06T16:57:35.921791Z",
+      "type": "discussion",
+      "topics": [
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a0745053-7aa8-5fc6-b383-e83fe1144c55",
+      "title": "OpenAI acquires TBPN",
+      "summary": "OpenAI acquires TBPN to accelerate global conversations around AI and support independent media, expanding dialogue with builders, businesses, and the broader tech community.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/openai-acquires-tbpn",
+      "published_at": "2026-04-02T10:30:00",
+      "fetched_at": "2026-04-06T16:57:35.921791Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "d08194ce-cf5f-51f3-b997-2d8e8b9cf68b",
       "title": "Welcome Gemma 4: Frontier multimodal intelligence on device",
       "summary": "",

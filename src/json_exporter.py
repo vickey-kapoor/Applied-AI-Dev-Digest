@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import tempfile
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -15,6 +16,20 @@ logger = get_logger(__name__)
 # Data directory path
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 
+# Allowed filenames for JSON data files
+_SAFE_FILENAME = re.compile(r"^[a-zA-Z0-9_\-]+\.json$")
+
+
+def _validate_filename(filename: str) -> str:
+    """Validate and resolve a safe filepath within DATA_DIR."""
+    if not _SAFE_FILENAME.match(filename):
+        raise ValueError(f"Invalid filename: {filename}")
+    filepath = os.path.join(DATA_DIR, filename)
+    # Prevent path traversal
+    if not os.path.abspath(filepath).startswith(os.path.abspath(DATA_DIR)):
+        raise ValueError(f"Path traversal detected: {filename}")
+    return filepath
+
 
 def ensure_data_dir():
     """Ensure the data directory exists."""
@@ -23,7 +38,7 @@ def ensure_data_dir():
 
 def load_json(filename: str) -> dict:
     """Load JSON file from data directory."""
-    filepath = os.path.join(DATA_DIR, filename)
+    filepath = _validate_filename(filename)
     try:
         with open(filepath, "r", encoding="utf-8") as f:
             return json.load(f)
@@ -37,7 +52,7 @@ def load_json(filename: str) -> dict:
 def save_json(filename: str, data: dict):
     """Save JSON file to data directory."""
     ensure_data_dir()
-    filepath = os.path.join(DATA_DIR, filename)
+    filepath = _validate_filename(filename)
     fd, temp_path = tempfile.mkstemp(
         prefix=f".{filename}.",
         suffix=".tmp",

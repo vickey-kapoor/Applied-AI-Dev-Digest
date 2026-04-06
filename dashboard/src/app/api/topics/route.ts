@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRedis } from "@/lib/kv";
 import { TOPICS, getDefaultTopicConfig, type TopicConfig } from "@/lib/topics";
+import { requireAuth, requireJson } from "@/lib/auth";
 
 const KV_KEY = "topics:config";
 const KV_CUSTOM_KEYWORDS = "topics:custom_keywords";
 const VALID_IDS = new Set(TOPICS.map((t) => t.id));
+const MAX_CUSTOM_KEYWORDS_PER_TOPIC = 20;
+const MAX_KEYWORD_LENGTH = 100;
 
 export type CustomKeywordsMap = Record<string, string[]>;
 
@@ -31,6 +34,12 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const authError = requireAuth(request);
+  if (authError) return authError;
+
+  const jsonError = requireJson(request);
+  if (jsonError) return jsonError;
+
   let body: { config: TopicConfig; customKeywords?: CustomKeywordsMap };
   try {
     body = await request.json();
@@ -56,6 +65,12 @@ export async function POST(request: NextRequest) {
       }
       if (!Array.isArray(value) || !value.every((v) => typeof v === "string")) {
         return NextResponse.json({ error: `Invalid custom keywords for ${key}` }, { status: 400 });
+      }
+      if (value.length > MAX_CUSTOM_KEYWORDS_PER_TOPIC) {
+        return NextResponse.json({ error: `Too many custom keywords for ${key}` }, { status: 400 });
+      }
+      if (value.some((v) => v.length > MAX_KEYWORD_LENGTH)) {
+        return NextResponse.json({ error: `Keyword too long in ${key}` }, { status: 400 });
       }
     }
   }

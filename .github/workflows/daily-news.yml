@@ -28,6 +28,8 @@ jobs:
           [ -z "${{ secrets.OPENAI_API_KEY }}" ] && missing="$missing OPENAI_API_KEY"
           [ -z "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] && missing="$missing TELEGRAM_BOT_TOKEN"
           [ -z "${{ secrets.TELEGRAM_CHAT_ID }}" ] && missing="$missing TELEGRAM_CHAT_ID"
+          [ -z "${{ secrets.KV_REST_API_URL }}" ] && missing="$missing KV_REST_API_URL"
+          [ -z "${{ secrets.KV_REST_API_TOKEN }}" ] && missing="$missing KV_REST_API_TOKEN"
           if [ -n "$missing" ]; then
             echo "::error::Missing required secrets:$missing"
             exit 1

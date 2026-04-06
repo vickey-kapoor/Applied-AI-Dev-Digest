@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireAuth, requireJson, isValidUrl } from "@/lib/auth";
 
 function escapeMarkdown(text: string): string {
   return text.replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, "\\$1");
 }
 
 export async function POST(request: NextRequest) {
+  const authError = requireAuth(request);
+  if (authError) return authError;
+
+  const jsonError = requireJson(request);
+  if (jsonError) return jsonError;
+
   let body: { title: string; source: string; summary: string; url: string };
   try {
     body = await request.json();
@@ -12,10 +19,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
+  if (body.url && !isValidUrl(body.url)) {
+    return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
+  }
+
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!botToken || !chatId) {
-    return NextResponse.json({ error: "Telegram env vars not configured" }, { status: 503 });
+    return NextResponse.json({ error: "Telegram service not configured" }, { status: 503 });
   }
 
   const title = escapeMarkdown(body.title || "Untitled");

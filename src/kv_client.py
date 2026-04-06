@@ -2,6 +2,7 @@
 
 import json
 import os
+from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 from urllib.error import URLError
 
@@ -13,16 +14,27 @@ logger = get_logger(__name__)
 
 def _get_config():
     """Return KV REST API URL and token from environment."""
-    url = os.getenv("KV_REST_API_URL")
-    token = os.getenv("KV_REST_API_TOKEN")
+    url = os.getenv("KV_REST_API_URL", "").strip()
+    token = os.getenv("KV_REST_API_TOKEN", "").strip()
     if not url or not token:
         raise RuntimeError("KV_REST_API_URL and KV_REST_API_TOKEN must be set")
+
+    # Validate URL scheme to prevent SSRF
+    parsed = urlparse(url)
+    if parsed.scheme not in ("https", "http"):
+        raise ValueError(f"KV_REST_API_URL must use https (got {parsed.scheme})")
+    if not parsed.hostname:
+        raise ValueError("KV_REST_API_URL has no hostname")
+
     return url, token
 
 
 def _kv_request(method, path, body=None):
     """Send a request to the Vercel KV REST API."""
     base_url, token = _get_config()
+    # Validate path to prevent injection
+    if path and (".." in path or path.count("//") > 1):
+        raise ValueError("Invalid KV path")
     url = f"{base_url}{path}"
 
     data = json.dumps(body).encode() if body is not None else None

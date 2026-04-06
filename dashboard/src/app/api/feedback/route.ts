@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRedis } from "@/lib/kv";
+import { requireAuth, requireJson, isValidUrl } from "@/lib/auth";
 
 const KV_KEY = "feedback:log";
 const MAX_ENTRIES = 90;
@@ -12,6 +13,12 @@ interface FeedbackEntry {
 }
 
 export async function POST(request: NextRequest) {
+  const authError = requireAuth(request);
+  if (authError) return authError;
+
+  const jsonError = requireJson(request);
+  if (jsonError) return jsonError;
+
   let body: FeedbackEntry;
   try {
     body = await request.json();
@@ -21,6 +28,20 @@ export async function POST(request: NextRequest) {
 
   if (!body.url || !body.date || ![1, -1].includes(body.rating)) {
     return NextResponse.json({ error: "Missing or invalid fields" }, { status: 400 });
+  }
+
+  if (!isValidUrl(body.url)) {
+    return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
+  }
+
+  // Sanitize topic_id — only allow known alphanumeric IDs
+  if (body.topic_id && !/^[a-z0-9_-]{1,50}$/i.test(body.topic_id)) {
+    return NextResponse.json({ error: "Invalid topic_id" }, { status: 400 });
+  }
+
+  // Sanitize date — only allow ISO-like date strings
+  if (!/^\d{4}-\d{2}-\d{2}/.test(body.date)) {
+    return NextResponse.json({ error: "Invalid date format" }, { status: 400 });
   }
 
   const redis = getRedis();

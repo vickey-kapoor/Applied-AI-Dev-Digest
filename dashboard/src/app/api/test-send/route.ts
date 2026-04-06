@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getRedis } from "@/lib/kv";
+import { requireAuth } from "@/lib/auth";
 
 const KV_KEY = "digest:last";
 
@@ -25,7 +26,10 @@ function formatTelegramMessage(paper: LastPaper): string {
   return `*Daily AI Dev Digest*\n\n*${title}*\n\n${summary}\n\n${url}\n_Lab: ${source}_`;
 }
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+  const authError = requireAuth(request);
+  if (authError) return authError;
+
   const redis = getRedis();
   if (!redis) {
     return NextResponse.json({ error: "KV not configured" }, { status: 503 });
@@ -47,7 +51,7 @@ export async function POST() {
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!botToken || !chatId) {
     return NextResponse.json(
-      { error: "TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID must be set" },
+      { error: "Telegram service not configured" },
       { status: 503 }
     );
   }
@@ -68,7 +72,7 @@ export async function POST() {
 
     const data = await res.json();
     if (!data.ok) {
-      console.error("[TEST-SEND] Telegram error:", data);
+      console.error("[TEST-SEND] Telegram error:", data.description);
       return NextResponse.json({ error: `Telegram: ${data.description || "send failed"}` }, { status: 502 });
     }
 

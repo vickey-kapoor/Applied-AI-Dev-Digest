@@ -2,8 +2,25 @@
 
 import logging
 import os
+import re
 import sys
 from typing import Optional
+
+
+class _SecretFilter(logging.Filter):
+    """Redact potential secrets from log output."""
+
+    _PATTERNS = [
+        (re.compile(r"sk-[a-zA-Z0-9\-_]{20,}"), "[REDACTED_KEY]"),
+        (re.compile(r"Bearer\s+[a-zA-Z0-9\-_.]{10,}"), "Bearer [REDACTED]"),
+        (re.compile(r"(?i)(api[_-]?key|token|secret|password)\s*[:=]\s*\S+"), r"\1=[REDACTED]"),
+    ]
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        if isinstance(record.msg, str):
+            for pattern, replacement in self._PATTERNS:
+                record.msg = pattern.sub(replacement, record.msg)
+        return True
 
 
 def setup_logger(
@@ -49,7 +66,8 @@ def setup_logger(
     formatter = logging.Formatter(log_format, datefmt="%Y-%m-%d %H:%M:%S")
     console_handler.setFormatter(formatter)
 
-    # Add handler to logger
+    # Add secret filter and handler to logger
+    console_handler.addFilter(_SecretFilter())
     logger.addHandler(console_handler)
 
     # Prevent propagation to root logger to avoid duplicate logs

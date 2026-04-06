@@ -1,6 +1,7 @@
 """Fetch developer product updates from major AI lab blogs."""
 
 from datetime import datetime, timezone
+import html
 from html.parser import HTMLParser
 import socket
 
@@ -37,10 +38,11 @@ def _is_dev_relevant(post: dict, filter_keywords: list[str] | None = None) -> bo
 
 
 def _strip_html(text: str) -> str:
-    """Remove HTML tags from text using stdlib HTMLParser."""
+    """Remove HTML tags and decode entities from text."""
     extractor = _HTMLTextExtractor()
     extractor.feed(text)
-    return extractor.get_text()
+    # Decode HTML entities (e.g. &amp; &#39; &quot;)
+    return html.unescape(extractor.get_text())
 
 
 @retry_with_backoff(

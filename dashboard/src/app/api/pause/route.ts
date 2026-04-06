@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRedis } from "@/lib/kv";
+import { requireAuth, requireJson } from "@/lib/auth";
 
 const KV_KEY = "digest:paused";
 
@@ -17,6 +18,12 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const authError = requireAuth(request);
+  if (authError) return authError;
+
+  const jsonError = requireJson(request);
+  if (jsonError) return jsonError;
+
   let body: { paused: boolean };
   try {
     body = await request.json();

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TOPICS } from "@/lib/topics";
+import { TOPICS, CATEGORY_BADGE_COLORS } from "@/lib/topics";
 import { Clock, ExternalLink, Inbox, ThumbsUp, ThumbsDown } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
@@ -17,18 +17,12 @@ interface HistoryEntry {
   date: string;
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  core: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300",
-  applied: "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300",
-  emerging: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300",
-};
-
 function getTopicBadge(topicId?: string) {
   if (!topicId) return null;
   const topic = TOPICS.find((t) => t.id === topicId);
   if (!topic) return null;
   return (
-    <Badge className={`text-xs font-mono ${CATEGORY_COLORS[topic.category] || ""}`}>
+    <Badge className={`text-xs font-mono ${CATEGORY_BADGE_COLORS[topic.category] || ""}`}>
       {topic.name}
     </Badge>
   );

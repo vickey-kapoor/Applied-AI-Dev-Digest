@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart3, Trophy } from "lucide-react";
+import { CATEGORY_BAR_COLORS, CATEGORY_TAG_COLORS } from "@/lib/topics";
 
 interface TopicStat {
   id: string;
@@ -11,18 +12,6 @@ interface TopicStat {
   wins: number;
   pct: number;
 }
-
-const CATEGORY_COLORS: Record<string, string> = {
-  core: "bg-primary",
-  applied: "bg-purple-500",
-  emerging: "bg-amber-500",
-};
-
-const CATEGORY_TAG_COLORS: Record<string, string> = {
-  core: "text-blue-600 dark:text-blue-400",
-  applied: "text-purple-600 dark:text-purple-400",
-  emerging: "text-amber-600 dark:text-amber-400",
-};
 
 export default function StatsPage() {
   const [stats, setStats] = useState<TopicStat[]>([]);
@@ -101,7 +90,7 @@ export default function StatsPage() {
                 </div>
                 <div className="h-3 w-full bg-secondary rounded-full overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all ${CATEGORY_COLORS[stat.category]}`}
+                    className={`h-full rounded-full transition-all ${CATEGORY_BAR_COLORS[stat.category]}`}
                     style={{ width: `${Math.max((stat.wins / maxWins) * 100, stat.wins > 0 ? 4 : 0)}%` }}
                   />
                 </div>

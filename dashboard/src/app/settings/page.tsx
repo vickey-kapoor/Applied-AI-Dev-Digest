@@ -36,10 +36,10 @@ const GITHUB_REPOS = [
 
 export default function SettingsPage() {
   return (
-    <div className="py-8 max-w-4xl mx-auto">
+    <div className="py-8">
       <div className="mb-8">
-        <div className="flex items-center gap-3 mb-1">
-          <SettingsIcon className="h-7 w-7 text-primary" />
+        <div className="flex items-baseline gap-3 mb-1">
+          <SettingsIcon className="h-7 w-7 text-primary shrink-0 self-center" />
           <h1 className="text-2xl font-display font-bold text-foreground">Settings</h1>
         </div>
         <p className="text-muted-foreground mt-1">Pipeline configuration and integrations</p>

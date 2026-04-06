@@ -72,10 +72,10 @@ export default function PreviewPage() {
   }, [paper]);
 
   return (
-    <div className="py-8 max-w-3xl mx-auto">
+    <div className="py-8">
       <div className="mb-8">
-        <div className="flex items-center gap-3 mb-1">
-          <Eye className="h-7 w-7 text-primary" />
+        <div className="flex items-baseline gap-3 mb-1">
+          <Eye className="h-7 w-7 text-primary shrink-0 self-center" />
           <h1 className="text-2xl font-display font-bold text-foreground">
             Digest Preview
           </h1>

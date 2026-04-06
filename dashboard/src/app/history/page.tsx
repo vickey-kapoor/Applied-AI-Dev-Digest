@@ -95,7 +95,7 @@ export default function HistoryPage() {
 
   if (loading) {
     return (
-      <div className="py-8 max-w-3xl mx-auto">
+      <div className="py-8">
         <div className="h-8 w-48 bg-muted rounded animate-pulse mb-8" />
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="h-32 bg-muted rounded-lg animate-pulse mb-4" />
@@ -105,10 +105,10 @@ export default function HistoryPage() {
   }
 
   return (
-    <div className="py-8 max-w-3xl mx-auto">
+    <div className="py-8">
       <div className="mb-8">
-        <div className="flex items-center gap-3 mb-1">
-          <Clock className="h-7 w-7 text-primary" />
+        <div className="flex items-baseline gap-3 mb-1">
+          <Clock className="h-7 w-7 text-primary shrink-0 self-center" />
           <h1 className="text-2xl font-display font-bold text-foreground">
             Weekly History
           </h1>

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { DM_Mono, Syne } from "next/font/google";
+import { Inter, Syne } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { cn } from "@/lib/utils";
 
-const dmMono = DM_Mono({ weight: "400", subsets: ["latin"], variable: "--font-dm-mono" });
+const inter = Inter({ subsets: ["latin"] });
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne" });
 
 export const metadata: Metadata = {
@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={cn(dmMono.variable, syne.variable)}>
+    <html lang="en">
+      <body className={cn(inter.className, syne.variable)}>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg"

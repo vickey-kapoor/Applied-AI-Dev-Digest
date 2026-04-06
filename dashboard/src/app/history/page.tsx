@@ -18,9 +18,9 @@ interface HistoryEntry {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  core: "bg-primary/15 text-primary",
-  applied: "bg-purple-500/15 text-purple-400",
-  emerging: "bg-amber-500/15 text-amber-400",
+  core: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300",
+  applied: "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300",
+  emerging: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300",
 };
 
 function getTopicBadge(topicId?: string) {
@@ -96,9 +96,9 @@ export default function HistoryPage() {
   if (loading) {
     return (
       <div className="py-8">
-        <div className="h-8 w-48 bg-card rounded animate-pulse mb-8" />
+        <div className="h-8 w-48 bg-muted rounded animate-pulse mb-8" />
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="h-32 bg-card rounded-lg animate-pulse mb-4" />
+          <div key={i} className="h-32 bg-muted rounded-lg animate-pulse mb-4" />
         ))}
       </div>
     );
@@ -151,10 +151,10 @@ export default function HistoryPage() {
                         aria-label="Thumbs up"
                         className={`p-1.5 rounded-md transition-colors ${
                           voted === 1
-                            ? "bg-green-900/40 text-green-400"
+                            ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
                             : voted
                             ? "text-muted-foreground/30 cursor-not-allowed"
-                            : "text-muted-foreground hover:text-green-400 hover:bg-green-900/20"
+                            : "text-muted-foreground hover:text-green-600 hover:bg-green-50 dark:hover:text-green-400 dark:hover:bg-green-900/20"
                         }`}
                       >
                         <ThumbsUp className="h-4 w-4" />
@@ -165,10 +165,10 @@ export default function HistoryPage() {
                         aria-label="Thumbs down"
                         className={`p-1.5 rounded-md transition-colors ${
                           voted === -1
-                            ? "bg-red-900/40 text-red-400"
+                            ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"
                             : voted
                             ? "text-muted-foreground/30 cursor-not-allowed"
-                            : "text-muted-foreground hover:text-red-400 hover:bg-red-900/20"
+                            : "text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-900/20"
                         }`}
                       >
                         <ThumbsDown className="h-4 w-4" />

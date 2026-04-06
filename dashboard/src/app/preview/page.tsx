@@ -111,11 +111,11 @@ export default function PreviewPage() {
 
       {/* Error state */}
       {fetchStatus === "error" && (
-        <Card className="mb-6 border-red-500/30">
+        <Card className="mb-6 border-red-200 dark:border-red-800">
           <CardContent className="flex items-center gap-3 py-4">
-            <AlertCircle className="h-5 w-5 text-red-400 shrink-0" />
+            <AlertCircle className="h-5 w-5 text-red-500 shrink-0" />
             <div>
-              <p className="text-sm font-medium text-red-400">{fetchError}</p>
+              <p className="text-sm font-medium text-red-700 dark:text-red-400">{fetchError}</p>
               <p className="text-xs text-muted-foreground mt-0.5">Check that OPENAI_API_KEY is set and the pipeline is working.</p>
             </div>
           </CardContent>
@@ -176,7 +176,7 @@ export default function PreviewPage() {
               Refresh
             </button>
             {sendStatus === "error" && (
-              <span className="text-sm text-red-400 flex items-center gap-1">
+              <span className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
                 <AlertCircle className="h-4 w-4" />
                 {sendError}
               </span>

@@ -19,9 +19,9 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 const CATEGORY_TAG_COLORS: Record<string, string> = {
-  core: "text-primary",
-  applied: "text-purple-400",
-  emerging: "text-amber-400",
+  core: "text-blue-600 dark:text-blue-400",
+  applied: "text-purple-600 dark:text-purple-400",
+  emerging: "text-amber-600 dark:text-amber-400",
 };
 
 export default function StatsPage() {
@@ -45,9 +45,9 @@ export default function StatsPage() {
   if (loading) {
     return (
       <div className="py-8">
-        <div className="h-8 w-48 bg-card rounded animate-pulse mb-8" />
+        <div className="h-8 w-48 bg-muted rounded animate-pulse mb-8" />
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-12 bg-card rounded animate-pulse mb-3" />
+          <div key={i} className="h-12 bg-muted rounded animate-pulse mb-3" />
         ))}
       </div>
     );

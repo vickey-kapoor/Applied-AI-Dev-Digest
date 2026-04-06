@@ -25,7 +25,7 @@ export default function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Database className="h-5 w-5 text-green-400" />
+              <Database className="h-5 w-5 text-green-600" />
               Data Sources
             </CardTitle>
             <CardDescription>AI lab blogs being monitored</CardDescription>
@@ -48,7 +48,7 @@ export default function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-orange-400" />
+              <Clock className="h-5 w-5 text-orange-600" />
               Schedule
             </CardTitle>
             <CardDescription>When the digest runs</CardDescription>
@@ -132,7 +132,7 @@ export default function SettingsPage() {
                 href="https://github.com/vickey-kapoor/ai-research-digest/actions/workflows/daily-news.yml"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background rounded-lg hover:opacity-80 transition-colors text-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors text-sm"
               >
                 <Github className="h-4 w-4" />
                 Run Workflow on GitHub

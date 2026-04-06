@@ -112,12 +112,12 @@ export default function TopicsPage() {
     return (
       <div className="py-8">
         <div className="mb-8">
-          <div className="h-8 w-48 bg-card rounded animate-pulse" />
-          <div className="h-4 w-96 bg-card rounded animate-pulse mt-2" />
+          <div className="h-8 w-48 bg-muted rounded animate-pulse" />
+          <div className="h-4 w-96 bg-muted rounded animate-pulse mt-2" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-48 bg-card rounded-lg animate-pulse" />
+            <div key={i} className="h-48 bg-muted rounded-lg animate-pulse" />
           ))}
         </div>
       </div>
@@ -182,7 +182,7 @@ export default function TopicsPage() {
                           aria-label={`Toggle ${topic.name}`}
                           onClick={() => toggle(topic.id)}
                           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ${
-                            enabled ? "bg-primary" : "bg-border"
+                            enabled ? "bg-primary" : "bg-gray-300 dark:bg-gray-600"
                           }`}
                         >
                           <span
@@ -208,7 +208,7 @@ export default function TopicsPage() {
                         {topicCustom.map((kw) => (
                           <Badge
                             key={`custom-${kw}`}
-                            className="text-xs font-mono bg-emerald-900/40 text-emerald-300 gap-1 cursor-pointer hover:bg-emerald-900/60"
+                            className="text-xs font-mono bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 gap-1 cursor-pointer hover:bg-emerald-200 dark:hover:bg-emerald-900/60"
                             onClick={() => removeCustomKeyword(topic.id, kw)}
                           >
                             {kw}
@@ -271,12 +271,12 @@ export default function TopicsPage() {
           <div className="text-sm text-muted-foreground">
             {isDirty && "You have unsaved changes"}
             {saveStatus === "saved" && (
-              <span className="flex items-center gap-1 text-green-400">
+              <span className="flex items-center gap-1 text-green-600 dark:text-green-400">
                 <Check className="h-4 w-4" /> Changes saved
               </span>
             )}
             {saveStatus === "error" && (
-              <span className="flex items-center gap-1 text-red-400">
+              <span className="flex items-center gap-1 text-red-600 dark:text-red-400">
                 <AlertCircle className="h-4 w-4" /> Failed to save — is Vercel KV configured?
               </span>
             )}

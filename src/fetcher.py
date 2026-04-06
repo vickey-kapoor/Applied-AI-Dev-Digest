@@ -6,6 +6,7 @@ from src.constants import THREAD_POOL_WORKERS
 from src.fetchers.blog_fetcher import fetch_blog_posts
 from src.fetchers.github_fetcher import fetch_github_releases
 from src.fetchers.hackernews_fetcher import fetch_hackernews_stories
+from src.fetchers.huggingface_fetcher import fetch_huggingface_papers
 from src.logger import get_logger
 
 logger = get_logger(__name__)
@@ -39,6 +40,7 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
         ("Blogs", lambda: fetch_blog_posts(max_results=10, filter_keywords=filter_keywords)),
         ("GitHub", fetch_github_releases),
         ("Hacker News", fetch_hackernews_stories),
+        ("HF Papers", fetch_huggingface_papers),
     ]
 
     all_items: list[dict] = []

@@ -8,6 +8,7 @@ import {
   Github,
   ExternalLink,
   Newspaper,
+  BookOpen,
 } from "lucide-react";
 
 const BLOG_SOURCES = [
@@ -45,12 +46,12 @@ export default function SettingsPage() {
         <p className="text-muted-foreground mt-1">Pipeline configuration and integrations</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Blog Sources */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Database className="h-5 w-5 text-green-600" />
+              <Database className="h-5 w-5 text-green-600 dark:text-green-400" />
               Blog Sources
             </CardTitle>
             <CardDescription>AI lab and platform blogs being monitored</CardDescription>
@@ -100,11 +101,38 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
+        {/* HF Daily Papers */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+              HF Daily Papers
+            </CardTitle>
+            <CardDescription>Trending papers from Hugging Face</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Min upvotes</span>
+                <span className="font-mono font-medium">10+</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Max papers</span>
+                <span className="font-mono font-medium">5</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Recency</span>
+                <span className="font-mono font-medium">Last 24h</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Hacker News */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Newspaper className="h-5 w-5 text-orange-600" />
+              <Newspaper className="h-5 w-5 text-orange-600 dark:text-orange-400" />
               Hacker News
             </CardTitle>
             <CardDescription>AI/ML discussions from HN</CardDescription>
@@ -131,7 +159,7 @@ export default function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-orange-600" />
+              <Clock className="h-5 w-5 text-orange-600 dark:text-orange-400" />
               Schedule
             </CardTitle>
             <CardDescription>When the digest runs</CardDescription>
@@ -215,7 +243,7 @@ export default function SettingsPage() {
                 href="https://github.com/vickey-kapoor/ai-research-digest/actions/workflows/daily-news.yml"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors text-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background rounded-lg hover:opacity-80 transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <Github className="h-4 w-4" />
                 Run Workflow on GitHub

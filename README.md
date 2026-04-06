@@ -1,12 +1,13 @@
 # Applied AI Dev Digest
 
-Daily digest of what's shipping in AI/ML — delivered to Telegram. Tracks blog announcements, GitHub releases, and Hacker News discussions relevant to working ML/AI engineers.
+Daily digest of what's shipping in AI/ML — delivered to Telegram. Tracks blog announcements, GitHub releases, Hacker News discussions, and trending Hugging Face papers relevant to working ML/AI engineers.
 
 ## Features
 
 - Fetches from **8 AI lab/platform blogs** via RSS (OpenAI, Anthropic, Google DeepMind, Meta AI, Mistral, Microsoft AI, AWS AI, Hugging Face)
 - Tracks **10 key GitHub repos** for new releases (transformers, LangChain, vLLM, Ollama, etc.)
 - Monitors **Hacker News** for top AI/ML discussions (score > 100, last 24h)
+- Surfaces **Hugging Face Daily Papers** with high upvotes (10+, last 24h)
 - **10 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords
 - Uses GPT-4o-mini to select the most impactful item, influenced by **user feedback weights**
 - Generates **structured dev summaries** (Why it matters / What it is / How to use it / Dev take)
@@ -85,6 +86,10 @@ https://openai.com/index/introducing-gpt-5-4-mini-and-nano
 | microsoft/autogen | Multi-agent framework |
 | unsloth/unsloth | Fine-tuning |
 | ggerganov/llama.cpp | Local inference |
+
+### Hugging Face Daily Papers
+
+Trending papers from `huggingface.co/api/daily_papers`, filtered to 10+ upvotes, last 24 hours. Top 5 returned.
 
 ### Hacker News
 

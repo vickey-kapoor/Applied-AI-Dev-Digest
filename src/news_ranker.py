@@ -72,6 +72,7 @@ Prioritize:
 4. API announcements that add new endpoints or change pricing/limits
 5. Significant open-source releases the community will adopt
 6. Practical techniques or benchmarks that change how engineers work
+7. Hugging Face daily papers with high upvotes that introduce new practical techniques (new fine-tuning method, inference optimization, architecture improvement engineers will use)
 
 Deprioritize:
 - Pure academic research with no near-term practical application
@@ -80,6 +81,8 @@ Deprioritize:
 - Patch releases, hotfixes, or build-number releases (e.g. b8671, v0.1.3-patch)
 - Releases with only bug fixes and no new capabilities
 - Any item where the only change is a minor dependency update or platform fix
+- Pure theory papers with no implementation or code release
+- Papers without a linked repo or runnable code
 
 Items:
 {research_text}

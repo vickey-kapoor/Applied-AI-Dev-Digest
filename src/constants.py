@@ -135,3 +135,7 @@ HN_KEYWORDS = [
 ]
 HN_MIN_SCORE = 100
 HN_MAX_STORIES = 5
+
+# Hugging Face Daily Papers settings
+HF_MIN_UPVOTES = 10
+HF_MAX_PAPERS = 5

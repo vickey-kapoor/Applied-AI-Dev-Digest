@@ -1,6 +1,130 @@
 {
   "papers": [
     {
+      "id": "9e209e90-efa6-5189-94a3-3f159ec7f59b",
+      "title": "Building real-time conversational podcasts with Amazon Nova 2 Sonic",
+      "summary": "This post walks through building an automated podcast generator that creates engaging conversations between two AI hosts on any topic, demonstrating the streaming capabilities of Nova Sonic, stage-aware content filtering, and real-time audio generation.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/building-real-time-conversational-podcasts-with-amazon-nova-2-sonic/",
+      "published_at": "2026-04-07T16:29:11",
+      "fetched_at": "2026-04-07T17:09:16.096833Z",
+      "type": "announcement",
+      "topics": [
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7bb2e5b9-34e1-5e8b-bb05-53078f6b431a",
+      "title": "Text-to-SQL solution powered by Amazon Bedrock",
+      "summary": "In this post, we show you how to build a natural text-to-SQL solution using Amazon Bedrock that transforms business questions into database queries and returns actionable answers.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/text-to-sql-solution-powered-by-amazon-bedrock/",
+      "published_at": "2026-04-07T16:28:20",
+      "fetched_at": "2026-04-07T17:09:16.096833Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "56333cfe-b83a-510f-be77-3eb8a26a9b25",
+      "title": "Claude Code is locking people out for hours",
+      "summary": "184 points · 224 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/anthropics/claude-code/issues/44257",
+      "published_at": "2026-04-07T15:04:23+00:00",
+      "fetched_at": "2026-04-07T17:09:16.096833Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c48aabec-c135-5383-8d74-5d87e3594c73",
+      "title": "langchain langchain-core==1.2.27 released",
+      "summary": "Changes since langchain-core==1.2.26\r\n\r\nrelease(core): 1.2.27 (#36586)\r\nfix(core): handle symlinks in deprecated prompt save path (#36585)\r\nchore: add comment explaining `pygments>=2.20.0` (#36570)\r\n\r\nCredit to Jeff Ponte (@JDP-Security) for reporting the symlink resolution issue in #36585.",
+      "source": "GitHub",
+      "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D1.2.27",
+      "published_at": "2026-04-07T14:56:49Z",
+      "fetched_at": "2026-04-07T17:09:16.096833Z",
+      "type": "release",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "408418fa-68dd-59f3-8517-386d0154b5c2",
+      "title": "AI may be making us think and write more alike",
+      "summary": "188 points · 185 comments",
+      "source": "Hacker News",
+      "url": "https://dornsife.usc.edu/news/stories/ai-may-be-making-us-think-and-write-more-alike/",
+      "published_at": "2026-04-07T11:29:02+00:00",
+      "fetched_at": "2026-04-07T17:09:16.096833Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "89e0ab88-71b9-5a3a-abdc-9e1cbf45d82f",
+      "title": "Blackholing My Email",
+      "summary": "130 points · 19 comments",
+      "source": "Hacker News",
+      "url": "https://www.johnsto.co.uk/blog/blackholing-my-email/",
+      "published_at": "2026-04-07T08:42:05+00:00",
+      "fetched_at": "2026-04-07T17:09:16.096833Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "6cd7e0be-edb2-5773-bd46-a867d04494b1",
+      "title": "ollama v0.20.3 released",
+      "summary": "## What's Changed\r\n* Gemma 4 Tool Calling improvements\r\n* Added latest models to Ollama App\r\n* OpenClaw fixes for launching TUI\r\n\r\n\r\n**Full Changelog**: https://github.com/ollama/ollama/compare/v0.20.2...v0.20.3",
+      "source": "GitHub",
+      "url": "https://github.com/ollama/ollama/releases/tag/v0.20.3",
+      "published_at": "2026-04-07T05:19:10Z",
+      "fetched_at": "2026-04-07T17:09:16.096833Z",
+      "type": "release",
+      "topics": [
+        "Model Release",
+        "Function Calling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "bff975af-bfb9-5278-8753-2cfe59f6bc85",
+      "title": "Show HN: Hippo, biologically inspired memory for AI agents",
+      "summary": "116 points · 22 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/kitfunso/hippo-memory",
+      "published_at": "2026-04-06T21:49:34+00:00",
+      "fetched_at": "2026-04-07T17:09:16.096833Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "973b15cc-5912-5be0-a6fb-8490174808b6",
+      "title": "Announcing the OpenAI Safety Fellowship",
+      "summary": "A pilot program to support independent safety and alignment research and develop the next generation of talent",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-openai-safety-fellowship",
+      "published_at": "2026-04-06T10:00:00",
+      "fetched_at": "2026-04-07T17:09:16.096833Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "23b5270a-aa6c-5611-863c-1e2126c70abb",
       "title": "Connecting MCP servers to Amazon Bedrock AgentCore Gateway using Authorization Code flow",
       "summary": "Amazon Bedrock AgentCore Gateway provides a centralized layer for managing how AI agents connect to tools and MCP servers across your organization. In this post, we walk through how to configure AgentCore Gateway to connect to an OAuth-protected MCP server using the Authorization Code flow.",

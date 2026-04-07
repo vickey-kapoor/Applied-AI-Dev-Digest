@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-07",
+      "top_paper_id": "9e209e90-efa6-5189-94a3-3f159ec7f59b",
+      "papers_fetched": 10,
+      "pdf_path": "reports/07-Apr/Building_real-time_conversational_podcasts_with_Am.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24094267924"
+    },
+    {
       "date": "2026-04-06",
       "top_paper_id": "23b5270a-aa6c-5611-863c-1e2126c70abb",
       "papers_fetched": 10,

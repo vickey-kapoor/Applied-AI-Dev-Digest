@@ -1,6 +1,138 @@
 {
   "papers": [
     {
+      "id": "8c8c151f-4d36-578d-bb43-97f71511c521",
+      "title": "anthropic-sdk-python v0.92.0 released",
+      "summary": "## 0.92.0 (2026-04-08)\n\nFull Changelog: [v0.91.0...v0.92.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.91.0...v0.92.0)\n\n### Features\n\n* **api:** add support for Claude Managed Agents ([5b879a7](https://github.com/anthropics/anthropic-sdk-python/commit/5b879a7d929bd93332d777bed067be680819dfac))",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.92.0",
+      "published_at": "2026-04-08T16:55:01Z",
+      "fetched_at": "2026-04-08T17:13:26.871535Z",
+      "type": "release",
+      "topics": [
+        "Model Release",
+        "API Update",
+        "SDK/Library"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "31ac6e21-6f87-56af-9692-6aa5f3d5cc59",
+      "title": "ALTK‑Evolve: On‑the‑Job Learning for AI Agents",
+      "summary": "",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/ibm-research/altk-evolve",
+      "published_at": "2026-04-08T14:27:42",
+      "fetched_at": "2026-04-08T17:13:26.871535Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "87b9cccb-41d2-5f7a-baef-f2c651b34c68",
+      "title": "MegaTrain: Full Precision Training of 100B+ Parameter LLMs on a Single GPU",
+      "summary": "162 points · 35 comments",
+      "source": "Hacker News",
+      "url": "https://arxiv.org/abs/2604.05091",
+      "published_at": "2026-04-08T12:19:00+00:00",
+      "fetched_at": "2026-04-08T17:13:26.871535Z",
+      "type": "discussion",
+      "topics": [
+        "Fine-tuning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "87b3be71-2ced-5234-b251-3da4a0b2761d",
+      "title": "Introducing the Child Safety Blueprint",
+      "summary": "Discover OpenAI’s Child Safety Blueprint—a roadmap for building AI responsibly with safeguards, age-appropriate design, and collaboration to protect and empower young people online.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-child-safety-blueprint",
+      "published_at": "2026-04-08T05:00:00",
+      "fetched_at": "2026-04-08T17:13:26.871535Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2926be93-d042-576d-82d1-b461694bdb83",
+      "title": "Manage AI costs with Amazon Bedrock Projects",
+      "summary": "With Amazon Bedrock Projects, you can attribute inference costs to specific workloads and analyze them in AWS Cost Explorer and AWS Data Exports. In this post, you will learn how to set up Projects end-to-end, from designing a tagging strategy to analyzing costs.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/manage-ai-costs-with-amazon-bedrock-projects/",
+      "published_at": "2026-04-07T23:32:00",
+      "fetched_at": "2026-04-08T17:13:26.871535Z",
+      "type": "announcement",
+      "topics": [
+        "Pricing"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c87d85ea-01a4-5568-b89b-c0755d87fed3",
+      "title": "Show HN: Gemma 4 Multimodal Fine-Tuner for Apple Silicon",
+      "summary": "212 points · 27 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/mattmireles/gemma-tuner-multimodal",
+      "published_at": "2026-04-07T19:37:05+00:00",
+      "fetched_at": "2026-04-08T17:13:26.871535Z",
+      "type": "discussion",
+      "topics": [
+        "Fine-tuning",
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3a58ac2a-7e16-5424-ae84-a207688ad9ec",
+      "title": "System Card: Claude Mythos Preview [pdf]",
+      "summary": "799 points · 595 comments",
+      "source": "Hacker News",
+      "url": "https://www-cdn.anthropic.com/53566bf5440a10affd749724787c8913a2ae0841.pdf",
+      "published_at": "2026-04-07T18:18:36+00:00",
+      "fetched_at": "2026-04-08T17:13:26.871535Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "187056e4-21cf-5c5b-a35c-7e84d2a69a8c",
+      "title": "Assessing Claude Mythos Preview's cybersecurity capabilities",
+      "summary": "300 points · 43 comments",
+      "source": "Hacker News",
+      "url": "https://red.anthropic.com/2026/mythos-preview/",
+      "published_at": "2026-04-07T18:11:31+00:00",
+      "fetched_at": "2026-04-08T17:13:26.871535Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d88a33ed-8b2d-5465-b98c-13cf4909269c",
+      "title": "Project Glasswing: Securing critical software for the AI era",
+      "summary": "1455 points · 760 comments",
+      "source": "Hacker News",
+      "url": "https://www.anthropic.com/glasswing",
+      "published_at": "2026-04-07T18:09:34+00:00",
+      "fetched_at": "2026-04-08T17:13:26.871535Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "9e209e90-efa6-5189-94a3-3f159ec7f59b",
       "title": "Building real-time conversational podcasts with Amazon Nova 2 Sonic",
       "summary": "This post walks through building an automated podcast generator that creates engaging conversations between two AI hosts on any topic, demonstrating the streaming capabilities of Nova Sonic, stage-aware content filtering, and real-time audio generation.",

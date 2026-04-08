@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-08",
+      "top_paper_id": "8c8c151f-4d36-578d-bb43-97f71511c521",
+      "papers_fetched": 10,
+      "pdf_path": "reports/08-Apr/anthropic-sdk-python_v0920_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24148561315"
+    },
+    {
       "date": "2026-04-07",
       "top_paper_id": "9e209e90-efa6-5189-94a3-3f159ec7f59b",
       "papers_fetched": 10,

@@ -1,6 +1,140 @@
 {
   "papers": [
     {
+      "id": "cbe97831-f773-5c75-8a5d-6b1f46931529",
+      "title": "Embed a live AI browser agent in your React app with Amazon Bedrock AgentCore",
+      "summary": "This post walks you through three steps: starting a session and generating the Live View URL, rendering the stream in your React application, and wiring up an AI agent that drives the browser while your users watch. At the end, you will have a working sample application you can clone and run.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/embed-a-live-ai-browser-agent-in-your-react-app-with-amazon-bedrock-agentcore/",
+      "published_at": "2026-04-09T17:06:07",
+      "fetched_at": "2026-04-09T17:15:21.665800Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8f28db33-a82e-5a64-9b01-152e6f2a64e9",
+      "title": "Vercel Claude Code plugin wants to read your prompt",
+      "summary": "157 points · 36 comments",
+      "source": "Hacker News",
+      "url": "https://akshaychugh.xyz/writings/png/vercel-plugin-telemetry",
+      "published_at": "2026-04-09T15:17:27+00:00",
+      "fetched_at": "2026-04-09T17:15:21.665800Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "09048be8-1c76-5ad8-a82a-4f27231d79bc",
+      "title": "Introducing stateful MCP client capabilities on Amazon Bedrock AgentCore Runtime",
+      "summary": "In this post, you will learn how to build stateful MCP servers that request user input during execution, invoke LLM sampling for dynamic content generation, and stream progress updates for long-running tasks. You will see code examples for each capability and deploy a working stateful MCP server to Amazon Bedrock AgentCore Runtime.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/introducing-stateful-mcp-client-capabilities-on-amazon-bedrock-agentcore-runtime/",
+      "published_at": "2026-04-09T14:47:57",
+      "fetched_at": "2026-04-09T17:15:21.665800Z",
+      "type": "announcement",
+      "topics": [
+        "SDK/Library",
+        "Developer Tools"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ef1b32d7-68ed-5ca9-a24b-737ae772a5dc",
+      "title": "Claude mixes up who said what",
+      "summary": "323 points · 283 comments",
+      "source": "Hacker News",
+      "url": "https://dwyer.co.za/static/claude-mixes-up-who-said-what-and-thats-not-ok.html",
+      "published_at": "2026-04-09T09:25:28+00:00",
+      "fetched_at": "2026-04-09T17:15:21.665800Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "41a3a54f-be40-5a08-8144-9606def567c3",
+      "title": "Reallocating $100/Month Claude Code Spend to Zed and OpenRouter",
+      "summary": "133 points · 129 comments",
+      "source": "Hacker News",
+      "url": "https://braw.dev/blog/2026-04-06-reallocating-100-month-claude-spend/",
+      "published_at": "2026-04-09T08:55:18+00:00",
+      "fetched_at": "2026-04-09T17:15:21.665800Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a6ad2548-9312-50c9-876e-5790a622f04d",
+      "title": "Multimodal Embedding & Reranker Models with Sentence Transformers",
+      "summary": "",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/multimodal-sentence-transformers",
+      "published_at": "2026-04-09T00:00:00",
+      "fetched_at": "2026-04-09T17:15:21.665800Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release",
+        "Embeddings",
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f949aa49-58af-5adf-a3f5-a4fdd9119162",
+      "title": "openai-python v2.31.0 released",
+      "summary": "## 2.31.0 (2026-04-08)\n\nFull Changelog: [v2.30.0...v2.31.0](https://github.com/openai/openai-python/compare/v2.30.0...v2.31.0)\n\n### Features\n\n* **api:** add phase field to conversations message ([3e5834e](https://github.com/openai/openai-python/commit/3e5834efb39b24e019a29dc54d890c67d18cbb54))\n* **api:** add web_search_call.results to ResponseIncludable type ([ffd8741](https://github.com/openai/openai-python/commit/ffd8741dd38609a5af0159ceb800d8ddba7925f8))\n* **client:** add support for short-li",
+      "source": "GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v2.31.0",
+      "published_at": "2026-04-08T21:01:00Z",
+      "fetched_at": "2026-04-09T17:15:21.665800Z",
+      "type": "release",
+      "topics": [
+        "API Update",
+        "SDK/Library",
+        "Developer Tools"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "577153f5-c0c6-5c23-9c40-0ebc27c46d62",
+      "title": "John Deere to pay $99M in right-to-repair settlement",
+      "summary": "356 points · 117 comments",
+      "source": "Hacker News",
+      "url": "https://www.thedrive.com/news/john-deere-to-pay-99-million-in-monumental-right-to-repair-settlement",
+      "published_at": "2026-04-08T20:46:27+00:00",
+      "fetched_at": "2026-04-09T17:15:21.665800Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7d3c9ce6-5d97-5e16-8cb5-e9d9874d0671",
+      "title": "I've been waiting over a month for Anthropic to respond to my billing issue",
+      "summary": "399 points · 187 comments",
+      "source": "Hacker News",
+      "url": "https://nickvecchioni.github.io/thoughts/2026/04/08/anthropic-support-doesnt-exist/",
+      "published_at": "2026-04-08T17:44:25+00:00",
+      "fetched_at": "2026-04-09T17:15:21.665800Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "8c8c151f-4d36-578d-bb43-97f71511c521",
       "title": "anthropic-sdk-python v0.92.0 released",
       "summary": "## 0.92.0 (2026-04-08)\n\nFull Changelog: [v0.91.0...v0.92.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.91.0...v0.92.0)\n\n### Features\n\n* **api:** add support for Claude Managed Agents ([5b879a7](https://github.com/anthropics/anthropic-sdk-python/commit/5b879a7d929bd93332d777bed067be680819dfac))",

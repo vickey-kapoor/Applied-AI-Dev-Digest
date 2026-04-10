@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-10",
+      "top_paper_id": "78919eba-5267-51fe-aa87-e77a6008b1de",
+      "papers_fetched": 10,
+      "pdf_path": "reports/10-Apr/langchain_langchain-core130a1_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24254234547"
+    },
+    {
       "date": "2026-04-09",
       "top_paper_id": "cbe97831-f773-5c75-8a5d-6b1f46931529",
       "papers_fetched": 10,

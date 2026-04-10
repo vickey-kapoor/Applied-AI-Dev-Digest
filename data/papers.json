@@ -1,6 +1,147 @@
 {
   "papers": [
     {
+      "id": "78919eba-5267-51fe-aa87-e77a6008b1de",
+      "title": "langchain langchain-core==1.3.0a1 released",
+      "summary": "Initial release\n\nrelease(core): 1.3.0a1 (#36656)\nchore(core): reduce streaming metadata / perf (#36588)\nrelease(core): release 1.2.28 (#36614)\nfix(core): add more sanitization to templates (#36612)\nrelease(core): 1.2.27 (#36586)\nfix(core): handle symlinks in deprecated prompt save path (#36585)\nchore: add comment explaining `pygments>=2.20.0` (#36570)\nrelease(core): 1.2.26 (#36511)\nfix(core): add init validator and serialization mappings for Bedrock models (#34510)\nfeat(core): add `ChatBaseten` ",
+      "source": "GitHub",
+      "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D1.3.0a1",
+      "published_at": "2026-04-10T16:01:46Z",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "release",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "91304ad9-417c-51e9-afdf-fccd5fbf6cfa",
+      "title": "OpenAI backs Illinois bill that would limit when AI labs can be held liable",
+      "summary": "380 points · 273 comments",
+      "source": "Hacker News",
+      "url": "https://www.wired.com/story/openai-backs-bill-exempt-ai-firms-model-harm-lawsuits/",
+      "published_at": "2026-04-10T13:08:43+00:00",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "cd796dd0-d52f-5dc8-bfda-c89ca35dd2d4",
+      "title": "We've raised $17M to build what comes after Git",
+      "summary": "260 points · 564 comments",
+      "source": "Hacker News",
+      "url": "https://blog.gitbutler.com/series-a",
+      "published_at": "2026-04-10T01:52:58+00:00",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7b779217-0528-53c7-9916-ff0667253d7c",
+      "title": "Microsoft is employing dark patterns to goad users into paying for storage?",
+      "summary": "372 points · 225 comments",
+      "source": "Hacker News",
+      "url": "https://lzon.ca/posts/other/microsoft-user-abuse/",
+      "published_at": "2026-04-09T21:09:12+00:00",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "52cd96b5-33dc-53f0-a2c1-5b113e296d83",
+      "title": "Netflix Prices Went Up Again – I Bought a DVD Player Instead",
+      "summary": "238 points · 262 comments",
+      "source": "Hacker News",
+      "url": "https://aywren.com/2026/04/09/netflix-prices-went-up-again-i-bought-a-dvd-player-instead/",
+      "published_at": "2026-04-09T20:17:50+00:00",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "06418b13-6c7a-5f9f-aa51-688520849a41",
+      "title": "anthropic-sdk-python v0.93.0 released",
+      "summary": "## 0.93.0 (2026-04-09)\n\nFull Changelog: [v0.92.0...v0.93.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.92.0...v0.93.0)\n\n### Features\n\n* **api:** Add beta advisor tool ([4297dca](https://github.com/anthropics/anthropic-sdk-python/commit/4297dca285441b185ea9e3d18b7f912102b54be2))",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.93.0",
+      "published_at": "2026-04-09T18:13:18Z",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "release",
+      "topics": [
+        "API Update",
+        "SDK/Library"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "cf2a638a-1c52-5443-9c0b-efc11866b76e",
+      "title": "ollama v0.20.5 released",
+      "summary": "## OpenClaw channel setup with Ollama Launch\r\n<img width=\"2292\" height=\"1694\" alt=\"CleanShot 2026-04-09 at 15 45 10@2x\" src=\"https://github.com/user-attachments/assets/3a6882c4-5c6e-4724-8f6e-56ff2df39f6f\" />\r\n\r\n## What's Changed\r\n  - OpenClaw channel setup: connect WhatsApp, Telegram, Discord, and other messaging channels through `ollama launch openclaw`\r\n  - Enable flash attention for Gemma 4 on compatible GPUs\r\n  - ollama launch openclaw now detects curl-based OpenCode installs at ~/.opencode",
+      "source": "GitHub",
+      "url": "https://github.com/ollama/ollama/releases/tag/v0.20.5",
+      "published_at": "2026-04-09T18:11:20Z",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "release",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "33482abf-bce3-5cf0-86f2-508bdf7917d3",
+      "title": "Understanding Amazon Bedrock model lifecycle",
+      "summary": "This post shows you how to manage FM transitions in Amazon Bedrock, so you can make sure your AI applications remain operational as models evolve. We discuss the three lifecycle states, how to plan migrations with the new extended access feature, and practical strategies to transition your applications to newer models without disruption.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/understanding-amazon-bedrock-model-lifecycle/",
+      "published_at": "2026-04-09T17:33:28",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "e8289313-5b49-50a3-8e4f-fe817178b35c",
+      "title": "The future of managing agents at scale: AWS Agent Registry now in preview",
+      "summary": "Today, we're announcing AWS Agent Registry (preview) in AgentCore, a single place to discover, share, and reuse AI agents, tools, and agent skills across your enterprise.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/the-future-of-managing-agents-at-scale-aws-agent-registry-now-in-preview/",
+      "published_at": "2026-04-09T17:28:20",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "fd3abbe4-d7c5-57fd-8f79-941782217197",
+      "title": "Unfolder for Mac – A 3D model unfolding tool for creating papercraft",
+      "summary": "293 points · 56 comments",
+      "source": "Hacker News",
+      "url": "https://www.unfolder.app/",
+      "published_at": "2026-04-09T16:58:46+00:00",
+      "fetched_at": "2026-04-10T16:57:16.225568Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "cbe97831-f773-5c75-8a5d-6b1f46931529",
       "title": "Embed a live AI browser agent in your React app with Amazon Bedrock AgentCore",
       "summary": "This post walks you through three steps: starting a session and generating the Live View URL, rendering the stream in your React application, and wiring up an AI agent that drives the browser while your users watch. At the end, you will have a working sample application you can clone and run.",

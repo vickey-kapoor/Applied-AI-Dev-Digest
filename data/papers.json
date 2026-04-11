@@ -1,6 +1,116 @@
 {
   "papers": [
     {
+      "id": "ae038cce-bc3c-5ef3-8e10-b0c2dddccd25",
+      "title": "Cirrus Labs to join OpenAI",
+      "summary": "134 points · 58 comments",
+      "source": "Hacker News",
+      "url": "https://cirruslabs.org/",
+      "published_at": "2026-04-11T13:01:34+00:00",
+      "fetched_at": "2026-04-11T16:46:12.788126Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "99d5041d-a91a-5420-af2a-590616a64822",
+      "title": "Italo Calvino: A traveller in a world of uncertainty",
+      "summary": "107 points · 20 comments",
+      "source": "Hacker News",
+      "url": "https://www.historytoday.com/archive/portrait-author-historian/italo-calvino-traveller-world-uncertainty",
+      "published_at": "2026-04-10T23:48:07+00:00",
+      "fetched_at": "2026-04-11T16:46:12.788126Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "1ff24761-469b-58b5-8dba-c0e5e239ed5d",
+      "title": "Sam Altman's response to Molotov cocktail incident",
+      "summary": "326 points · 762 comments",
+      "source": "Hacker News",
+      "url": "https://blog.samaltman.com/2279512",
+      "published_at": "2026-04-10T23:05:48+00:00",
+      "fetched_at": "2026-04-11T16:46:12.788126Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d98530e4-9741-535d-912a-9f0fab232f16",
+      "title": "anthropic-sdk-python v0.94.0 released",
+      "summary": "## 0.94.0 (2026-04-10)\n\nFull Changelog: [v0.93.0...v0.94.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.93.0...v0.94.0)\n\n### Features\n\n* vertex eu region ([#1658](https://github.com/anthropics/anthropic-sdk-python/issues/1658)) ([b7e157d](https://github.com/anthropics/anthropic-sdk-python/commit/b7e157d85f50b2900ddf896e8e80882dd7311bfd))\n\n\n### Bug Fixes\n\n* ensure file data are only sent as 1 parameter ([837b25b](https://github.com/anthropics/anthropic-sdk-python/commit/837b25bb",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.94.0",
+      "published_at": "2026-04-10T22:27:28Z",
+      "fetched_at": "2026-04-11T16:46:12.788126Z",
+      "type": "release",
+      "topics": [
+        "SDK/Library"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7feea0e1-5c42-5ee8-b6f0-4d8f99fbfec6",
+      "title": "Molotov cocktail is hurled at home of Sam Altman",
+      "summary": "239 points · 571 comments",
+      "source": "Hacker News",
+      "url": "https://www.nytimes.com/2026/04/10/us/open-ai-sam-altman-molotov-cocktail.html",
+      "published_at": "2026-04-10T18:48:24+00:00",
+      "fetched_at": "2026-04-11T16:46:12.788126Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b7f91f02-7128-5107-b226-085063cc6869",
+      "title": "AI assistance when contributing to the Linux kernel",
+      "summary": "429 points · 312 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/torvalds/linux/blob/master/Documentation/process/coding-assistants.rst",
+      "published_at": "2026-04-10T18:35:21+00:00",
+      "fetched_at": "2026-04-11T16:46:12.788126Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3c1a2e11-7ffb-5fa9-a35e-c9d87dd4cda2",
+      "title": "Using custom GPTs",
+      "summary": "Learn how to build and use custom GPTs to automate workflows, maintain consistent outputs, and create purpose-built AI assistants.",
+      "source": "OpenAI",
+      "url": "https://openai.com/academy/custom-gpts",
+      "published_at": "2026-04-10T00:00:00",
+      "fetched_at": "2026-04-11T16:46:12.788126Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "61426360-4d31-58e2-bf50-6b7f6177d1dd",
+      "title": "ChatGPT for customer success teams",
+      "summary": "Learn how customer success teams use ChatGPT to manage accounts, improve communication, reduce churn, and drive adoption and renewals.",
+      "source": "OpenAI",
+      "url": "https://openai.com/academy/customer-success",
+      "published_at": "2026-04-10T00:00:00",
+      "fetched_at": "2026-04-11T16:46:12.788126Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "78919eba-5267-51fe-aa87-e77a6008b1de",
       "title": "langchain langchain-core==1.3.0a1 released",
       "summary": "Initial release\n\nrelease(core): 1.3.0a1 (#36656)\nchore(core): reduce streaming metadata / perf (#36588)\nrelease(core): release 1.2.28 (#36614)\nfix(core): add more sanitization to templates (#36612)\nrelease(core): 1.2.27 (#36586)\nfix(core): handle symlinks in deprecated prompt save path (#36585)\nchore: add comment explaining `pygments>=2.20.0` (#36570)\nrelease(core): 1.2.26 (#36511)\nfix(core): add init validator and serialization mappings for Bedrock models (#34510)\nfeat(core): add `ChatBaseten` ",

@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-11",
+      "top_paper_id": "ae038cce-bc3c-5ef3-8e10-b0c2dddccd25",
+      "papers_fetched": 10,
+      "pdf_path": "reports/11-Apr/Cirrus_Labs_to_join_OpenAI.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24286975422"
+    },
+    {
       "date": "2026-04-10",
       "top_paper_id": "78919eba-5267-51fe-aa87-e77a6008b1de",
       "papers_fetched": 10,

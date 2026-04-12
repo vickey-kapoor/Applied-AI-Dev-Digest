@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-12",
+      "top_paper_id": "431fc196-2cf5-5947-9095-704d37440644",
+      "papers_fetched": 10,
+      "pdf_path": "reports/12-Apr/Tell_HN_OpenAI_silently_removed_Study_Mode_from_C.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24311388422"
+    },
+    {
       "date": "2026-04-11",
       "top_paper_id": "ae038cce-bc3c-5ef3-8e10-b0c2dddccd25",
       "papers_fetched": 10,

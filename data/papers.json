@@ -1,6 +1,105 @@
 {
   "papers": [
     {
+      "id": "431fc196-2cf5-5947-9095-704d37440644",
+      "title": "Tell HN: OpenAI silently removed Study Mode from ChatGPT",
+      "summary": "126 points · 35 comments",
+      "source": "Hacker News",
+      "url": "https://news.ycombinator.com/item?id=47739305",
+      "published_at": "2026-04-12T13:20:58+00:00",
+      "fetched_at": "2026-04-12T16:40:31.620000Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "59dbeeb6-26c3-548d-bed4-8d163173e1a2",
+      "title": "Tell HN: docker pull fails in spain due to football cloudflare block",
+      "summary": "244 points · 104 comments",
+      "source": "Hacker News",
+      "url": "https://news.ycombinator.com/item?id=47738883",
+      "published_at": "2026-04-12T12:28:57+00:00",
+      "fetched_at": "2026-04-12T16:40:31.620000Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "06771e76-61e1-562d-9971-fc4b61df3c98",
+      "title": "AI Will Be Met with Violence, and Nothing Good Will Come of It",
+      "summary": "266 points · 447 comments",
+      "source": "Hacker News",
+      "url": "https://www.thealgorithmicbridge.com/p/ai-will-be-met-with-violence-and",
+      "published_at": "2026-04-12T09:16:35+00:00",
+      "fetched_at": "2026-04-12T16:40:31.620000Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "689189d3-56f4-5a74-974c-61cf23081914",
+      "title": "How We Broke Top AI Agent Benchmarks: And What Comes Next",
+      "summary": "453 points · 111 comments",
+      "source": "Hacker News",
+      "url": "https://rdi.berkeley.edu/blog/trustworthy-benchmarks-cont/",
+      "published_at": "2026-04-11T19:15:56+00:00",
+      "fetched_at": "2026-04-12T16:40:31.620000Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3b693a04-24c3-55bd-9b76-90dc53d8059d",
+      "title": "Small models also found the vulnerabilities that Mythos found",
+      "summary": "1184 points · 318 comments",
+      "source": "Hacker News",
+      "url": "https://aisle.com/blog/ai-cybersecurity-after-mythos-the-jagged-frontier",
+      "published_at": "2026-04-11T16:47:28+00:00",
+      "fetched_at": "2026-04-12T16:40:31.620000Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "324ccc60-ade4-5a46-aff7-64e818acb3c7",
+      "title": "Using projects in ChatGPT",
+      "summary": "Learn how to use orojects in ChatGPT to organize chats, files, and instructions, manage ongoing work, and collaborate more effectively.",
+      "source": "OpenAI",
+      "url": "https://openai.com/academy/projects",
+      "published_at": "2026-04-10T00:00:00",
+      "fetched_at": "2026-04-12T16:40:31.620000Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "bb6df5ba-c224-5836-82ed-36c952c2cf3b",
+      "title": "ChatGPT for marketing teams",
+      "summary": "Learn how marketing teams use ChatGPT to plan campaigns, generate content, analyze performance, and move from ideas to execution faster.",
+      "source": "OpenAI",
+      "url": "https://openai.com/academy/marketing",
+      "published_at": "2026-04-10T00:00:00",
+      "fetched_at": "2026-04-12T16:40:31.620000Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "ae038cce-bc3c-5ef3-8e10-b0c2dddccd25",
       "title": "Cirrus Labs to join OpenAI",
       "summary": "134 points · 58 comments",

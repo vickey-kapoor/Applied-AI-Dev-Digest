@@ -1,6 +1,19 @@
 {
   "papers": [
     {
+      "id": "7a734d8c-685e-5b2d-8097-32a1faba6af6",
+      "title": "We have a 99% email reputation. Gmail disagrees",
+      "summary": "123 points · 115 comments",
+      "source": "Hacker News",
+      "url": "https://blogfontawesome.wpcomstaging.com/we-have-a-99-email-reputation-gmail-disagrees/",
+      "published_at": "2026-04-12T12:42:25+00:00",
+      "fetched_at": "2026-04-12T16:49:47.281278Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "431fc196-2cf5-5947-9095-704d37440644",
       "title": "Tell HN: OpenAI silently removed Study Mode from ChatGPT",
       "summary": "126 points · 35 comments",

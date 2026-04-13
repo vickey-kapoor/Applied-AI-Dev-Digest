@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-13",
+      "top_paper_id": "1729f3e3-3019-56e8-b672-695976d48326",
+      "papers_fetched": 10,
+      "pdf_path": "reports/13-Apr/transformers_v554_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24356549004"
+    },
+    {
       "date": "2026-04-12",
       "top_paper_id": "7a734d8c-685e-5b2d-8097-32a1faba6af6",
       "papers_fetched": 10,

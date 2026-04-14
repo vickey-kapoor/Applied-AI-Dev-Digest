@@ -1,6 +1,95 @@
 {
   "papers": [
     {
+      "id": "e00ab433-2136-5161-82ed-286abdafe071",
+      "title": "Spring AI SDK for Amazon Bedrock AgentCore is now Generally Available",
+      "summary": "With the new Spring AI AgentCore SDK, you can build production-ready AI agents and run them on the highly scalable AgentCore Runtime. The Spring AI AgentCore SDK is an open source library that brings Amazon Bedrock AgentCore capabilities into Spring AI. In this post, we build an AI agent starting with a chat endpoint, then adding streaming responses, conversation memory, and tools for web browsing and code execution.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/spring-ai-sdk-for-amazon-bedrock-agentcore-is-now-generally-available/",
+      "published_at": "2026-04-14T12:40:47",
+      "fetched_at": "2026-04-14T17:18:12.364435Z",
+      "type": "announcement",
+      "topics": [
+        "API Update",
+        "SDK/Library"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f661e05a-1959-5185-a48d-56413bac5f49",
+      "title": "Introspective Diffusion Language Models",
+      "summary": "171 points · 35 comments",
+      "source": "Hacker News",
+      "url": "https://introspective-diffusion.github.io/",
+      "published_at": "2026-04-14T07:57:33+00:00",
+      "fetched_at": "2026-04-14T17:18:12.364435Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ce002baf-1e21-579d-b4c6-4a1f173ef2e6",
+      "title": "ollama v0.20.7 released",
+      "summary": "## What's Changed\r\n* Fix quality of gemma:e2b and gemma:e4b when thinking is disabled \r\n* ROCm: Update to ROCm 7.2.1 on Linux by @saman-amd in https://github.com/ollama/ollama/pull/15483\r\n\r\n**Full Changelog**: https://github.com/ollama/ollama/compare/v0.20.6...v0.20.7",
+      "source": "GitHub",
+      "url": "https://github.com/ollama/ollama/releases/tag/v0.20.7",
+      "published_at": "2026-04-13T23:33:00Z",
+      "fetched_at": "2026-04-14T17:18:12.364435Z",
+      "type": "release",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "df17c9fe-1268-5089-86a0-b1b37cd5dae3",
+      "title": "GAIA – Open-source framework for building AI agents that run on local hardware",
+      "summary": "140 points · 33 comments",
+      "source": "Hacker News",
+      "url": "https://amd-gaia.ai/docs",
+      "published_at": "2026-04-13T19:28:41+00:00",
+      "fetched_at": "2026-04-14T17:18:12.364435Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7fa70410-d403-5912-b967-8e7a67d7ee91",
+      "title": "anthropic-sdk-python v0.94.1 released",
+      "summary": "## 0.94.1 (2026-04-13)\n\nFull Changelog: [v0.94.0...v0.94.1](https://github.com/anthropics/anthropic-sdk-python/compare/v0.94.0...v0.94.1)\n\n### Bug Fixes\n\n* **streaming:** add missing events ([c6a06d8](https://github.com/anthropics/anthropic-sdk-python/commit/c6a06d80b7e87bc034bd6ade950c735da02a0be3))",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.94.1",
+      "published_at": "2026-04-13T18:07:46Z",
+      "fetched_at": "2026-04-14T17:18:12.364435Z",
+      "type": "release",
+      "topics": [
+        "SDK/Library"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b3f37054-67db-596e-9584-fa824ad3de80",
+      "title": "Gemini Robotics-ER 1.6: Powering real-world robotics tasks through enhanced embodied reasoning",
+      "summary": "Gemini Robotics ER 1.6: Enhancing spatial reasoning and multi-view understanding for autonomous robotics.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
+      "published_at": "2026-04-13T15:52:13",
+      "fetched_at": "2026-04-14T17:18:12.364435Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "1729f3e3-3019-56e8-b672-695976d48326",
       "title": "transformers v5.5.4 released",
       "summary": "# Patch release v5.5.4\r\n\r\nThis is mostly some fixes that are good to have asap, mostly for tokenizers;\r\n** Fix Kimi-K2.5 tokenizer regression and _patch_mistral_regex Attribute… (#45305) by ArthurZucker\r\n\r\nFor training:\r\n** Fix #45305 + add regression test GAS (#45349) by florian6973, SunMarc\r\n** Fix IndexError with DeepSpeed ZeRO-3 when kernels rotary is active (#…) by ArthurZucker\r\n\r\nAnd for Qwen2.5-VL :\r\n** Fix Qwen2.5-VL temporal RoPE scaling applied to still images (#45330) by Kash6, zucchi",

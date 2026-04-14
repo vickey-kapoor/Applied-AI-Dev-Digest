@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-14",
+      "top_paper_id": "e00ab433-2136-5161-82ed-286abdafe071",
+      "papers_fetched": 10,
+      "pdf_path": "reports/14-Apr/Spring_AI_SDK_for_Amazon_Bedrock_AgentCore_is_now.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24412930319"
+    },
+    {
       "date": "2026-04-13",
       "top_paper_id": "1729f3e3-3019-56e8-b672-695976d48326",
       "papers_fetched": 10,

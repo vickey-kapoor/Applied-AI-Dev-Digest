@@ -36,52 +36,59 @@ DIGEST_CAP_DAYS = 90
 # Thread pool settings
 THREAD_POOL_WORKERS = 2
 
-# Keywords for developer-facing product features
+# Keywords for developer-facing computer use agent features
 PRODUCT_FEATURE_KEYWORDS = [
-    "API",
-    "SDK",
-    "model release",
-    "new feature",
-    "changelog",
-    "launch",
-    "developer tools",
-    "fine-tuning",
-    "embeddings",
-    "function calling",
-    "tool use",
-    "multimodal",
-    "context window",
-    "CLI",
-    "pricing",
-    "general availability",
-    "beta",
+    "computer use",
+    "computer-use",
+    "browser use",
+    "browser-use",
+    "web agent",
+    "GUI agent",
+    "desktop automation",
+    "UI agent",
+    "UI automation",
+    "screen grounding",
+    "operator",
+    "WebArena",
+    "OSWorld",
+    "playwright",
+    "web browsing agent",
+    "desktop agent",
+    "visual agent",
+    "multimodal agent",
+    "Set-of-Mark",
+    "web navigation",
+    "GUI automation",
+    "computer control",
 ]
 
-# Simplified keywords for filtering (lowercase)
+# Simplified keywords for filtering (lowercase) — computer use agents only
 FILTER_KEYWORDS = [
-    "api",
-    "sdk",
-    "model",
-    "release",
-    "launch",
-    "new model",
-    "new feature",
-    "developer",
-    "fine-tuning",
-    "fine-tune",
-    "embeddings",
-    "function calling",
-    "tool use",
-    "multimodal",
-    "context window",
-    "cli",
-    "pricing",
-    "generally available",
-    "beta",
-    "endpoint",
-    "playground",
-    "library",
-    "integration",
+    "computer use",
+    "computer-use",
+    "browser use",
+    "browser-use",
+    "web agent",
+    "gui agent",
+    "desktop automation",
+    "ui agent",
+    "ui automation",
+    "screen grounding",
+    "operator",
+    "webarena",
+    "osworld",
+    "playwright",
+    "web browsing agent",
+    "desktop agent",
+    "visual agent",
+    "set-of-mark",
+    "web navigation",
+    "web task",
+    "computer control",
+    "gui automation",
+    "screenspot",
+    "webvoyager",
+    "mind2web",
 ]
 
 # Keywords to exclude non-developer content (lowercase)
@@ -113,25 +120,25 @@ BLOG_FEEDS = {
     "Hugging Face": "https://huggingface.co/blog/feed.xml",
 }
 
-# GitHub repos to track for releases
+# GitHub repos to track for releases — computer use / GUI / browser agents only
 GITHUB_REPOS = [
-    "huggingface/transformers",
-    "langchain-ai/langchain",
-    "run-llama/llama_index",
-    "vllm-project/vllm",
-    "ollama/ollama",
-    "openai/openai-python",
-    "anthropics/anthropic-sdk-python",
-    "microsoft/autogen",
-    "unsloth/unsloth",
-    "ggerganov/llama.cpp",
+    "anthropics/computer-use-demo",
+    "browser-use/browser-use",
+    "web-arena-x/webarena",
+    "microsoft/playwright-python",
+    "microsoft/playwright",
+    "xlang-ai/OpenAgents",
+    "MinorJoey/OSWorld",
 ]
 
-# Hacker News AI/ML filter keywords (case-insensitive match on title)
+# Hacker News filter keywords — computer use / GUI / browser agents only
 HN_KEYWORDS = [
-    "AI", "LLM", "GPT", "Claude", "Gemini", "ML", "machine learning",
-    "neural", "model", "fine-tun", "inference", "RAG", "agent",
-    "transformer", "open source model",
+    "computer use", "computer-use", "browser use", "browser-use",
+    "web agent", "GUI agent", "desktop automation", "UI agent",
+    "screen grounding", "operator", "WebArena", "OSWorld",
+    "playwright", "web browsing", "GUI automation", "desktop agent",
+    "visual agent", "web navigation agent", "Set-of-Mark",
+    "ScreenSpot", "WebVoyager", "Mind2Web",
 ]
 HN_MIN_SCORE = 100
 HN_MAX_STORIES = 5

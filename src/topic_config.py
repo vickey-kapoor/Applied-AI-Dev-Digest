@@ -12,49 +12,64 @@ logger = get_logger(__name__)
 # Mirror of dashboard/src/lib/topics.ts — canonical topic definitions
 DEFAULT_TOPICS = [
     {
+        "id": "computer_use",
+        "keywords": [
+            "computer use", "computer-use", "browser use", "browser-use",
+            "web agent", "GUI agent", "desktop automation", "UI agent",
+            "screen grounding", "screen capture", "operator", "WebArena",
+            "playwright", "selenium", "puppeteer", "web automation",
+            "click agent", "agentic browser", "web browsing agent",
+            "visual agent", "multimodal agent", "SoM", "Set-of-Mark",
+            "UI grounding", "web task", "web navigation",
+            "computer control", "desktop agent", "GUI automation",
+            "OSWorld", "ScreenSpot", "WebVoyager", "Mind2Web",
+        ],
+        "default_enabled": True,
+    },
+    {
         "id": "models",
         "keywords": ["GPT", "Claude", "Gemini", "Llama", "Mistral", "model release"],
-        "default_enabled": True,
+        "default_enabled": False,
     },
     {
         "id": "apis",
         "keywords": ["API", "SDK", "endpoint", "breaking change", "deprecation"],
-        "default_enabled": True,
+        "default_enabled": False,
     },
     {
         "id": "frameworks",
         "keywords": ["LangChain", "LlamaIndex", "AutoGen", "CrewAI", "framework"],
-        "default_enabled": True,
+        "default_enabled": False,
     },
     {
         "id": "inference",
         "keywords": ["vLLM", "Ollama", "TensorRT", "quantization", "serving", "deployment"],
-        "default_enabled": True,
+        "default_enabled": False,
     },
     {
         "id": "finetuning",
         "keywords": ["fine-tuning", "LoRA", "QLoRA", "Unsloth", "training", "PEFT"],
-        "default_enabled": True,
+        "default_enabled": False,
     },
     {
         "id": "rag",
         "keywords": ["RAG", "retrieval", "vector database", "embedding", "memory"],
-        "default_enabled": True,
+        "default_enabled": False,
     },
     {
         "id": "agents",
         "keywords": ["agent", "tool use", "multi-agent", "autonomous", "agentic"],
-        "default_enabled": True,
+        "default_enabled": False,
     },
     {
         "id": "opensource",
         "keywords": ["open source", "open weights", "Apache", "MIT license"],
-        "default_enabled": True,
+        "default_enabled": False,
     },
     {
         "id": "safety",
         "keywords": ["safety", "alignment", "jailbreak", "red-teaming", "guardrails"],
-        "default_enabled": True,
+        "default_enabled": False,
     },
     {
         "id": "hardware",
@@ -65,9 +80,9 @@ DEFAULT_TOPICS = [
 
 # Additional keywords that supplement topic-based filtering
 _SUPPLEMENTAL_KEYWORDS = [
-    "model", "release", "launch", "new feature",
-    "developer", "inference", "pricing",
-    "generally available", "beta", "open source",
+    "computer use", "computer-use", "browser use", "browser-use",
+    "web agent", "GUI agent", "desktop automation", "UI automation",
+    "operator", "WebArena", "OSWorld", "web navigation",
 ]
 
 

@@ -1,6 +1,28 @@
 {
   "papers": [
     {
+      "id": "302db7a0-af03-5a6b-881f-1c37234f8abf",
+      "title": "Claude Computer Use: Let AI agents control desktops and browsers natively",
+      "summary": "Anthropic's computer use API lets Claude take screenshots, click, type, and scroll to complete tasks on real computers. Claude 3.7 Sonnet drives browsers and desktop apps end-to-end, enabling agents that operate software the way a human would. New improvements in tool call reliability and reduced hallucinated actions make it production-ready for browser automation pipelines.",
+      "source": "Anthropic",
+      "url": "https://docs.anthropic.com/en/docs/agents-and-tools/computer-use",
+      "published_at": "2026-04-15T08:00:00Z",
+      "fetched_at": "2026-04-15T08:00:00.000000Z",
+      "type": "announcement",
+      "topics": [
+        "Computer Use",
+        "GUI Agent",
+        "Browser Automation"
+      ],
+      "ranking_score": 95,
+      "status": "unread",
+      "why_it_matters": "Claude can now control any desktop app or browser autonomously, removing the need for custom UI automation scripts.",
+      "what_it_is": "The computer use API exposes screenshot, click, type, and scroll tools that let Claude operate real GUIs. Claude 3.7 Sonnet achieves state-of-the-art results on OSWorld and WebArena benchmarks. The API ships with a Docker reference implementation and a streaming live-view for monitoring agent actions.",
+      "how_to_use_it": "Pass `computer_use` as a beta flag when calling the Anthropic API, include screenshot and action tools in your tool list, then run the reference demo at github.com/anthropics/computer-use-demo.",
+      "dev_take": "Genuinely useful for automating legacy apps or browser workflows with no programmatic API — worth the extra latency cost for the right use case.",
+      "detailed_summary": "**Why it matters**\nClaude can now control any desktop app or browser autonomously, removing the need for custom UI automation scripts.\n\n**What it is**\nThe computer use API exposes screenshot, click, type, and scroll tools that let Claude operate real GUIs. Claude 3.7 Sonnet achieves state-of-the-art results on OSWorld and WebArena benchmarks. The API ships with a Docker reference implementation and a streaming live-view for monitoring agent actions.\n\n**How to use it**\nPass `computer_use` as a beta flag when calling the Anthropic API, include screenshot and action tools in your tool list, then run the reference demo at github.com/anthropics/computer-use-demo.\n\n**Dev take**\nGenuinely useful for automating legacy apps or browser workflows with no programmatic API — worth the extra latency cost for the right use case."
+    },
+    {
       "id": "e00ab433-2136-5161-82ed-286abdafe071",
       "title": "Spring AI SDK for Amazon Bedrock AgentCore is now Generally Available",
       "summary": "With the new Spring AI AgentCore SDK, you can build production-ready AI agents and run them on the highly scalable AgentCore Runtime. The Spring AI AgentCore SDK is an open source library that brings Amazon Bedrock AgentCore capabilities into Spring AI. In this post, we build an AI agent starting with a chat endpoint, then adding streaming responses, conversation memory, and tools for web browsing and code execution.",

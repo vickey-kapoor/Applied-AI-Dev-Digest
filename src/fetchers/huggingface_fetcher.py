@@ -12,10 +12,12 @@ logger = get_logger(__name__)
 HF_DAILY_PAPERS_URL = "https://huggingface.co/api/daily_papers"
 
 
-def fetch_huggingface_papers() -> list[dict]:
+def fetch_huggingface_papers(filter_keywords: list[str] | None = None) -> list[dict]:
     """Fetch today's top papers from Hugging Face Daily Papers.
 
     Filters to papers published within the last 24 hours with upvotes >= HF_MIN_UPVOTES.
+    When filter_keywords is provided, only papers whose title or summary match
+    at least one keyword are returned.
     Returns up to HF_MAX_PAPERS items.
     """
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -58,6 +60,11 @@ def fetch_huggingface_papers() -> list[dict]:
 
             if not title:
                 continue
+
+            if filter_keywords:
+                text = (title + " " + summary).lower()
+                if not any(kw.lower() in text for kw in filter_keywords):
+                    continue
 
             papers.append({
                 "title": title,

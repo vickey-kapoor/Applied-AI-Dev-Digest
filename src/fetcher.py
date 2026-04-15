@@ -31,16 +31,16 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
 
     Args:
         max_results: Maximum number of items to return
-        filter_keywords: Optional keyword list for blog relevance filtering
+        filter_keywords: Keyword list used to filter every source to matching topics only
 
     Returns:
-        Combined, deduplicated, and sorted list of items
+        Combined, deduplicated, keyword-filtered, and sorted list of items
     """
     fetchers = [
         ("Blogs", lambda: fetch_blog_posts(max_results=10, filter_keywords=filter_keywords)),
         ("GitHub", fetch_github_releases),
-        ("Hacker News", fetch_hackernews_stories),
-        ("HF Papers", fetch_huggingface_papers),
+        ("Hacker News", lambda: fetch_hackernews_stories(filter_keywords=filter_keywords)),
+        ("HF Papers", lambda: fetch_huggingface_papers(filter_keywords=filter_keywords)),
     ]
 
     all_items: list[dict] = []
@@ -63,6 +63,16 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
     # Deduplicate by URL
     unique = _deduplicate_by_url(all_items)
     logger.info("After deduplication: %d unique items", len(unique))
+
+    # Final keyword filter — drop anything that doesn't mention a topic keyword
+    if filter_keywords:
+        kw_lower = [k.lower() for k in filter_keywords]
+        unique = [
+            item for item in unique
+            if any(kw in (item.get("title", "") + " " + item.get("summary", "")).lower()
+                   for kw in kw_lower)
+        ]
+        logger.info("After keyword filter: %d items match active topics", len(unique))
 
     # Sort by published date (most recent first)
     unique.sort(key=lambda x: x.get("published", ""), reverse=True)

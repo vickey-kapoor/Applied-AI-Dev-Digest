@@ -20,16 +20,17 @@ def _fetch_json(url: str):
         return json.loads(resp.read())
 
 
-def _matches_keywords(title: str) -> bool:
-    """Check if title matches any AI/ML keyword (case-insensitive)."""
-    for kw in HN_KEYWORDS:
+def _matches_keywords(title: str, keywords: list[str] | None = None) -> bool:
+    """Check if title matches any keyword (case-insensitive)."""
+    kw_list = keywords if keywords is not None else HN_KEYWORDS
+    for kw in kw_list:
         if re.search(re.escape(kw), title, re.IGNORECASE):
             return True
     return False
 
 
-def fetch_hackernews_stories() -> list[dict]:
-    """Fetch top HN stories matching AI/ML keywords.
+def fetch_hackernews_stories(filter_keywords: list[str] | None = None) -> list[dict]:
+    """Fetch top HN stories matching computer use agent keywords.
 
     Filters: score > HN_MIN_SCORE, published within last 24 hours.
     Returns top HN_MAX_STORIES matching stories.
@@ -70,7 +71,7 @@ def fetch_hackernews_stories() -> list[dict]:
             continue
 
         # Check keyword match
-        if not _matches_keywords(title):
+        if not _matches_keywords(title, filter_keywords):
             continue
 
         comments = item.get("descendants", 0)
@@ -89,5 +90,5 @@ def fetch_hackernews_stories() -> list[dict]:
     # Sort by score descending, take top N
     matches.sort(key=lambda x: x.get("score", 0), reverse=True)
     result = matches[:HN_MAX_STORIES]
-    logger.info("Found %d AI/ML stories on Hacker News", len(result))
+    logger.info("Found %d computer use agent stories on Hacker News", len(result))
     return result

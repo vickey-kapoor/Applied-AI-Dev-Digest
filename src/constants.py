@@ -36,7 +36,7 @@ DIGEST_CAP_DAYS = 90
 # Thread pool settings
 THREAD_POOL_WORKERS = 2
 
-# Keywords for developer-facing product features
+# Keywords for developer-facing computer use agent features
 PRODUCT_FEATURE_KEYWORDS = [
     "computer use",
     "computer-use",
@@ -56,26 +56,13 @@ PRODUCT_FEATURE_KEYWORDS = [
     "desktop agent",
     "visual agent",
     "multimodal agent",
-    "API",
-    "SDK",
-    "model release",
-    "new feature",
-    "changelog",
-    "launch",
-    "developer tools",
-    "fine-tuning",
-    "embeddings",
-    "function calling",
-    "tool use",
-    "multimodal",
-    "context window",
-    "CLI",
-    "pricing",
-    "general availability",
-    "beta",
+    "Set-of-Mark",
+    "web navigation",
+    "GUI automation",
+    "computer control",
 ]
 
-# Simplified keywords for filtering (lowercase)
+# Simplified keywords for filtering (lowercase) — computer use agents only
 FILTER_KEYWORDS = [
     "computer use",
     "computer-use",
@@ -99,29 +86,9 @@ FILTER_KEYWORDS = [
     "web task",
     "computer control",
     "gui automation",
-    "api",
-    "sdk",
-    "model",
-    "release",
-    "launch",
-    "new model",
-    "new feature",
-    "developer",
-    "fine-tuning",
-    "fine-tune",
-    "embeddings",
-    "function calling",
-    "tool use",
-    "multimodal",
-    "context window",
-    "cli",
-    "pricing",
-    "generally available",
-    "beta",
-    "endpoint",
-    "playground",
-    "library",
-    "integration",
+    "screenspot",
+    "webvoyager",
+    "mind2web",
 ]
 
 # Keywords to exclude non-developer content (lowercase)
@@ -153,9 +120,8 @@ BLOG_FEEDS = {
     "Hugging Face": "https://huggingface.co/blog/feed.xml",
 }
 
-# GitHub repos to track for releases
+# GitHub repos to track for releases — computer use / GUI / browser agents only
 GITHUB_REPOS = [
-    # Computer use / browser / GUI agents — primary focus
     "anthropics/computer-use-demo",
     "browser-use/browser-use",
     "web-arena-x/webarena",
@@ -163,29 +129,16 @@ GITHUB_REPOS = [
     "microsoft/playwright",
     "xlang-ai/OpenAgents",
     "MinorJoey/OSWorld",
-    # General LLM ecosystem (retained for context)
-    "huggingface/transformers",
-    "langchain-ai/langchain",
-    "run-llama/llama_index",
-    "vllm-project/vllm",
-    "ollama/ollama",
-    "openai/openai-python",
-    "anthropics/anthropic-sdk-python",
-    "microsoft/autogen",
-    "unsloth/unsloth",
-    "ggerganov/llama.cpp",
 ]
 
-# Hacker News computer-use / web-agent filter keywords (case-insensitive match on title)
+# Hacker News filter keywords — computer use / GUI / browser agents only
 HN_KEYWORDS = [
     "computer use", "computer-use", "browser use", "browser-use",
     "web agent", "GUI agent", "desktop automation", "UI agent",
     "screen grounding", "operator", "WebArena", "OSWorld",
     "playwright", "web browsing", "GUI automation", "desktop agent",
     "visual agent", "web navigation agent", "Set-of-Mark",
-    "AI", "LLM", "GPT", "Claude", "Gemini", "ML", "machine learning",
-    "neural", "model", "fine-tun", "inference", "RAG", "agent",
-    "transformer", "open source model",
+    "ScreenSpot", "WebVoyager", "Mind2Web",
 ]
 HN_MIN_SCORE = 100
 HN_MAX_STORIES = 5

@@ -1,4 +1,4 @@
-"""Rank AI/dev news by relevance to working ML engineers using OpenAI."""
+"""Rank AI/dev news by relevance to computer use agent developers using OpenAI."""
 
 import json
 
@@ -27,14 +27,14 @@ def _call_openai_ranking(client: OpenAI, prompt: str):
 
 def rank_research(research: list[dict], api_key: str) -> dict:
     """
-    Use OpenAI to select the most important AI product update for developers.
+    Use OpenAI to select the most important computer use agent update for developers.
 
     Args:
         research: List of product update dictionaries
         api_key: OpenAI API key
 
     Returns:
-        The most important product update
+        The most important computer use agent update
     """
     if not research:
         raise ValueError("No research to rank")
@@ -63,31 +63,30 @@ def rank_research(research: list[dict], api_key: str) -> dict:
         for i, r in enumerate(research)
     )
 
-    prompt = f"""You are a senior ML engineer reviewing today's AI/dev news.
-Rank the following items by relevance to a working ML/AI engineer.
+    prompt = f"""You are a senior ML engineer who specializes in computer use agents — AI systems that autonomously operate web browsers, desktop GUIs, and other software interfaces.
+Your job is to pick the single most important update from today's items for engineers building or following computer use agent technology.
+
+Rank the following items by relevance to computer use / GUI / web agent developers.
 Prioritize:
-1. New model releases or major version updates to widely-used tools
-2. Major or minor version releases (v1.0, v2.3) with new features or capabilities
-3. Model releases with benchmark numbers or capability descriptions
-4. API announcements that add new endpoints or change pricing/limits
-5. Significant open-source releases the community will adopt
-6. Practical techniques or benchmarks that change how engineers work
-7. Hugging Face daily papers with high upvotes that introduce new practical techniques (new fine-tuning method, inference optimization, architecture improvement engineers will use)
+1. New computer use agent releases or major capability updates (e.g. Claude computer use, OpenAI Operator, Gemini browser agent)
+2. New browser-use, GUI-agent, or desktop-agent frameworks and libraries
+3. Benchmark or evaluation releases for computer/GUI/web agents (WebArena, OSWorld, ScreenSpot, Mind2Web)
+4. Research papers that introduce novel techniques for GUI grounding, screen understanding, or web navigation
+5. API or SDK changes that affect how computer use agents are built or deployed
+6. Open-source agent toolkits with code and demos (playwright wrappers, vision-language grounding tools)
+7. Hugging Face papers with strong upvotes covering multimodal or visual agent capabilities
 
 Deprioritize:
-- Pure academic research with no near-term practical application
+- Pure academic research with no near-term practical application to computer use
 - Marketing announcements with no technical substance
-- Incremental updates to niche tools
-- Patch releases, hotfixes, or build-number releases (e.g. b8671, v0.1.3-patch)
-- Releases with only bug fixes and no new capabilities
-- Any item where the only change is a minor dependency update or platform fix
+- Incremental patch releases with only bug fixes
+- Items completely unrelated to computer use, browser agents, GUI automation, or visual agents
 - Pure theory papers with no implementation or code release
-- Papers without a linked repo or runnable code
 
 Items:
 {research_text}
 
-Return the single most important item as JSON: {{"index": N, "reason": "one sentence why this matters to a dev"}}"""
+Return the single most important item as JSON: {{"index": N, "reason": "one sentence why this matters to a computer use agent developer"}}"""
 
     try:
         response = _call_openai_ranking(client, prompt)

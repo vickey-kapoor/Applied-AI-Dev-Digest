@@ -38,6 +38,24 @@ THREAD_POOL_WORKERS = 2
 
 # Keywords for developer-facing product features
 PRODUCT_FEATURE_KEYWORDS = [
+    "computer use",
+    "computer-use",
+    "browser use",
+    "browser-use",
+    "web agent",
+    "GUI agent",
+    "desktop automation",
+    "UI agent",
+    "UI automation",
+    "screen grounding",
+    "operator",
+    "WebArena",
+    "OSWorld",
+    "playwright",
+    "web browsing agent",
+    "desktop agent",
+    "visual agent",
+    "multimodal agent",
     "API",
     "SDK",
     "model release",
@@ -59,6 +77,28 @@ PRODUCT_FEATURE_KEYWORDS = [
 
 # Simplified keywords for filtering (lowercase)
 FILTER_KEYWORDS = [
+    "computer use",
+    "computer-use",
+    "browser use",
+    "browser-use",
+    "web agent",
+    "gui agent",
+    "desktop automation",
+    "ui agent",
+    "ui automation",
+    "screen grounding",
+    "operator",
+    "webarena",
+    "osworld",
+    "playwright",
+    "web browsing agent",
+    "desktop agent",
+    "visual agent",
+    "set-of-mark",
+    "web navigation",
+    "web task",
+    "computer control",
+    "gui automation",
     "api",
     "sdk",
     "model",
@@ -115,6 +155,15 @@ BLOG_FEEDS = {
 
 # GitHub repos to track for releases
 GITHUB_REPOS = [
+    # Computer use / browser / GUI agents — primary focus
+    "anthropics/computer-use-demo",
+    "browser-use/browser-use",
+    "web-arena-x/webarena",
+    "microsoft/playwright-python",
+    "microsoft/playwright",
+    "xlang-ai/OpenAgents",
+    "MinorJoey/OSWorld",
+    # General LLM ecosystem (retained for context)
     "huggingface/transformers",
     "langchain-ai/langchain",
     "run-llama/llama_index",
@@ -127,8 +176,13 @@ GITHUB_REPOS = [
     "ggerganov/llama.cpp",
 ]
 
-# Hacker News AI/ML filter keywords (case-insensitive match on title)
+# Hacker News computer-use / web-agent filter keywords (case-insensitive match on title)
 HN_KEYWORDS = [
+    "computer use", "computer-use", "browser use", "browser-use",
+    "web agent", "GUI agent", "desktop automation", "UI agent",
+    "screen grounding", "operator", "WebArena", "OSWorld",
+    "playwright", "web browsing", "GUI automation", "desktop agent",
+    "visual agent", "web navigation agent", "Set-of-Mark",
     "AI", "LLM", "GPT", "Claude", "Gemini", "ML", "machine learning",
     "neural", "model", "fine-tun", "inference", "RAG", "agent",
     "transformer", "open source model",

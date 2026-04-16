@@ -14,15 +14,35 @@ DEFAULT_TOPICS = [
     {
         "id": "computer_use",
         "keywords": [
-            "computer use", "computer-use", "browser use", "browser-use",
-            "web agent", "GUI agent", "desktop automation", "UI agent",
-            "screen grounding", "screen capture", "operator", "WebArena",
-            "playwright", "selenium", "puppeteer", "web automation",
-            "click agent", "agentic browser", "web browsing agent",
-            "visual agent", "multimodal agent", "SoM", "Set-of-Mark",
-            "UI grounding", "web task", "web navigation",
-            "computer control", "desktop agent", "GUI automation",
-            "OSWorld", "ScreenSpot", "WebVoyager", "Mind2Web",
+            # High-precision identifiers for computer-use / browser automation agents.
+            # Avoid overly-generic tokens (e.g. "operator") that cause false positives.
+            "computer use",
+            "computer-use",
+            "browser use",
+            "browser-use",
+            "WebArena",
+            "webarena",
+            "OSWorld",
+            "osworld",
+            "ScreenSpot",
+            "screenspot",
+            "WebVoyager",
+            "webvoyager",
+            "Mind2Web",
+            "mind2web",
+            "playwright",
+            "puppeteer",
+            "selenium",
+            "click agent",
+            "agentic browser",
+            "screen grounding",
+            "screen capture",
+            "computer control",
+            "GUI automation",
+            "GUI agent",
+            "web automation",
+            "web browsing agent",
+            "desktop agent",
         ],
         "default_enabled": True,
     },
@@ -80,9 +100,7 @@ DEFAULT_TOPICS = [
 
 # Additional keywords that supplement topic-based filtering
 _SUPPLEMENTAL_KEYWORDS = [
-    "computer use", "computer-use", "browser use", "browser-use",
-    "web agent", "GUI agent", "desktop automation", "UI automation",
-    "operator", "WebArena", "OSWorld", "web navigation",
+    # Keep empty to avoid expanding beyond the high-precision computer_use identifiers.
 ]
 
 
@@ -140,8 +158,9 @@ def _get_enabled_topics(kv_config: dict | None) -> list[dict]:
 
 def get_active_topics() -> list[dict]:
     """Get the list of currently enabled topics."""
-    kv_config = _fetch_kv_config()
-    return _get_enabled_topics(kv_config)
+    # Strict enforcement: this project should only generate/send a computer_use digest.
+    # Even if dashboard KV config enables other topics, we intentionally ignore them here.
+    return [t for t in DEFAULT_TOPICS if t["id"] == "computer_use"]
 
 
 def get_active_keywords() -> list[str]:

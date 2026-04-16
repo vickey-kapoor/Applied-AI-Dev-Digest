@@ -10,6 +10,42 @@ export interface Topic {
 export type TopicConfig = Record<string, boolean>;
 
 export const TOPICS: Topic[] = [
+  {
+    id: "computer_use",
+    name: "Computer Use Agents",
+    description: "Browser/GUI/desktop automation agents (WebArena, OSWorld, ScreenSpot, Mind2Web, Playwright, Puppeteer, Selenium, etc.)",
+    category: "core",
+    keywords: [
+      "computer use",
+      "computer-use",
+      "browser use",
+      "browser-use",
+      "WebArena",
+      "webarena",
+      "OSWorld",
+      "osworld",
+      "ScreenSpot",
+      "screenspot",
+      "WebVoyager",
+      "webvoyager",
+      "Mind2Web",
+      "mind2web",
+      "playwright",
+      "puppeteer",
+      "selenium",
+      "click agent",
+      "agentic browser",
+      "screen grounding",
+      "screen capture",
+      "computer control",
+      "GUI automation",
+      "GUI agent",
+      "web automation",
+      "web browsing agent",
+      "desktop agent",
+    ],
+    defaultEnabled: true,
+  },
   // Core
   {
     id: "models",
@@ -17,7 +53,7 @@ export const TOPICS: Topic[] = [
     description: "New models from major labs — GPT, Claude, Gemini, Llama, Mistral",
     category: "core",
     keywords: ["GPT", "Claude", "Gemini", "Llama", "Mistral", "model release"],
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   {
     id: "apis",
@@ -25,7 +61,7 @@ export const TOPICS: Topic[] = [
     description: "API changes, new SDK versions, breaking changes, deprecations",
     category: "core",
     keywords: ["API", "SDK", "endpoint", "breaking change", "deprecation"],
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   {
     id: "frameworks",
@@ -33,7 +69,7 @@ export const TOPICS: Topic[] = [
     description: "Updates to LangChain, LlamaIndex, AutoGen, CrewAI, and other frameworks",
     category: "core",
     keywords: ["LangChain", "LlamaIndex", "AutoGen", "CrewAI", "framework"],
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   // Applied
   {
@@ -42,7 +78,7 @@ export const TOPICS: Topic[] = [
     description: "vLLM, Ollama, TensorRT, quantization, model serving, deployment",
     category: "applied",
     keywords: ["vLLM", "Ollama", "TensorRT", "quantization", "serving", "deployment"],
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   {
     id: "finetuning",
@@ -50,7 +86,7 @@ export const TOPICS: Topic[] = [
     description: "Fine-tuning techniques, LoRA, QLoRA, Unsloth, PEFT, training tools",
     category: "applied",
     keywords: ["fine-tuning", "LoRA", "QLoRA", "Unsloth", "training", "PEFT"],
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   {
     id: "rag",
@@ -58,7 +94,7 @@ export const TOPICS: Topic[] = [
     description: "Retrieval-augmented generation, vector databases, embeddings, memory systems",
     category: "applied",
     keywords: ["RAG", "retrieval", "vector database", "embedding", "memory"],
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   {
     id: "agents",
@@ -66,7 +102,7 @@ export const TOPICS: Topic[] = [
     description: "Agent frameworks, tool use, multi-agent systems, autonomous agents",
     category: "applied",
     keywords: ["agent", "tool use", "multi-agent", "autonomous", "agentic"],
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   {
     id: "opensource",
@@ -74,7 +110,7 @@ export const TOPICS: Topic[] = [
     description: "Notable open source and open weight model releases",
     category: "applied",
     keywords: ["open source", "open weights", "Apache", "MIT license"],
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   // Emerging
   {
@@ -83,7 +119,7 @@ export const TOPICS: Topic[] = [
     description: "AI safety research, alignment techniques, red-teaming, guardrails",
     category: "emerging",
     keywords: ["safety", "alignment", "jailbreak", "red-teaming", "guardrails"],
-    defaultEnabled: true,
+    defaultEnabled: false,
   },
   {
     id: "hardware",

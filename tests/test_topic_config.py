@@ -30,13 +30,13 @@ class TestDefaults:
         assert len(ids) == len(set(ids))
 
     def test_ten_topics_defined(self):
-        """All 10 dev-focused topics are present."""
-        assert len(DEFAULT_TOPICS) == 10
+        """All dev-focused topics are present (including computer_use)."""
+        assert len(DEFAULT_TOPICS) == 11
 
     def test_default_enabled_count(self):
-        """9 topics should be enabled by default (hardware is off)."""
+        """Only computer_use should be enabled by default."""
         enabled = [t for t in DEFAULT_TOPICS if t["default_enabled"]]
-        assert len(enabled) == 9
+        assert len(enabled) == 1
 
 
 class TestGetEnabledTopics:
@@ -45,8 +45,7 @@ class TestGetEnabledTopics:
     def test_returns_defaults_when_kv_is_none(self):
         topics = _get_enabled_topics(None)
         ids = {t["id"] for t in topics}
-        assert "agents" in ids
-        assert "models" in ids
+        assert "computer_use" in ids
         assert "hardware" not in ids
 
     def test_respects_kv_overrides(self):
@@ -57,13 +56,14 @@ class TestGetEnabledTopics:
         topics = _get_enabled_topics(kv_config)
         ids = {t["id"] for t in topics}
         assert "agents" not in ids
+        assert "computer_use" in ids
         assert "hardware" in ids
-        assert "models" in ids  # Non-overridden topics use defaults
 
     def test_unknown_keys_in_kv_ignored(self):
         kv_config = {"unknown_topic": True, "agents": True}
         topics = _get_enabled_topics(kv_config)
         ids = {t["id"] for t in topics}
+        assert "computer_use" in ids
         assert "agents" in ids
 
 
@@ -73,20 +73,18 @@ class TestGetActiveKeywords:
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_defaults_include_expected_keywords(self, mock_kv):
         keywords = get_active_keywords()
-        assert "agent" in keywords
-        assert "API" in keywords
-        assert "fine-tuning" in keywords
-        assert "safety" in keywords
+        assert "computer use" in keywords
+        assert "browser-use" in keywords or "browser use" in keywords
 
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_defaults_exclude_disabled_topic_keywords(self, mock_kv):
         keywords = get_active_keywords()
-        # hardware is disabled by default
         assert "CUDA" not in keywords
+        assert "fine-tuning" not in keywords
 
     @patch("src.topic_config._fetch_kv_config")
     def test_kv_config_changes_keywords(self, mock_kv):
-        """Enabling a disabled topic adds its keywords."""
+        """Even if KV enables other topics, active keywords stay computer_use only."""
         mock_kv.return_value = {
             "models": True,
             "apis": True,
@@ -97,11 +95,11 @@ class TestGetActiveKeywords:
             "agents": True,
             "opensource": True,
             "safety": True,
-            "hardware": True,  # Enabling hardware
+            "hardware": True,
         }
         keywords = get_active_keywords()
-        assert "GPU" in keywords
-        assert "CUDA" in keywords
+        assert "GPU" not in keywords
+        assert "CUDA" not in keywords
 
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_keywords_are_deduplicated(self, mock_kv):
@@ -109,11 +107,11 @@ class TestGetActiveKeywords:
         assert len(keywords) == len(set(keywords))
 
     @patch("src.topic_config._fetch_kv_config", return_value=None)
-    def test_supplemental_keywords_included(self, mock_kv):
+    def test_no_generic_supplemental_keywords(self, mock_kv):
         keywords = get_active_keywords()
-        assert "model" in keywords
-        assert "release" in keywords
-        assert "launch" in keywords
+        assert "model" not in keywords
+        assert "release" not in keywords
+        assert "launch" not in keywords
 
 
 class TestFetchKvConfig:
@@ -122,7 +120,7 @@ class TestFetchKvConfig:
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_graceful_fallback_when_no_kv(self, mock_kv):
         topics = get_active_topics()
-        assert len(topics) == 9  # 9 default-enabled topics
+        assert len(topics) == 1  # computer_use only
         keywords = get_active_keywords()
         assert len(keywords) > 0
 
@@ -155,7 +153,7 @@ class TestCustomKeywords:
     def test_custom_keywords_merged(self, mock_config, mock_kv_get):
         def side_effect(key):
             if key == "topics:custom_keywords":
-                return {"agents": ["my-custom-kw", "another-one"]}
+                return {"computer_use": ["my-custom-kw", "another-one"]}
             return None
         mock_kv_get.side_effect = side_effect
 

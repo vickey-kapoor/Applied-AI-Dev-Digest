@@ -82,9 +82,9 @@ class TestBlogFetcher:
 class TestDevRelevanceFilter:
     """Tests for _is_dev_relevant filtering."""
 
-    def test_is_dev_relevant_accepts_api_post(self):
-        """Post with 'API' keyword in title is accepted."""
-        post = {"title": "New API for developers", "summary": "Check it out"}
+    def test_is_dev_relevant_accepts_computer_use_post(self):
+        """Post with a computer-use keyword is accepted."""
+        post = {"title": "New WebArena release for web agents", "summary": "browser automation and agent tooling"}
         assert _is_dev_relevant(post) is True
 
     def test_is_dev_relevant_rejects_partnership(self):

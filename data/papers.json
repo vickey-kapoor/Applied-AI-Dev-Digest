@@ -1,6 +1,19 @@
 {
   "papers": [
     {
+      "id": "17b1b6ef-5fb1-54ca-b204-c06b496a5a12",
+      "title": "CRISPR takes important step toward silencing Down syndrome’s extra chromosome",
+      "summary": "176 points · 103 comments",
+      "source": "Hacker News",
+      "url": "https://medicalxpress.com/news/2026-04-crispr-bold-silencing-syndrome-extra.html",
+      "published_at": "2026-04-15T16:19:48+00:00",
+      "fetched_at": "2026-04-16T11:41:23.476965Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "302db7a0-af03-5a6b-881f-1c37234f8abf",
       "title": "Claude Computer Use: Let AI agents control desktops and browsers natively",
       "summary": "Anthropic's computer use API lets Claude take screenshots, click, type, and scroll to complete tasks on real computers. Claude 3.7 Sonnet drives browsers and desktop apps end-to-end, enabling agents that operate software the way a human would. New improvements in tool call reliability and reduced hallucinated actions make it production-ready for browser automation pipelines.",

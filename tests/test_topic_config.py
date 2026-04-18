@@ -34,9 +34,9 @@ class TestDefaults:
         assert len(DEFAULT_TOPICS) == 11
 
     def test_default_enabled_count(self):
-        """Only computer_use should be enabled by default."""
+        """8 Applied AI Engineer topics should be enabled by default."""
         enabled = [t for t in DEFAULT_TOPICS if t["default_enabled"]]
-        assert len(enabled) == 1
+        assert len(enabled) == 8
 
 
 class TestGetEnabledTopics:
@@ -79,27 +79,19 @@ class TestGetActiveKeywords:
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_defaults_exclude_disabled_topic_keywords(self, mock_kv):
         keywords = get_active_keywords()
+        # hardware and safety are disabled by default
         assert "CUDA" not in keywords
-        assert "fine-tuning" not in keywords
+        assert "jailbreak" not in keywords
 
     @patch("src.topic_config._fetch_kv_config")
     def test_kv_config_changes_keywords(self, mock_kv):
-        """Even if KV enables other topics, active keywords stay computer_use only."""
+        """KV can enable hardware topic, adding its keywords."""
         mock_kv.return_value = {
-            "models": True,
-            "apis": True,
-            "frameworks": True,
-            "inference": True,
-            "finetuning": True,
-            "rag": True,
-            "agents": True,
-            "opensource": True,
-            "safety": True,
             "hardware": True,
         }
         keywords = get_active_keywords()
-        assert "GPU" not in keywords
-        assert "CUDA" not in keywords
+        assert "GPU" in keywords
+        assert "CUDA" in keywords
 
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_keywords_are_deduplicated(self, mock_kv):
@@ -120,7 +112,7 @@ class TestFetchKvConfig:
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_graceful_fallback_when_no_kv(self, mock_kv):
         topics = get_active_topics()
-        assert len(topics) == 1  # computer_use only
+        assert len(topics) == 8  # 8 Applied AI Engineer topics enabled by default
         keywords = get_active_keywords()
         assert len(keywords) > 0
 

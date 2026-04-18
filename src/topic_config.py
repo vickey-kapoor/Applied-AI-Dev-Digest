@@ -49,37 +49,37 @@ DEFAULT_TOPICS = [
     {
         "id": "models",
         "keywords": ["GPT", "Claude", "Gemini", "Llama", "Mistral", "model release"],
-        "default_enabled": False,
+        "default_enabled": True,
     },
     {
         "id": "apis",
         "keywords": ["API", "SDK", "endpoint", "breaking change", "deprecation"],
-        "default_enabled": False,
+        "default_enabled": True,
     },
     {
         "id": "frameworks",
         "keywords": ["LangChain", "LlamaIndex", "AutoGen", "CrewAI", "framework"],
-        "default_enabled": False,
+        "default_enabled": True,
     },
     {
         "id": "inference",
         "keywords": ["vLLM", "Ollama", "TensorRT", "quantization", "serving", "deployment"],
-        "default_enabled": False,
+        "default_enabled": True,
     },
     {
         "id": "finetuning",
         "keywords": ["fine-tuning", "LoRA", "QLoRA", "Unsloth", "training", "PEFT"],
-        "default_enabled": False,
+        "default_enabled": True,
     },
     {
         "id": "rag",
         "keywords": ["RAG", "retrieval", "vector database", "embedding", "memory"],
-        "default_enabled": False,
+        "default_enabled": True,
     },
     {
         "id": "agents",
         "keywords": ["agent", "tool use", "multi-agent", "autonomous", "agentic"],
-        "default_enabled": False,
+        "default_enabled": True,
     },
     {
         "id": "opensource",
@@ -158,9 +158,8 @@ def _get_enabled_topics(kv_config: dict | None) -> list[dict]:
 
 def get_active_topics() -> list[dict]:
     """Get the list of currently enabled topics."""
-    # Strict enforcement: this project should only generate/send a computer_use digest.
-    # Even if dashboard KV config enables other topics, we intentionally ignore them here.
-    return [t for t in DEFAULT_TOPICS if t["id"] == "computer_use"]
+    kv_config = _fetch_kv_config()
+    return _get_enabled_topics(kv_config)
 
 
 def get_active_keywords() -> list[str]:

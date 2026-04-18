@@ -1,6 +1,19 @@
 {
   "papers": [
     {
+      "id": "ae12e3e9-8e09-550f-ab4d-f189c7b9bb74",
+      "title": "Ecom-RLVE: Adaptive Verifiable Environments for E-Commerce Conversational Agents",
+      "summary": "",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/ecom-rlve",
+      "published_at": "2026-04-16T00:00:00",
+      "fetched_at": "2026-04-18T16:51:17.663903Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "f005593a-6134-5b3d-8940-9e68d2467656",
       "title": "Codex for (almost) everything",
       "summary": "The updated Codex app for macOS and Windows adds computer use, in-app browsing, image generation, memory, and plugins to accelerate developer workflows.",

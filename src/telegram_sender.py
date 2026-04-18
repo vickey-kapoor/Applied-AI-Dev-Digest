@@ -90,15 +90,30 @@ def format_research_message(research: dict) -> str:
     title = _escape_markdown(research.get("title", "Untitled"))
     source = _escape_markdown(research.get("source", "Unknown"))
     url = _validate_url(research.get("url", ""))
-    item_type = research.get("type", "announcement")
 
-    # Build topic tag from type
-    type_tags = {
-        "announcement": "#Announcement",
-        "release": "#Release",
-        "discussion": "#Discussion",
+    # Build topic tag from topic_id (preferred) or item type fallback
+    topic_id = research.get("topic_id", "")
+    topic_labels = {
+        "computer_use": "#ComputerUse",
+        "models": "#Models",
+        "apis": "#APIs",
+        "frameworks": "#Frameworks",
+        "inference": "#Inference",
+        "finetuning": "#FineTuning",
+        "rag": "#RAG",
+        "agents": "#Agents",
+        "opensource": "#OpenSource",
+        "safety": "#Safety",
+        "hardware": "#Hardware",
     }
-    tag = type_tags.get(item_type, "#Update")
+    type_tags = {"announcement": "#Announcement", "release": "#Release", "discussion": "#Discussion"}
+    tag = topic_labels.get(topic_id) or type_tags.get(research.get("type", ""), "#Update")
+
+    # Effort indicator
+    effort_map = {"low": "🟢", "medium": "🟡", "high": "🔴"}
+    effort_label = {"low": "quick win", "medium": "afternoon project", "high": "deep dive"}
+    effort = research.get("effort", "").lower().strip()
+    effort_str = f" · {effort_map[effort]} {effort_label[effort]}" if effort in effort_map else ""
 
     # Structured summary fields
     why = _escape_markdown(research.get("why_it_matters", ""))
@@ -109,7 +124,7 @@ def format_research_message(research: dict) -> str:
     # Fall back to flat summary if structured fields are missing
     if not why and not what:
         summary = _escape_markdown(research.get("summary", ""))
-        message = f"""{tag} \u00b7 {source}
+        message = f"""{tag} · {source}{effort_str}
 
 *{title}*
 
@@ -118,16 +133,16 @@ def format_research_message(research: dict) -> str:
 {url}"""
         return message
 
-    lines = [f"{tag} \u00b7 {source}", "", f"*{title}*"]
+    lines = [f"{tag} · {source}{effort_str}", "", f"*{title}*"]
 
     if why:
-        lines += ["", f"*Why it matters*", why]
+        lines += ["", "*Why it matters*", why]
     if what:
-        lines += ["", f"*What it is*", what]
+        lines += ["", "*What it is*", what]
     if how:
-        lines += ["", f"*How to use it*", how]
+        lines += ["", "*How to use it*", how]
     if take:
-        lines += ["", f"*Dev take*", take]
+        lines += ["", "*Dev take*", take]
 
     if url:
         lines += ["", url]

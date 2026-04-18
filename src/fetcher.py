@@ -8,6 +8,7 @@ from src.fetchers.github_fetcher import fetch_github_releases
 from src.fetchers.hackernews_fetcher import fetch_hackernews_stories
 from src.fetchers.huggingface_fetcher import fetch_huggingface_papers
 from src.logger import get_logger
+from src.topic_config import get_active_topics
 
 logger = get_logger(__name__)
 
@@ -65,13 +66,23 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
     logger.info("After deduplication: %d unique items", len(unique))
 
     # Final keyword filter — drop anything that doesn't mention a topic keyword
+    # Also assign topic_id to each item based on first matching topic
     if filter_keywords:
+        topics = get_active_topics()
         kw_lower = [k.lower() for k in filter_keywords]
-        unique = [
-            item for item in unique
-            if any(kw in (item.get("title", "") + " " + item.get("summary", "")).lower()
-                   for kw in kw_lower)
-        ]
+        filtered = []
+        for item in unique:
+            text = (item.get("title", "") + " " + item.get("summary", "")).lower()
+            if not any(kw in text for kw in kw_lower):
+                continue
+            # Tag with the first topic whose keywords match
+            if not item.get("topic_id"):
+                for topic in topics:
+                    if any(kw.lower() in text for kw in topic["keywords"]):
+                        item = {**item, "topic_id": topic["id"]}
+                        break
+            filtered.append(item)
+        unique = filtered
         logger.info("After keyword filter: %d items match active topics", len(unique))
 
     # Sort by published date (most recent first)

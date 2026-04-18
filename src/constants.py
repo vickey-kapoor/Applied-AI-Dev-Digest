@@ -113,47 +113,45 @@ EXCLUDE_KEYWORDS = [
 # Blog RSS feeds for AI labs and platforms
 BLOG_FEEDS = {
     "OpenAI": "https://openai.com/blog/rss.xml",
-    "Anthropic": "https://www.anthropic.com/rss.xml",
     "Google DeepMind": "https://deepmind.google/blog/rss.xml",
-    "Meta AI": "https://ai.meta.com/blog/rss/",
-    "Mistral": "https://mistral.ai/news/rss",
+    "Meta AI": "https://engineering.fb.com/category/ml-applications/feed/",
     "Microsoft AI": "https://blogs.microsoft.com/ai/feed/",
     "AWS AI": "https://aws.amazon.com/blogs/machine-learning/feed/",
     "Hugging Face": "https://huggingface.co/blog/feed.xml",
+    "PyTorch": "https://pytorch.org/blog/feed.xml",
+    "Google AI": "https://blog.google/technology/ai/rss/",
 }
 
-# GitHub repos to track for releases — computer use / GUI / browser agents only
+# GitHub repos to track for releases — Applied AI Engineer toolchain
 GITHUB_REPOS = [
-    "anthropics/computer-use-demo",
-    "browser-use/browser-use",
-    "web-arena-x/webarena",
+    "openai/openai-python",
+    "anthropics/anthropic-sdk-python",
+    "langchain-ai/langchain",
+    "BerriAI/litellm",
+    "vllm-project/vllm",
+    "ggerganov/llama.cpp",
     "microsoft/playwright-python",
-    "microsoft/playwright",
-    "xlang-ai/OpenAgents",
-    "MinorJoey/OSWorld",
+    "browser-use/browser-use",
+    "run-llama/llama_index",
+    "unslothai/unsloth",
 ]
 
-# Hacker News filter keywords — computer use / GUI / browser agents only
+# Hacker News filter keywords — Applied AI Engineer topics
 HN_KEYWORDS = [
-    "computer use",
-    "computer-use",
-    "browser use",
-    "browser-use",
-    "webarena",
-    "osworld",
-    "screenspot",
-    "webvoyager",
-    "mind2web",
-    "playwright",
-    "puppeteer",
-    "selenium",
-    "agentic browser",
-    "screen grounding",
-    "screen capture",
-    "gui automation",
-    "computer control",
-    "desktop agent",
-    "web browsing agent",
+    # Models & APIs
+    "openai api", "anthropic api", "claude api", "gemini api",
+    "model release", "fine-tuning", "LoRA", "QLoRA",
+    # Frameworks & tools
+    "langchain", "llamaindex", "autogen", "crewai", "litellm",
+    "vllm", "ollama", "llama.cpp", "unsloth",
+    # Patterns
+    "RAG", "retrieval augmented", "vector database", "embeddings",
+    "function calling", "tool use", "multi-agent",
+    # Computer use / agents
+    "computer use", "browser use", "gui agent", "web agent",
+    "playwright", "autonomous agent", "agentic",
+    # Deployment
+    "quantization", "inference server", "model serving",
 ]
 HN_MIN_SCORE = 100
 HN_MAX_STORIES = 5

@@ -6,6 +6,8 @@ on:
   schedule:
     # Run daily at 10:00 AM CST (16:00 UTC)
     - cron: '0 16 * * *'
+    # Run weekly digest every Sunday at 11:00 AM CST (17:00 UTC)
+    - cron: '0 17 * * 0'
   workflow_dispatch: # Allow manual trigger
 
 permissions:
@@ -52,7 +54,11 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
           KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
           KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
-        run: python main.py
+        run: |
+          if [ "$(date -u +%u)" = "7" ]; then
+            python weekly_digest.py
+          fi
+          python main.py
 
       - name: Commit and push reports and data
         run: |

@@ -43,7 +43,7 @@ def summarize_research_bundle(research: dict, api_key: str) -> dict:
     client = OpenAI(api_key=api_key)
     title, source, description = _prepare_inputs(research)
 
-    prompt = f"""You are explaining AI/dev news to a senior ML engineer.
+    prompt = f"""You are explaining AI/dev news to a senior Applied AI Engineer.
 Be direct and technical. No hype.
 
 Item title: {title}
@@ -52,10 +52,11 @@ Description: {description}
 
 Return JSON (no markdown fences):
 {{
-  "why_it_matters": "One sentence — what changed and why a dev should care",
+  "why_it_matters": "One sentence — what changed and why an Applied AI Engineer should care",
   "what_it_is": "2-3 sentences — what exactly was released/announced, key specs or capabilities",
-  "how_to_use_it": "1-2 sentences — how to get started or what to watch (pip install, API endpoint, repo link)",
-  "dev_take": "One honest sentence — is this worth your time or just noise?"
+  "how_to_use_it": "1-2 sentences — always include a concrete starting point: pip install command, API endpoint, or direct GitHub/docs URL",
+  "dev_take": "One honest sentence — is this worth your time or just noise?",
+  "effort": "low, medium, or high — low = drop-in swap or 1-hour read, medium = afternoon project, high = multi-day deep dive"
 }}"""
 
     try:
@@ -75,7 +76,7 @@ Return JSON (no markdown fences):
         research_with_summaries = research.copy()
 
         # Store structured fields
-        for key in ("why_it_matters", "what_it_is", "how_to_use_it", "dev_take"):
+        for key in ("why_it_matters", "what_it_is", "how_to_use_it", "dev_take", "effort"):
             if parsed.get(key):
                 research_with_summaries[key] = parsed[key]
 

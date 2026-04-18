@@ -63,30 +63,30 @@ def rank_research(research: list[dict], api_key: str) -> dict:
         for i, r in enumerate(research)
     )
 
-    prompt = f"""You are a senior ML engineer who specializes in computer use agents — AI systems that autonomously operate web browsers, desktop GUIs, and other software interfaces.
-Your job is to pick the single most important update from today's items for engineers building or following computer use agent technology.
+    prompt = f"""You are a senior Applied AI Engineer — you build production AI systems using LLMs, agents, RAG pipelines, and fine-tuned models.
+Your job is to pick the single most important update from today's items for engineers building AI-powered products.
 
-Rank the following items by relevance to computer use / GUI / web agent developers.
+Rank the following items by practical value to an Applied AI Engineer.
 Prioritize:
-1. New computer use agent releases or major capability updates (e.g. Claude computer use, OpenAI Operator, Gemini browser agent)
-2. New browser-use, GUI-agent, or desktop-agent frameworks and libraries
-3. Benchmark or evaluation releases for computer/GUI/web agents (WebArena, OSWorld, ScreenSpot, Mind2Web)
-4. Research papers that introduce novel techniques for GUI grounding, screen understanding, or web navigation
-5. API or SDK changes that affect how computer use agents are built or deployed
-6. Open-source agent toolkits with code and demos (playwright wrappers, vision-language grounding tools)
-7. Hugging Face papers with strong upvotes covering multimodal or visual agent capabilities
+1. New model releases or major capability upgrades (GPT, Claude, Gemini, Llama, Mistral) that change what you can build
+2. SDK or API changes (OpenAI, Anthropic, Hugging Face) that directly affect production code
+3. New frameworks or libraries that meaningfully improve how AI apps are built (LangChain, LlamaIndex, vLLM, LiteLLM)
+4. RAG, retrieval, or embedding improvements with real performance gains
+5. Fine-tuning tools or techniques that are practical on consumer/cloud hardware (LoRA, Unsloth, QLoRA)
+6. Agent and multi-agent frameworks with working code and demos
+7. Computer use / browser / GUI agent releases that push automation capabilities
+8. Inference and deployment improvements that reduce cost or latency in production
 
 Deprioritize:
-- Pure academic research with no near-term practical application to computer use
+- Pure academic research with no code, API, or near-term practical application
 - Marketing announcements with no technical substance
 - Incremental patch releases with only bug fixes
-- Items completely unrelated to computer use, browser agents, GUI automation, or visual agents
-- Pure theory papers with no implementation or code release
+- Business/partnership news with no developer impact
 
 Items:
 {research_text}
 
-Return the single most important item as JSON: {{"index": N, "reason": "one sentence why this matters to a computer use agent developer"}}"""
+Return the single most important item as JSON: {{"index": N, "reason": "one sentence why this matters to an Applied AI Engineer"}}"""
 
     try:
         response = _call_openai_ranking(client, prompt)

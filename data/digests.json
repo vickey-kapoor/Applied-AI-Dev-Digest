@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-19",
+      "top_paper_id": "08d91132-3400-55d4-b72e-e8a99f74e6a5",
+      "papers_fetched": 7,
+      "pdf_path": "reports/19-Apr/Thoughts_and_feelings_around_Claude_Design.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24634187336"
+    },
+    {
       "date": "2026-04-18",
       "top_paper_id": "ae12e3e9-8e09-550f-ab4d-f189c7b9bb74",
       "papers_fetched": 3,

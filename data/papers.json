@@ -1,6 +1,66 @@
 {
   "papers": [
     {
+      "id": "08d91132-3400-55d4-b72e-e8a99f74e6a5",
+      "title": "Thoughts and feelings around Claude Design",
+      "summary": "346 points · 225 comments",
+      "source": "Hacker News",
+      "url": "https://samhenri.gold/blog/20260418-claude-design/",
+      "published_at": "2026-04-18T19:19:24+00:00",
+      "fetched_at": "2026-04-19T16:51:32.248011Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "1db5f7ca-2160-5047-a244-10e0a68fa135",
+      "title": "Optimizing Effective Training Time for Meta’s Internal Recommendation/Ranking Workloads",
+      "summary": "Motivation and Introduction Across the industry, teams training and serving large AI models face aggressive ROI targets under tight compute capacity. As workloads scale, improving infrastructure effectiveness gets harder because...",
+      "source": "PyTorch",
+      "url": "https://pytorch.org/blog/optimizing-effective-training-time-for-metas-internal-recommendation-ranking-workloads/",
+      "published_at": "2026-04-17T16:00:18",
+      "fetched_at": "2026-04-19T16:51:32.248011Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release",
+        "Fine-tuning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b916bd5c-1a9c-507d-acad-d46ef1ee38ed",
+      "title": "Capacity Efficiency at Meta: How Unified AI Agents Optimize Performance at Hyperscale",
+      "summary": "We’re sharing insights into Meta’s Capacity Efficiency Program, where we’ve built an AI agent platform that helps automate finding and fixing performance issues throughout our infrastructure. By leveraging encoded domain expertise across a unified, standardized tool interface these agents help save power and free up engineers’ time away from addressing performance issues to innovating on [...] Read More... The post Capacity Efficiency at Meta: How Unified AI Agents Optimize Performance at Hyp...",
+      "source": "Meta AI",
+      "url": "https://engineering.fb.com/2026/04/16/developer-tools/capacity-efficiency-at-meta-how-unified-ai-agents-optimize-performance-at-hyperscale/",
+      "published_at": "2026-04-16T16:00:34",
+      "fetched_at": "2026-04-19T16:51:32.248011Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a253e1c6-8652-5ffe-a435-07f778791a8b",
+      "title": "Faster Diffusion on Blackwell: MXFP8 and NVFP4 with Diffusers and TorchAO",
+      "summary": "Diffusion models for image and video generation have been surging in popularity, delivering super-realistic visual media. However, their adoption is often constrained by the sheer requirements in memory and compute....",
+      "source": "PyTorch",
+      "url": "https://pytorch.org/blog/faster-diffusion-on-blackwell-mxfp8-and-nvfp4-with-diffusers-and-torchao/",
+      "published_at": "2026-04-08T16:40:22",
+      "fetched_at": "2026-04-19T16:51:32.248011Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release",
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "ae12e3e9-8e09-550f-ab4d-f189c7b9bb74",
       "title": "Ecom-RLVE: Adaptive Verifiable Environments for E-Commerce Conversational Agents",
       "summary": "",

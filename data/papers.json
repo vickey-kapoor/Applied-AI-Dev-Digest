@@ -1,6 +1,53 @@
 {
   "papers": [
     {
+      "id": "d1fbe2c6-2c96-5cc0-81e7-65697a4cb0ae",
+      "title": "ToolSimulator: scalable tool testing for AI agents",
+      "summary": "You can use ToolSimulator, an LLM-powered tool simulation framework within Strands Evals, to thoroughly and safely test AI agents that rely on external tools, at scale. Instead of risking live API calls that expose personally identifiable information (PII), trigger unintended actions, or settling for static mocks that break with multi-turn workflows, you can use ToolSimulator's large language model (LLM)-powered simulations to validate your agents. Available today as part of the Strands Evals...",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/toolsimulator-scalable-tool-testing-for-ai-agents/",
+      "published_at": "2026-04-20T17:06:26",
+      "fetched_at": "2026-04-20T17:13:00.952941Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release",
+        "API Update"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "6e8e5bcb-63bf-5452-80ea-2c44b228c090",
+      "title": "Omnichannel ordering with Amazon Bedrock AgentCore and Amazon Nova 2 Sonic",
+      "summary": "In this post, we'll show you how to build a complete omnichannel ordering system using Amazon Bedrock AgentCore, an agentic platform, to build, deploy, and operate highly effective AI agents securely at scale using any framework and foundation model and Amazon Nova 2 Sonic.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/omnichannel-ordering-with-amazon-bedrock-agentcore-and-amazon-nova-2-sonic/",
+      "published_at": "2026-04-20T15:03:28",
+      "fetched_at": "2026-04-20T17:13:00.952941Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "58921b20-0fad-5316-a838-28b80f4e9de7",
+      "title": "Claude Token Counter, now with model comparisons",
+      "summary": "187 points · 73 comments",
+      "source": "Hacker News",
+      "url": "https://simonwillison.net/2026/Apr/20/claude-token-counts/",
+      "published_at": "2026-04-20T00:56:40+00:00",
+      "fetched_at": "2026-04-20T17:13:00.952941Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release",
+        "Pricing"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "08d91132-3400-55d4-b72e-e8a99f74e6a5",
       "title": "Thoughts and feelings around Claude Design",
       "summary": "346 points · 225 comments",

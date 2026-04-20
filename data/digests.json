@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-20",
+      "top_paper_id": "d1fbe2c6-2c96-5cc0-81e7-65697a4cb0ae",
+      "papers_fetched": 9,
+      "pdf_path": "reports/20-Apr/ToolSimulator_scalable_tool_testing_for_AI_agents.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24680010814"
+    },
+    {
       "date": "2026-04-19",
       "top_paper_id": "1db5f7ca-2160-5047-a244-10e0a68fa135",
       "papers_fetched": 7,

@@ -1,6 +1,111 @@
 {
   "papers": [
     {
+      "id": "e5e0ca08-d2e8-55ea-bfff-75cfd85558a6",
+      "title": "Modernizing the Facebook Groups Search to Unlock the Power of Community Knowledge",
+      "summary": "We’ve fundamentally transformed Facebook Groups Search to help people more reliably discover, sort through, and validate community content that’s most relevant to them. We’ve adopted a new hybrid retrieval architecture and implemented automated model-based evaluation to address the major friction points people experience when searching community content. Under this new framework, we’ve made tangible improvements [...] Read More... The post Modernizing the Facebook Groups Search to Unlock the ...",
+      "source": "Meta AI",
+      "url": "https://engineering.fb.com/2026/04/21/ml-applications/modernizing-the-facebook-groups-search-to-unlock-the-power-of-community-knowledge/",
+      "published_at": "2026-04-21T16:00:19",
+      "fetched_at": "2026-04-21T17:11:21.839040Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "6bf5edde-1e32-5e2c-a685-e76c5bfa6794",
+      "title": "Anthropic says OpenClaw-style Claude CLI usage is allowed again",
+      "summary": "387 points · 223 comments",
+      "source": "Hacker News",
+      "url": "https://docs.openclaw.ai/providers/anthropic",
+      "published_at": "2026-04-21T03:43:03+00:00",
+      "fetched_at": "2026-04-21T17:11:21.839040Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release",
+        "Developer Tools"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "71edc683-3be1-5018-9741-f760a2cbec2f",
+      "title": "How to Ground a Korean AI Agent in Real Demographics with Synthetic Personas",
+      "summary": "",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/nvidia/build-korean-agents-with-nemotron-personas",
+      "published_at": "2026-04-21T00:40:10",
+      "fetched_at": "2026-04-21T17:11:21.839040Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "13bdfa70-d1d4-521d-8316-f3ff7acacba7",
+      "title": "llama_index v0.14.21 released",
+      "summary": "# Release Notes\n\n## [2026-04-21]\n\n### llama-index-callbacks-honeyhive [0.5.0]\n\n- chore(deps): bump the pip group across 87 directories with 2 updates ([#21382](https://github.com/run-llama/llama_index/pull/21382))\n- chore(deps): bump the pip group across 68 directories with 2 updates ([#21394](https://github.com/run-llama/llama_index/pull/21394))\n\n### llama-index-core [0.14.21]\n\n- fix(core): prevent `KeyError` in `DocumentSummaryIndex.delete_nodes` when invalid node ID is provided ([#21067](http",
+      "source": "GitHub",
+      "url": "https://github.com/run-llama/llama_index/releases/tag/v0.14.21",
+      "published_at": "2026-04-21T00:18:51Z",
+      "fetched_at": "2026-04-21T17:11:21.839040Z",
+      "type": "release",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f15595ac-7735-5bea-8368-1f1f40525527",
+      "title": "OpenAI ad partner now selling ChatGPT ad placements based on “prompt relevance”",
+      "summary": "290 points · 151 comments",
+      "source": "Hacker News",
+      "url": "https://www.adweek.com/media/exclusive-leaked-deck-reveals-stackadapts-playbook-for-chatgpt-ads/",
+      "published_at": "2026-04-20T21:20:52+00:00",
+      "fetched_at": "2026-04-21T17:11:21.839040Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ae2114a9-c555-5466-9684-55de41f775b7",
+      "title": "Accelerate Generative AI Inference on Amazon SageMaker AI with G7e Instances",
+      "summary": "Today, we are thrilled to announce the availability of G7e instances powered by NVIDIA RTX PRO 6000 Blackwell Server Edition GPUs on Amazon SageMaker AI. You can provision nodes with 1, 2, 4, and 8 RTX PRO 6000 GPU instances, with each GPU providing 96 GB of GDDR7 memory. This launch provides the capability to use a single-node GPU, G7e.2xlarge instance to host powerful open source foundation models (FMs) like GPT-OSS-120B, Nemotron-3-Super-120B-A12B (NVFP4 variant), and Qwen3.5-35B-A3B, offe...",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/accelerate-generative-ai-inference-on-amazon-sagemaker-ai-with-g7e-instances/",
+      "published_at": "2026-04-20T19:38:10",
+      "fetched_at": "2026-04-21T17:11:21.839040Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release",
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "9573abb3-7194-5486-8ade-ce6d41c09754",
+      "title": "OpenAI helps Hyatt advance AI among colleagues",
+      "summary": "Hyatt deploys ChatGPT Enterprise across its global workforce, using GPT-5.4 and Codex to improve productivity, operations, and guest experiences.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/hyatt-advances-ai-with-chatgpt-enterprise",
+      "published_at": "2026-04-20T00:00:00",
+      "fetched_at": "2026-04-21T17:11:21.839040Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "d1fbe2c6-2c96-5cc0-81e7-65697a4cb0ae",
       "title": "ToolSimulator: scalable tool testing for AI agents",
       "summary": "You can use ToolSimulator, an LLM-powered tool simulation framework within Strands Evals, to thoroughly and safely test AI agents that rely on external tools, at scale. Instead of risking live API calls that expose personally identifiable information (PII), trigger unintended actions, or settling for static mocks that break with multi-turn workflows, you can use ToolSimulator's large language model (LLM)-powered simulations to validate your agents. Available today as part of the Strands Evals...",

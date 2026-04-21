@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-21",
+      "top_paper_id": "e5e0ca08-d2e8-55ea-bfff-75cfd85558a6",
+      "papers_fetched": 10,
+      "pdf_path": "reports/21-Apr/Modernizing_the_Facebook_Groups_Search_to_Unlock_t.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24735987957"
+    },
+    {
       "date": "2026-04-20",
       "top_paper_id": "d1fbe2c6-2c96-5cc0-81e7-65697a4cb0ae",
       "papers_fetched": 9,

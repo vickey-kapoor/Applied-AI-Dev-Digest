@@ -1,6 +1,120 @@
 {
   "papers": [
     {
+      "id": "d1ff40e3-96b2-5612-81dd-6d10a8fdbdac",
+      "title": "Company-wise memory in Amazon Bedrock with Amazon Neptune and Mem0",
+      "summary": "Company-wise memory in Amazon Bedrock, powered by Amazon Neptune and Mem0, provides AI agents with persistent, company-specific context—enabling them to learn, adapt, and respond intelligently across multiple interactions. TrendMicro, one of the largest antivirus software companies in the world, developed the Trend’s Companion chatbot, so their customers can explore information through natural, conversational interactions",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/company-wise-memory-in-amazon-bedrock-with-amazon-neptune-and-mem0/",
+      "published_at": "2026-04-22T15:56:24",
+      "fetched_at": "2026-04-22T17:09:30.170987Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "441b3bd0-15ca-56b6-b5e0-12b15d40ca89",
+      "title": "Our eighth generation TPUs: two chips for the agentic era",
+      "summary": "253 points · 131 comments",
+      "source": "Hacker News",
+      "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/eighth-generation-tpu-agentic-era/",
+      "published_at": "2026-04-22T12:15:29+00:00",
+      "fetched_at": "2026-04-22T17:09:30.170987Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4ea00a96-f7d9-5bbb-9e96-d846556ee37a",
+      "title": "We're launching two specialized TPUs for the agentic era.",
+      "summary": "The eighth generation of Google’s TPU includes two specialized chips that will power the future of AI.",
+      "source": "Google AI",
+      "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/tpus-8t-8i-cloud-next/",
+      "published_at": "2026-04-22T12:00:00",
+      "fetched_at": "2026-04-22T17:09:30.170987Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d94c3eea-a427-5e11-bc3a-78567c58094f",
+      "title": "Speeding up agentic workflows with WebSockets in the Responses API",
+      "summary": "A deep dive into the Codex agent loop, showing how WebSockets and connection-scoped caching reduced API overhead and improved model latency.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/speeding-up-agentic-workflows-with-websockets",
+      "published_at": "2026-04-22T10:00:00",
+      "fetched_at": "2026-04-22T17:09:30.170987Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release",
+        "API Update"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f5e2cb86-f877-563a-b00f-eb823e1650db",
+      "title": "Claude Code to be removed from Anthropic's Pro plan?",
+      "summary": "630 points · 600 comments",
+      "source": "Hacker News",
+      "url": "https://bsky.app/profile/edzitron.com/post/3mjzxwfx3qs2a",
+      "published_at": "2026-04-21T21:03:04+00:00",
+      "fetched_at": "2026-04-22T17:09:30.170987Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "adc8a9f2-f147-51ca-bd2c-bfd6170e5614",
+      "title": "ChatGPT Images 2.0",
+      "summary": "977 points · 867 comments",
+      "source": "Hacker News",
+      "url": "https://openai.com/index/introducing-chatgpt-images-2-0/",
+      "published_at": "2026-04-21T18:50:00+00:00",
+      "fetched_at": "2026-04-22T17:09:30.170987Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release",
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d045be4d-e51b-5aed-b704-7afea5881a6c",
+      "title": "Framework Laptop 13 Pro",
+      "summary": "1399 points · 716 comments",
+      "source": "Hacker News",
+      "url": "https://frame.work/laptop13pro",
+      "published_at": "2026-04-21T18:00:34+00:00",
+      "fetched_at": "2026-04-22T17:09:30.170987Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "10b54f63-31e2-5984-aebe-84023b8bfaa2",
+      "title": "Meta to start capturing employee mouse movements, keystrokes for AI training",
+      "summary": "748 points · 494 comments",
+      "source": "Hacker News",
+      "url": "https://www.reuters.com/sustainability/boards-policy-regulation/meta-start-capturing-employee-mouse-movements-keystrokes-ai-training-data-2026-04-21/",
+      "published_at": "2026-04-21T17:40:39+00:00",
+      "fetched_at": "2026-04-22T17:09:30.170987Z",
+      "type": "discussion",
+      "topics": [
+        "Fine-tuning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "e5e0ca08-d2e8-55ea-bfff-75cfd85558a6",
       "title": "Modernizing the Facebook Groups Search to Unlock the Power of Community Knowledge",
       "summary": "We’ve fundamentally transformed Facebook Groups Search to help people more reliably discover, sort through, and validate community content that’s most relevant to them. We’ve adopted a new hybrid retrieval architecture and implemented automated model-based evaluation to address the major friction points people experience when searching community content. Under this new framework, we’ve made tangible improvements [...] Read More... The post Modernizing the Facebook Groups Search to Unlock the ...",

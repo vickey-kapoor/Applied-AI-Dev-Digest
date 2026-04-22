@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-22",
+      "top_paper_id": "d1ff40e3-96b2-5612-81dd-6d10a8fdbdac",
+      "papers_fetched": 10,
+      "pdf_path": "reports/22-Apr/Company-wise_memory_in_Amazon_Bedrock_with_Amazon.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24791889710"
+    },
+    {
       "date": "2026-04-21",
       "top_paper_id": "e5e0ca08-d2e8-55ea-bfff-75cfd85558a6",
       "papers_fetched": 10,

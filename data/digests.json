@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-23",
+      "top_paper_id": "f2001f5f-3fb6-5514-adb5-df0d80ee9425",
+      "papers_fetched": 9,
+      "pdf_path": "reports/23-Apr/unsloth_v0137-beta_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24849136377"
+    },
+    {
       "date": "2026-04-22",
       "top_paper_id": "d1ff40e3-96b2-5612-81dd-6d10a8fdbdac",
       "papers_fetched": 10,

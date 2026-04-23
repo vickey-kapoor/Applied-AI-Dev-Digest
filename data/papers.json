@@ -1,6 +1,79 @@
 {
   "papers": [
     {
+      "id": "f2001f5f-3fb6-5514-adb5-df0d80ee9425",
+      "title": "unsloth v0.1.37-beta released",
+      "summary": "Hey guys, we revamped the entire Unsloth Studio UI and UX experience to put an emphasis on chat and training:\r\n* Added a collapsible sidebar based on community feedback <br><img width=\"500\" alt=\"new ui\" src=\"https://github.com/user-attachments/assets/1f7326c3-347a-4ebf-b2a7-43e26ebbf1ab\" />\r\n* You can now delete chats and search past conversations<br><img width=\"400\"  alt=\"Delete messages\" src=\"https://github.com/user-attachments/assets/a9268174-ab80-477e-870d-142d7cb9305b\" /> <img width=\"300\" a",
+      "source": "GitHub",
+      "url": "https://github.com/unslothai/unsloth/releases/tag/v0.1.37-beta",
+      "published_at": "2026-04-23T14:33:16Z",
+      "fetched_at": "2026-04-23T17:26:38.221605Z",
+      "type": "release",
+      "topics": [
+        "Fine-tuning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3a89a372-6ebb-5597-aacc-36b0ce306028",
+      "title": "Workspace Agents in ChatGPT",
+      "summary": "151 points · 58 comments",
+      "source": "Hacker News",
+      "url": "https://openai.com/index/introducing-workspace-agents-in-chatgpt/",
+      "published_at": "2026-04-22T17:47:07+00:00",
+      "fetched_at": "2026-04-23T17:26:38.221605Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8d907a7c-eb49-563c-a1b2-915312f6529e",
+      "title": "Parallel agents in Zed",
+      "summary": "265 points · 151 comments",
+      "source": "Hacker News",
+      "url": "https://zed.dev/blog/parallel-agents",
+      "published_at": "2026-04-22T17:38:57+00:00",
+      "fetched_at": "2026-04-23T17:26:38.221605Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "e76d07ee-29f2-59b0-9428-a5d39a14c396",
+      "title": "Decoupled DiLoCo: A new frontier for resilient, distributed AI training",
+      "summary": "",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/decoupled-diloco/",
+      "published_at": "2026-04-22T10:20:03",
+      "fetched_at": "2026-04-23T17:26:38.221605Z",
+      "type": "announcement",
+      "topics": [
+        "Fine-tuning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2ddfaf73-92b7-5155-9f14-7953f377065d",
+      "title": "Introducing workspace agents in ChatGPT",
+      "summary": "Workspace agents in ChatGPT are Codex-powered agents that automate complex workflows, run in the cloud, and help teams scale work across tools securely.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-workspace-agents-in-chatgpt",
+      "published_at": "2026-04-22T10:00:00",
+      "fetched_at": "2026-04-23T17:26:38.221605Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "d1ff40e3-96b2-5612-81dd-6d10a8fdbdac",
       "title": "Company-wise memory in Amazon Bedrock with Amazon Neptune and Mem0",
       "summary": "Company-wise memory in Amazon Bedrock, powered by Amazon Neptune and Mem0, provides AI agents with persistent, company-specific context—enabling them to learn, adapt, and respond intelligently across multiple interactions. TrendMicro, one of the largest antivirus software companies in the world, developed the Trend’s Companion chatbot, so their customers can explore information through natural, conversational interactions",

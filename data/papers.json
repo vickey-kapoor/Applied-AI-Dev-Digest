@@ -1,6 +1,127 @@
 {
   "papers": [
     {
+      "id": "ffadc7e8-d070-58fe-8b78-1842db8ba60a",
+      "title": "I Cancelled Claude: Token Issues, Declining Quality, and Poor Support",
+      "summary": "184 points · 78 comments",
+      "source": "Hacker News",
+      "url": "https://nickyreinert.de/en/2026/2026-04-24-claude-critics/",
+      "published_at": "2026-04-24T15:59:19+00:00",
+      "fetched_at": "2026-04-24T17:05:38.645995Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release",
+        "Developer Tools",
+        "Pricing"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a64294af-51b8-5d7f-b38b-58e3e443b222",
+      "title": "Hear your agent suffer through your code",
+      "summary": "129 points · 60 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/AndrewVos/endless-toil",
+      "published_at": "2026-04-24T10:58:45+00:00",
+      "fetched_at": "2026-04-24T17:05:38.645995Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0501846a-efbd-5113-9d46-aef15b88cbe5",
+      "title": "DeepSeek-V4: a million-token context that agents can actually use",
+      "summary": "",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/deepseekv4",
+      "published_at": "2026-04-24T00:00:00",
+      "fetched_at": "2026-04-24T17:05:38.645995Z",
+      "type": "announcement",
+      "topics": [
+        "Pricing"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b186044a-5809-5eb2-aa85-db8467dcf0bf",
+      "title": "anthropic-sdk-python v0.97.0 released",
+      "summary": "## 0.97.0 (2026-04-23)\n\nFull Changelog: [v0.96.0...v0.97.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.96.0...v0.97.0)\n\n### Features\n\n* **api:** CMA Memory public beta ([fc30ebe](https://github.com/anthropics/anthropic-sdk-python/commit/fc30ebe5ca81204faa0b1d756b61dad176e37dcb))\n\n\n### Bug Fixes\n\n* **api:** fix errors in api spec ([f946de8](https://github.com/anthropics/anthropic-sdk-python/commit/f946de8da00748b472489e93ab4920d64d1cb22d))\n* **api:** restore missing features ([",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.97.0",
+      "published_at": "2026-04-23T20:51:59Z",
+      "fetched_at": "2026-04-24T17:05:38.645995Z",
+      "type": "release",
+      "topics": [
+        "API Update",
+        "SDK/Library"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a1e7cab3-1ff9-58b6-a29f-1ef0b3ac4219",
+      "title": "GPT-5.5",
+      "summary": "1485 points · 992 comments",
+      "source": "Hacker News",
+      "url": "https://openai.com/index/introducing-gpt-5-5/",
+      "published_at": "2026-04-23T18:01:39+00:00",
+      "fetched_at": "2026-04-24T17:05:38.645995Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f413642a-bda5-5902-b7c1-b64193962871",
+      "title": "An update on recent Claude Code quality reports",
+      "summary": "856 points · 654 comments",
+      "source": "Hacker News",
+      "url": "https://www.anthropic.com/engineering/april-23-postmortem",
+      "published_at": "2026-04-23T17:48:38+00:00",
+      "fetched_at": "2026-04-24T17:05:38.645995Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "72fa6ba6-5aeb-50ad-8752-9347aa9aee87",
+      "title": "Introducing GPT-5.5",
+      "summary": "Introducing GPT-5.5, our smartest model yet—faster, more capable, and built for complex tasks like coding, research, and data analysis across tools.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-gpt-5-5",
+      "published_at": "2026-04-23T11:00:00",
+      "fetched_at": "2026-04-24T17:05:38.645995Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ad97b522-56e5-5499-b64d-494fb25158e8",
+      "title": "GPT-5.5 System Card",
+      "summary": "",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/gpt-5-5-system-card",
+      "published_at": "2026-04-23T11:00:00",
+      "fetched_at": "2026-04-24T17:05:38.645995Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "f2001f5f-3fb6-5514-adb5-df0d80ee9425",
       "title": "unsloth v0.1.37-beta released",
       "summary": "Hey guys, we revamped the entire Unsloth Studio UI and UX experience to put an emphasis on chat and training:\r\n* Added a collapsible sidebar based on community feedback <br><img width=\"500\" alt=\"new ui\" src=\"https://github.com/user-attachments/assets/1f7326c3-347a-4ebf-b2a7-43e26ebbf1ab\" />\r\n* You can now delete chats and search past conversations<br><img width=\"400\"  alt=\"Delete messages\" src=\"https://github.com/user-attachments/assets/a9268174-ab80-477e-870d-142d7cb9305b\" /> <img width=\"300\" a",

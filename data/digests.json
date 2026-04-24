@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-24",
+      "top_paper_id": "ffadc7e8-d070-58fe-8b78-1842db8ba60a",
+      "papers_fetched": 10,
+      "pdf_path": "reports/24-Apr/I_Cancelled_Claude_Token_Issues_Declining_Qualit.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24901891682"
+    },
+    {
       "date": "2026-04-23",
       "top_paper_id": "f2001f5f-3fb6-5514-adb5-df0d80ee9425",
       "papers_fetched": 9,

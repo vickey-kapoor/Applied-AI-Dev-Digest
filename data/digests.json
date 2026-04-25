@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-25",
+      "top_paper_id": "f95dc3fe-bc63-5d48-92ab-510643818d68",
+      "papers_fetched": 10,
+      "pdf_path": "reports/25-Apr/Show_HN_A_Karpathy-style_LLM_wiki_your_agents_mai.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24935816237"
+    },
+    {
       "date": "2026-04-24",
       "top_paper_id": "ffadc7e8-d070-58fe-8b78-1842db8ba60a",
       "papers_fetched": 10,

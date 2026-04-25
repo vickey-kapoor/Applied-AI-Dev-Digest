@@ -1,6 +1,80 @@
 {
   "papers": [
     {
+      "id": "f95dc3fe-bc63-5d48-92ab-510643818d68",
+      "title": "Show HN: A Karpathy-style LLM wiki your agents maintain (Markdown and Git)",
+      "summary": "165 points · 85 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/nex-crm/wuphf",
+      "published_at": "2026-04-25T08:53:53+00:00",
+      "fetched_at": "2026-04-25T16:52:48.233196Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "17d336bb-58fb-5e70-b76f-197401a3a588",
+      "title": "Open source memory layer so any AI agent can do what Claude.ai and ChatGPT do",
+      "summary": "132 points · 56 comments",
+      "source": "Hacker News",
+      "url": "https://alash3al.github.io/stash?_v01",
+      "published_at": "2026-04-25T01:24:40+00:00",
+      "fetched_at": "2026-04-25T16:52:48.233196Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "5520651b-fd40-58a6-8389-1b64e2076549",
+      "title": "8 Gemini tips for organizing your space (and life)",
+      "summary": "Black screen with illustrations including a laptop with document and email icons streaming out, a smiling person holding a phone and looking at a checklist, and a user activating Gemini Live",
+      "source": "Google AI",
+      "url": "https://blog.google/products-and-platforms/products/gemini/gemini-spring-cleaning-tips/",
+      "published_at": "2026-04-24T19:00:00",
+      "fetched_at": "2026-04-25T16:52:48.233196Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "52720376-9fc8-53bd-834d-8899939264df",
+      "title": "OpenAI releases GPT-5.5 and GPT-5.5 Pro in the API",
+      "summary": "251 points · 145 comments",
+      "source": "Hacker News",
+      "url": "https://developers.openai.com/api/docs/changelog",
+      "published_at": "2026-04-24T18:23:32+00:00",
+      "fetched_at": "2026-04-25T16:52:48.233196Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release",
+        "API Update"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "fc2c717f-fe21-5ab9-93ed-bf0def511370",
+      "title": "Building Workforce AI Agents with Visier and Amazon Quick",
+      "summary": "In this post, we show how connecting the Visier Workforce AI platform with Amazon Quick through Model Context Protocol (MCP) gives every knowledge worker a unified agentic workspace to ask questions in. Visier helps ground the workspace in live workforce data and the organizational context that surrounds it while letting your users act on the conversational results without switching tools.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/building-workforce-ai-agents-with-visier-and-amazon-quick/",
+      "published_at": "2026-04-24T18:04:20",
+      "fetched_at": "2026-04-25T16:52:48.233196Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "ffadc7e8-d070-58fe-8b78-1842db8ba60a",
       "title": "I Cancelled Claude: Token Issues, Declining Quality, and Poor Support",
       "summary": "184 points · 78 comments",

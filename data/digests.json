@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-26",
+      "top_paper_id": "96033a6a-b301-5c30-9eb5-572c11ee5870",
+      "papers_fetched": 10,
+      "pdf_path": "reports/26-Apr/Colorado_Adds_Open-Source_Exemption_to_Age-Verific.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "24961961168"
+    },
+    {
       "date": "2026-04-25",
       "top_paper_id": "f95dc3fe-bc63-5d48-92ab-510643818d68",
       "papers_fetched": 10,

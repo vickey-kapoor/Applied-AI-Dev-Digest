@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-27",
+      "top_paper_id": "b1103cbc-b054-5a88-8e16-1f5933dbf9fd",
+      "papers_fetched": 10,
+      "pdf_path": "reports/27-Apr/Build_Strands_Agents_with_SageMaker_AI_models_and.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25009698132"
+    },
+    {
       "date": "2026-04-26",
       "top_paper_id": "9f89788e-2cb4-59b9-a06c-4ec402ba48b4",
       "papers_fetched": 10,

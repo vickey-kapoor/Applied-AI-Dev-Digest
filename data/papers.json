@@ -1,6 +1,129 @@
 {
   "papers": [
     {
+      "id": "b1103cbc-b054-5a88-8e16-1f5933dbf9fd",
+      "title": "Build Strands Agents with SageMaker AI models and MLflow",
+      "summary": "In this post, we demonstrate how to build AI agents using Strands Agents SDK with models deployed on SageMaker AI endpoints. You will learn how to deploy foundation models from SageMaker JumpStart, integrate them with Strands Agents, and establish production-grade observability using SageMaker Serverless MLflow for agent tracing. We also cover how to implement A/B testing across multiple model variants and evaluate agent performance using MLflow metrics and show how you can build, deploy, and...",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-strands-agents-with-sagemaker-ai-models-and-mlflow/",
+      "published_at": "2026-04-27T16:50:41",
+      "fetched_at": "2026-04-27T17:27:11.268802Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release",
+        "API Update",
+        "SDK/Library"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "534c8d46-7bcd-5a66-8e69-4a7e3f33dc4d",
+      "title": "How Popsa used Amazon Nova to inspire customers with personalised title suggestions",
+      "summary": "In this post, we share how we applied Amazon Bedrock and the Amazon Nova family of models to reimagine our Title Suggestion feature. By combining metadata, computer vision, and retrieval-augmented generative AI, we now automatically generate creative, brand-aligned titles and subtitles across 12 languages. Using the unified API of Amazon Bedrock, Anthropic’s Claude 3 Haiku, and Amazon Nova Lite and Pro, we improved quality, reduced cost, and cut response times. This resulted in higher custome...",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-popsa-used-amazon-nova-to-inspire-customers-with-personalised-title-suggestions/",
+      "published_at": "2026-04-27T16:45:37",
+      "fetched_at": "2026-04-27T17:27:11.268802Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release",
+        "API Update",
+        "Multimodal",
+        "Pricing"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2602a8d3-1125-562d-9624-2cf05eb38e12",
+      "title": "Join the new AI Agents Vibe Coding Course from Google and Kaggle",
+      "summary": "A web next to a laptop",
+      "source": "Google AI",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/kaggle-genai-intensive-course-vibe-coding-june-2026/",
+      "published_at": "2026-04-27T13:00:00",
+      "fetched_at": "2026-04-27T17:27:11.268802Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8f872a74-23d0-54ae-aafd-84ca80c339e2",
+      "title": "Show HN: OSS Agent I built topped the TerminalBench on Gemini-3-flash-preview",
+      "summary": "199 points · 70 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/dirac-run/dirac",
+      "published_at": "2026-04-27T12:35:55+00:00",
+      "fetched_at": "2026-04-27T17:27:11.268802Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "27e78df5-3b74-5b17-92ca-c7eac15a1b66",
+      "title": "Mistral built a $14B AI empire by not being American",
+      "summary": "179 points · 137 comments",
+      "source": "Hacker News",
+      "url": "https://www.forbes.com/sites/iainmartin/2026/04/16/how-frances-mistral-built-a-14-billion-ai-empire-by-not-being-american/",
+      "published_at": "2026-04-27T10:14:15+00:00",
+      "fetched_at": "2026-04-27T17:27:11.268802Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2d98d7b5-0502-55ab-95cc-1c680b7691bd",
+      "title": "vllm v0.20.0 released",
+      "summary": "# vLLM v0.20.0\r\n\r\n## Highlights\r\nThis release features 752 commits from 320 contributors (123 new)!\r\n\r\n* **CUDA 13.0 default**: Default CUDA wheel on PyPI and `vllm/vllm-openai:v0.20.0` image switched to CUDA 13.0; architecture lists and build-args cleaned up (#39878), and CUDA bumped to 13.0.2 to match PyTorch 2.11.0 (#40669). As a general rule of thumb, our CUDA version policy follows PyTorch's. We highly recommend to install vLLM with `uv` and use `--torch-backend=cu129` if you are on CUDA 12",
+      "source": "GitHub",
+      "url": "https://github.com/vllm-project/vllm/releases/tag/v0.20.0",
+      "published_at": "2026-04-27T09:05:23Z",
+      "fetched_at": "2026-04-27T17:27:11.268802Z",
+      "type": "release",
+      "topics": [
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c90b3f3b-13ec-551b-817c-d68b3d3fd558",
+      "title": "The Prompt API",
+      "summary": "235 points · 119 comments",
+      "source": "Hacker News",
+      "url": "https://developer.chrome.com/docs/ai/prompt-api",
+      "published_at": "2026-04-27T02:18:58+00:00",
+      "fetched_at": "2026-04-27T17:27:11.268802Z",
+      "type": "discussion",
+      "topics": [
+        "API Update"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "653ede15-309e-5fa3-ab84-8669356c27e7",
+      "title": "Choco automates food distribution with AI agents",
+      "summary": "How Choco used OpenAI APIs to streamline food distribution, boost productivity, and unlock growth—an in-depth customer story on real-world AI impact.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/choco",
+      "published_at": "2026-04-27T00:00:00",
+      "fetched_at": "2026-04-27T17:27:11.268802Z",
+      "type": "announcement",
+      "topics": [
+        "API Update"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "96033a6a-b301-5c30-9eb5-572c11ee5870",
       "title": "Colorado Adds Open-Source Exemption to Age-Verification Bill",
       "summary": "122 points · 49 comments",

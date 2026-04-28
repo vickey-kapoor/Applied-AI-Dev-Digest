@@ -1,6 +1,64 @@
 {
   "papers": [
     {
+      "id": "a1eab60c-1295-528b-a810-ac0e1b9ce915",
+      "title": "Migrating a text agent to a voice assistant with Amazon Nova 2 Sonic",
+      "summary": "In this post, we explore what it takes to migrate a traditional text agent into a conversational voice assistant using Amazon Nova 2 Sonic. We compare text and voice agent requirements, highlight design priorities for different use cases, break down agent architecture, and address common concerns like tools and sub-agents for reuse and system prompt adaptation. This post helps you navigate the migration process and avoid common pitfalls.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/migrating-a-text-agent-to-a-voice-assistant-with-amazon-nova-2-sonic/",
+      "published_at": "2026-04-28T17:46:55",
+      "fetched_at": "2026-04-28T17:52:21.081335Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "dac10199-90c5-5501-ad17-13efff3ea38c",
+      "title": "Introducing NVIDIA Nemotron 3 Nano Omni: Long-Context Multimodal Intelligence for Documents, Audio and Video Agents",
+      "summary": "",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/nvidia/nemotron-3-nano-omni-multimodal-intelligence",
+      "published_at": "2026-04-28T15:58:57",
+      "fetched_at": "2026-04-28T17:52:21.081335Z",
+      "type": "announcement",
+      "topics": [
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ac58f648-8dee-5f2c-890d-f739b5c0a90c",
+      "title": "openai-python v2.33.0 released",
+      "summary": "## 2.33.0 (2026-04-28)\n\nFull Changelog: [v2.32.0...v2.33.0](https://github.com/openai/openai-python/compare/v2.32.0...v2.33.0)\n\n### Features\n\n* **api:** api update ([18f834a](https://github.com/openai/openai-python/commit/18f834a54f92ea827452471a46a4f442f251e2c8))\n\n\n### Bug Fixes\n\n* **api:** correct prompt_cache_retention enum value from in-memory to in_memory ([#1822](https://github.com/openai/openai-python/issues/1822)) ([f9d2d13](https://github.com/openai/openai-python/commit/f9d2d1359688a624",
+      "source": "GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v2.33.0",
+      "published_at": "2026-04-28T14:03:52Z",
+      "fetched_at": "2026-04-28T17:52:21.081335Z",
+      "type": "release",
+      "topics": [
+        "API Update"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "220aee01-0a0f-5b91-b69a-9e5bb6dad72d",
+      "title": "OpenAI models, Codex, and Managed Agents come to AWS",
+      "summary": "OpenAI GPT models, Codex, and Managed Agents are now available on AWS, enabling enterprises to build secure AI in their AWS environments.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/openai-on-aws",
+      "published_at": "2026-04-28T00:00:00",
+      "fetched_at": "2026-04-28T17:52:21.081335Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "b1103cbc-b054-5a88-8e16-1f5933dbf9fd",
       "title": "Build Strands Agents with SageMaker AI models and MLflow",
       "summary": "In this post, we demonstrate how to build AI agents using Strands Agents SDK with models deployed on SageMaker AI endpoints. You will learn how to deploy foundation models from SageMaker JumpStart, integrate them with Strands Agents, and establish production-grade observability using SageMaker Serverless MLflow for agent tracing. We also cover how to implement A/B testing across multiple model variants and evaluate agent performance using MLflow metrics and show how you can build, deploy, and...",

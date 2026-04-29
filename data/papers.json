@@ -1,6 +1,139 @@
 {
   "papers": [
     {
+      "id": "b9cca6b3-b5b2-5946-98c8-588ec8d9eb6a",
+      "title": "Introducing AutoSP",
+      "summary": "¹ SSAIL Lab, University of Illinois Urbana-Champaign, ² Anyscale, ³ Snowflake TL;DR: AutoSP automatically converts standard transformer training code into sequence-parallel code for long-context LLM training across multiple GPUs. Integrated...",
+      "source": "PyTorch",
+      "url": "https://pytorch.org/blog/introducing-autosp/",
+      "published_at": "2026-04-29T15:25:24",
+      "fetched_at": "2026-04-29T17:44:02.632801Z",
+      "type": "announcement",
+      "topics": [
+        "Fine-tuning"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d252fdb3-d84a-5daa-a464-f729699165b1",
+      "title": "Mistral Medium 3.5",
+      "summary": "200 points · 111 comments",
+      "source": "Hacker News",
+      "url": "https://mistral.ai/news/vibe-remote-agents-mistral-medium-3-5",
+      "published_at": "2026-04-29T15:17:46+00:00",
+      "fetched_at": "2026-04-29T17:44:02.632801Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f9f1da46-ddf7-5b66-804b-2b607d630103",
+      "title": "Run custom MCP proxies serverless on Amazon Bedrock AgentCore Runtime",
+      "summary": "This post shows you how to deploy a serverless MCP proxy on Amazon Bedrock AgentCore Runtime that gives you a programmable layer to implement proper governance, controls, and observability aligned with an organization's security policies.",
+      "source": "AWS AI",
+      "url": "https://aws.amazon.com/blogs/machine-learning/run-custom-mcp-proxies-serverless-on-amazon-bedrock-agentcore-runtime/",
+      "published_at": "2026-04-29T11:52:16",
+      "fetched_at": "2026-04-29T17:44:02.632801Z",
+      "type": "announcement",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "db503549-a0f4-5530-b581-d3b1a45d19c5",
+      "title": "playwright-python v1.59.0 released",
+      "summary": "## 🎬 Screencast\r\n\r\nNew [page.screencast](https://playwright.dev/python/docs/api/class-page#page-screencast) API provides a unified interface for capturing page content with:\r\n- Screencast recordings\r\n- Action annotations\r\n- Visual overlays\r\n- Real-time frame capture\r\n- Agentic video receipts\r\n\r\n<center>\r\n\r\n<img src=\"https://raw.githubusercontent.com/microsoft/playwright/main/docs/src/images/release-notes-1.59-screencast-demo.gif\" alt=\"Demo\" width=\"500\" height=\"313\" />\r\n\r\n</center>\r\n\r\n**Screencas",
+      "source": "GitHub",
+      "url": "https://github.com/microsoft/playwright-python/releases/tag/v1.59.0",
+      "published_at": "2026-04-29T07:37:58Z",
+      "fetched_at": "2026-04-29T17:44:02.632801Z",
+      "type": "release",
+      "topics": [
+        "API Update",
+        "Multimodal"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "e06dcff1-b3c8-5a96-8cfd-1fc8abf8ccb2",
+      "title": "Regression: malware reminder on every read still causes subagent refusals",
+      "summary": "243 points · 136 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/anthropics/claude-code/issues/49363",
+      "published_at": "2026-04-28T23:59:57+00:00",
+      "fetched_at": "2026-04-29T17:44:02.632801Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "afa8ee74-dc41-5bbf-ba5a-e6be8842fe40",
+      "title": "How ChatGPT serves ads",
+      "summary": "459 points · 315 comments",
+      "source": "Hacker News",
+      "url": "https://www.buchodi.com/how-chatgpt-serves-ads-heres-the-full-attribution-loop/",
+      "published_at": "2026-04-28T23:54:14+00:00",
+      "fetched_at": "2026-04-29T17:44:02.632801Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2527d2f7-b6aa-5acd-8b8b-759c536e0c50",
+      "title": "Claude for Creative Work",
+      "summary": "142 points · 107 comments",
+      "source": "Hacker News",
+      "url": "https://www.anthropic.com/news/claude-for-creative-work",
+      "published_at": "2026-04-28T23:46:56+00:00",
+      "fetched_at": "2026-04-29T17:44:02.632801Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ed416a79-9990-5039-9d88-3a4e362cb025",
+      "title": "Claude.ai unavailable and elevated errors on the API",
+      "summary": "293 points · 250 comments",
+      "source": "Hacker News",
+      "url": "https://status.claude.com/incidents/9l93x2ht4s5w",
+      "published_at": "2026-04-28T18:01:21+00:00",
+      "fetched_at": "2026-04-29T17:44:02.632801Z",
+      "type": "discussion",
+      "topics": [
+        "Model Release",
+        "API Update"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "98d1f66d-574c-571d-9ff1-3c1767c1e5a9",
+      "title": "Our commitment to community safety",
+      "summary": "Learn how OpenAI protects community safety in ChatGPT through model safeguards, misuse detection, policy enforcement, and collaboration with safety experts.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/our-commitment-to-community-safety",
+      "published_at": "2026-04-28T00:00:00",
+      "fetched_at": "2026-04-29T17:44:02.632801Z",
+      "type": "announcement",
+      "topics": [
+        "Model Release"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "a1eab60c-1295-528b-a810-ac0e1b9ce915",
       "title": "Migrating a text agent to a voice assistant with Amazon Nova 2 Sonic",
       "summary": "In this post, we explore what it takes to migrate a traditional text agent into a conversational voice assistant using Amazon Nova 2 Sonic. We compare text and voice agent requirements, highlight design priorities for different use cases, break down agent architecture, and address common concerns like tools and sub-agents for reuse and system prompt adaptation. This post helps you navigate the migration process and avoid common pitfalls.",

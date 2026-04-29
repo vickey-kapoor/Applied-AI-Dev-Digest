@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-29",
+      "top_paper_id": "b9cca6b3-b5b2-5946-98c8-588ec8d9eb6a",
+      "papers_fetched": 10,
+      "pdf_path": "reports/29-Apr/Introducing_AutoSP.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25124550131"
+    },
+    {
       "date": "2026-04-28",
       "top_paper_id": "a1eab60c-1295-528b-a810-ac0e1b9ce915",
       "papers_fetched": 10,

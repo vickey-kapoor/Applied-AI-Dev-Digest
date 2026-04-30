@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-04-30",
+      "top_paper_id": "eaf7a7da-2785-5059-acd8-ea223ed091ea",
+      "papers_fetched": 7,
+      "pdf_path": "reports/30-Apr/AWS_Generative_AI_Model_Agility_Solution_A_compre.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25179595796"
+    },
+    {
       "date": "2026-04-29",
       "top_paper_id": "b9cca6b3-b5b2-5946-98c8-588ec8d9eb6a",
       "papers_fetched": 10,

@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "bf543878-ac4c-570e-959f-92ea16b2abb7",
+      "title": "Research Sabotage in ML Codebases",
+      "summary": "One of the main hopes for AI safety is using AIs to automate AI safety research. However, if models are misaligned, then they may sabotage the safety research. For example, misaligned AIs may try to:Perform sloppy research in order to slow down the rate of research progressMake AI systems appear safer than they areTrain a successor model to be misalignedWhether we should worry about those things depends substantially on how hard it is to sabotage research in ways that are hard for reviewers t...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/LByP4qsF8a4g7Pz3p/research-sabotage-in-ml-codebases",
+      "published_at": "2026-04-30T00:31:54",
+      "fetched_at": "2026-05-01T17:04:05.762676Z",
+      "type": "announcement",
+      "topics": [
+        "Agentic Safety"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "eaf7a7da-2785-5059-acd8-ea223ed091ea",
       "title": "AWS Generative AI Model Agility Solution: A comprehensive guide to migrating LLMs for generative AI production",
       "summary": "In this post, we introduce a systematic framework for LLM migration or upgrade in generative AI production, encompassing essential tools, methodologies, and best practices. The framework facilitates transitions between different LLMs by providing robust protocols for prompt conversion and optimization.",

@@ -9,7 +9,9 @@ export interface HistoryEntry {
   institution?: string;
   topic_id?: string;
   url: string;
-  why_it_matters: string;
+  claim: string;
+  safety_relevance?: string;
+  rigor?: string;
   date: string;
 }
 

@@ -9,11 +9,14 @@ interface PreviewPaper {
   source: string;
   url: string;
   type: string;
+  topic_id?: string;
   summary: string;
-  why_it_matters: string;
-  what_it_is: string;
-  how_to_use_it: string;
-  dev_take: string;
+  claim: string;
+  evidence: string;
+  method: string;
+  limitations: string;
+  safety_relevance: string;
+  rigor: string;
   date: string;
 }
 
@@ -145,33 +148,42 @@ export default function PreviewPage() {
             {/* Message bubble */}
             <div className="p-4">
               <div className="bg-background rounded-xl p-4 max-w-md font-mono text-sm leading-relaxed text-foreground space-y-3">
-                <p className="text-muted-foreground/70">{typeTag} · {paper.source}</p>
+                <p className="text-muted-foreground/70">
+                  {typeTag} · {paper.source}
+                  {paper.rigor && <span> · {paper.rigor}</span>}
+                </p>
                 <p className="font-bold text-foreground">{paper.title}</p>
-                {paper.why_it_matters && (
+                {paper.claim && (
                   <>
-                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Why it matters</p>
-                    <p className="text-muted-foreground">{paper.why_it_matters}</p>
+                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Claim</p>
+                    <p className="text-muted-foreground">{paper.claim}</p>
                   </>
                 )}
-                {paper.what_it_is && (
+                {paper.evidence && (
                   <>
-                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">What it is</p>
-                    <p className="text-muted-foreground">{paper.what_it_is}</p>
+                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Evidence</p>
+                    <p className="text-muted-foreground">{paper.evidence}</p>
                   </>
                 )}
-                {paper.how_to_use_it && (
+                {paper.method && (
                   <>
-                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">How to use it</p>
-                    <p className="text-muted-foreground">{paper.how_to_use_it}</p>
+                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Method</p>
+                    <p className="text-muted-foreground">{paper.method}</p>
                   </>
                 )}
-                {paper.dev_take && (
+                {paper.limitations && (
                   <>
-                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Dev take</p>
-                    <p className="text-muted-foreground">{paper.dev_take}</p>
+                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Limitations</p>
+                    <p className="text-muted-foreground">{paper.limitations}</p>
                   </>
                 )}
-                {!paper.why_it_matters && paper.summary && (
+                {paper.safety_relevance && (
+                  <>
+                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Safety relevance</p>
+                    <p className="text-muted-foreground">{paper.safety_relevance}</p>
+                  </>
+                )}
+                {!paper.claim && paper.summary && (
                   <p className="text-muted-foreground">{paper.summary}</p>
                 )}
                 {paper.url && (

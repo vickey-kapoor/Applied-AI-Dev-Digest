@@ -76,7 +76,7 @@ def _escape_markdown(text: str) -> str:
 
 def format_research_message(research: dict) -> str:
     """
-    Format item into a Telegram message using the structured dev digest format.
+    Format item into a Telegram message using the safety-research digest format.
 
     Args:
         research: Item dictionary with title, source, url, and structured summary fields
@@ -85,7 +85,7 @@ def format_research_message(research: dict) -> str:
         Formatted message string with Markdown
     """
     if not research:
-        return "*Applied AI Dev Digest*\n\nNo updates found today."
+        return "*AI Safety Digest*\n\nNo updates found today."
 
     title = _escape_markdown(research.get("title", "Untitled"))
     source = _escape_markdown(research.get("source", "Unknown"))
@@ -94,37 +94,46 @@ def format_research_message(research: dict) -> str:
     # Build topic tag from topic_id (preferred) or item type fallback
     topic_id = research.get("topic_id", "")
     topic_labels = {
-        "computer_use": "#ComputerUse",
-        "models": "#Models",
-        "apis": "#APIs",
-        "frameworks": "#Frameworks",
-        "inference": "#Inference",
-        "finetuning": "#FineTuning",
-        "rag": "#RAG",
-        "agents": "#Agents",
-        "opensource": "#OpenSource",
-        "safety": "#Safety",
-        "hardware": "#Hardware",
+        "alignment": "#Alignment",
+        "interpretability": "#Interpretability",
+        "evals": "#Evals",
+        "red_teaming": "#RedTeaming",
+        "system_cards": "#SystemCards",
+        "agentic_safety": "#AgenticSafety",
+        "governance": "#Governance",
+        "catastrophic_risk": "#CatastrophicRisk",
+        "robustness": "#Robustness",
+        "data_provenance": "#DataProvenance",
+        "open_weights_safety": "#OpenWeightsSafety",
     }
-    type_tags = {"announcement": "#Announcement", "release": "#Release", "discussion": "#Discussion"}
+    type_tags = {"announcement": "#Announcement", "release": "#Release", "discussion": "#Discussion", "paper": "#Paper"}
     tag = topic_labels.get(topic_id) or type_tags.get(research.get("type", ""), "#Update")
 
-    # Effort indicator
-    effort_map = {"low": "🟢", "medium": "🟡", "high": "🔴"}
-    effort_label = {"low": "quick win", "medium": "afternoon project", "high": "deep dive"}
-    effort = research.get("effort", "").lower().strip()
-    effort_str = f" · {effort_map[effort]} {effort_label[effort]}" if effort in effort_map else ""
+    # Rigor indicator (replaces "effort")
+    rigor_map = {
+        "preprint": "📄 preprint",
+        "peer-reviewed": "🎓 peer-reviewed",
+        "peer reviewed": "🎓 peer-reviewed",
+        "lab-blog": "🏛 lab blog",
+        "lab blog": "🏛 lab blog",
+        "position": "💭 position",
+        "system-card": "📋 system card",
+        "system card": "📋 system card",
+    }
+    rigor = research.get("rigor", "").lower().strip()
+    rigor_str = f" · {rigor_map[rigor]}" if rigor in rigor_map else ""
 
     # Structured summary fields
-    why = _escape_markdown(research.get("why_it_matters", ""))
-    what = _escape_markdown(research.get("what_it_is", ""))
-    how = _escape_markdown(research.get("how_to_use_it", ""))
-    take = _escape_markdown(research.get("dev_take", ""))
+    claim = _escape_markdown(research.get("claim", ""))
+    evidence = _escape_markdown(research.get("evidence", ""))
+    method = _escape_markdown(research.get("method", ""))
+    limitations = _escape_markdown(research.get("limitations", ""))
+    safety_rel = _escape_markdown(research.get("safety_relevance", ""))
 
     # Fall back to flat summary if structured fields are missing
-    if not why and not what:
+    if not claim and not evidence:
         summary = _escape_markdown(research.get("summary", ""))
-        message = f"""{tag} · {source}{effort_str}
+        message = f"""{tag} · {source}{rigor_str}
 
 *{title}*
 
@@ -133,16 +142,18 @@ def format_research_message(research: dict) -> str:
 {url}"""
         return message
 
-    lines = [f"{tag} · {source}{effort_str}", "", f"*{title}*"]
+    lines = [f"{tag} · {source}{rigor_str}", "", f"*{title}*"]
 
-    if why:
-        lines += ["", "*Why it matters*", why]
-    if what:
-        lines += ["", "*What it is*", what]
-    if how:
-        lines += ["", "*How to use it*", how]
-    if take:
-        lines += ["", "*Dev take*", take]
+    if claim:
+        lines += ["", "*Claim*", claim]
+    if evidence:
+        lines += ["", "*Evidence*", evidence]
+    if method:
+        lines += ["", "*Method*", method]
+    if limitations:
+        lines += ["", "*Limitations*", limitations]
+    if safety_rel:
+        lines += ["", "*Safety relevance*", safety_rel]
 
     if url:
         lines += ["", url]

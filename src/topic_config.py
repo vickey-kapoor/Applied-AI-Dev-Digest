@@ -10,90 +10,109 @@ from src.logger import get_logger
 logger = get_logger(__name__)
 
 # Mirror of dashboard/src/lib/topics.ts — canonical topic definitions
+# Persona: AI Safety researcher. Prioritize empirical findings, evals,
+# alignment techniques, and red-teaming results over deployment/SDK news.
 DEFAULT_TOPICS = [
     {
-        "id": "computer_use",
+        "id": "alignment",
         "keywords": [
-            # High-precision identifiers for computer-use / browser automation agents.
-            # Avoid overly-generic tokens (e.g. "operator") that cause false positives.
-            "computer use",
-            "computer-use",
-            "browser use",
-            "browser-use",
-            "WebArena",
-            "webarena",
-            "OSWorld",
-            "osworld",
-            "ScreenSpot",
-            "screenspot",
-            "WebVoyager",
-            "webvoyager",
-            "Mind2Web",
-            "mind2web",
-            "playwright",
-            "puppeteer",
-            "selenium",
-            "click agent",
-            "agentic browser",
-            "screen grounding",
-            "screen capture",
-            "computer control",
-            "GUI automation",
-            "GUI agent",
-            "web automation",
-            "web browsing agent",
-            "desktop agent",
+            "RLHF", "RLAIF", "DPO", "constitutional AI", "scalable oversight",
+            "weak-to-weak", "weak-to-strong", "debate", "recursive reward",
+            "instruction tuning", "alignment", "preference learning",
+            "reward model", "reward hacking",
         ],
         "default_enabled": True,
     },
     {
-        "id": "models",
-        "keywords": ["GPT", "Claude", "Gemini", "Llama", "Mistral", "model release"],
+        "id": "interpretability",
+        "keywords": [
+            "interpretability", "mechanistic interpretability", "mech interp",
+            "sparse autoencoder", "SAE", "circuit analysis", "feature attribution",
+            "probing", "activation steering", "activation patching",
+            "logit lens", "TransformerLens", "sae_lens", "monosemanticity",
+        ],
         "default_enabled": True,
     },
     {
-        "id": "apis",
-        "keywords": ["API", "SDK", "endpoint", "breaking change", "deprecation"],
+        "id": "evals",
+        "keywords": [
+            "benchmark", "eval", "evaluation suite", "capability eval",
+            "dangerous capability", "autonomy eval", "MMLU", "BIG-bench",
+            "HELM", "inspect_ai", "METR", "GPQA", "ARC-AGI", "SWE-bench",
+            "model evaluation",
+        ],
         "default_enabled": True,
     },
     {
-        "id": "frameworks",
-        "keywords": ["LangChain", "LlamaIndex", "AutoGen", "CrewAI", "framework"],
+        "id": "red_teaming",
+        "keywords": [
+            "red-teaming", "red teaming", "jailbreak", "prompt injection",
+            "adversarial prompt", "automated red-teaming", "PAIR attack",
+            "GCG attack", "universal adversarial", "garak", "harm bench",
+        ],
         "default_enabled": True,
     },
     {
-        "id": "inference",
-        "keywords": ["vLLM", "Ollama", "TensorRT", "quantization", "serving", "deployment"],
+        "id": "system_cards",
+        "keywords": [
+            "system card", "model card", "responsible scaling policy", "RSP",
+            "preparedness framework", "frontier safety", "release notes safety",
+            "deployment evaluation",
+        ],
         "default_enabled": True,
     },
     {
-        "id": "finetuning",
-        "keywords": ["fine-tuning", "LoRA", "QLoRA", "Unsloth", "training", "PEFT"],
+        "id": "agentic_safety",
+        "keywords": [
+            "deception", "scheming", "sandbagging", "situational awareness",
+            "alignment faking", "sabotage", "agent safety", "autonomous agent risk",
+            "agent evaluation", "in-context scheming",
+        ],
         "default_enabled": True,
     },
     {
-        "id": "rag",
-        "keywords": ["RAG", "retrieval", "vector database", "embedding", "memory"],
-        "default_enabled": True,
-    },
-    {
-        "id": "agents",
-        "keywords": ["agent", "tool use", "multi-agent", "autonomous", "agentic"],
-        "default_enabled": True,
-    },
-    {
-        "id": "opensource",
-        "keywords": ["open source", "open weights", "Apache", "MIT license"],
+        "id": "governance",
+        "keywords": [
+            "NIST AISI", "UK AISI", "EU AI Act", "AI safety institute",
+            "executive order", "compute governance", "frontier AI", "AI policy",
+            "AI regulation", "responsible scaling",
+        ],
         "default_enabled": False,
     },
     {
-        "id": "safety",
-        "keywords": ["safety", "alignment", "jailbreak", "red-teaming", "guardrails"],
+        "id": "catastrophic_risk",
+        "keywords": [
+            "CBRN", "biorisk", "bioweapon", "chemical weapon", "cyber uplift",
+            "persuasion", "manipulation", "catastrophic risk", "existential risk",
+            "WMDP", "uplift study",
+        ],
         "default_enabled": False,
     },
     {
-        "id": "hardware",
-        "keywords": ["GPU", "TPU", "chip", "CUDA", "inference cost", "hardware"],
+        "id": "robustness",
+        "keywords": [
+            "adversarial example", "distribution shift", "out-of-distribution",
+            "OOD", "robustness", "adversarial robustness", "spurious correlation",
+            "calibration",
+        ],
+        "default_enabled": False,
+    },
+    {
+        "id": "data_provenance",
+        "keywords": [
+            "data poisoning", "watermarking", "model watermark", "training data",
+            "data attribution", "membership inference", "memorization",
+            "data extraction", "provenance",
+        ],
+        "default_enabled": False,
+    },
+    {
+        "id": "open_weights_safety",
+        "keywords": [
+            "open weights", "open-source model", "fine-tuning attack",
+            "safety finetuning", "removable safety", "Llama 3", "Mistral", "Qwen",
+            "DeepSeek",
+        ],
         "default_enabled": False,
     },
 ]

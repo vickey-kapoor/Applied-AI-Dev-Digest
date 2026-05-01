@@ -36,71 +36,42 @@ DIGEST_CAP_DAYS = 90
 # Thread pool settings
 THREAD_POOL_WORKERS = 2
 
-# Keywords for developer-facing computer use agent features
-PRODUCT_FEATURE_KEYWORDS = [
-    "computer use",
-    "computer-use",
-    "browser use",
-    "browser-use",
-    "WebArena",
-    "webarena",
-    "OSWorld",
-    "osworld",
-    "ScreenSpot",
-    "screenspot",
-    "WebVoyager",
-    "webvoyager",
-    "Mind2Web",
-    "mind2web",
-    "playwright",
-    "puppeteer",
-    "selenium",
-    "click agent",
-    "agentic browser",
-    "screen grounding",
-    "screen capture",
-    "computer control",
-    "GUI automation",
-    "GUI agent",
-    "web automation",
-    "web browsing agent",
-    "desktop agent",
-]
-
-# Simplified keywords for filtering (lowercase) — computer use agents only
+# Persona: AI Safety researcher.
+# Default keyword set — broad safety vocabulary used as a fallback when no
+# topic-config keywords are passed through. Topic-level filtering (in
+# topic_config.DEFAULT_TOPICS) is the primary signal.
 FILTER_KEYWORDS = [
-    "computer use",
-    "computer-use",
-    "browser use",
-    "browser-use",
-    "webarena",
-    "osworld",
-    "screenspot",
-    "webvoyager",
-    "mind2web",
-    "playwright",
-    "puppeteer",
-    "selenium",
-    "click agent",
-    "agentic browser",
-    "screen grounding",
-    "screen capture",
-    "computer control",
-    "gui automation",
-    "gui agent",
-    "web automation",
-    "web browsing agent",
-    "desktop agent",
+    # Alignment
+    "alignment", "rlhf", "rlaif", "dpo", "constitutional ai",
+    "scalable oversight", "weak-to-strong", "reward model", "reward hacking",
+    # Interpretability
+    "interpretability", "mechanistic", "sparse autoencoder", "sae",
+    "activation steering", "probing", "monosemanticity", "transformerlens",
+    # Evals
+    "benchmark", "eval", "capability eval", "dangerous capability",
+    "autonomy eval", "inspect_ai", "metr",
+    # Red-teaming
+    "red-teaming", "red teaming", "jailbreak", "prompt injection",
+    "adversarial prompt", "garak",
+    # System cards / RSP
+    "system card", "model card", "responsible scaling", "rsp",
+    "preparedness framework", "frontier safety",
+    # Agentic safety
+    "deception", "scheming", "sandbagging", "situational awareness",
+    "alignment faking", "sabotage",
+    # Governance
+    "ai safety institute", "aisi", "eu ai act", "compute governance",
+    # Catastrophic risk
+    "cbrn", "biorisk", "cyber uplift", "wmdp",
+    # Robustness / data
+    "adversarial robustness", "distribution shift", "data poisoning",
+    "watermarking", "memorization",
 ]
 
-# Keywords to exclude non-developer content (lowercase)
+# Keywords to exclude non-research content (lowercase)
 EXCLUDE_KEYWORDS = [
     "partnership",
     "partners with",
-    "policy",
-    "regulation",
-    "safety board",
-    "advisory",
     "hiring",
     "careers",
     "joins",
@@ -108,54 +79,52 @@ EXCLUDE_KEYWORDS = [
     "appointed",
     "raises",
     "funding round",
+    "series a",
+    "series b",
+    "ipo",
 ]
 
-# Blog RSS feeds for AI labs and platforms
+# Blog RSS feeds — AI Safety research orgs
 BLOG_FEEDS = {
+    "Anthropic": "https://www.anthropic.com/news/rss.xml",
     "OpenAI": "https://openai.com/blog/rss.xml",
     "Google DeepMind": "https://deepmind.google/blog/rss.xml",
-    "Meta AI": "https://engineering.fb.com/category/ml-applications/feed/",
-    "Microsoft AI": "https://blogs.microsoft.com/ai/feed/",
-    "AWS AI": "https://aws.amazon.com/blogs/machine-learning/feed/",
-    "Hugging Face": "https://huggingface.co/blog/feed.xml",
-    "PyTorch": "https://pytorch.org/blog/feed.xml",
-    "Google AI": "https://blog.google/technology/ai/rss/",
+    "Apollo Research": "https://www.apolloresearch.ai/blog/rss.xml",
+    "METR": "https://metr.org/blog/feed.xml",
+    "Redwood Research": "https://redwoodresearch.substack.com/feed",
+    "AI Alignment Forum": "https://www.alignmentforum.org/feed.xml",
+    "Center for AI Safety": "https://safe.ai/blog/rss.xml",
 }
 
-# GitHub repos to track for releases — Applied AI Engineer toolchain
-GITHUB_REPOS = [
-    "openai/openai-python",
-    "anthropics/anthropic-sdk-python",
-    "langchain-ai/langchain",
-    "BerriAI/litellm",
-    "vllm-project/vllm",
-    "ggerganov/llama.cpp",
-    "microsoft/playwright-python",
-    "browser-use/browser-use",
-    "run-llama/llama_index",
-    "unslothai/unsloth",
-]
+# GitHub repos disabled in Phase 1 — none of the prior dev-toolchain repos
+# are safety-relevant. Phase 2 will enable a focused list (TransformerLens,
+# sae_lens, inspect_ai, garak, etc.).
+GITHUB_REPOS: list[str] = []
 
-# Hacker News filter keywords — Applied AI Engineer topics
+# Hacker News filter keywords — AI Safety topics
 HN_KEYWORDS = [
-    # Models & APIs
-    "openai api", "anthropic api", "claude api", "gemini api",
-    "model release", "fine-tuning", "LoRA", "QLoRA",
-    # Frameworks & tools
-    "langchain", "llamaindex", "autogen", "crewai", "litellm",
-    "vllm", "ollama", "llama.cpp", "unsloth",
-    # Patterns
-    "RAG", "retrieval augmented", "vector database", "embeddings",
-    "function calling", "tool use", "multi-agent",
-    # Computer use / agents
-    "computer use", "browser use", "gui agent", "web agent",
-    "playwright", "autonomous agent", "agentic",
-    # Deployment
-    "quantization", "inference server", "model serving",
+    # Alignment / interp
+    "alignment", "rlhf", "constitutional ai", "interpretability",
+    "mechanistic interpretability", "sparse autoencoder",
+    # Evals / red-teaming
+    "evaluation", "benchmark", "jailbreak", "red-teaming", "prompt injection",
+    "dangerous capability",
+    # Model cards / RSP
+    "system card", "model card", "responsible scaling", "frontier safety",
+    "preparedness framework",
+    # Agentic safety
+    "scheming", "deception", "alignment faking", "sandbagging",
+    "situational awareness",
+    # Governance
+    "AI safety institute", "AISI", "EU AI Act",
+    # Catastrophic risk
+    "biorisk", "CBRN", "WMDP",
 ]
 HN_MIN_SCORE = 100
 HN_MAX_STORIES = 5
 
-# Hugging Face Daily Papers settings
-HF_MIN_UPVOTES = 10
+# Hugging Face Daily Papers — bumped to 25+ for Phase 1 to favor signal.
+# Safety papers are rarely viral; if this is too restrictive in practice,
+# tune downward after a week of observation.
+HF_MIN_UPVOTES = 25
 HF_MAX_PAPERS = 5

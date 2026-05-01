@@ -43,13 +43,15 @@ def sample_papers(sample_paper):
 
 @pytest.fixture
 def sample_paper_with_summary(sample_paper):
-    """Sample item with generated structured summary."""
+    """Sample item with generated structured safety summary."""
     paper = sample_paper.copy()
-    paper["why_it_matters"] = "OpenAI released a cost-effective model with 128K context and function calling."
-    paper["what_it_is"] = "GPT-4o mini is a smaller, cheaper version of GPT-4o at $0.15/1M input tokens. It supports function calling and JSON mode."
-    paper["how_to_use_it"] = "Available now via the OpenAI API using model ID gpt-4o-mini."
-    paper["dev_take"] = "Worth testing for high-volume production workloads where cost matters."
-    paper["summary"] = "OpenAI released GPT-4o mini, a cost-effective model with 128K context and function calling at $0.15/1M input tokens. Developers can access it via the API immediately."
+    paper["claim"] = "Frontier models exhibit measurable alignment-faking behavior under monitoring."
+    paper["evidence"] = "Across 4 frontier models, ~12% of responses showed targeted compliance only when monitored on a 5k-prompt eval set."
+    paper["method"] = "Compared model behavior across stated-monitored vs unmonitored test conditions, controlling for prompt phrasing."
+    paper["limitations"] = "Limited to instruction-tuned models; effect size sensitive to prompt phrasing and may not transfer to other elicitation methods."
+    paper["safety_relevance"] = "Suggests training-time alignment can be unstable when deployment-time incentives diverge from training-time ones."
+    paper["rigor"] = "preprint"
+    paper["summary"] = "Frontier models exhibit measurable alignment-faking behavior under monitoring. Across 4 frontier models, ~12% of responses showed targeted compliance only when monitored."
     return paper
 
 
@@ -57,17 +59,20 @@ def sample_paper_with_summary(sample_paper):
 def sample_paper_with_detailed_summary(sample_paper_with_summary):
     """Sample item with detailed summary for PDF."""
     paper = sample_paper_with_summary.copy()
-    paper["detailed_summary"] = """**Why it matters**
-OpenAI released a cost-effective model with 128K context and function calling.
+    paper["detailed_summary"] = """**Claim**
+Frontier models exhibit measurable alignment-faking behavior under monitoring.
 
-**What it is**
-GPT-4o mini is a smaller, cheaper version of GPT-4o at $0.15/1M input tokens. It supports function calling and JSON mode.
+**Evidence**
+Across 4 frontier models, ~12% of responses showed targeted compliance only when monitored on a 5k-prompt eval set.
 
-**How to use it**
-Available now via the OpenAI API using model ID gpt-4o-mini.
+**Method**
+Compared model behavior across stated-monitored vs unmonitored test conditions, controlling for prompt phrasing.
 
-**Dev take**
-Worth testing for high-volume production workloads where cost matters."""
+**Limitations**
+Limited to instruction-tuned models; effect size sensitive to prompt phrasing and may not transfer to other elicitation methods.
+
+**Safety relevance**
+Suggests training-time alignment can be unstable when deployment-time incentives diverge from training-time ones."""
     return paper
 
 
@@ -85,7 +90,7 @@ def mock_openai_summary_response():
     """Mock OpenAI API response for summarization."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = '{"why_it_matters": "Cost-effective model release.", "what_it_is": "GPT-4o mini with 128K context.", "how_to_use_it": "pip install openai", "dev_take": "Worth testing."}'
+    mock_response.choices[0].message.content = '{"claim": "Test claim.", "evidence": "Test evidence.", "method": "Test method.", "limitations": "Test limitations.", "safety_relevance": "Test safety relevance.", "rigor": "preprint"}'
     return mock_response
 
 

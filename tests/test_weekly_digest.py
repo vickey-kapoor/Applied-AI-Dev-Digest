@@ -10,20 +10,24 @@ from weekly_digest import _deduplicate, _format_weekly_message, main
 SAMPLE_PAPERS = [
     {
         "title": "Paper Alpha",
-        "source": "OpenAI",
-        "type": "announcement",
-        "topic_id": "models",
+        "source": "Anthropic",
+        "type": "paper",
+        "topic_id": "alignment",
         "url": "https://example.com/alpha",
-        "why_it_matters": "Breakthrough in reasoning.",
+        "claim": "Models exhibit alignment-faking under monitoring.",
+        "safety_relevance": "Updates threat model for training-time alignment.",
+        "rigor": "preprint",
         "date": "2026-04-01",
     },
     {
         "title": "Paper Beta",
-        "source": "GitHub",
-        "type": "release",
-        "topic_id": "frameworks",
+        "source": "Apollo Research",
+        "type": "paper",
+        "topic_id": "interpretability",
         "url": "https://example.com/beta",
-        "why_it_matters": "New multimodal approach.",
+        "claim": "New SAE training recipe improves feature recovery.",
+        "safety_relevance": "Better interp tools for monitoring frontier behavior.",
+        "rigor": "preprint",
         "date": "2026-04-02",
     },
     {
@@ -32,7 +36,9 @@ SAMPLE_PAPERS = [
         "type": "discussion",
         "topic_id": None,
         "url": "https://example.com/gamma",
-        "why_it_matters": "",
+        "claim": "",
+        "safety_relevance": "",
+        "rigor": "",
         "date": "2026-04-03",
     },
 ]
@@ -62,7 +68,7 @@ class TestDeduplicate:
 class TestFormatWeeklyMessage:
     def test_contains_header(self):
         msg = _format_weekly_message(SAMPLE_PAPERS)
-        assert "Week in Applied AI" in msg
+        assert "Week in AI Safety" in msg
 
     def test_contains_all_titles(self):
         msg = _format_weekly_message(SAMPLE_PAPERS)
@@ -78,16 +84,15 @@ class TestFormatWeeklyMessage:
 
     def test_includes_source(self):
         msg = _format_weekly_message(SAMPLE_PAPERS)
-        assert "OpenAI" in msg
+        assert "Anthropic" in msg
 
-    def test_includes_type_when_present(self):
+    def test_includes_claim_when_present(self):
         msg = _format_weekly_message(SAMPLE_PAPERS)
-        assert "announcement" in msg
+        assert "alignment-faking" in msg
 
-    def test_skips_type_when_empty(self):
-        paper = {**SAMPLE_PAPERS[0], "type": ""}
-        msg = _format_weekly_message([paper])
-        assert "\u00b7 _\n" not in msg
+    def test_includes_rigor_when_present(self):
+        msg = _format_weekly_message(SAMPLE_PAPERS)
+        assert "preprint" in msg
 
     def test_includes_footer(self):
         msg = _format_weekly_message(SAMPLE_PAPERS)
@@ -107,7 +112,7 @@ class TestMain:
 
         mock_send.assert_called_once()
         msg = mock_send.call_args[0][2]
-        assert "Week in Applied AI" in msg
+        assert "Week in AI Safety" in msg
         mock_del.assert_called_once_with("digest:weekly")
 
     @patch("weekly_digest.kv_delete")

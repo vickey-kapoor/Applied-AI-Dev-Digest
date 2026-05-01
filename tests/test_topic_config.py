@@ -29,14 +29,22 @@ class TestDefaults:
         ids = [t["id"] for t in DEFAULT_TOPICS]
         assert len(ids) == len(set(ids))
 
-    def test_ten_topics_defined(self):
-        """All dev-focused topics are present (including computer_use)."""
+    def test_eleven_topics_defined(self):
+        """All AI Safety topics are present."""
         assert len(DEFAULT_TOPICS) == 11
 
     def test_default_enabled_count(self):
-        """8 Applied AI Engineer topics should be enabled by default."""
-        enabled = [t for t in DEFAULT_TOPICS if t["default_enabled"]]
-        assert len(enabled) == 8
+        """Six core safety topics are enabled by default — matches dashboard TS defaults."""
+        enabled = {t["id"] for t in DEFAULT_TOPICS if t["default_enabled"]}
+        expected = {
+            "alignment",
+            "interpretability",
+            "evals",
+            "red_teaming",
+            "system_cards",
+            "agentic_safety",
+        }
+        assert enabled == expected
 
 
 class TestGetEnabledTopics:
@@ -45,26 +53,27 @@ class TestGetEnabledTopics:
     def test_returns_defaults_when_kv_is_none(self):
         topics = _get_enabled_topics(None)
         ids = {t["id"] for t in topics}
-        assert "computer_use" in ids
-        assert "hardware" not in ids
+        assert "alignment" in ids
+        assert "interpretability" in ids
+        assert "governance" not in ids
+        assert "robustness" not in ids
 
     def test_respects_kv_overrides(self):
         kv_config = {
-            "agents": False,
-            "hardware": True,
+            "alignment": False,
+            "governance": True,
         }
         topics = _get_enabled_topics(kv_config)
         ids = {t["id"] for t in topics}
-        assert "agents" not in ids
-        assert "computer_use" in ids
-        assert "hardware" in ids
+        assert "alignment" not in ids
+        assert "governance" in ids
 
     def test_unknown_keys_in_kv_ignored(self):
-        kv_config = {"unknown_topic": True, "agents": True}
+        kv_config = {"unknown_topic": True, "alignment": True}
         topics = _get_enabled_topics(kv_config)
         ids = {t["id"] for t in topics}
-        assert "computer_use" in ids
-        assert "agents" in ids
+        assert "alignment" in ids
+        assert "unknown_topic" not in ids
 
 
 class TestGetActiveKeywords:
@@ -73,25 +82,26 @@ class TestGetActiveKeywords:
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_defaults_include_expected_keywords(self, mock_kv):
         keywords = get_active_keywords()
-        assert "computer use" in keywords
-        assert "browser-use" in keywords or "browser use" in keywords
+        assert "RLHF" in keywords
+        assert "jailbreak" in keywords
+        assert "mechanistic interpretability" in keywords
 
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_defaults_exclude_disabled_topic_keywords(self, mock_kv):
         keywords = get_active_keywords()
-        # hardware and safety are disabled by default
-        assert "CUDA" not in keywords
-        assert "jailbreak" not in keywords
+        # governance and catastrophic_risk are disabled by default
+        assert "EU AI Act" not in keywords
+        assert "CBRN" not in keywords
 
     @patch("src.topic_config._fetch_kv_config")
     def test_kv_config_changes_keywords(self, mock_kv):
-        """KV can enable hardware topic, adding its keywords."""
+        """KV can enable governance topic, adding its keywords."""
         mock_kv.return_value = {
-            "hardware": True,
+            "governance": True,
         }
         keywords = get_active_keywords()
-        assert "GPU" in keywords
-        assert "CUDA" in keywords
+        assert "EU AI Act" in keywords
+        assert "AI policy" in keywords
 
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_keywords_are_deduplicated(self, mock_kv):
@@ -112,7 +122,9 @@ class TestFetchKvConfig:
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_graceful_fallback_when_no_kv(self, mock_kv):
         topics = get_active_topics()
-        assert len(topics) == 8  # 8 Applied AI Engineer topics enabled by default
+        assert len(topics) == 6  # Six core safety topics enabled by default
+        ids = {t["id"] for t in topics}
+        assert "alignment" in ids
         keywords = get_active_keywords()
         assert len(keywords) > 0
 
@@ -145,7 +157,7 @@ class TestCustomKeywords:
     def test_custom_keywords_merged(self, mock_config, mock_kv_get):
         def side_effect(key):
             if key == "topics:custom_keywords":
-                return {"computer_use": ["my-custom-kw", "another-one"]}
+                return {"alignment": ["my-custom-kw", "another-one"]}
             return None
         mock_kv_get.side_effect = side_effect
 
@@ -172,8 +184,8 @@ class TestGetFeedbackWeights:
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
         entries = [
-            json.dumps({"url": "a", "rating": 1, "topic_id": "agents", "date": today}),
-            json.dumps({"url": "b", "rating": 1, "topic_id": "agents", "date": today}),
+            json.dumps({"url": "a", "rating": 1, "topic_id": "alignment", "date": today}),
+            json.dumps({"url": "b", "rating": 1, "topic_id": "alignment", "date": today}),
         ]
         mock_resp = MagicMock()
         mock_resp.read.return_value = json.dumps({"result": entries}).encode()
@@ -182,7 +194,7 @@ class TestGetFeedbackWeights:
         mock_urlopen.return_value = mock_resp
 
         weights = get_feedback_weights()
-        assert weights["agents"] == 1.1
+        assert weights["alignment"] == 1.1
 
     @patch("src.topic_config.urllib.request.urlopen")
     def test_clamped_at_lower_bound(self, mock_urlopen, monkeypatch):
@@ -193,7 +205,7 @@ class TestGetFeedbackWeights:
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
         entries = [
-            json.dumps({"url": f"u{i}", "rating": -1, "topic_id": "safety", "date": today})
+            json.dumps({"url": f"u{i}", "rating": -1, "topic_id": "interpretability", "date": today})
             for i in range(20)
         ]
         mock_resp = MagicMock()
@@ -203,7 +215,7 @@ class TestGetFeedbackWeights:
         mock_urlopen.return_value = mock_resp
 
         weights = get_feedback_weights()
-        assert weights["safety"] == 0.75
+        assert weights["interpretability"] == 0.75
 
     @patch("src.topic_config.urllib.request.urlopen")
     def test_clamped_at_upper_bound(self, mock_urlopen, monkeypatch):
@@ -214,7 +226,7 @@ class TestGetFeedbackWeights:
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
         entries = [
-            json.dumps({"url": f"u{i}", "rating": 1, "topic_id": "agents", "date": today})
+            json.dumps({"url": f"u{i}", "rating": 1, "topic_id": "alignment", "date": today})
             for i in range(20)
         ]
         mock_resp = MagicMock()
@@ -224,7 +236,7 @@ class TestGetFeedbackWeights:
         mock_urlopen.return_value = mock_resp
 
         weights = get_feedback_weights()
-        assert weights["agents"] == 1.25
+        assert weights["alignment"] == 1.25
 
     def test_returns_empty_when_no_kv(self):
         weights = get_feedback_weights()

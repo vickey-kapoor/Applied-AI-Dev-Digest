@@ -43,8 +43,8 @@ def summarize_research_bundle(research: dict, api_key: str) -> dict:
     client = OpenAI(api_key=api_key)
     title, source, description = _prepare_inputs(research)
 
-    prompt = f"""You are explaining AI/dev news to a senior Applied AI Engineer.
-Be direct and technical. No hype.
+    prompt = f"""You are summarizing for a working AI Safety researcher.
+Be direct, empirical, and skeptical. No hype, no marketing language.
 
 Item title: {title}
 Source: {source}
@@ -52,11 +52,12 @@ Description: {description}
 
 Return JSON (no markdown fences):
 {{
-  "why_it_matters": "One sentence — what changed and why an Applied AI Engineer should care",
-  "what_it_is": "2-3 sentences — what exactly was released/announced, key specs or capabilities",
-  "how_to_use_it": "1-2 sentences — always include a concrete starting point: pip install command, API endpoint, or direct GitHub/docs URL",
-  "dev_take": "One honest sentence — is this worth your time or just noise?",
-  "effort": "low, medium, or high — low = drop-in swap or 1-hour read, medium = afternoon project, high = multi-day deep dive"
+  "claim": "One sentence — the central empirical or methodological claim being made",
+  "evidence": "2-3 sentences — what specifically supports the claim: experiments run, models tested, sample sizes, key numbers if reported",
+  "method": "1-2 sentences — how the work was done: technique used, eval setup, datasets, or analysis pipeline",
+  "limitations": "1-2 sentences — honest limitations: scope, model coverage, reproducibility gaps, confounds, or whether claims outrun the evidence",
+  "safety_relevance": "One sentence — what this updates about alignment, evaluation, threat models, or governance for frontier systems",
+  "rigor": "preprint, peer-reviewed, lab-blog, position, or system-card — tag the source type so the reader weights credibility"
 }}"""
 
     try:
@@ -76,26 +77,27 @@ Return JSON (no markdown fences):
         research_with_summaries = research.copy()
 
         # Store structured fields
-        for key in ("why_it_matters", "what_it_is", "how_to_use_it", "dev_take", "effort"):
+        for key in ("claim", "evidence", "method", "limitations", "safety_relevance", "rigor"):
             if parsed.get(key):
                 research_with_summaries[key] = parsed[key]
 
-        # Build short summary for backward compat (Telegram, KV, etc.)
+        # Build short summary for backward compat (Telegram fallback, KV, etc.)
         parts = []
-        if parsed.get("why_it_matters"):
-            parts.append(parsed["why_it_matters"])
-        if parsed.get("what_it_is"):
-            parts.append(parsed["what_it_is"])
+        if parsed.get("claim"):
+            parts.append(parsed["claim"])
+        if parsed.get("evidence"):
+            parts.append(parsed["evidence"])
         if parts:
             research_with_summaries["summary"] = " ".join(parts)
 
         # Build detailed summary for PDF
         detail_parts = []
         for key, label in [
-            ("why_it_matters", "Why it matters"),
-            ("what_it_is", "What it is"),
-            ("how_to_use_it", "How to use it"),
-            ("dev_take", "Dev take"),
+            ("claim", "Claim"),
+            ("evidence", "Evidence"),
+            ("method", "Method"),
+            ("limitations", "Limitations"),
+            ("safety_relevance", "Safety relevance"),
         ]:
             if parsed.get(key):
                 detail_parts.append(f"**{label}**\n{parsed[key]}")

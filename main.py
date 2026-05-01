@@ -97,6 +97,24 @@ def main():
         except Exception as e:
             logger.warning("Could not update topic stats: %s", e)
 
+        try:
+            top_paper_id = export_papers(research_items, top_research)
+            logger.info("Items exported to data/papers.json")
+        except Exception as e:
+            logger.warning("Could not export items to JSON: %s", e)
+
+        # Generate summaries in one model call (must run before weekly-KV append
+        # so the saved entry includes the structured fields)
+        logger.info("Generating summaries...")
+        try:
+            top_research = summarize_research_bundle(top_research, openai_key)
+            if "claim" in top_research:
+                logger.info("Generated structured summary")
+            if "detailed_summary" in top_research:
+                logger.info("Generated detailed summary for PDF")
+        except Exception:
+            logger.warning("Could not generate summaries")
+
         # Append top item to weekly KV list for Sunday digest
         try:
             kv_append("digest:weekly", {
@@ -105,29 +123,14 @@ def main():
                 "topic_id": top_research.get("topic_id"),
                 "url": top_research.get("url", ""),
                 "type": top_research.get("type", ""),
-                "why_it_matters": top_research.get("why_it_matters", ""),
+                "claim": top_research.get("claim", ""),
+                "safety_relevance": top_research.get("safety_relevance", ""),
+                "rigor": top_research.get("rigor", ""),
                 "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
             })
             logger.info("Appended top item to weekly KV list")
         except Exception as e:
             logger.warning("Could not append to weekly KV: %s", e)
-
-        try:
-            top_paper_id = export_papers(research_items, top_research)
-            logger.info("Items exported to data/papers.json")
-        except Exception as e:
-            logger.warning("Could not export items to JSON: %s", e)
-
-        # Generate summaries in one model call
-        logger.info("Generating summaries...")
-        try:
-            top_research = summarize_research_bundle(top_research, openai_key)
-            if "why_it_matters" in top_research:
-                logger.info("Generated structured summary")
-            if "detailed_summary" in top_research:
-                logger.info("Generated detailed summary for PDF")
-        except Exception:
-            logger.warning("Could not generate summaries")
     else:
         # Still export items for the dashboard, but no top pick
         try:
@@ -165,8 +168,14 @@ def main():
                 "source": top_research.get("source", ""),
                 "url": top_research.get("url", ""),
                 "type": top_research.get("type", ""),
+                "topic_id": top_research.get("topic_id", ""),
                 "summary": top_research.get("summary", ""),
-                "why_it_matters": top_research.get("why_it_matters", ""),
+                "claim": top_research.get("claim", ""),
+                "evidence": top_research.get("evidence", ""),
+                "method": top_research.get("method", ""),
+                "limitations": top_research.get("limitations", ""),
+                "safety_relevance": top_research.get("safety_relevance", ""),
+                "rigor": top_research.get("rigor", ""),
                 "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
             })
             logger.info("Stored last digest payload in KV")

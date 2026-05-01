@@ -13,7 +13,9 @@ interface HistoryEntry {
   institution?: string;
   topic_id?: string;
   url: string;
-  why_it_matters: string;
+  claim: string;
+  safety_relevance?: string;
+  rigor?: string;
   date: string;
 }
 
@@ -176,9 +178,19 @@ export default function HistoryPage() {
                   </p>
                 </CardHeader>
                 <CardContent>
-                  {entry.why_it_matters && (
-                    <p className="text-sm text-muted-foreground mb-3">
-                      {entry.why_it_matters}
+                  {entry.claim && (
+                    <p className="text-sm text-foreground mb-2">
+                      {entry.claim}
+                    </p>
+                  )}
+                  {entry.safety_relevance && (
+                    <p className="text-sm text-muted-foreground italic mb-3">
+                      {entry.safety_relevance}
+                    </p>
+                  )}
+                  {entry.rigor && (
+                    <p className="text-xs font-mono text-muted-foreground/70 mb-3">
+                      {entry.rigor}
                     </p>
                   )}
                   {entry.url && (

@@ -31,7 +31,7 @@ def _deduplicate(papers):
 def _format_weekly_message(papers):
     """Format the weekly digest Telegram message (Markdown)."""
     count = len(papers)
-    lines = [f"\U0001f5d3 *Week in Applied AI*\n"]
+    lines = [f"\U0001f5d3 *Week in AI Safety*\n"]
     lines.append(
         f"Here are the {count} most important updates from this week\\.\n"
     )
@@ -45,18 +45,27 @@ def _format_weekly_message(papers):
         topic = p.get("topic_id") or ""
         if topic:
             topic = f"#{_escape_markdown(topic)}"
-        why = _escape_markdown(p.get("why_it_matters", ""))
+        rigor = p.get("rigor", "")
+        if rigor:
+            rigor = _escape_markdown(rigor)
+        # Prefer claim+safety_relevance for the one-liner; fall back to legacy fields
+        claim = _escape_markdown(p.get("claim", ""))
+        safety_rel = _escape_markdown(p.get("safety_relevance", ""))
         url = p.get("url", "")
 
         entry = f"{i}\\. *{title}*\n"
         entry += f"_{source}{item_type}_\n"
-        parts = []
+        meta = []
         if topic:
-            parts.append(topic)
-        if why:
-            parts.append(why)
-        if parts:
-            entry += " \u00b7 ".join(parts) + "\n"
+            meta.append(topic)
+        if rigor:
+            meta.append(rigor)
+        if meta:
+            entry += " \u00b7 ".join(meta) + "\n"
+        if claim:
+            entry += f"{claim}\n"
+        if safety_rel:
+            entry += f"_{safety_rel}_\n"
         if url:
             entry += f"{url}\n"
         lines.append(entry)

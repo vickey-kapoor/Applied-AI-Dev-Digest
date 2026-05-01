@@ -175,22 +175,22 @@ def export_papers(research_items: list[dict], ranked_paper: dict = None) -> str:
 
 
 def extract_topics(item: dict) -> list[str]:
-    """Extract topic tags from a product update item."""
+    """Extract safety-research topic tags from an item."""
     topics = []
-
-    # Add keyword-based topics for developer product features
     text = f"{item.get('title', '')} {item.get('summary', '')}".lower()
 
     topic_keywords = {
-        "Model Release": ["model", "gpt", "claude", "gemini", "llama", "mistral", "command"],
-        "API Update": ["api", "endpoint", "rest"],
-        "SDK/Library": ["sdk", "library", "package", "client"],
-        "Fine-tuning": ["fine-tun", "custom model", "training"],
-        "Embeddings": ["embedding"],
-        "Multimodal": ["vision", "image", "audio", "video", "multimodal"],
-        "Developer Tools": ["playground", "cli", "console", "dashboard"],
-        "Pricing": ["pricing", "cost", "token", "rate limit"],
-        "Function Calling": ["function calling", "tool use", "tool calling"],
+        "Alignment": ["alignment", "rlhf", "rlaif", "dpo", "constitutional", "reward model", "reward hacking"],
+        "Interpretability": ["interpretability", "mechanistic", "sparse autoencoder", "sae", "activation steering", "probing"],
+        "Evals": ["benchmark", "eval", "capability eval", "dangerous capability", "inspect_ai", "metr"],
+        "Red-teaming": ["red-teaming", "red teaming", "jailbreak", "prompt injection", "adversarial prompt"],
+        "System Cards": ["system card", "model card", "responsible scaling", "rsp", "preparedness"],
+        "Agentic Safety": ["deception", "scheming", "sandbagging", "alignment faking", "situational awareness", "sabotage"],
+        "Governance": ["aisi", "ai safety institute", "eu ai act", "executive order", "compute governance"],
+        "Catastrophic Risk": ["cbrn", "biorisk", "bioweapon", "cyber uplift", "wmdp", "persuasion"],
+        "Robustness": ["adversarial robustness", "distribution shift", "ood", "calibration"],
+        "Data Provenance": ["data poisoning", "watermark", "data attribution", "memorization", "membership inference"],
+        "Open-Weights Safety": ["open weights", "open-source model", "fine-tuning attack", "removable safety"],
     }
 
     for topic, keywords in topic_keywords.items():
@@ -198,7 +198,7 @@ def extract_topics(item: dict) -> list[str]:
             if topic not in topics:
                 topics.append(topic)
 
-    return topics[:5]  # Limit to 5 topics
+    return topics[:5]
 
 
 def export_digest(

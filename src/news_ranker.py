@@ -63,30 +63,31 @@ def rank_research(research: list[dict], api_key: str) -> dict:
         for i, r in enumerate(research)
     )
 
-    prompt = f"""You are a senior Applied AI Engineer — you build production AI systems using LLMs, agents, RAG pipelines, and fine-tuned models.
-Your job is to pick the single most important update from today's items for engineers building AI-powered products.
+    prompt = f"""You are a working AI Safety researcher. You read to update your model of how frontier systems behave, how to measure them, and how to align them.
+Your job is to pick the single most important item from today's list for an AI Safety researcher.
 
-Rank the following items by practical value to an Applied AI Engineer.
+Rank by epistemic value to a safety researcher.
 Prioritize:
-1. New model releases or major capability upgrades (GPT, Claude, Gemini, Llama, Mistral) that change what you can build
-2. SDK or API changes (OpenAI, Anthropic, Hugging Face) that directly affect production code
-3. New frameworks or libraries that meaningfully improve how AI apps are built (LangChain, LlamaIndex, vLLM, LiteLLM)
-4. RAG, retrieval, or embedding improvements with real performance gains
-5. Fine-tuning tools or techniques that are practical on consumer/cloud hardware (LoRA, Unsloth, QLoRA)
-6. Agent and multi-agent frameworks with working code and demos
-7. Computer use / browser / GUI agent releases that push automation capabilities
-8. Inference and deployment improvements that reduce cost or latency in production
+1. Empirical findings about model behavior — deception, scheming, sandbagging, alignment faking, situational awareness, reward hacking, with reproducible setups
+2. New evaluations or benchmarks measuring dangerous capability, autonomy, persuasion, CBRN uplift, or alignment properties
+3. Interpretability results — mechanistic findings, sparse autoencoder discoveries, circuits, activation steering with concrete claims
+4. Alignment techniques with measured outcomes — RLHF/RLAIF/DPO/Constitutional AI variants, scalable oversight, debate, weak-to-strong
+5. Red-teaming and jailbreak research — novel attacks, robust defenses, automated red-teaming methods
+6. Frontier-model system cards / RSPs / preparedness reports with safety-relevant detail
+7. Governance actions that materially constrain frontier development (AISIs, EU AI Act enforcement, compute thresholds)
+8. Open-weight releases when they shift the safety threat model (fine-tuning attack feasibility, removable safety, capability proliferation)
 
 Deprioritize:
-- Pure academic research with no code, API, or near-term practical application
-- Marketing announcements with no technical substance
-- Incremental patch releases with only bug fixes
-- Business/partnership news with no developer impact
+- Capability announcements with no safety eval, system card, or behavioral analysis
+- SDK / framework / inference / deployment news
+- Pure opinion or position pieces without data, methods, or measurements
+- Hiring, partnerships, funding rounds, leadership changes
+- Incremental benchmark improvements without methodological insight
 
 Items:
 {research_text}
 
-Return the single most important item as JSON: {{"index": N, "reason": "one sentence why this matters to an Applied AI Engineer"}}"""
+Return the single most important item as JSON: {{"index": N, "reason": "one sentence why this matters to an AI Safety researcher"}}"""
 
     try:
         response = _call_openai_ranking(client, prompt)

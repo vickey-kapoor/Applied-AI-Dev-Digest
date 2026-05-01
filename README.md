@@ -4,11 +4,11 @@ Daily digest of what's shipping in AI/ML — delivered to Telegram. Tracks blog 
 
 ## Features
 
-- Fetches from **8 AI lab/platform blogs** via RSS (OpenAI, Anthropic, Google DeepMind, Meta AI, Mistral, Microsoft AI, AWS AI, Hugging Face)
-- Tracks **10 key GitHub repos** for new releases (transformers, LangChain, vLLM, Ollama, etc.)
+- Fetches from **8 AI lab/platform blogs** via RSS (OpenAI, Google DeepMind, Meta AI Engineering, Microsoft AI, AWS AI, Hugging Face, PyTorch, Google AI)
+- Tracks **10 key GitHub repos** for new releases (LangChain, LlamaIndex, vLLM, llama.cpp, Playwright, browser-use, etc.)
 - Monitors **Hacker News** for top AI/ML discussions (score > 100, last 24h)
 - Surfaces **Hugging Face Daily Papers** with high upvotes (10+, last 24h)
-- **10 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords
+- **11 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords; only **Computer Use Agents** is enabled by default
 - Uses GPT-4o-mini to select the most impactful item, influenced by **user feedback weights**
 - Generates **structured dev summaries** (Why it matters / What it is / How to use it / Dev take)
 - Sends to Telegram via Bot API
@@ -27,7 +27,7 @@ Next.js app deployed on Vercel with top nav: **Topics · Preview · History · S
 
 | Page | Description |
 |------|-------------|
-| **Topics** | Toggle 10 dev-focused topics on/off, add custom keywords per topic |
+| **Topics** | Toggle 11 dev-focused topics on/off, add custom keywords per topic |
 | **Preview** | Shows the last sent digest as a Telegram message mockup, re-send it |
 | **History** | Weekly list of sent items with feedback buttons |
 | **Stats** | Bar chart showing which topics win the daily ranking most often |
@@ -68,28 +68,28 @@ https://openai.com/index/gpt-4o-mini
 | Source | Feed |
 |--------|------|
 | OpenAI | openai.com/blog/rss.xml |
-| Anthropic | anthropic.com/rss.xml |
 | Google DeepMind | deepmind.google/blog/rss.xml |
-| Meta AI | ai.meta.com/blog/rss/ |
-| Mistral | mistral.ai/news/rss |
+| Meta AI Engineering | engineering.fb.com/category/ml-applications/feed/ |
 | Microsoft AI | blogs.microsoft.com/ai/feed/ |
 | AWS AI | aws.amazon.com/blogs/machine-learning/feed/ |
 | Hugging Face | huggingface.co/blog/feed.xml |
+| PyTorch | pytorch.org/blog/feed.xml |
+| Google AI | blog.google/technology/ai/rss/ |
 
 ### GitHub Releases
 
 | Repo | Why |
 |------|-----|
-| huggingface/transformers | Core ML library |
-| langchain-ai/langchain | Agent framework |
-| run-llama/llama_index | RAG framework |
-| vllm-project/vllm | Inference engine |
-| ollama/ollama | Local model runner |
 | openai/openai-python | OpenAI SDK |
 | anthropics/anthropic-sdk-python | Anthropic SDK |
-| microsoft/autogen | Multi-agent framework |
-| unsloth/unsloth | Fine-tuning |
+| langchain-ai/langchain | Agent framework |
+| BerriAI/litellm | Multi-provider LLM proxy |
+| vllm-project/vllm | Inference engine |
 | ggerganov/llama.cpp | Local inference |
+| microsoft/playwright-python | Browser automation |
+| browser-use/browser-use | Browser-use agent |
+| run-llama/llama_index | RAG framework |
+| unslothai/unsloth | Fine-tuning |
 
 ### Hugging Face Daily Papers
 
@@ -109,18 +109,21 @@ Releases are skipped if any of these apply:
 
 ## Topics
 
-| ID | Name | Category | Keywords |
-|----|------|----------|----------|
-| models | New Model Releases | Core | GPT, Claude, Gemini, Llama, Mistral, model release |
-| apis | API & SDK Updates | Core | API, SDK, endpoint, breaking change, deprecation |
-| frameworks | Dev Frameworks | Core | LangChain, LlamaIndex, AutoGen, CrewAI, framework |
-| inference | Inference & Deployment | Applied | vLLM, Ollama, TensorRT, quantization, serving, deployment |
-| finetuning | Fine-tuning & Training | Applied | fine-tuning, LoRA, QLoRA, Unsloth, training, PEFT |
-| rag | RAG & Memory | Applied | RAG, retrieval, vector database, embedding, memory |
-| agents | AI Agents | Applied | agent, tool use, multi-agent, autonomous, agentic |
-| opensource | Open Source Releases | Applied | open source, open weights, Apache, MIT license |
-| safety | Safety & Alignment | Emerging | safety, alignment, jailbreak, red-teaming, guardrails |
-| hardware | Hardware & Efficiency | Emerging | GPU, TPU, chip, CUDA, inference cost, hardware |
+Only `computer_use` is enabled by default; toggle the rest from the dashboard.
+
+| ID | Name | Category | Default | Keywords |
+|----|------|----------|---------|----------|
+| computer_use | Computer Use Agents | Core | on | computer use, browser use, WebArena, OSWorld, ScreenSpot, Mind2Web, Playwright, Puppeteer, Selenium, GUI agent, … |
+| models | New Model Releases | Core | off | GPT, Claude, Gemini, Llama, Mistral, model release |
+| apis | API & SDK Updates | Core | off | API, SDK, endpoint, breaking change, deprecation |
+| frameworks | Dev Frameworks | Core | off | LangChain, LlamaIndex, AutoGen, CrewAI, framework |
+| inference | Inference & Deployment | Applied | off | vLLM, Ollama, TensorRT, quantization, serving, deployment |
+| finetuning | Fine-tuning & Training | Applied | off | fine-tuning, LoRA, QLoRA, Unsloth, training, PEFT |
+| rag | RAG & Memory | Applied | off | RAG, retrieval, vector database, embedding, memory |
+| agents | AI Agents | Applied | off | agent, tool use, multi-agent, autonomous, agentic |
+| opensource | Open Source Releases | Applied | off | open source, open weights, Apache, MIT license |
+| safety | Safety & Alignment | Emerging | off | safety, alignment, jailbreak, red-teaming, guardrails |
+| hardware | Hardware & Efficiency | Emerging | off | GPU, TPU, chip, CUDA, inference cost, hardware |
 
 ## Setup
 

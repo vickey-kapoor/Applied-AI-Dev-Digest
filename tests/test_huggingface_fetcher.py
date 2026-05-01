@@ -109,7 +109,7 @@ class TestEmptyAndMalformedResponses:
     def test_malformed_entry_skipped(self, mock_urlopen):
         entries = [
             {"paper": None, "numUpvotes": 100, "publishedAt": "2024-01-01T00:00:00Z"},
-            _make_entry(upvotes=20, paper_id="good"),
+            _make_entry(upvotes=30, paper_id="good"),
         ]
         mock_resp = MagicMock()
         mock_resp.read.return_value = json.dumps(entries).encode()
@@ -152,9 +152,9 @@ class TestOutputFormat:
     @patch("src.fetchers.huggingface_fetcher.urllib.request.urlopen")
     def test_sorted_by_upvotes_descending(self, mock_urlopen):
         entries = [
-            _make_entry(title="Low", upvotes=15, paper_id="a"),
+            _make_entry(title="Low", upvotes=30, paper_id="a"),
             _make_entry(title="High", upvotes=100, paper_id="b"),
-            _make_entry(title="Mid", upvotes=40, paper_id="c"),
+            _make_entry(title="Mid", upvotes=60, paper_id="c"),
         ]
         mock_resp = MagicMock()
         mock_resp.read.return_value = json.dumps(entries).encode()

@@ -80,11 +80,11 @@ class TestBlogFetcher:
 
 
 class TestDevRelevanceFilter:
-    """Tests for _is_dev_relevant filtering."""
+    """Tests for _is_dev_relevant filtering (now safety-relevance)."""
 
-    def test_is_dev_relevant_accepts_computer_use_post(self):
-        """Post with a computer-use keyword is accepted."""
-        post = {"title": "New WebArena release for web agents", "summary": "browser automation and agent tooling"}
+    def test_is_dev_relevant_accepts_safety_post(self):
+        """Post with a safety keyword is accepted."""
+        post = {"title": "New mechanistic interpretability finding", "summary": "Sparse autoencoder reveals deception circuits"}
         assert _is_dev_relevant(post) is True
 
     def test_is_dev_relevant_rejects_partnership(self):
@@ -94,7 +94,7 @@ class TestDevRelevanceFilter:
 
     def test_exclude_takes_precedence_over_include(self):
         """Post with both include and exclude keywords is rejected."""
-        post = {"title": "API partnership announcement", "summary": "New API via partnership"}
+        post = {"title": "Alignment partnership announcement", "summary": "New alignment work via partnership"}
         assert _is_dev_relevant(post) is False
 
     def test_no_keyword_match_rejected(self):

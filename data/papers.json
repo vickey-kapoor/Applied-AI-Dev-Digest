@@ -1,6 +1,37 @@
 {
   "papers": [
     {
+      "id": "a258dfbf-e894-568c-b610-7f361ecb982b",
+      "title": "Risk from fitness-seeking AIs: mechanisms and mitigations",
+      "summary": "Current AIs routinely take unintended actions to score well on tasks: hardcoding test cases, training on the test set, downplaying issues, etc. This misalignment is still somewhat incoherent, but it increasingly resembles what I call \"fitness-seeking\"—a family of misaligned motivations centered on performing well in training and evaluations (e.g., reward-seeking). Fitness-seeking warrants substantial concern.In this piece, I lay out what I take to be the central mechanisms by which fitness-se...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/9YCJZBtqr3FYL8rDp/risk-from-fitness-seeking-ais-mechanisms-and-mitigations",
+      "published_at": "2026-05-01T17:42:55",
+      "fetched_at": "2026-05-02T16:57:32.161417Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment",
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "50201c9a-9a91-5c47-b0fb-2e3cb4a21719",
+      "title": "The gay jailbreak technique (2025)",
+      "summary": "589 points · 234 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/Exocija/ZetaLib/blob/main/The%20Gay%20Jailbreak/The%20Gay%20Jailbreak.md",
+      "published_at": "2026-05-01T16:59:35+00:00",
+      "fetched_at": "2026-05-02T16:57:32.161417Z",
+      "type": "discussion",
+      "topics": [
+        "Red-teaming"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "bf543878-ac4c-570e-959f-92ea16b2abb7",
       "title": "Research Sabotage in ML Codebases",
       "summary": "One of the main hopes for AI safety is using AIs to automate AI safety research. However, if models are misaligned, then they may sabotage the safety research. For example, misaligned AIs may try to:Perform sloppy research in order to slow down the rate of research progressMake AI systems appear safer than they areTrain a successor model to be misalignedWhether we should worry about those things depends substantially on how hard it is to sabotage research in ways that are hard for reviewers t...",

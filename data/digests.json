@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-02",
+      "top_paper_id": "a258dfbf-e894-568c-b610-7f361ecb982b",
+      "papers_fetched": 3,
+      "pdf_path": "reports/02-May/Risk_from_fitness-seeking_AIs_mechanisms_and_miti.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25257010012"
+    },
+    {
       "date": "2026-05-01",
       "top_paper_id": "bf543878-ac4c-570e-959f-92ea16b2abb7",
       "papers_fetched": 1,

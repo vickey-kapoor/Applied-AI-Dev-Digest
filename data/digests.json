@@ -2,11 +2,11 @@
   "digests": [
     {
       "date": "2026-05-03",
-      "top_paper_id": "",
+      "top_paper_id": null,
       "papers_fetched": 2,
       "pdf_path": "",
       "telegram_sent": false,
-      "workflow_run_id": "25285188515"
+      "workflow_run_id": "25286194105"
     },
     {
       "date": "2026-05-02",

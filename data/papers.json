@@ -1,6 +1,22 @@
 {
   "papers": [
     {
+      "id": "84580914-7787-50a8-9c3b-94e76c186cf4",
+      "title": "Exploration Hacking: Can LLMs Learn to Resist RL Training?",
+      "summary": "We empirically investigate exploration hacking (EH) — where models strategically alter their exploration to resist RL training — by creating model organisms that resist capability elicitation, evaluating countermeasures, and auditing frontier models for their propensity.Authors: Eyon Jang*, Damon Falck*, Joschka Braun*, Nathalie Kirch, Achu Menon, Perusha Moodley, Scott Emmons, Roland S. Zimmermann, David Lindner (*Equal contribution, random order)Paper: arXiv | Code: GitHub | Models: Hugging...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/eeFFpKCDWE9gjfzsk/exploration-hacking-can-llms-learn-to-resist-rl-training-2",
+      "published_at": "2026-05-01T20:54:42",
+      "fetched_at": "2026-05-04T17:46:21.157227Z",
+      "type": "announcement",
+      "topics": [
+        "Evals",
+        "Robustness"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "a258dfbf-e894-568c-b610-7f361ecb982b",
       "title": "Risk from fitness-seeking AIs: mechanisms and mitigations",
       "summary": "Current AIs routinely take unintended actions to score well on tasks: hardcoding test cases, training on the test set, downplaying issues, etc. This misalignment is still somewhat incoherent, but it increasingly resembles what I call \"fitness-seeking\"—a family of misaligned motivations centered on performing well in training and evaluations (e.g., reward-seeking). Fitness-seeking warrants substantial concern.In this piece, I lay out what I take to be the central mechanisms by which fitness-se...",

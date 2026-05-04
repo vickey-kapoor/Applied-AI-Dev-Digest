@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-04",
+      "top_paper_id": "84580914-7787-50a8-9c3b-94e76c186cf4",
+      "papers_fetched": 2,
+      "pdf_path": "reports/04-May/Exploration_Hacking_Can_LLMs_Learn_to_Resist_RL_T.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25334046046"
+    },
+    {
       "date": "2026-05-03",
       "top_paper_id": null,
       "papers_fetched": 2,

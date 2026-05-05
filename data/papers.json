@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "e543f090-5551-520c-9de5-c189bfb3a9ac",
+      "title": "GPT-5.5 Instant System Card",
+      "summary": "",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/gpt-5-5-instant-system-card",
+      "published_at": "2026-05-05T10:00:00",
+      "fetched_at": "2026-05-05T17:42:36.587101Z",
+      "type": "announcement",
+      "topics": [
+        "System Cards"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "84580914-7787-50a8-9c3b-94e76c186cf4",
       "title": "Exploration Hacking: Can LLMs Learn to Resist RL Training?",
       "summary": "We empirically investigate exploration hacking (EH) — where models strategically alter their exploration to resist RL training — by creating model organisms that resist capability elicitation, evaluating countermeasures, and auditing frontier models for their propensity.Authors: Eyon Jang*, Damon Falck*, Joschka Braun*, Nathalie Kirch, Achu Menon, Perusha Moodley, Scott Emmons, Roland S. Zimmermann, David Lindner (*Equal contribution, random order)Paper: arXiv | Code: GitHub | Models: Hugging...",

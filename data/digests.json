@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-05",
+      "top_paper_id": "e543f090-5551-520c-9de5-c189bfb3a9ac",
+      "papers_fetched": 2,
+      "pdf_path": "reports/05-May/GPT-55_Instant_System_Card.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25392457910"
+    },
+    {
       "date": "2026-05-04",
       "top_paper_id": "84580914-7787-50a8-9c3b-94e76c186cf4",
       "papers_fetched": 2,

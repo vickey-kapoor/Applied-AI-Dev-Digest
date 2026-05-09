@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-09",
+      "top_paper_id": "1c76caff-9fdc-59b7-880c-8f939f710938",
+      "papers_fetched": 1,
+      "pdf_path": "reports/09-May/Running_Codex_safely_at_OpenAI.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25606678822"
+    },
+    {
       "date": "2026-05-05",
       "top_paper_id": "e543f090-5551-520c-9de5-c189bfb3a9ac",
       "papers_fetched": 2,

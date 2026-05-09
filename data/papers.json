@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "1c76caff-9fdc-59b7-880c-8f939f710938",
+      "title": "Running Codex safely at OpenAI",
+      "summary": "How OpenAI runs Codex securely with sandboxing, approvals, network policies, and agent-native telemetry to support safe and compliant coding agent adoption.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/running-codex-safely",
+      "published_at": "2026-05-08T12:30:00",
+      "fetched_at": "2026-05-09T17:01:35.669182Z",
+      "type": "announcement",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "e543f090-5551-520c-9de5-c189bfb3a9ac",
       "title": "GPT-5.5 Instant System Card",
       "summary": "",

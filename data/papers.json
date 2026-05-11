@@ -1,6 +1,22 @@
 {
   "papers": [
     {
+      "id": "75e39aab-28e4-5304-a499-463d50b95afe",
+      "title": "Empowerment, corrigibility, etc. are simple abstractions (of a messed-up ontology)",
+      "summary": "1.1 Tl;drAlignment is often conceptualized as AIs helping humans achieve their goals: AIs that increase people’s agency and empowerment; AIs that are helpful, corrigible, and/or obedient; AIs that avoid manipulating people. But that last one—manipulation—points to a challenge for all these desiderata: a human’s goals are themselves under-determined and manipulable, and it’s awfully hard to pin down a principled distinction between changing people’s goals in a good way (“providing counsel”, “p...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/vzHtHHBJoKATi5SeK/empowerment-corrigibility-etc-are-simple-abstractions-of-a",
+      "published_at": "2026-05-11T17:48:11",
+      "fetched_at": "2026-05-11T17:59:42.173290Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment",
+        "Robustness"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "1c76caff-9fdc-59b7-880c-8f939f710938",
       "title": "Running Codex safely at OpenAI",
       "summary": "How OpenAI runs Codex securely with sandboxing, approvals, network policies, and agent-native telemetry to support safe and compliant coding agent adoption.",

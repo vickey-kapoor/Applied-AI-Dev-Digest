@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-11",
+      "top_paper_id": "75e39aab-28e4-5304-a499-463d50b95afe",
+      "papers_fetched": 1,
+      "pdf_path": "reports/11-May/Empowerment_corrigibility_etc_are_simple_abstra.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25687811441"
+    },
+    {
       "date": "2026-05-10",
       "top_paper_id": null,
       "papers_fetched": 1,

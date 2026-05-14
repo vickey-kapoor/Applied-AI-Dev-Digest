@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-14",
+      "top_paper_id": "15af4144-64e5-550d-8de5-9879e124ab37",
+      "papers_fetched": 3,
+      "pdf_path": "reports/14-May/The_safe-to-dangerous_shift_is_a_fundamental_probl.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25876441552"
+    },
+    {
       "date": "2026-05-13",
       "top_paper_id": "",
       "papers_fetched": 1,

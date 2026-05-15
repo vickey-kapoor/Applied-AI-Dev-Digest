@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-15",
+      "top_paper_id": "e3881ea7-9f5f-5a11-8a56-1a0657b0b1fd",
+      "papers_fetched": 2,
+      "pdf_path": "reports/15-May/Show_HN_Find_the_best_local_LLM_for_your_hardware.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25932652713"
+    },
+    {
       "date": "2026-05-14",
       "top_paper_id": "15af4144-64e5-550d-8de5-9879e124ab37",
       "papers_fetched": 3,

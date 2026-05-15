@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "e3881ea7-9f5f-5a11-8a56-1a0657b0b1fd",
+      "title": "Show HN: Find the best local LLM for your hardware, ranked by benchmarks",
+      "summary": "272 points · 63 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/Andyyyy64/whichllm",
+      "published_at": "2026-05-15T09:19:24+00:00",
+      "fetched_at": "2026-05-15T17:47:14.129495Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "15af4144-64e5-550d-8de5-9879e124ab37",
       "title": "The safe-to-dangerous shift is a fundamental problem for eval realism; but also for measuring awareness",
       "summary": "1) The safe-to-dangerous shift is a fundamental problem for eval realismSuppose we have a capable and potentially scheming model, and before we deploy it, we want some evidence that it won’t do anything catastrophically dangerous once we deploy it. A common approach is to use black-box alignment evaluations. However, alignment evaluations are only reassuring to the extent that the model can't reliably[1] distinguish the deployment distribution from the evaluation distribution, as it is otherw...",

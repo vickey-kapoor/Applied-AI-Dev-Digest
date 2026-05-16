@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-16",
+      "top_paper_id": "d1718393-b9de-5b91-a0e1-239efc00478c",
+      "papers_fetched": 1,
+      "pdf_path": "reports/16-May/Risk_reports_need_to_address_deployment-time_sprea.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "25967832084"
+    },
+    {
       "date": "2026-05-15",
       "top_paper_id": "e3881ea7-9f5f-5a11-8a56-1a0657b0b1fd",
       "papers_fetched": 2,

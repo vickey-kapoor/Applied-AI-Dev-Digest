@@ -1,6 +1,22 @@
 {
   "papers": [
     {
+      "id": "d1718393-b9de-5b91-a0e1-239efc00478c",
+      "title": "Risk reports need to address deployment-time spread of misalignment",
+      "summary": "Risk reports commonly use pre-deployment alignment assessments to measure misalignment risk from an internally deployed AI. However, an AI that genuinely starts out with largely benign motivations can develop widespread dangerous motivations during deployment. I think this is the most plausible route to consistent adversarial misalignment in the near future. So, AI companies and evaluators should substantively incorporate it into risk analysis and planning.In this post, I’ll briefly argue why...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/cNymohcWtGHzW7AjK/risk-reports-need-to-address-deployment-time-spread-of",
+      "published_at": "2026-05-15T18:20:21",
+      "fetched_at": "2026-05-16T17:05:05.333187Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment",
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "e3881ea7-9f5f-5a11-8a56-1a0657b0b1fd",
       "title": "Show HN: Find the best local LLM for your hardware, ranked by benchmarks",
       "summary": "272 points · 63 comments",

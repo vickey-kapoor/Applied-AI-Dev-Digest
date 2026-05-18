@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-18",
+      "top_paper_id": "1e8bb8d4-3557-5645-9840-aca9198e847d",
+      "papers_fetched": 2,
+      "pdf_path": "reports/18-May/It_is_time_to_give_up_the_dualism_introduced_by_th.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "26051299435"
+    },
+    {
       "date": "2026-05-17",
       "top_paper_id": null,
       "papers_fetched": 1,

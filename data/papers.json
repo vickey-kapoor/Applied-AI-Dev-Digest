@@ -1,6 +1,19 @@
 {
   "papers": [
     {
+      "id": "1e8bb8d4-3557-5645-9840-aca9198e847d",
+      "title": "It is time to give up the dualism introduced by the debate on consciousness",
+      "summary": "237 points · 588 comments",
+      "source": "Hacker News",
+      "url": "https://www.noemamag.com/there-is-no-hard-problem-of-consciousness/",
+      "published_at": "2026-05-18T02:59:34+00:00",
+      "fetched_at": "2026-05-18T18:04:58.913890Z",
+      "type": "discussion",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "d1718393-b9de-5b91-a0e1-239efc00478c",
       "title": "Risk reports need to address deployment-time spread of misalignment",
       "summary": "Risk reports commonly use pre-deployment alignment assessments to measure misalignment risk from an internally deployed AI. However, an AI that genuinely starts out with largely benign motivations can develop widespread dangerous motivations during deployment. I think this is the most plausible route to consistent adversarial misalignment in the near future. So, AI companies and evaluators should substantively incorporate it into risk analysis and planning.In this post, I’ll briefly argue why...",

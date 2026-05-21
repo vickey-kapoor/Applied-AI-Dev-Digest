@@ -1,6 +1,38 @@
 {
   "papers": [
     {
+      "id": "7bfc4abb-49c9-50cc-ac8a-d09a94c04bf7",
+      "title": "An OpenAI model has disproved a central conjecture in discrete geometry",
+      "summary": "1349 points · 974 comments",
+      "source": "Hacker News",
+      "url": "https://openai.com/index/model-disproves-discrete-geometry-conjecture/",
+      "published_at": "2026-05-20T19:05:30+00:00",
+      "fetched_at": "2026-05-21T18:04:55.014770Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b1218e49-5404-5eab-a0a5-5e855401c65a",
+      "title": "The Case for Evaluating Model Behaviors",
+      "summary": "Most evaluations of AI systems focus on their capabilities: how good they are at coding tasks, how effectively they can answer complex scientific questions, and so on.From a safety perspective, capability evaluations have a place: by understanding how close we are to different capabilities, and the rate of progress on them, we can forecast when different risks are likely to occur, as well as the broad shape of AI development. These capability evaluations were very useful to me when writing GP...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/J5KkwYnnaeNX7hL2s/the-case-for-evaluating-model-behaviors",
+      "published_at": "2026-05-20T18:42:36",
+      "fetched_at": "2026-05-21T18:04:55.014770Z",
+      "type": "announcement",
+      "topics": [
+        "Evals",
+        "System Cards",
+        "Robustness"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "1e8bb8d4-3557-5645-9840-aca9198e847d",
       "title": "It is time to give up the dualism introduced by the debate on consciousness",
       "summary": "237 points · 588 comments",

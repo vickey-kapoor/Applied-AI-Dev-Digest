@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-21",
+      "top_paper_id": "7bfc4abb-49c9-50cc-ac8a-d09a94c04bf7",
+      "papers_fetched": 4,
+      "pdf_path": "reports/21-May/An_OpenAI_model_has_disproved_a_central_conjecture.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "26244066200"
+    },
+    {
       "date": "2026-05-20",
       "top_paper_id": "",
       "papers_fetched": 1,

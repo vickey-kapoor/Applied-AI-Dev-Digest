@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "322b1dbf-c35c-5434-83c0-f6b5e8dfd6a1",
+      "title": "Antigravity 2.0 Tops the OpenSCAD Architectural 3D LLM Benchmark",
+      "summary": "256 points · 108 comments",
+      "source": "Hacker News",
+      "url": "https://modelrift.com/blog/openscad-llm-benchmark/",
+      "published_at": "2026-05-22T10:38:26+00:00",
+      "fetched_at": "2026-05-22T17:57:54.922369Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "7bfc4abb-49c9-50cc-ac8a-d09a94c04bf7",
       "title": "An OpenAI model has disproved a central conjecture in discrete geometry",
       "summary": "1349 points · 974 comments",

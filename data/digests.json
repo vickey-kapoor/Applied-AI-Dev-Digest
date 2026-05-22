@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-22",
+      "top_paper_id": "322b1dbf-c35c-5434-83c0-f6b5e8dfd6a1",
+      "papers_fetched": 3,
+      "pdf_path": "reports/22-May/Antigravity_20_Tops_the_OpenSCAD_Architectural_3D.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "26303695094"
+    },
+    {
       "date": "2026-05-21",
       "top_paper_id": "7bfc4abb-49c9-50cc-ac8a-d09a94c04bf7",
       "papers_fetched": 4,

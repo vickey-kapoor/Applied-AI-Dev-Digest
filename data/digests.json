@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-23",
+      "top_paper_id": "b1218e49-5404-5eab-a0a5-5e855401c65a",
+      "papers_fetched": 2,
+      "pdf_path": "reports/23-May/The_Case_for_Evaluating_Model_Behaviors.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "26338643962"
+    },
+    {
       "date": "2026-05-22",
       "top_paper_id": "322b1dbf-c35c-5434-83c0-f6b5e8dfd6a1",
       "papers_fetched": 3,

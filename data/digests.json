@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-28",
+      "top_paper_id": "583315e9-0d3c-5c7e-ac89-1d3dd5156461",
+      "papers_fetched": 1,
+      "pdf_path": "reports/28-May/Eval_Cooperativeness_May_Be_a_Scalable_Mitigation.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "26594730751"
+    },
+    {
       "date": "2026-05-27",
       "top_paper_id": "",
       "papers_fetched": 1,

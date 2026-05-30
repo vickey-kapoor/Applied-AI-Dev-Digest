@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-05-30",
+      "top_paper_id": "39f18075-4c9e-547c-852b-3ada7ecc0332",
+      "papers_fetched": 1,
+      "pdf_path": "reports/30-May/Testing_Gemini_models_for_scheming_tendencies.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "26690021087"
+    },
+    {
       "date": "2026-05-29",
       "top_paper_id": "",
       "papers_fetched": 1,

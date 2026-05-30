@@ -1,6 +1,22 @@
 {
   "papers": [
     {
+      "id": "39f18075-4c9e-547c-852b-3ada7ecc0332",
+      "title": "Testing Gemini models for scheming tendencies",
+      "summary": "As AI models become increasingly capable and autonomous, keeping them safely aligned with human intentions is critical. Extending our previous work on evaluating scheming capabilities, we introduce complementary approaches to test whether AI models would sabotage their own safeguards, if given the opportunity.Our new papers focus on propensity for scheming: when models are deployed as coding agents, will they take opportunities to undermine the safeguards designed to oversee them? We tackle t...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/F3sDngvTL9uyfz53k/testing-gemini-models-for-scheming-tendencies",
+      "published_at": "2026-05-29T19:24:35",
+      "fetched_at": "2026-05-30T17:16:00.228732Z",
+      "type": "announcement",
+      "topics": [
+        "Evals",
+        "Agentic Safety"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "583315e9-0d3c-5c7e-ac89-1d3dd5156461",
       "title": "Eval Cooperativeness May Be a Scalable Mitigation for Eval Gaming",
       "summary": "Behavioral evaluations may become worthless, which we think would be a disaster. Smart misaligned models may realize they are being evaluated (\"eval awareness\") and then act to look good to us so we don't realize they're misaligned (\"eval gaming\"). We think increasing eval cooperativeness might be a more scalable solution to eval gaming than reducing eval awareness.Eval cooperativeness: A situational desire to help the developers acquire whatever information they are trying to acquire through...",

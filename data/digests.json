@@ -2,11 +2,11 @@
   "digests": [
     {
       "date": "2026-05-31",
-      "top_paper_id": "0eb949a7-1427-5d95-b1b4-ca1d0ad5b52f",
+      "top_paper_id": null,
       "papers_fetched": 2,
       "pdf_path": "reports/31-May/A_pictorial_introduction_to_differential_geometry.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "26719148089"
+      "telegram_sent": false,
+      "workflow_run_id": "26720130562"
     },
     {
       "date": "2026-05-30",

@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "0eb949a7-1427-5d95-b1b4-ca1d0ad5b52f",
+      "title": "A pictorial introduction to differential geometry (2017)",
+      "summary": "105 points · 3 comments",
+      "source": "Hacker News",
+      "url": "https://arxiv.org/abs/1709.08492",
+      "published_at": "2026-05-31T05:30:18+00:00",
+      "fetched_at": "2026-05-31T17:15:26.250521Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "39f18075-4c9e-547c-852b-3ada7ecc0332",
       "title": "Testing Gemini models for scheming tendencies",
       "summary": "As AI models become increasingly capable and autonomous, keeping them safely aligned with human intentions is critical. Extending our previous work on evaluating scheming capabilities, we introduce complementary approaches to test whether AI models would sabotage their own safeguards, if given the opportunity.Our new papers focus on propensity for scheming: when models are deployed as coding agents, will they take opportunities to undermine the safeguards designed to oversee them? We tackle t...",

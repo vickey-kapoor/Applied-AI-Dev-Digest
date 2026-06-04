@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-04",
+      "top_paper_id": "",
+      "papers_fetched": 1,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "26971200556"
+    },
+    {
       "date": "2026-06-03",
       "top_paper_id": "",
       "papers_fetched": 1,

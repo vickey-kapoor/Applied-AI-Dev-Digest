@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-05",
+      "top_paper_id": "b665c226-ec59-5f1c-89c8-c7c5782bf06f",
+      "papers_fetched": 1,
+      "pdf_path": "reports/05-Jun/My_research_agenda_and_work.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27031444697"
+    },
+    {
       "date": "2026-06-04",
       "top_paper_id": "",
       "papers_fetched": 1,

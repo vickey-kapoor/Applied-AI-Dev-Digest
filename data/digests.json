@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-07",
+      "top_paper_id": "2a135729-114f-5c42-a08a-39c7e6d38f25",
+      "papers_fetched": 1,
+      "pdf_path": "reports/07-Jun/My_research_a_computational_cognitive_neuroscienc.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27099555489"
+    },
+    {
       "date": "2026-06-06",
       "top_paper_id": "",
       "papers_fetched": 1,

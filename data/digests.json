@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-09",
+      "top_paper_id": "d351f0c3-7965-5720-bcad-29d9ca6bfdcd",
+      "papers_fetched": 2,
+      "pdf_path": "reports/09-Jun/System_Card_Claude_Fable_5_and_Claude_Mythos_5_p.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27226281824"
+    },
+    {
       "date": "2026-06-08",
       "top_paper_id": "2a135729-114f-5c42-a08a-39c7e6d38f25",
       "papers_fetched": 1,

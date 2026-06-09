@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "d351f0c3-7965-5720-bcad-29d9ca6bfdcd",
+      "title": "System Card: Claude Fable 5 and Claude Mythos 5 [pdf]",
+      "summary": "156 points · 37 comments",
+      "source": "Hacker News",
+      "url": "https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf",
+      "published_at": "2026-06-09T16:58:13+00:00",
+      "fetched_at": "2026-06-09T18:12:36.496921Z",
+      "type": "discussion",
+      "topics": [
+        "System Cards"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "2a135729-114f-5c42-a08a-39c7e6d38f25",
       "title": "My research: a computational cognitive neuroscience perspective on alignment",
       "summary": "Note - title edited to be more descriptive.This is a summary of the work I've done and work I plan to do, and the theories of change and AI progress that motivate my work. I've been working full-time on alignment for three years and change, and thinking about brainlike AGI and its alignment increasingly often since 2004. Here's the research agenda in one breath: I'm trying to predict what the first transformative AI will be, in enough mechanistic detail that we can predict likely failure mode...",

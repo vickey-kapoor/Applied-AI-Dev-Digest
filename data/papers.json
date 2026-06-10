@@ -1,6 +1,39 @@
 {
   "papers": [
     {
+      "id": "3eb8bd7b-2d1d-5841-b179-686aeb99dea9",
+      "title": "Sequent: scale and automation for higher confidence in alignment",
+      "summary": "Alignment is not on trackArtificial superintelligence (ASI) may be developed in the next few years. It is unclear whether alignment is on track to be ready on the same timeframe. At a minimum, the empirical programs at AI labs are unlikely to deliver a priori confidence, before training ASI, that things will go well. We are starting a large nonprofit research organization, Sequent, that aims to clear a higher bar:We are aiming at higher confidence via a portfolio of theory and empirics bets, ...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/AP7YDke5jjY4v3X9Z/sequent-scale-and-automation-for-higher-confidence-in-1",
+      "published_at": "2026-06-10T15:37:47",
+      "fetched_at": "2026-06-10T18:34:18.720111Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3004512c-7b63-5656-840a-e7e10b2c6750",
+      "title": "Tracing Eval-Awareness Emergence Through Training of OLMo 3",
+      "summary": "TL;DRRecent work from Goodfire & UK AISI – Verbalized Eval Awareness Inflates Measured Safety – shows that newer open-weight models verbalize evaluation-awareness (VEA) more often, and that this inflates measured safety. Between OLMo-3-32B-Think and OLMo-3.1-32B-Think – identical base, SFT, DPO, and RL data, differing only in an additional ~3 weeks of the RLVR stage – VEA roughly doubles.Because OLMo ships stepwise checkpoints across all training stages, we can attribute VEA growth to specifi...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/c2tqL9xPbttisAHtt/tracing-eval-awareness-emergence-through-training-of-olmo-3",
+      "published_at": "2026-06-10T10:13:05",
+      "fetched_at": "2026-06-10T18:34:18.720111Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment",
+        "Evals",
+        "Governance",
+        "Robustness"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "d351f0c3-7965-5720-bcad-29d9ca6bfdcd",
       "title": "System Card: Claude Fable 5 and Claude Mythos 5 [pdf]",
       "summary": "156 points · 37 comments",

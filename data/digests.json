@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-10",
+      "top_paper_id": "3eb8bd7b-2d1d-5841-b179-686aeb99dea9",
+      "papers_fetched": 2,
+      "pdf_path": "reports/10-Jun/Sequent_scale_and_automation_for_higher_confidenc.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27297677178"
+    },
+    {
       "date": "2026-06-09",
       "top_paper_id": "d351f0c3-7965-5720-bcad-29d9ca6bfdcd",
       "papers_fetched": 2,

@@ -1,6 +1,38 @@
 {
   "papers": [
     {
+      "id": "f2bd731b-95f1-5ba1-ab59-3d039f407565",
+      "title": "Building and evaluating model diffing agents",
+      "summary": "This is the second in a series of research updates from the Google DeepMind Language Model Interpretability team, in interpretability and adjacent areas. The first post can be found here.TL;DRIt is possible to build extremely simple agents that reliably find interesting behavioural differences between distinct models. We call these ‘diffing agents’.The closest previous 'behavioural model diffing' work has focussed on understanding behavioural differences between two models on some static prom...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/qi4mNbZYAFDYwfRba/building-and-evaluating-model-diffing-agents",
+      "published_at": "2026-06-12T17:14:39",
+      "fetched_at": "2026-06-12T18:11:48.135678Z",
+      "type": "announcement",
+      "topics": [
+        "Interpretability",
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d4f61bce-b455-56aa-a5d5-a3d1dea59e60",
+      "title": "Sympathy for both sides of the egregious misalignment debate",
+      "summary": "On one side of this debate is Yudkowsky & Soares, who think that (if AI progress continues) we’re on a direct path to egregiously-misaligned, scheming, out-of-control, rogue superintelligence (ASI), not even slightly nice, in the absence of yet-to-be-invented breakthrough technical alignment ideas.On the other side of this debate is almost everyone who works on or studies LLMs. Some of them are very concerned about egregious scheming, others much less so, and as a group they’re equally or mor...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/DZaZ3fqHnvfLCftPu/sympathy-for-both-sides-of-the-egregious-misalignment-debate",
+      "published_at": "2026-06-12T16:26:12",
+      "fetched_at": "2026-06-12T18:11:48.135678Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment",
+        "Agentic Safety"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "0a52ad7f-fe29-5e55-9ad3-b2a25aaf068e",
       "title": "Models May Behave Worse When Eval Aware",
       "summary": "This is the first in a series of research updates from the Google DeepMind Language Model Interpretability team, in interpretability and adjacent areas.TL;DRIt's often assumed that models will act more aligned when they can tell they're being evaluated. But we find that Gemini can take “undesired” actions in behavioural evals even when it explicitly reasons that the environments are contrived, and sometimes this reasoning will increase the rate of undesired actions. When we dig into the model...",

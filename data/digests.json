@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-12",
+      "top_paper_id": "f2bd731b-95f1-5ba1-ab59-3d039f407565",
+      "papers_fetched": 3,
+      "pdf_path": "reports/12-Jun/Building_and_evaluating_model_diffing_agents.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27434180292"
+    },
+    {
       "date": "2026-06-11",
       "top_paper_id": "0a52ad7f-fe29-5e55-9ad3-b2a25aaf068e",
       "papers_fetched": 3,

@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "2dfdefb2-840c-5e28-b0df-91f4b568549f",
+      "title": "SFT Drives Gemini’s Safety Properties",
+      "summary": "This is the third in a series of informal research updates from the Google DeepMind Language Model Interpretability team, in interpretability and adjacent areas. The second post can be found here.In this short post, we describe a surprising finding: most safety relevant properties in Gemini seem to be caused by the combination of pretraining and SFT, not other training stages like RL. We do not want to overstate this claim as applying to other model families, and we also note that this may ch...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/nLrrYweeFxgXACSmS/sft-drives-gemini-s-safety-properties-1",
+      "published_at": "2026-06-13T15:31:52",
+      "fetched_at": "2026-06-13T17:37:53.790149Z",
+      "type": "announcement",
+      "topics": [
+        "Interpretability"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "f2bd731b-95f1-5ba1-ab59-3d039f407565",
       "title": "Building and evaluating model diffing agents",
       "summary": "This is the second in a series of research updates from the Google DeepMind Language Model Interpretability team, in interpretability and adjacent areas. The first post can be found here.TL;DRIt is possible to build extremely simple agents that reliably find interesting behavioural differences between distinct models. We call these ‘diffing agents’.The closest previous 'behavioural model diffing' work has focussed on understanding behavioural differences between two models on some static prom...",

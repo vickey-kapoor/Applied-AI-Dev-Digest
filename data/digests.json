@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-13",
+      "top_paper_id": "2dfdefb2-840c-5e28-b0df-91f4b568549f",
+      "papers_fetched": 3,
+      "pdf_path": "reports/13-Jun/SFT_Drives_Geminis_Safety_Properties.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27474087359"
+    },
+    {
       "date": "2026-06-12",
       "top_paper_id": "f2bd731b-95f1-5ba1-ab59-3d039f407565",
       "papers_fetched": 3,

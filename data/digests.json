@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-14",
+      "top_paper_id": "42e22296-f6f2-5dd4-87a9-1ee5dc6c8cd5",
+      "papers_fetched": 4,
+      "pdf_path": "reports/14-Jun/Rio_de_Janeiros_city_government_model_Rio35_beat.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27506471332"
+    },
+    {
       "date": "2026-06-13",
       "top_paper_id": "2dfdefb2-840c-5e28-b0df-91f4b568549f",
       "papers_fetched": 3,

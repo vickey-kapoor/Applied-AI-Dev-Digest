@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-15",
+      "top_paper_id": "6290a0d2-8292-5f26-a26d-6ff79e6f48b0",
+      "papers_fetched": 3,
+      "pdf_path": "reports/15-Jun/Why_Do_Naive_SFT_Filters_For_Safety_Properties_Fai.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27572220934"
+    },
+    {
       "date": "2026-06-14",
       "top_paper_id": "c9e539a5-6545-51bf-8854-a4e2a5a26ba4",
       "papers_fetched": 4,

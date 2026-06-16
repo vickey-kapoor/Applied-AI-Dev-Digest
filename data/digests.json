@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-16",
+      "top_paper_id": "f438abb4-f330-500a-8cac-ba0d86cbf082",
+      "papers_fetched": 5,
+      "pdf_path": "reports/16-Jun/Feds_freaked_over_Fable_5_after_fix_this_code_n.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27643334072"
+    },
+    {
       "date": "2026-06-15",
       "top_paper_id": "6290a0d2-8292-5f26-a26d-6ff79e6f48b0",
       "papers_fetched": 3,

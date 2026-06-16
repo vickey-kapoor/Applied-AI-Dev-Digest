@@ -1,6 +1,51 @@
 {
   "papers": [
     {
+      "id": "f438abb4-f330-500a-8cac-ba0d86cbf082",
+      "title": "Feds freaked over Fable 5 after 'fix this code', not jailbreak, say researchers",
+      "summary": "501 points · 303 comments",
+      "source": "Hacker News",
+      "url": "https://www.theregister.com/security/2026/06/15/feds-freaked-over-fable-5-after-simple-fix-this-code-prompt-not-jailbreak-says-researcher/5255827",
+      "published_at": "2026-06-16T09:26:09+00:00",
+      "fetched_at": "2026-06-16T19:41:44.803571Z",
+      "type": "discussion",
+      "topics": [
+        "Red-teaming"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b1e9e2fd-b7ce-5e32-9d03-920314b64445",
+      "title": "Synthetic document finetuning for instilling positive traits",
+      "summary": "This is the fifth in a series of informal research updates from the Google DeepMind Language Model Interpretability team, in interpretability and adjacent areas. The fourth post can be found here.TLDR: Via adapting the methods of Marks et al and Li et al, we train Gemini 3 Flash to have certain traits/values by midtraining it on documents about how Gemini has those properties, followed by finetuning it on synthetic chat data where it demonstrates those properties. The chat finetuning is effec...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/GTYJRLhqztxKF2v5R/synthetic-document-finetuning-for-instilling-positive-traits",
+      "published_at": "2026-06-16T00:04:26",
+      "fetched_at": "2026-06-16T19:41:44.803571Z",
+      "type": "announcement",
+      "topics": [
+        "Interpretability"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0253fda1-b461-5ab1-9a43-dbe2e89a00ed",
+      "title": "Predicting model behavior before release by simulating deployment",
+      "summary": "OpenAI introduces Deployment Simulation, a method to predict AI model behavior before deployment using real conversation data to improve safety and evaluation accuracy.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/deployment-simulation",
+      "published_at": "2026-06-16T00:00:00",
+      "fetched_at": "2026-06-16T19:41:44.803571Z",
+      "type": "announcement",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "6290a0d2-8292-5f26-a26d-6ff79e6f48b0",
       "title": "Why Do Naive SFT Filters For Safety Properties Fail?",
       "summary": "This is the fourth in a series of informal research updates from the Google DeepMind Language Model Interpretability team, in interpretability and adjacent areas. The third post can be found here.Since SFT is the cause for many safety relevant properties, a natural strategy is to filter out rollouts from SFT that have undesirable properties. However, as we show in this section (and in forthcoming MATS work), SFT data filtering frequently works surprisingly poorly. In this post, we investigate...",

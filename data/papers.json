@@ -1,6 +1,37 @@
 {
   "papers": [
     {
+      "id": "7a668278-3451-5ea7-a3fb-09c021ec639b",
+      "title": "GLM 5.2 Performance Benchmarks",
+      "summary": "125 points · 41 comments",
+      "source": "Hacker News",
+      "url": "https://artificialanalysis.ai/models/glm-5-2",
+      "published_at": "2026-06-17T07:30:51+00:00",
+      "fetched_at": "2026-06-17T18:26:02.969426Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8740766e-7576-576c-9e89-b2162fefabe3",
+      "title": "Predicting LLM Safety Before Release by Simulating Deployment",
+      "summary": "Paper linkBefore releasing a new model, labs need to understand not just what it can do, but how it is likely to behave in real-world use, including where it might introduce new risks. This becomes even more important as capabilities increase. As part of our pre-deployment safety review, we leverage targeted evaluations, red-teaming, and other checks to understand model behavior. We’ve now started using a method for simulating model deployments before they happen, which adds a complementary s...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/xPXJfgqFTvuJxGZbE/predicting-llm-safety-before-release-by-simulating",
+      "published_at": "2026-06-16T19:55:05",
+      "fetched_at": "2026-06-17T18:26:02.969426Z",
+      "type": "announcement",
+      "topics": [
+        "Evals",
+        "Red-teaming"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "f438abb4-f330-500a-8cac-ba0d86cbf082",
       "title": "Feds freaked over Fable 5 after 'fix this code', not jailbreak, say researchers",
       "summary": "501 points · 303 comments",

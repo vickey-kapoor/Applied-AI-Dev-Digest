@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-18",
+      "top_paper_id": "82ef050f-2206-5f81-91f0-aede65e6c803",
+      "papers_fetched": 3,
+      "pdf_path": "reports/18-Jun/Improving_health_intelligence_in_ChatGPT.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27780827554"
+    },
+    {
       "date": "2026-06-17",
       "top_paper_id": "7a668278-3451-5ea7-a3fb-09c021ec639b",
       "papers_fetched": 4,

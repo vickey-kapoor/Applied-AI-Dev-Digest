@@ -1,6 +1,36 @@
 {
   "papers": [
     {
+      "id": "82ef050f-2206-5f81-91f0-aede65e6c803",
+      "title": "Improving health intelligence in ChatGPT",
+      "summary": "Learn how GPT-5.5 Instant improves ChatGPT’s health and wellness responses with stronger reasoning, better context, clearer communication, and physician-informed evaluations.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/improving-health-intelligence-in-chatgpt",
+      "published_at": "2026-06-18T11:00:00",
+      "fetched_at": "2026-06-18T18:29:21.413133Z",
+      "type": "announcement",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3c564371-9b6c-5d75-819e-2f324bb984bf",
+      "title": "How Madrid built its metro cheaply (2024)",
+      "summary": "200 points · 158 comments",
+      "source": "Hacker News",
+      "url": "https://worksinprogress.co/issue/how-madrid-built-its-metro-cheaply/",
+      "published_at": "2026-06-17T19:59:27+00:00",
+      "fetched_at": "2026-06-18T18:29:21.413133Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "7a668278-3451-5ea7-a3fb-09c021ec639b",
       "title": "GLM 5.2 Performance Benchmarks",
       "summary": "125 points · 41 comments",

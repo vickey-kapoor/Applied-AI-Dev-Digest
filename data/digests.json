@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-19",
+      "top_paper_id": "8740766e-7576-576c-9e89-b2162fefabe3",
+      "papers_fetched": 2,
+      "pdf_path": "reports/19-Jun/Predicting_LLM_Safety_Before_Release_by_Simulating.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27841242878"
+    },
+    {
       "date": "2026-06-18",
       "top_paper_id": "82ef050f-2206-5f81-91f0-aede65e6c803",
       "papers_fetched": 3,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/19-Mar/Gemini_31_Flash-Lite_Built_for_intelligence_at_s.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23306908698"
-    },
-    {
-      "date": "2026-03-18",
-      "top_paper_id": "ad9f23f1-659a-5080-a0d4-e6ff442fac5e",
-      "papers_fetched": 3,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "local-refresh"
     }
   ]
 }

@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-20",
+      "top_paper_id": "",
+      "papers_fetched": 2,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "27878847930"
+    },
+    {
       "date": "2026-06-19",
       "top_paper_id": "8740766e-7576-576c-9e89-b2162fefabe3",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/20-Mar/Gemini_31_Flash-Lite_Built_for_intelligence_at_s.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23353347135"
-    },
-    {
-      "date": "2026-03-19",
-      "top_paper_id": "3a892c81-87d9-563b-a138-b50f2a85c770",
-      "papers_fetched": 3,
-      "pdf_path": "reports/19-Mar/Gemini_31_Flash-Lite_Built_for_intelligence_at_s.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23306908698"
     }
   ]
 }

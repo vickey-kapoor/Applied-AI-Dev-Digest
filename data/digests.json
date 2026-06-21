@@ -2,11 +2,11 @@
   "digests": [
     {
       "date": "2026-06-21",
-      "top_paper_id": "da64801e-0606-550b-bbe8-d20b1d4ce735",
+      "top_paper_id": "3efaa629-3e86-56af-89d9-9df1a6c90b48",
       "papers_fetched": 4,
-      "pdf_path": "reports/21-Jun/The_case_against_geometric_algebra_2024.pdf",
+      "pdf_path": "reports/21-Jun/How_transparent_is_DiffusionGemma_and_why_it_matt.pdf",
       "telegram_sent": true,
-      "workflow_run_id": "27912412400"
+      "workflow_run_id": "27913232226"
     },
     {
       "date": "2026-06-20",

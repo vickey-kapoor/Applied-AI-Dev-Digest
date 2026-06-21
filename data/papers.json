@@ -1,6 +1,51 @@
 {
   "papers": [
     {
+      "id": "da64801e-0606-550b-bbe8-d20b1d4ce735",
+      "title": "The case against geometric algebra (2024)",
+      "summary": "106 points · 89 comments",
+      "source": "Hacker News",
+      "url": "https://alexkritchevsky.com/2024/02/28/geometric-algebra.html",
+      "published_at": "2026-06-21T11:06:55+00:00",
+      "fetched_at": "2026-06-21T17:44:14.025412Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3efaa629-3e86-56af-89d9-9df1a6c90b48",
+      "title": "How transparent is DiffusionGemma (and why it matters)",
+      "summary": "Authors: Joshua Engels*, Callum McDougall*, Bilal Chughtai*, Janos Kramar, Senthoran Rajamanoharan, Cindy Wu, Arthur Conmy, Asic Q Chen, Jean Tarbouriech, Min Ma, Brendan O'Donoghue+, João Gabriel Lopes de Oliveira+, Rohin Shah+, Neel Nanda+*Primary Contributor+AdvisingPaper here: https://arxiv.org/abs/2606.20560OverviewIn a recent collaboration between the GDM interpretability team and the GDM text diffusion team, we performed a transparency audit of DiffusionGemma, GDM's new text diffusion ...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/zoYXpdaMgFT43Wc24/how-transparent-is-diffusiongemma-and-why-it-matters",
+      "published_at": "2026-06-20T20:05:50",
+      "fetched_at": "2026-06-21T17:44:14.025412Z",
+      "type": "announcement",
+      "topics": [
+        "Interpretability"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "87b83fd6-85e0-5e6d-a2cc-22ad8041b4d1",
+      "title": "PostgresBench: A Reproducible Benchmark for Postgres Services",
+      "summary": "108 points · 23 comments",
+      "source": "Hacker News",
+      "url": "https://clickhouse.com/blog/postgresbench",
+      "published_at": "2026-06-20T19:01:10+00:00",
+      "fetched_at": "2026-06-21T17:44:14.025412Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "82ef050f-2206-5f81-91f0-aede65e6c803",
       "title": "Improving health intelligence in ChatGPT",
       "summary": "Learn how GPT-5.5 Instant improves ChatGPT’s health and wellness responses with stronger reasoning, better context, clearer communication, and physician-informed evaluations.",

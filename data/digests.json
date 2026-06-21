@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-21",
+      "top_paper_id": "da64801e-0606-550b-bbe8-d20b1d4ce735",
+      "papers_fetched": 4,
+      "pdf_path": "reports/21-Jun/The_case_against_geometric_algebra_2024.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "27912412400"
+    },
+    {
       "date": "2026-06-20",
       "top_paper_id": "",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/21-Mar/Introducing_GPT-54_mini_and_nano.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23383969138"
-    },
-    {
-      "date": "2026-03-20",
-      "top_paper_id": "3a892c81-87d9-563b-a138-b50f2a85c770",
-      "papers_fetched": 3,
-      "pdf_path": "reports/20-Mar/Gemini_31_Flash-Lite_Built_for_intelligence_at_s.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23353347135"
     }
   ]
 }

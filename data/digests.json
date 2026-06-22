@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-22",
+      "top_paper_id": "",
+      "papers_fetched": 1,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "27978794638"
+    },
+    {
       "date": "2026-06-21",
       "top_paper_id": "3efaa629-3e86-56af-89d9-9df1a6c90b48",
       "papers_fetched": 4,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/22-Mar/Introducing_GPT-54_mini_and_nano.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23407556509"
-    },
-    {
-      "date": "2026-03-21",
-      "top_paper_id": "7b812e6c-119e-5161-983e-06649e86c372",
-      "papers_fetched": 4,
-      "pdf_path": "reports/21-Mar/Introducing_GPT-54_mini_and_nano.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23383969138"
     }
   ]
 }

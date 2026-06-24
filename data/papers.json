@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "04ba2dcf-96b7-59e5-9774-e4537bbb6fe7",
+      "title": "Helping build shared standards for advanced AI",
+      "summary": "OpenAI helps build shared standards for advanced AI, supporting evaluation frameworks, safety practices, and global cooperation through the Appia Foundation.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/helping-build-shared-standards-for-advanced-ai",
+      "published_at": "2026-06-23T13:00:00",
+      "fetched_at": "2026-06-24T18:01:28.203839Z",
+      "type": "announcement",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "73dc97c0-f68b-52f4-a02a-d83763fc30b1",
       "title": "LLM-Driven Feature Discovery",
       "summary": "We would often like to get a qualitative sense of a target model’s behaviors in important distributions (e.g. deployment, RL training, or evals). For example, we might want to discover novel behaviors, figure out what causes some target behavior to occur, or find surprising correlations between behaviors. In a recent short exploratory project, we tackled this problem via LLM-Driven Feature Discovery. Our method works as follows:Choose a dataset of model transcriptsSplit transcripts into three...",

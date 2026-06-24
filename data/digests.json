@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-24",
+      "top_paper_id": "04ba2dcf-96b7-59e5-9774-e4537bbb6fe7",
+      "papers_fetched": 3,
+      "pdf_path": "reports/24-Jun/Helping_build_shared_standards_for_advanced_AI.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "28119068223"
+    },
+    {
       "date": "2026-06-23",
       "top_paper_id": "73dc97c0-f68b-52f4-a02a-d83763fc30b1",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/24-Mar/Gemini_31_Flash-Lite_Built_for_intelligence_at_s.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23502339262"
-    },
-    {
-      "date": "2026-03-23",
-      "top_paper_id": "3a892c81-87d9-563b-a138-b50f2a85c770",
-      "papers_fetched": 4,
-      "pdf_path": "reports/23-Mar/Gemini_31_Flash-Lite_Built_for_intelligence_at_s.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23449705276"
     }
   ]
 }

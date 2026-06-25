@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-25",
+      "top_paper_id": "",
+      "papers_fetched": 2,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "28191166614"
+    },
+    {
       "date": "2026-06-24",
       "top_paper_id": "04ba2dcf-96b7-59e5-9774-e4537bbb6fe7",
       "papers_fetched": 3,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/25-Mar/Helping_developers_build_safer_AI_experiences_for.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23554054091"
-    },
-    {
-      "date": "2026-03-24",
-      "top_paper_id": "3a892c81-87d9-563b-a138-b50f2a85c770",
-      "papers_fetched": 4,
-      "pdf_path": "reports/24-Mar/Gemini_31_Flash-Lite_Built_for_intelligence_at_s.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23502339262"
     }
   ]
 }

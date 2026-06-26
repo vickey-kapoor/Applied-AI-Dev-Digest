@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "6dab8119-aa23-56a7-8447-1efecc9af6ae",
+      "title": "The Case for Model Forensics",
+      "summary": "If we had a misalignment warning shot, would we be able to tell?Suppose an AI company catches their model taking an egregious action, like deleting oversight code that monitors its actions. Should they sound the alarm? A key piece of evidence to determine what to do next – such as what mitigations to take – is to understand why the model took the action. If the model was just confused (e.g. it may have been trying to reduce latency), a simple mitigation like a regex classifier that blocks des...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/LCGcD28rSMkMTMvBK/the-case-for-model-forensics",
+      "published_at": "2026-06-26T15:09:10",
+      "fetched_at": "2026-06-26T17:55:36.529229Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "04ba2dcf-96b7-59e5-9774-e4537bbb6fe7",
       "title": "Helping build shared standards for advanced AI",
       "summary": "OpenAI helps build shared standards for advanced AI, supporting evaluation frameworks, safety practices, and global cooperation through the Appia Foundation.",

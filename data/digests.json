@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-26",
+      "top_paper_id": "6dab8119-aa23-56a7-8447-1efecc9af6ae",
+      "papers_fetched": 2,
+      "pdf_path": "reports/26-Jun/The_Case_for_Model_Forensics.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "28255793279"
+    },
+    {
       "date": "2026-06-25",
       "top_paper_id": "",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/26-Mar/Gemini_31_Flash_Live_Making_audio_AI_more_natura.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23607824203"
-    },
-    {
-      "date": "2026-03-25",
-      "top_paper_id": "25fa011e-1f03-5709-96b5-6f0235527960",
-      "papers_fetched": 4,
-      "pdf_path": "reports/25-Mar/Helping_developers_build_safer_AI_experiences_for.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23554054091"
     }
   ]
 }

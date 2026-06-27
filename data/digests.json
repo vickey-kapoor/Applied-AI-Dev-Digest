@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-27",
+      "top_paper_id": "4a599e80-1cb7-5438-90f2-533205b08c34",
+      "papers_fetched": 2,
+      "pdf_path": "reports/27-Jun/Deployment_Awareness_Matters_More_Than_Evaluation.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "28296236932"
+    },
+    {
       "date": "2026-06-26",
       "top_paper_id": "6dab8119-aa23-56a7-8447-1efecc9af6ae",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/27-Mar/Inside_our_approach_to_the_Model_Spec.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23657995183"
-    },
-    {
-      "date": "2026-03-26",
-      "top_paper_id": "e57284bb-7634-569d-8ab8-b1b6b0e69a06",
-      "papers_fetched": 4,
-      "pdf_path": "reports/26-Mar/Gemini_31_Flash_Live_Making_audio_AI_more_natura.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23607824203"
     }
   ]
 }

@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "4a599e80-1cb7-5438-90f2-533205b08c34",
+      "title": "Deployment Awareness Matters More Than Evaluation Awareness",
+      "summary": "TL;DREvaluation awareness — an AI recognizing it's being evaluated — is a widely discussed concept in AI safety. But there is a closely related concept that we claim is more important: deployment awareness, the AI's ability to recognize when it is not being evaluated and when its actions matter. A misaligned AI with deployment awareness can game evaluations without any evaluation awareness at all, with a simple strategy: act aligned by default, and deviate only when confident you're in real d...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/XP794SHDuXYfWLrvJ/deployment-awareness-matters-more-than-evaluation-awareness",
+      "published_at": "2026-06-26T22:54:06",
+      "fetched_at": "2026-06-27T17:17:51.528444Z",
+      "type": "announcement",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "6dab8119-aa23-56a7-8447-1efecc9af6ae",
       "title": "The Case for Model Forensics",
       "summary": "If we had a misalignment warning shot, would we be able to tell?Suppose an AI company catches their model taking an egregious action, like deleting oversight code that monitors its actions. Should they sound the alarm? A key piece of evidence to determine what to do next – such as what mitigations to take – is to understand why the model took the action. If the model was just confused (e.g. it may have been trying to reduce latency), a simple mitigation like a regex classifier that blocks des...",

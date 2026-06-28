@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-28",
+      "top_paper_id": "",
+      "papers_fetched": 2,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "28329993137"
+    },
+    {
       "date": "2026-06-27",
       "top_paper_id": "4a599e80-1cb7-5438-90f2-533205b08c34",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/28-Mar/Introducing_the_OpenAI_Safety_Bug_Bounty_program.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23689605544"
-    },
-    {
-      "date": "2026-03-27",
-      "top_paper_id": "0cd57e38-78de-5ed0-8934-6e660a41ac3a",
-      "papers_fetched": 4,
-      "pdf_path": "reports/27-Mar/Inside_our_approach_to_the_Model_Spec.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23657995183"
     }
   ]
 }

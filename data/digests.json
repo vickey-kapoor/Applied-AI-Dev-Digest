@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-29",
+      "top_paper_id": "",
+      "papers_fetched": 2,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "28393056368"
+    },
+    {
       "date": "2026-06-28",
       "top_paper_id": null,
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/29-Mar/Gemini_31_Flash_Live_Making_audio_AI_more_natura.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23713886398"
-    },
-    {
-      "date": "2026-03-28",
-      "top_paper_id": "fb6be8c8-5e47-51f3-92ce-45673d35e5a6",
-      "papers_fetched": 3,
-      "pdf_path": "reports/28-Mar/Introducing_the_OpenAI_Safety_Bug_Bounty_program.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23689605544"
     }
   ]
 }

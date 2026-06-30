@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "2c453822-eaab-5d13-bb0d-8b66a13a23e1",
+      "title": "Introducing GeneBench-Pro",
+      "summary": "Introducing GeneBench-Pro, a new benchmark testing AI performance in genomics, biology, and scientific research using complex, real-world datasets.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-genebench-pro",
+      "published_at": "2026-06-30T00:00:00",
+      "fetched_at": "2026-06-30T18:03:02.808094Z",
+      "type": "announcement",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "4a599e80-1cb7-5438-90f2-533205b08c34",
       "title": "Deployment Awareness Matters More Than Evaluation Awareness",
       "summary": "TL;DREvaluation awareness — an AI recognizing it's being evaluated — is a widely discussed concept in AI safety. But there is a closely related concept that we claim is more important: deployment awareness, the AI's ability to recognize when it is not being evaluated and when its actions matter. A misaligned AI with deployment awareness can game evaluations without any evaluation awareness at all, with a simple strategy: act aligned by default, and deviate only when confident you're in real d...",

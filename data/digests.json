@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-06-30",
+      "top_paper_id": "2c453822-eaab-5d13-bb0d-8b66a13a23e1",
+      "papers_fetched": 3,
+      "pdf_path": "reports/30-Jun/Introducing_GeneBench-Pro.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "28465478724"
+    },
+    {
       "date": "2026-06-29",
       "top_paper_id": "",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/30-Mar/Gemini_31_Flash_Live_Making_audio_AI_more_natura.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23757237238"
-    },
-    {
-      "date": "2026-03-29",
-      "top_paper_id": "e57284bb-7634-569d-8ab8-b1b6b0e69a06",
-      "papers_fetched": 3,
-      "pdf_path": "reports/29-Mar/Gemini_31_Flash_Live_Making_audio_AI_more_natura.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23713886398"
     }
   ]
 }

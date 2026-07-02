@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-02",
+      "top_paper_id": "a3d759dc-da45-5041-af88-082efc33476a",
+      "papers_fetched": 3,
+      "pdf_path": "reports/02-Jul/Senior_SWE-Bench_open-source_benchmark_that_asses.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "28610833664"
+    },
+    {
       "date": "2026-07-01",
       "top_paper_id": "",
       "papers_fetched": 3,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/01-Apr/Gradient_Labs_gives_every_bank_customer_an_AI_acco.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23860764325"
-    },
-    {
-      "date": "2026-03-31",
-      "top_paper_id": "e57284bb-7634-569d-8ab8-b1b6b0e69a06",
-      "papers_fetched": 2,
-      "pdf_path": "reports/31-Mar/Gemini_31_Flash_Live_Making_audio_AI_more_natura.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23809787472"
     }
   ]
 }

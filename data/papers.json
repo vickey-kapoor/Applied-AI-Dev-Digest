@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "a3d759dc-da45-5041-af88-082efc33476a",
+      "title": "Senior SWE-Bench: open-source benchmark that assesses agents as senior engineers",
+      "summary": "144 points · 97 comments",
+      "source": "Hacker News",
+      "url": "https://senior-swe-bench.snorkel.ai/",
+      "published_at": "2026-07-02T02:55:16+00:00",
+      "fetched_at": "2026-07-02T17:56:27.772756Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "2c453822-eaab-5d13-bb0d-8b66a13a23e1",
       "title": "Introducing GeneBench-Pro",
       "summary": "Introducing GeneBench-Pro, a new benchmark testing AI performance in genomics, biology, and scientific research using complex, real-world datasets.",

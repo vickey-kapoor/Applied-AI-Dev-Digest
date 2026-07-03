@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-03",
+      "top_paper_id": "",
+      "papers_fetched": 1,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "28675557094"
+    },
+    {
       "date": "2026-07-02",
       "top_paper_id": "a3d759dc-da45-5041-af88-082efc33476a",
       "papers_fetched": 3,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/02-Apr/Gemma_4_Byte_for_byte_the_most_capable_open_mode.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23912198746"
-    },
-    {
-      "date": "2026-04-01",
-      "top_paper_id": "832df1b1-8c64-5e65-b025-b5598f377fa3",
-      "papers_fetched": 4,
-      "pdf_path": "reports/01-Apr/Gradient_Labs_gives_every_bank_customer_an_AI_acco.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23860764325"
     }
   ]
 }

@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-05",
+      "top_paper_id": "",
+      "papers_fetched": 1,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "28748671506"
+    },
+    {
       "date": "2026-07-04",
       "top_paper_id": "",
       "papers_fetched": 1,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/04-Apr/Gemma_4_Byte_for_byte_the_most_capable_open_mode.pdf",
       "telegram_sent": true,
       "workflow_run_id": "23983153647"
-    },
-    {
-      "date": "2026-04-03",
-      "top_paper_id": "86fe53ed-baed-53a9-b1bd-4cb41c02cf47",
-      "papers_fetched": 3,
-      "pdf_path": "reports/03-Apr/Codex_now_offers_more_flexible_pricing_for_teams.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "23954208748"
     }
   ]
 }

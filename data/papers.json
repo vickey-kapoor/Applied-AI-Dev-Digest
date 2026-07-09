@@ -1,6 +1,66 @@
 {
   "papers": [
     {
+      "id": "a0417d69-c7d2-5d7c-9309-7a374d22e5e8",
+      "title": "Announcing our $160M grant from Coefficient Giving",
+      "summary": "We are excited to announce that Resolution (fka Sequent) has a $160M grant from Coefficient Giving (cG) to put rigorous alignment research on a (closer to) even footing with the frontier labs. We will use it to accelerate progress towards higher-confidence alignment, or to find evidence and obstacles showing why alignment is hard.The grant is structured as a $108M base plus $52M conditional on a combination of hiring success and compute needs. The base includes a small regranting budget, whic...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/HDKQNqiR2gtfMiWsn/announcing-our-usd160m-grant-from-coefficient-giving",
+      "published_at": "2026-07-09T07:58:47",
+      "fetched_at": "2026-07-09T18:01:59.779321Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "9e6b62ac-552c-5f09-821a-0919c6b78341",
+      "title": "Benchmarking coding agents on Databricks' multi-million line codebase",
+      "summary": "138 points · 65 comments",
+      "source": "Hacker News",
+      "url": "https://www.databricks.com/blog/benchmarking-coding-agents-databricks-multi-million-line-codebase",
+      "published_at": "2026-07-08T21:30:09+00:00",
+      "fetched_at": "2026-07-09T18:01:59.779321Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f89e90e1-83ac-500b-b37b-354b2e5e1590",
+      "title": "Separating signal from noise in coding evaluations",
+      "summary": "236 points · 87 comments",
+      "source": "Hacker News",
+      "url": "https://openai.com/index/separating-signal-from-noise-coding-evaluations/",
+      "published_at": "2026-07-08T21:03:51+00:00",
+      "fetched_at": "2026-07-09T18:01:59.779321Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8800a57d-f84f-5612-a4c2-2a72de488838",
+      "title": "OpenMandriva: Statement regarding attempted distribution sabotage",
+      "summary": "125 points · 41 comments",
+      "source": "Hacker News",
+      "url": "https://forum.openmandriva.org/t/statement-regarding-attempted-distribution-sabotage/8997",
+      "published_at": "2026-07-08T18:21:53+00:00",
+      "fetched_at": "2026-07-09T18:01:59.779321Z",
+      "type": "discussion",
+      "topics": [
+        "Agentic Safety"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "a3d759dc-da45-5041-af88-082efc33476a",
       "title": "Senior SWE-Bench: open-source benchmark that assesses agents as senior engineers",
       "summary": "144 points · 97 comments",

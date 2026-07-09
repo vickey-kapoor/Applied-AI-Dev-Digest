@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-09",
+      "top_paper_id": "a0417d69-c7d2-5d7c-9309-7a374d22e5e8",
+      "papers_fetched": 4,
+      "pdf_path": "reports/09-Jul/Announcing_our_160M_grant_from_Coefficient_Giving.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "29039144772"
+    },
+    {
       "date": "2026-07-06",
       "top_paper_id": "",
       "papers_fetched": 1,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/06-Apr/Connecting_MCP_servers_to_Amazon_Bedrock_AgentCore.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24041245937"
-    },
-    {
-      "date": "2026-04-05",
-      "top_paper_id": "007a4f70-6324-5eea-8408-9fcd93affd10",
-      "papers_fetched": 8,
-      "pdf_path": "reports/05-Apr/AI_for_American-Produced_Cement_and_Concrete.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24013076542"
     }
   ]
 }

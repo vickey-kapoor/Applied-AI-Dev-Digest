@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "4a250582-49a0-5ac0-bfcf-9bb5e96fb657",
+      "title": "Value generalisation: value correction",
+      "summary": "I firmly believe that value generalisation[1]is the key to AI Alignment. That, indeed, it is necessary and almost sufficient for alignment.But I won't be arguing that grand point today; instead, I'll focus on a specific RL example of an agent that displays value correction: it realises its current reward function is (probably) incorrect, and acts to correct it.Thus there are:The initial situation, in distribution, where the human displays how to maximise the true reward.The out of distributio...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/iPyJfD9Jyxj6Jfdws/value-generalisation-value-correction",
+      "published_at": "2026-07-10T07:56:04",
+      "fetched_at": "2026-07-10T17:50:58.156617Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "a0417d69-c7d2-5d7c-9309-7a374d22e5e8",
       "title": "Announcing our $160M grant from Coefficient Giving",
       "summary": "We are excited to announce that Resolution (fka Sequent) has a $160M grant from Coefficient Giving (cG) to put rigorous alignment research on a (closer to) even footing with the frontier labs. We will use it to accelerate progress towards higher-confidence alignment, or to find evidence and obstacles showing why alignment is hard.The grant is structured as a $108M base plus $52M conditional on a combination of hiring success and compute needs. The base includes a small regranting budget, whic...",

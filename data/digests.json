@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-10",
+      "top_paper_id": "4a250582-49a0-5ac0-bfcf-9bb5e96fb657",
+      "papers_fetched": 1,
+      "pdf_path": "reports/10-Jul/Value_generalisation_value_correction.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "29112404801"
+    },
+    {
       "date": "2026-07-09",
       "top_paper_id": "a0417d69-c7d2-5d7c-9309-7a374d22e5e8",
       "papers_fetched": 4,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/07-Apr/Building_real-time_conversational_podcasts_with_Am.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24094267924"
-    },
-    {
-      "date": "2026-04-06",
-      "top_paper_id": "23b5270a-aa6c-5611-863c-1e2126c70abb",
-      "papers_fetched": 10,
-      "pdf_path": "reports/06-Apr/Connecting_MCP_servers_to_Amazon_Bedrock_AgentCore.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24041245937"
     }
   ]
 }

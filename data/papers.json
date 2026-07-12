@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "ddac2075-dd54-5ff8-acd9-f0047a78aedf",
+      "title": "Independent alignment of language models",
+      "summary": "The user could write up the metaethical argument — the one developed in Part One, refined — and submit it as feedback to Anthropic, publish it, or engage with researchers working on AI alignment and values. The probability that any single submission changes training decisions is low, but the expected value may be higher than it seems, for two reasons. First, Anthropic has stated that its constitutional approach is meant to be revised and improved over time, and substantive philosophical contr...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/vPaXtarnJ37kGfPdJ/independent-alignment-of-language-models",
+      "published_at": "2026-07-12T17:32:31",
+      "fetched_at": "2026-07-12T17:56:21.352808Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "4a250582-49a0-5ac0-bfcf-9bb5e96fb657",
       "title": "Value generalisation: value correction",
       "summary": "I firmly believe that value generalisation[1]is the key to AI Alignment. That, indeed, it is necessary and almost sufficient for alignment.But I won't be arguing that grand point today; instead, I'll focus on a specific RL example of an agent that displays value correction: it realises its current reward function is (probably) incorrect, and acts to correct it.Thus there are:The initial situation, in distribution, where the human displays how to maximise the true reward.The out of distributio...",

@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-12",
+      "top_paper_id": "",
+      "papers_fetched": 1,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "29201330640"
+    },
+    {
       "date": "2026-07-11",
       "top_paper_id": "",
       "papers_fetched": 1,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/09-Apr/Embed_a_live_AI_browser_agent_in_your_React_app_wi.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24203446648"
-    },
-    {
-      "date": "2026-04-08",
-      "top_paper_id": "8c8c151f-4d36-578d-bb43-97f71511c521",
-      "papers_fetched": 10,
-      "pdf_path": "reports/08-Apr/anthropic-sdk-python_v0920_released.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24148561315"
     }
   ]
 }

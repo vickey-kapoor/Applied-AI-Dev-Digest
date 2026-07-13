@@ -1,6 +1,36 @@
 {
   "papers": [
     {
+      "id": "6bdcdebc-349d-5393-b688-9add2faa955b",
+      "title": "Apple's new SpeechAnalyzer API, benchmarked against Whisper and its predecessor",
+      "summary": "150 points · 73 comments",
+      "source": "Hacker News",
+      "url": "https://get-inscribe.com/blog/apple-speech-api-benchmark.html",
+      "published_at": "2026-07-13T16:06:08+00:00",
+      "fetched_at": "2026-07-13T17:59:35.278162Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "95e153ce-f4c5-5a59-aef8-ee91014000d5",
+      "title": "Mechanistic interpretability researchers applying causality theory to LLMs",
+      "summary": "112 points · 75 comments",
+      "source": "Hacker News",
+      "url": "https://cacm.acm.org/news/can-we-understand-how-large-language-models-reason/",
+      "published_at": "2026-07-12T18:04:41+00:00",
+      "fetched_at": "2026-07-13T17:59:35.278162Z",
+      "type": "discussion",
+      "topics": [
+        "Interpretability"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "ddac2075-dd54-5ff8-acd9-f0047a78aedf",
       "title": "Independent alignment of language models",
       "summary": "The user could write up the metaethical argument — the one developed in Part One, refined — and submit it as feedback to Anthropic, publish it, or engage with researchers working on AI alignment and values. The probability that any single submission changes training decisions is low, but the expected value may be higher than it seems, for two reasons. First, Anthropic has stated that its constitutional approach is meant to be revised and improved over time, and substantive philosophical contr...",

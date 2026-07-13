@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-13",
+      "top_paper_id": "6bdcdebc-349d-5393-b688-9add2faa955b",
+      "papers_fetched": 3,
+      "pdf_path": "reports/13-Jul/Apples_new_SpeechAnalyzer_API_benchmarked_agains.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "29272615492"
+    },
+    {
       "date": "2026-07-12",
       "top_paper_id": "ddac2075-dd54-5ff8-acd9-f0047a78aedf",
       "papers_fetched": 1,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/10-Apr/langchain_langchain-core130a1_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24254234547"
-    },
-    {
-      "date": "2026-04-09",
-      "top_paper_id": "cbe97831-f773-5c75-8a5d-6b1f46931529",
-      "papers_fetched": 10,
-      "pdf_path": "reports/09-Apr/Embed_a_live_AI_browser_agent_in_your_React_app_wi.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24203446648"
     }
   ]
 }

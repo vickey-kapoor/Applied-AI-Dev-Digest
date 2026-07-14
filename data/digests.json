@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-14",
+      "top_paper_id": "5183a5a8-44fd-5565-974b-33a6eb625f71",
+      "papers_fetched": 2,
+      "pdf_path": "reports/14-Jul/Open_Distillation_of_Hereditary_Traits.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "29353282875"
+    },
+    {
       "date": "2026-07-13",
       "top_paper_id": "6bdcdebc-349d-5393-b688-9add2faa955b",
       "papers_fetched": 3,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/11-Apr/Cirrus_Labs_to_join_OpenAI.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24286975422"
-    },
-    {
-      "date": "2026-04-10",
-      "top_paper_id": "78919eba-5267-51fe-aa87-e77a6008b1de",
-      "papers_fetched": 10,
-      "pdf_path": "reports/10-Apr/langchain_langchain-core130a1_released.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24254234547"
     }
   ]
 }

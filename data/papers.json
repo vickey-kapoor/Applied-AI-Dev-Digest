@@ -1,6 +1,37 @@
 {
   "papers": [
     {
+      "id": "5183a5a8-44fd-5565-974b-33a6eb625f71",
+      "title": "Open Distillation of Hereditary Traits",
+      "summary": "TL;DRJosh and Neel show that distillation from a teacher model to a base pretrained student model transfers some of the teacher model’s traits (such as displaying negative emotion in the Gemma Needs Help evals)On its own this is pretty unsurprising, but Josh and Neel additionally show that even filtering out all the prompts and rollouts where the trait is mentioned doesn’t generally prevent the trait transferIn this post, I show a simple way to replicate and study these phenomena without acce...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/WpYFAmJDH3zuAq2ha/open-distillation-of-hereditary-traits-1",
+      "published_at": "2026-07-14T10:15:03",
+      "fetched_at": "2026-07-14T17:19:57.741857Z",
+      "type": "announcement",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "35118abe-b4fa-5b1f-847a-1b4ce75e50d6",
+      "title": "Prism: Automating Science-of-Evals Research",
+      "summary": "tl;dr – we present [Prism], a scaffold for automating science-of-evals research: work that makes the evaluation the primary object of study. The scaffold provides Claude Code with sub-agents and resources for carrying out scientifically rigorous investigations into eval dynamics and, by extension, model behaviours.We talk through an autonomous Prism run on the Agentic Misalignment setting which demonstrates how minor perturbations to GPT-4.1's prompt cause the model to adopt more indirect met...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/wq5PfGiHvnx6XipDi/prism-automating-science-of-evals-research",
+      "published_at": "2026-07-13T16:30:21",
+      "fetched_at": "2026-07-14T17:19:57.741857Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment",
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "6bdcdebc-349d-5393-b688-9add2faa955b",
       "title": "Apple's new SpeechAnalyzer API, benchmarked against Whisper and its predecessor",
       "summary": "150 points · 73 comments",

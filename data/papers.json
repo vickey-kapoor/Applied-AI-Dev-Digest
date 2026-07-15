@@ -1,6 +1,22 @@
 {
   "papers": [
     {
+      "id": "b9ca6b63-5066-5d73-8c51-105cd2d017ad",
+      "title": "GPT-Red: Unlocking Self-Improvement for Robustness",
+      "summary": "Explore GPT-Red, OpenAI’s automated red teaming system that uses self-play to improve AI safety, alignment, and prompt injection robustness.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/unlocking-self-improvement-gpt-red",
+      "published_at": "2026-07-15T10:00:00",
+      "fetched_at": "2026-07-15T17:22:52.911348Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment",
+        "Red-teaming"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "5183a5a8-44fd-5565-974b-33a6eb625f71",
       "title": "Open Distillation of Hereditary Traits",
       "summary": "TL;DRJosh and Neel show that distillation from a teacher model to a base pretrained student model transfers some of the teacher model’s traits (such as displaying negative emotion in the Gemma Needs Help evals)On its own this is pretty unsurprising, but Josh and Neel additionally show that even filtering out all the prompts and rollouts where the trait is mentioned doesn’t generally prevent the trait transferIn this post, I show a simple way to replicate and study these phenomena without acce...",

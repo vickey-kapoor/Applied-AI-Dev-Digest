@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-16",
+      "top_paper_id": "",
+      "papers_fetched": 1,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "29519606825"
+    },
+    {
       "date": "2026-07-15",
       "top_paper_id": "b9ca6b63-5066-5d73-8c51-105cd2d017ad",
       "papers_fetched": 3,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/13-Apr/transformers_v554_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24356549004"
-    },
-    {
-      "date": "2026-04-12",
-      "top_paper_id": "7a734d8c-685e-5b2d-8097-32a1faba6af6",
-      "papers_fetched": 10,
-      "pdf_path": "reports/12-Apr/We_have_a_99_email_reputation_Gmail_disagrees.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24311560754"
     }
   ]
 }

@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "e0281b64-27f0-5942-af5b-920c8e0524e7",
+      "title": "Evidence of inconsistencies in evaluation process and selection of winners",
+      "summary": "408 points · 249 comments",
+      "source": "Hacker News",
+      "url": "https://www.kaggle.com/competitions/kaggle-measuring-agi/discussion/724918#3498423",
+      "published_at": "2026-07-17T11:30:00+00:00",
+      "fetched_at": "2026-07-17T17:17:20.104527Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "b9ca6b63-5066-5d73-8c51-105cd2d017ad",
       "title": "GPT-Red: Unlocking Self-Improvement for Robustness",
       "summary": "Explore GPT-Red, OpenAI’s automated red teaming system that uses self-play to improve AI safety, alignment, and prompt injection robustness.",

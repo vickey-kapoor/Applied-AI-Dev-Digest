@@ -1,6 +1,37 @@
 {
   "papers": [
     {
+      "id": "3e57077a-4fa6-581b-a1e3-3db8aa6d9bc6",
+      "title": "Endogenous Alignment",
+      "summary": "Starting when children are fairly young, usually around 1 year of age, we adults begin the work of aligning them to our values. We teach them to say “please”, not to hit, to ask for what they want instead of screaming, and much else. We do this primarily via exogenous methods, using a combination of punishments and rewards, that molds their behavior by encouraging good behaviors and discouraging bad ones.Such operant conditioning works because children have many instinctive behaviors that mak...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/xWZpwPPp5nR9rZq3x/endogenous-alignment",
+      "published_at": "2026-07-18T14:10:37",
+      "fetched_at": "2026-07-18T17:02:37.107412Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment",
+        "Robustness"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "539fc7e0-8ec3-5cb9-9b62-bd66e90e1e0c",
+      "title": "Should we benchmark conceptual capabilities using judgment prediction tasks?",
+      "summary": "A bunch of conceptual reasoning tasks involve very subjective judgments, which makes them poorly suited for benchmarking AI capabilities. For example, it seems unreasonable to benchmark how well AIs can predict the probability of misaligned AI takeover. Perhaps instead we should measure capabilities by explicitly instructing the AI to predict a specified person’s judgment on this kind of question.(This quick document is aimed at people interested in benchmarking beneficial, urgent, and neglec...",
+      "source": "AI Alignment Forum",
+      "url": "https://www.alignmentforum.org/posts/5kEezahvkEiQuWEfx/should-we-benchmark-conceptual-capabilities-using-judgment",
+      "published_at": "2026-07-17T23:42:45",
+      "fetched_at": "2026-07-18T17:02:37.107412Z",
+      "type": "announcement",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "e0281b64-27f0-5942-af5b-920c8e0524e7",
       "title": "Evidence of inconsistencies in evaluation process and selection of winners",
       "summary": "408 points · 249 comments",

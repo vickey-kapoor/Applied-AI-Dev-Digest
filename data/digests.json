@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-18",
+      "top_paper_id": "3e57077a-4fa6-581b-a1e3-3db8aa6d9bc6",
+      "papers_fetched": 2,
+      "pdf_path": "reports/18-Jul/Endogenous_Alignment.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "29653125258"
+    },
+    {
       "date": "2026-07-17",
       "top_paper_id": "e0281b64-27f0-5942-af5b-920c8e0524e7",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": ""
-    },
-    {
-      "date": "2026-04-14",
-      "top_paper_id": "e00ab433-2136-5161-82ed-286abdafe071",
-      "papers_fetched": 10,
-      "pdf_path": "reports/14-Apr/Spring_AI_SDK_for_Amazon_Bedrock_AgentCore_is_now.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24412930319"
     }
   ]
 }

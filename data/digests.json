@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-19",
+      "top_paper_id": "",
+      "papers_fetched": 1,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "29696090362"
+    },
+    {
       "date": "2026-07-18",
       "top_paper_id": "3e57077a-4fa6-581b-a1e3-3db8aa6d9bc6",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/16-Apr/Codex_for_almost_everything.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24524130301"
-    },
-    {
-      "date": "2026-04-15",
-      "top_paper_id": "302db7a0-af03-5a6b-881f-1c37234f8abf",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": ""
     }
   ]
 }

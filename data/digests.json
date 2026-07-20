@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-20",
+      "top_paper_id": "c38473b4-b6c1-5430-8609-f23d3dadb80e",
+      "papers_fetched": 2,
+      "pdf_path": "reports/20-Jul/Safety_and_alignment_in_an_era_of_long-horizon_mod.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "29766541387"
+    },
+    {
       "date": "2026-07-19",
       "top_paper_id": null,
       "papers_fetched": 1,
@@ -711,14 +719,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "24576923811"
-    },
-    {
-      "date": "2026-04-16",
-      "top_paper_id": "f005593a-6134-5b3d-8940-9e68d2467656",
-      "papers_fetched": 1,
-      "pdf_path": "reports/16-Apr/Codex_for_almost_everything.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24524130301"
     }
   ]
 }

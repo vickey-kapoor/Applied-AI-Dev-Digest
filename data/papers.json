@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "c38473b4-b6c1-5430-8609-f23d3dadb80e",
+      "title": "Safety and alignment in an era of long-horizon models",
+      "summary": "OpenAI shares lessons from deploying long-running AI models, highlighting new safety risks, observed failures, and improved safeguards through iterative deployment.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/safety-alignment-long-horizon-models",
+      "published_at": "2026-07-20T10:00:00",
+      "fetched_at": "2026-07-20T18:09:47.471365Z",
+      "type": "announcement",
+      "topics": [
+        "Alignment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "3e57077a-4fa6-581b-a1e3-3db8aa6d9bc6",
       "title": "Endogenous Alignment",
       "summary": "Starting when children are fairly young, usually around 1 year of age, we adults begin the work of aligning them to our values. We teach them to say “please”, not to hit, to ask for what they want instead of screaming, and much else. We do this primarily via exogenous methods, using a combination of punishments and rewards, that molds their behavior by encouraging good behaviors and discouraging bad ones.Such operant conditioning works because children have many instinctive behaviors that mak...",

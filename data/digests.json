@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-21",
+      "top_paper_id": "",
+      "papers_fetched": 1,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "29852955917"
+    },
+    {
       "date": "2026-07-20",
       "top_paper_id": "c38473b4-b6c1-5430-8609-f23d3dadb80e",
       "papers_fetched": 2,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/18-Apr/Ecom-RLVE_Adaptive_Verifiable_Environments_for_E-.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24609335527"
-    },
-    {
-      "date": "2026-04-17",
-      "top_paper_id": "",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "24576923811"
     }
   ]
 }

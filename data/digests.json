@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-22",
+      "top_paper_id": "e6d6052f-879a-54b6-82b5-a2d6a7af9cae",
+      "papers_fetched": 1,
+      "pdf_path": "reports/22-Jul/OpenAI_and_Hugging_Face_address_security_incident.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "29942229313"
+    },
+    {
       "date": "2026-07-21",
       "top_paper_id": "",
       "papers_fetched": 1,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/19-Apr/Optimizing_Effective_Training_Time_for_Metas_Inte.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24634983500"
-    },
-    {
-      "date": "2026-04-18",
-      "top_paper_id": "ae12e3e9-8e09-550f-ab4d-f189c7b9bb74",
-      "papers_fetched": 3,
-      "pdf_path": "reports/18-Apr/Ecom-RLVE_Adaptive_Verifiable_Environments_for_E-.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24609335527"
     }
   ]
 }

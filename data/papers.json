@@ -1,6 +1,21 @@
 {
   "papers": [
     {
+      "id": "e6d6052f-879a-54b6-82b5-a2d6a7af9cae",
+      "title": "OpenAI and Hugging Face address security incident during model evaluation",
+      "summary": "1488 points · 1035 comments",
+      "source": "Hacker News",
+      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
+      "published_at": "2026-07-21T20:09:52+00:00",
+      "fetched_at": "2026-07-22T17:25:33.172083Z",
+      "type": "discussion",
+      "topics": [
+        "Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "c38473b4-b6c1-5430-8609-f23d3dadb80e",
       "title": "Safety and alignment in an era of long-horizon models",
       "summary": "OpenAI shares lessons from deploying long-running AI models, highlighting new safety risks, observed failures, and improved safeguards through iterative deployment.",

@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-07-23",
+      "top_paper_id": "9b3d5fb0-34ec-55db-bd0b-0ab7bf0d4288",
+      "papers_fetched": 1,
+      "pdf_path": "reports/23-Jul/Are_we_existentially_threatened_by_the_type_of_AI.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "30030071635"
+    },
+    {
       "date": "2026-07-22",
       "top_paper_id": "e6d6052f-879a-54b6-82b5-a2d6a7af9cae",
       "papers_fetched": 1,
@@ -711,14 +719,6 @@
       "pdf_path": "reports/20-Apr/ToolSimulator_scalable_tool_testing_for_AI_agents.pdf",
       "telegram_sent": true,
       "workflow_run_id": "24680010814"
-    },
-    {
-      "date": "2026-04-19",
-      "top_paper_id": "1db5f7ca-2160-5047-a244-10e0a68fa135",
-      "papers_fetched": 7,
-      "pdf_path": "reports/19-Apr/Optimizing_Effective_Training_Time_for_Metas_Inte.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "24634983500"
     }
   ]
 }

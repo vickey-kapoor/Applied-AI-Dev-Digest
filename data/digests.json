@@ -2,13 +2,13 @@
   "digests": [
     {
       "date": "2026-09-07",
-      "run_at": "2026-09-07T21:54:55.679184Z",
-      "top_paper_id": "5ddf0707-ed02-5b5f-b0d7-c9427cfaa9a8",
+      "run_at": "2026-09-07T23:59:21.288130Z",
+      "top_paper_id": null,
       "papers_fetched": 1,
       "pdf_path": "reports/07-Sep/Research_acceleration_The_view_inside_OpenAI.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "34164793821",
-      "previous_run_at": "2026-09-07T18:49:18.180392Z"
+      "telegram_sent": false,
+      "workflow_run_id": "34171809634",
+      "previous_run_at": "2026-09-07T21:54:55.679184Z"
     },
     {
       "date": "2026-09-06",

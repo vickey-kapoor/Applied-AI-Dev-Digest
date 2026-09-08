@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-08",
+      "run_at": "2026-09-08T04:21:48.327249Z",
+      "top_paper_id": "5ddf0707-ed02-5b5f-b0d7-c9427cfaa9a8",
+      "papers_fetched": 1,
+      "pdf_path": "reports/08-Sep/Research_acceleration_The_view_inside_OpenAI.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "34186696017"
+    },
+    {
       "date": "2026-09-07",
       "run_at": "2026-09-07T23:59:21.288130Z",
       "top_paper_id": null,
@@ -720,14 +729,6 @@
       "pdf_path": "reports/07-Jun/My_research_a_computational_cognitive_neuroscienc.pdf",
       "telegram_sent": false,
       "workflow_run_id": "27100413383"
-    },
-    {
-      "date": "2026-06-06",
-      "top_paper_id": "",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "27068851772"
     }
   ]
 }

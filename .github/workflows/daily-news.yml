@@ -2,12 +2,16 @@ name: Daily Applied AI Dev Digest
 
 # Sends daily AI research digest to Telegram
 
-# Polls every 15 minutes; src/schedule_guard.py decides whether anything is
+# Polls hourly; src/schedule_guard.py decides whether anything is
 # actually due. A single daily cron cannot hold a delivery time here: GitHub's
 # scheduled delivery is best-effort and this workflow has arrived between 30
 # minutes and 5h23m after its slot, which put the digest anywhere from late
 # morning to evening. Polling means a late tick is simply followed by another,
-# so the digest lands within about one interval of the target.
+# so the digest lands within about an hour of the target.
+#
+# The poll was every 15 minutes at first. GitHub honoured roughly one tick
+# in twelve at that rate, with gaps of 1.5 to 4.5 hours, so the nominal
+# precision was fiction. Asking for less appears to get more.
 #
 # The target is local noon evaluated in America/Chicago, not a fixed UTC hour,
 # so it stays at noon when CDT gives way to CST in November.
@@ -15,7 +19,7 @@ name: Daily Applied AI Dev Digest
 # Almost every tick exits at the guard step: no pip install, no fetching.
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
     inputs:
       job:
@@ -93,7 +97,7 @@ jobs:
 
       # Routing is driven by the guard's own decision, not by which cron
       # fired. Keying off github.event.schedule broke the moment the two
-      # daily/weekly crons collapsed into a single */15 poll: the string
+      # daily/weekly crons collapsed into a single polling cron: the string
       # never matched again, so every tick took the daily branch and the
       # weekly roundup stopped running entirely.
       - name: Send the daily digest

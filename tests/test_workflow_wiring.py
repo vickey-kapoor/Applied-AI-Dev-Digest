@@ -5,7 +5,7 @@ sent four to five times a day for three days: the workflow called `check` but
 never called `mark`, so last_daily_date was never written and every tick after
 noon read as due. The same release keyed weekly routing off
 github.event.schedule, which stopped matching the moment the two crons became
-one */15 poll, so the weekly roundup never ran at all.
+a single polling cron, so the weekly roundup never ran at all.
 
 Neither bug was reachable from a unit test of the guard — both lived in the
 YAML. These tests read the workflow itself, so the wiring is covered too.

@@ -2,12 +2,13 @@
   "digests": [
     {
       "date": "2026-09-08",
-      "run_at": "2026-09-08T04:21:48.327249Z",
-      "top_paper_id": "5ddf0707-ed02-5b5f-b0d7-c9427cfaa9a8",
-      "papers_fetched": 1,
-      "pdf_path": "reports/08-Sep/Research_acceleration_The_view_inside_OpenAI.pdf",
+      "run_at": "2026-09-08T17:23:29.770209Z",
+      "top_paper_id": "cc7c3973-afae-530e-8f76-81561db34e10",
+      "papers_fetched": 2,
+      "pdf_path": "reports/08-Sep/Multi-Agents_LLM_Financial_Trading_Framework.pdf",
       "telegram_sent": true,
-      "workflow_run_id": "34186696017"
+      "workflow_run_id": "34256749874",
+      "previous_run_at": "2026-09-08T04:21:48.327249Z"
     },
     {
       "date": "2026-09-07",

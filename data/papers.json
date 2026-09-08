@@ -1,6 +1,45 @@
 {
   "papers": [
     {
+      "id": "cc7c3973-afae-530e-8f76-81561db34e10",
+      "title": "Multi-Agents LLM Financial Trading Framework",
+      "summary": "A Multi-Agents LLM Financial Trading Framework was released by an unspecified lab. The framework is designed for multi-agent financial trading, leveraging language models for decision-making in trading scenarios. Specific performance benchmarks, context lengths, and quality metrics were not provided.",
+      "source": "Hacker News",
+      "url": "https://github.com/TauricResearch/TradingAgents",
+      "published_at": "2026-09-08T05:20:23+00:00",
+      "fetched_at": "2026-09-08T17:23:28.927794Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "A Multi-Agents LLM Financial Trading Framework was released by an unspecified lab.",
+      "capabilities": "The framework is designed for multi-agent financial trading, leveraging language models for decision-making in trading scenarios. Specific performance benchmarks, context lengths, and quality metrics were not provided.",
+      "availability": "Details on how to access the framework, such as pricing, availability regions, or whether it is offered as an API or application, were not stated.",
+      "why_it_matters": "This framework potentially enables more sophisticated trading strategies through the integration of multiple agents, enhancing decision-making in financial markets.",
+      "caveats": "The claims regarding its capabilities and performance have not been verified, and there is a lack of detailed documentation on its implementation and access.",
+      "release_type": "product"
+    },
+    {
+      "id": "0458ef20-3479-54dc-a9b4-753df835b2ea",
+      "title": "Mistral raises €3B",
+      "summary": "724 points · 524 comments",
+      "source": "Hacker News",
+      "url": "https://mistral.ai/news/mistral-makes-sovereign-open-weight-ai-to-frontier/",
+      "published_at": "2026-09-08T05:06:23+00:00",
+      "fetched_at": "2026-09-08T17:23:28.927794Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "5ddf0707-ed02-5b5f-b0d7-c9427cfaa9a8",
       "title": "Research acceleration: The view inside OpenAI",
       "summary": "OpenAI has released insights into the usage of coding agents in AI research. The coding agents are designed to accelerate research by improving experiment velocity and handling complex tasks. Early data indicates that these agents can manage a higher task complexity compared to traditional methods, although specific benchmark numbers are not provided.",

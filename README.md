@@ -184,8 +184,8 @@ between 30 minutes and 5h23m after their slot — enough to put a "daily" digest
 anywhere from late morning to evening, and occasionally past midnight onto the
 next date.
 
-So the workflow polls every 15 minutes and `src/schedule_guard.py` decides
-whether anything is actually due:
+So the workflow polls hourly and `src/schedule_guard.py` decides whether
+anything is actually due:
 
 | Condition | Daily | Weekly |
 |---|---|---|
@@ -194,8 +194,9 @@ whether anything is actually due:
 | Already ran today | skip | skip |
 
 A late tick is simply followed by another, so the digest lands within roughly
-one interval of the target rather than hours away. Almost every tick exits at
-the guard step — no dependency install, no fetching — so a no-op costs seconds.
+an hour of the target rather than anywhere in the day. Almost every tick exits
+at the guard step — no dependency install, no fetching — so a no-op costs
+seconds.
 
 **Daylight saving.** The target is evaluated in `America/Chicago`, not as a
 fixed UTC hour. Cron only understands UTC, so a fixed hour would silently slip
@@ -222,7 +223,12 @@ the cron:
 manual dispatch bypasses the guard, so it sends immediately regardless of the
 time or whether today's digest already went out.
 
-**Trade-off.** The Actions tab gets ~96 entries a day instead of one. Actions
+**Why hourly, not every 15 minutes.** The poll started at `*/15`. GitHub
+honoured roughly one tick in twelve at that rate, with observed gaps of 1.5 to
+4.5 hours, so the finer interval was precision on paper only. Asking for less
+appears to get more.
+
+**Trade-off.** The Actions tab gets ~24 entries a day instead of one. Actions
 minutes are free on public repositories, so this costs nothing but list noise.
 
 ## Local Development
@@ -285,7 +291,7 @@ digest.
 Applied-AI-Dev-Digest/
 ├── .github/workflows/
 │   ├── ci.yml                    # Tests + typecheck/lint on every PR
-│   └── daily-news.yml            # 15-minute poll; schedule_guard decides what runs
+│   └── daily-news.yml            # Hourly poll; schedule_guard decides what runs
 ├── src/
 │   ├── fetchers/
 │   │   ├── blog_fetcher.py       # RSS fetch from 11 AI lab/platform blogs

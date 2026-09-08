@@ -2,10 +2,14 @@
 
 GitHub's scheduled delivery is best-effort: measured on this repo, a single
 daily cron arrived between 30 minutes and 5h23m after its slot, which put the
-"daily" digest anywhere from late morning to evening. Firing a cheap poll every
-15 minutes and running the digest on the first poll that lands after the target
-local time converts that into "within roughly a poll interval of noon", because
-a delayed poll is simply followed by another one.
+"daily" digest anywhere from late morning to evening. Firing a cheap hourly
+poll and running the digest on the first poll that lands after the target local
+time converts that into "within roughly an hour of noon", because a delayed
+poll is simply followed by another one.
+
+The poll ran every 15 minutes at first. GitHub honoured about one tick in
+twelve at that rate — measured gaps of 1.5 to 4.5 hours — so the finer
+interval bought nothing and asking for less appears to get more.
 
 The target is evaluated in America/Chicago rather than a fixed UTC hour, so the
 digest stays at local noon when CDT gives way to CST in November. A UTC cron

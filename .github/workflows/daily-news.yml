@@ -91,8 +91,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Applied AI dev digest
-        if: steps.guard.outputs.daily == 'true' || steps.guard.outputs.weekly == 'true'
+      # Routing is driven by the guard's own decision, not by which cron
+      # fired. Keying off github.event.schedule broke the moment the two
+      # daily/weekly crons collapsed into a single */15 poll: the string
+      # never matched again, so every tick took the daily branch and the
+      # weekly roundup stopped running entirely.
+      - name: Send the daily digest
+        if: steps.guard.outputs.daily == 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -101,21 +106,30 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
           KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
           KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
-          # Passed as env rather than interpolated into the script body:
-          # ${{ }} inside run: splices text straight into the shell.
-          TRIGGER_SCHEDULE: ${{ github.event.schedule }}
-        run: |
-          # Route by which schedule fired. Previously both crons fell through
-          # to main.py, so every Sunday sent two daily digests an hour apart
-          # on top of the weekly roundup. TRIGGER_SCHEDULE is empty for a
-          # manual dispatch, which falls through to the daily digest.
-          if [ "$TRIGGER_SCHEDULE" = "17 17 * * 0" ]; then
-            echo "Weekly schedule — sending the roundup only"
-            python weekly_digest.py
-          else
-            echo "Daily schedule — sending the daily digest"
-            python main.py
-          fi
+        run: python main.py
+
+      # Marked only after the send succeeds: a step with an `if:` also
+      # requires every earlier step to have passed, so a failed send leaves
+      # the day unmarked and the next tick retries it.
+      - name: Record the daily run
+        if: steps.guard.outputs.daily == 'true'
+        run: python -m src.schedule_guard mark daily
+
+      - name: Send the weekly roundup
+        if: steps.guard.outputs.weekly == 'true'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
+          KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
+        run: python weekly_digest.py
+
+      - name: Record the weekly run
+        if: steps.guard.outputs.weekly == 'true'
+        run: python -m src.schedule_guard mark weekly
 
       - name: Commit and push reports and data
         if: steps.guard.outputs.daily == 'true' || steps.guard.outputs.weekly == 'true'

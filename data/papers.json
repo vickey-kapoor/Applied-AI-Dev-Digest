@@ -1,6 +1,61 @@
 {
   "papers": [
     {
+      "id": "b65244e3-f2ac-5a17-9f9a-137363785692",
+      "title": "transformers v5.17.0 released",
+      "summary": "Transformers v5.17.0 was released, featuring the HYV4 model. HYV4 is a 780 billion parameter mixture-of-experts language model that activates 49 billion parameters per token. It has a context window of 1 million tokens and uses a routing mechanism that selects 8 experts from 256 available per token.",
+      "source": "GitHub",
+      "url": "https://github.com/huggingface/transformers/releases/tag/v5.17.0",
+      "published_at": "2026-09-09T15:42:45Z",
+      "fetched_at": "2026-09-09T18:23:48.956152Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Product & API"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Transformers v5.17.0 was released, featuring the HYV4 model.",
+      "capabilities": "HYV4 is a 780 billion parameter mixture-of-experts language model that activates 49 billion parameters per token. It has a context window of 1 million tokens and uses a routing mechanism that selects 8 experts from 256 available per token.",
+      "availability": "The availability details are not stated in the description.",
+      "why_it_matters": "This model offers a significant increase in context length and parameter efficiency, which can enhance performance in complex language tasks and applications requiring extensive context.",
+      "caveats": "The claims regarding performance and efficiency are unverified, and specific benchmark results or comparisons to previous models are not provided.",
+      "release_type": "model"
+    },
+    {
+      "id": "7ef32275-b72f-59fe-a5c2-c0ccdd2d0438",
+      "title": "GPT-6 Astra, looped transformers, and hidden reasoning",
+      "summary": "183 points · 66 comments",
+      "source": "Hacker News",
+      "url": "https://magazine.sebastianraschka.com/p/gpt-6-astra-looped-transformers-and",
+      "published_at": "2026-09-09T14:37:47+00:00",
+      "fetched_at": "2026-09-09T18:23:48.956152Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "1e446b17-65d7-5be7-87b5-e03375e95c6b",
+      "title": "DeepSeek launching v4.1 flash cheaper and more capable than v4 pro",
+      "summary": "363 points · 185 comments",
+      "source": "Hacker News",
+      "url": "https://news.ycombinator.com/item?id=49624603",
+      "published_at": "2026-09-09T11:19:26+00:00",
+      "fetched_at": "2026-09-09T18:23:48.956152Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "cc7c3973-afae-530e-8f76-81561db34e10",
       "title": "Multi-Agents LLM Financial Trading Framework",
       "summary": "A Multi-Agents LLM Financial Trading Framework was released by an unspecified lab. The framework is designed for multi-agent financial trading, leveraging language models for decision-making in trading scenarios. Specific performance benchmarks, context lengths, and quality metrics were not provided.",

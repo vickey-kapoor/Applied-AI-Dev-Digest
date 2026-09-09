@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-09",
+      "run_at": "2026-09-09T18:23:51.138699Z",
+      "top_paper_id": "b65244e3-f2ac-5a17-9f9a-137363785692",
+      "papers_fetched": 3,
+      "pdf_path": "reports/09-Sep/transformers_v5170_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "34388675464"
+    },
+    {
       "date": "2026-09-08",
       "run_at": "2026-09-08T17:23:29.770209Z",
       "top_paper_id": "cc7c3973-afae-530e-8f76-81561db34e10",
@@ -722,14 +731,6 @@
       "pdf_path": "reports/08-Jun/My_research_a_computational_cognitive_neuroscienc.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27158489870"
-    },
-    {
-      "date": "2026-06-07",
-      "top_paper_id": null,
-      "papers_fetched": 1,
-      "pdf_path": "reports/07-Jun/My_research_a_computational_cognitive_neuroscienc.pdf",
-      "telegram_sent": false,
-      "workflow_run_id": "27100413383"
     }
   ]
 }

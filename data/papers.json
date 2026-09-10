@@ -1,6 +1,45 @@
 {
   "papers": [
     {
+      "id": "53142528-7498-5f81-a0cb-ccadb59f8586",
+      "title": "Cognition launches new SWE-2 model, Rivaling Fable 5.1 and GPT-Astra",
+      "summary": "Cognition launched the SWE-2 model. The SWE-2 model reportedly rivals the Fable 5.1 and GPT-Astra, though specific performance metrics such as context length and benchmark numbers are not provided in the description. Claims regarding speed or quality are also not detailed.",
+      "source": "Hacker News",
+      "url": "https://cognition.com/blog/swe-2",
+      "published_at": "2026-09-10T15:29:47+00:00",
+      "fetched_at": "2026-09-10T17:34:55.530343Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Cognition launched the SWE-2 model.",
+      "capabilities": "The SWE-2 model reportedly rivals the Fable 5.1 and GPT-Astra, though specific performance metrics such as context length and benchmark numbers are not provided in the description. Claims regarding speed or quality are also not detailed.",
+      "availability": "The availability details for the SWE-2 model are not stated in the description.",
+      "why_it_matters": "The launch of the SWE-2 model introduces competition for existing models like Fable 5.1 and GPT-Astra, potentially impacting pricing and feature development in the AI model space.",
+      "caveats": "The lack of specific performance metrics and availability information means that claims about the SWE-2 model's capabilities remain unverified, and details surrounding its practical applications are limited.",
+      "release_type": "model"
+    },
+    {
+      "id": "31b6c2b7-3edb-559e-af06-28a69ceca177",
+      "title": "DeepSeek v4.1 Flash",
+      "summary": "787 points · 426 comments",
+      "source": "Hacker News",
+      "url": "https://twitter.com/deepseek_ai/status/2097930608790167907",
+      "published_at": "2026-09-10T06:11:05+00:00",
+      "fetched_at": "2026-09-10T17:34:55.530343Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "b65244e3-f2ac-5a17-9f9a-137363785692",
       "title": "transformers v5.17.0 released",
       "summary": "Transformers v5.17.0 was released, featuring the HYV4 model. HYV4 is a 780 billion parameter mixture-of-experts language model that activates 49 billion parameters per token. It has a context window of 1 million tokens and uses a routing mechanism that selects 8 experts from 256 available per token.",

@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-10",
+      "run_at": "2026-09-10T17:34:56.447077Z",
+      "top_paper_id": "53142528-7498-5f81-a0cb-ccadb59f8586",
+      "papers_fetched": 2,
+      "pdf_path": "reports/10-Sep/Cognition_launches_new_SWE-2_model_Rivaling_Fable.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "34509033749"
+    },
+    {
       "date": "2026-09-09",
       "run_at": "2026-09-09T18:23:51.138699Z",
       "top_paper_id": "b65244e3-f2ac-5a17-9f9a-137363785692",
@@ -723,14 +732,6 @@
       "pdf_path": "reports/09-Jun/System_Card_Claude_Fable_5_and_Claude_Mythos_5_p.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27226281824"
-    },
-    {
-      "date": "2026-06-08",
-      "top_paper_id": "2a135729-114f-5c42-a08a-39c7e6d38f25",
-      "papers_fetched": 1,
-      "pdf_path": "reports/08-Jun/My_research_a_computational_cognitive_neuroscienc.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "27158489870"
     }
   ]
 }

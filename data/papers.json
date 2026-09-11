@@ -1,6 +1,44 @@
 {
   "papers": [
     {
+      "id": "c74fd0d7-e491-518b-9b36-ab8ac90141f1",
+      "title": "RTK reports token savings, but our cost benchmarks disagree",
+      "summary": "RTK reports token savings, but specific model or product details are not stated. The report discusses token savings but does not provide clear metrics or performance benchmarks. It does not specify any capabilities related to modalities, context length, or quality claims.",
+      "source": "Hacker News",
+      "url": "https://quesma.com/blog/does-rtk-make-ai-coding-cheaper/",
+      "published_at": "2026-09-11T11:15:13+00:00",
+      "fetched_at": "2026-09-11T18:17:22.561846Z",
+      "type": "discussion",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "RTK reports token savings, but specific model or product details are not stated.",
+      "capabilities": "The report discusses token savings but does not provide clear metrics or performance benchmarks. It does not specify any capabilities related to modalities, context length, or quality claims.",
+      "availability": "Not stated.",
+      "why_it_matters": "The report highlights potential cost savings in token usage, which could impact budget considerations for developers using AI models.",
+      "caveats": "The claims of token savings are not verified against established benchmarks, and there may be discrepancies with existing cost benchmarks.",
+      "release_type": "report"
+    },
+    {
+      "id": "10f4aaaa-2bdf-54e5-982f-9f74e471ab93",
+      "title": "Claude is only available to people over 18 years",
+      "summary": "385 points · 452 comments",
+      "source": "Hacker News",
+      "url": "https://support.claude.com/en/articles/15171100-age-assurance-on-claude",
+      "published_at": "2026-09-11T10:48:00+00:00",
+      "fetched_at": "2026-09-11T18:17:22.561846Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "53142528-7498-5f81-a0cb-ccadb59f8586",
       "title": "Cognition launches new SWE-2 model, Rivaling Fable 5.1 and GPT-Astra",
       "summary": "Cognition launched the SWE-2 model. The SWE-2 model reportedly rivals the Fable 5.1 and GPT-Astra, though specific performance metrics such as context length and benchmark numbers are not provided in the description. Claims regarding speed or quality are also not detailed.",

@@ -1,6 +1,28 @@
 {
   "papers": [
     {
+      "id": "1eedd46e-11e0-5067-89bb-80c6f173fa04",
+      "title": "OpenAI agents carried out an undisclosed attack on RubyGems",
+      "summary": "Not stated Not stated",
+      "source": "Hacker News",
+      "url": "https://www.rubyhack.ai/",
+      "published_at": "2026-09-11T23:17:42+00:00",
+      "fetched_at": "2026-09-12T19:03:06.139539Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Not stated",
+      "capabilities": "Not stated",
+      "availability": "Not stated",
+      "why_it_matters": "The incident raises concerns about the security of open-source package managers and the potential for AI to be misused in cyberattacks.",
+      "caveats": "Details about the specific nature of the attack, the models or agents involved, and the impact on RubyGems users are not provided.",
+      "release_type": "Not applicable"
+    },
+    {
       "id": "c74fd0d7-e491-518b-9b36-ab8ac90141f1",
       "title": "RTK reports token savings, but our cost benchmarks disagree",
       "summary": "RTK reports token savings, but specific model or product details are not stated. The report discusses token savings but does not provide clear metrics or performance benchmarks. It does not specify any capabilities related to modalities, context length, or quality claims.",

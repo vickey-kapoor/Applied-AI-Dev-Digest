@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-12",
+      "run_at": "2026-09-12T19:03:07.011363Z",
+      "top_paper_id": "1eedd46e-11e0-5067-89bb-80c6f173fa04",
+      "papers_fetched": 1,
+      "pdf_path": "reports/12-Sep/OpenAI_agents_carried_out_an_undisclosed_attack_on.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "34712989940"
+    },
+    {
       "date": "2026-09-11",
       "run_at": "2026-09-11T18:17:23.444907Z",
       "top_paper_id": "c74fd0d7-e491-518b-9b36-ab8ac90141f1",
@@ -725,14 +734,6 @@
       "pdf_path": "reports/11-Jun/Models_May_Behave_Worse_When_Eval_Aware.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27369892105"
-    },
-    {
-      "date": "2026-06-10",
-      "top_paper_id": "3eb8bd7b-2d1d-5841-b179-686aeb99dea9",
-      "papers_fetched": 2,
-      "pdf_path": "reports/10-Jun/Sequent_scale_and_automation_for_higher_confidenc.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "27297677178"
     }
   ]
 }

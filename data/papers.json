@@ -1,6 +1,45 @@
 {
   "papers": [
     {
+      "id": "3ad82b30-4e1c-56ae-892d-5207a7b42c5f",
+      "title": "David Sacks: OpenAI and Anthropic Don't Need Regulations to Pace Frontier Models",
+      "summary": "Not stated Not stated",
+      "source": "Hacker News",
+      "url": "https://twitter.com/DavidSacks/status/2098973625252708460",
+      "published_at": "2026-09-13T16:52:33+00:00",
+      "fetched_at": "2026-09-13T18:38:38.276560Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Not stated",
+      "capabilities": "Not stated",
+      "availability": "Not stated",
+      "why_it_matters": "Not stated",
+      "caveats": "Not stated",
+      "release_type": "Not stated"
+    },
+    {
+      "id": "989505c8-c819-51d8-962d-b9e08bd834da",
+      "title": "Garry Tan wants US open-weight AI labs to 'distill' frontier models, too",
+      "summary": "175 points · 78 comments",
+      "source": "Hacker News",
+      "url": "https://techcrunch.com/2026/09/11/y-combinators-garry-tan-wants-u-s-open-weight-ai-labs-to-distill-frontier-models-too/",
+      "published_at": "2026-09-13T15:44:38+00:00",
+      "fetched_at": "2026-09-13T18:38:38.276560Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "1eedd46e-11e0-5067-89bb-80c6f173fa04",
       "title": "OpenAI agents carried out an undisclosed attack on RubyGems",
       "summary": "Not stated Not stated",

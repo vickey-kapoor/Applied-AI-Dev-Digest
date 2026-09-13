@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-13",
+      "run_at": "2026-09-13T18:38:39.210249Z",
+      "top_paper_id": "3ad82b30-4e1c-56ae-892d-5207a7b42c5f",
+      "papers_fetched": 2,
+      "pdf_path": "reports/13-Sep/David_Sacks_OpenAI_and_Anthropic_Dont_Need_Regul.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "34775239826"
+    },
+    {
       "date": "2026-09-12",
       "run_at": "2026-09-12T19:03:07.011363Z",
       "top_paper_id": "1eedd46e-11e0-5067-89bb-80c6f173fa04",
@@ -726,14 +735,6 @@
       "pdf_path": "reports/12-Jun/Building_and_evaluating_model_diffing_agents.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27434180292"
-    },
-    {
-      "date": "2026-06-11",
-      "top_paper_id": "0a52ad7f-fe29-5e55-9ad3-b2a25aaf068e",
-      "papers_fetched": 3,
-      "pdf_path": "reports/11-Jun/Models_May_Behave_Worse_When_Eval_Aware.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "27369892105"
     }
   ]
 }

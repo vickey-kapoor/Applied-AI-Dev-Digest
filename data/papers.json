@@ -1,6 +1,61 @@
 {
   "papers": [
     {
+      "id": "257c19c5-b9b5-587b-9afd-8d0f5cd2a2ac",
+      "title": "llama.cpp v0.4.1 released",
+      "summary": "llama.cpp version 0.4.1 was released by the llama.cpp project. This version adds support for the Maple 20B-A1B, Tencent Hy 4, and Spark2.5 models. It also improves JSON schema handling, chat parsing, logging, server child-process management, and updates ggml to version 0.24.0.",
+      "source": "GitHub",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/v0.4.1",
+      "published_at": "2026-09-14T18:27:29Z",
+      "fetched_at": "2026-09-14T20:48:10.094124Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "llama.cpp version 0.4.1 was released by the llama.cpp project.",
+      "capabilities": "This version adds support for the Maple 20B-A1B, Tencent Hy 4, and Spark2.5 models. It also improves JSON schema handling, chat parsing, logging, server child-process management, and updates ggml to version 0.24.0.",
+      "availability": "The release is available on GitHub. Pricing and tiers are not stated.",
+      "why_it_matters": "The addition of support for new models enhances the versatility of the llama.cpp framework, potentially enabling users to leverage more advanced capabilities in their applications.",
+      "caveats": "Specific performance benchmarks, context lengths, or detailed capabilities of the newly supported models are not provided in the description.",
+      "release_type": "infrastructure"
+    },
+    {
+      "id": "f1a5431d-bba0-54c9-8eb9-4ff4d5f4913d",
+      "title": "Perplexity Portable Computer Is Now Available on Windows, Powered by NVIDIA RTX",
+      "summary": "As local models become more capable, AI agents can handle more work directly on a PC while keeping sensitive information on the device. Portable Computer is a local version of the agent Perplexity Computer that plans and carries out multistep tasks. Accelerated by NVIDIA GPUs, it uses local models to analyze data, bring together information […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/local-ai-perplexity-windows-pcs/",
+      "published_at": "2026-09-14T15:00:52+00:00",
+      "fetched_at": "2026-09-14T20:48:10.094124Z",
+      "type": "announcement",
+      "topic_id": "product_api",
+      "topics": [
+        "Product & API",
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ffdca60c-0f5a-558c-9cee-e646abb2c800",
+      "title": "Apple's Siri AI Can Be Swapped Out for Claude, ChatGPT, Code Shows",
+      "summary": "212 points · 147 comments",
+      "source": "Hacker News",
+      "url": "https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/",
+      "published_at": "2026-09-14T12:01:32+00:00",
+      "fetched_at": "2026-09-14T20:48:10.094124Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "3ad82b30-4e1c-56ae-892d-5207a7b42c5f",
       "title": "David Sacks: OpenAI and Anthropic Don't Need Regulations to Pace Frontier Models",
       "summary": "Not stated Not stated",

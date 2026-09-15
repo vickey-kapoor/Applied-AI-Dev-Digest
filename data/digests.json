@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-15",
+      "run_at": "2026-09-15T18:47:11.268822Z",
+      "top_paper_id": "f1a5431d-bba0-54c9-8eb9-4ff4d5f4913d",
+      "papers_fetched": 3,
+      "pdf_path": "reports/15-Sep/Perplexity_Portable_Computer_Is_Now_Available_on_W.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "35009577995"
+    },
+    {
       "date": "2026-09-14",
       "run_at": "2026-09-14T20:48:10.647588Z",
       "top_paper_id": "257c19c5-b9b5-587b-9afd-8d0f5cd2a2ac",
@@ -728,14 +737,6 @@
       "pdf_path": "reports/14-Jun/Investing_in_multi-agent_AI_safety_research.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27507581270"
-    },
-    {
-      "date": "2026-06-13",
-      "top_paper_id": "2dfdefb2-840c-5e28-b0df-91f4b568549f",
-      "papers_fetched": 3,
-      "pdf_path": "reports/13-Jun/SFT_Drives_Geminis_Safety_Properties.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "27474087359"
     }
   ]
 }

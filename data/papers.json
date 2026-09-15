@@ -1,6 +1,38 @@
 {
   "papers": [
     {
+      "id": "989acb57-bd80-5f15-8883-4926b05dd82c",
+      "title": "There's a 100% Chance AI Agents Are Ruining the Internet",
+      "summary": "172 points · 117 comments",
+      "source": "Hacker News",
+      "url": "https://www.404media.co/theres-a-100-chance-ai-agents-are-already-ruining-the-internet/",
+      "published_at": "2026-09-15T16:38:45+00:00",
+      "fetched_at": "2026-09-15T18:47:10.371339Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "e0ea2b8e-77ef-56a9-87b8-39382c7347a5",
+      "title": "anthropic-sdk-python v1.6.0 released",
+      "summary": "## 1.6.0 (2026-09-15)\n\nFull Changelog: [v1.5.0...v1.6.0](https://github.com/anthropics/anthropic-sdk-python/compare/v1.5.0...v1.6.0)\n\n### Features\n\n* **api:** add auto mode tool permissions for Managed Agents ([909d92f](https://github.com/anthropics/anthropic-sdk-python/commit/909d92ff57dd27270796407547ffbbf521cf941e))\n* **api:** add compaction parameter and signed compaction blocks (beta) ([8689179](https://github.com/anthropics/anthropic-sdk-python/commit/8689179d2c760f005d0f7736387d352b71f05b",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.6.0",
+      "published_at": "2026-09-15T15:14:42Z",
+      "fetched_at": "2026-09-15T18:47:10.371339Z",
+      "type": "release",
+      "topic_id": "product_api",
+      "topics": [
+        "Product & API"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "257c19c5-b9b5-587b-9afd-8d0f5cd2a2ac",
       "title": "llama.cpp v0.4.1 released",
       "summary": "llama.cpp version 0.4.1 was released by the llama.cpp project. This version adds support for the Maple 20B-A1B, Tencent Hy 4, and Spark2.5 models. It also improves JSON schema handling, chat parsing, logging, server child-process management, and updates ggml to version 0.24.0.",

@@ -1,6 +1,78 @@
 {
   "papers": [
     {
+      "id": "befd0d55-c85a-5239-b42b-a235ba95b48e",
+      "title": "Claude Cowork and chat are now one Claude",
+      "summary": "Claude, the AI chatbot, has integrated its coworking and chat functionalities into a single model called Claude. Claude is designed for conversational interactions and collaborative tasks, though specific performance metrics, context length, and benchmark numbers are not provided in the description.",
+      "source": "Hacker News",
+      "url": "https://claude.com/blog/cowork-is-now-claude",
+      "published_at": "2026-09-16T16:26:25+00:00",
+      "fetched_at": "2026-09-16T19:54:12.307949Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Claude, the AI chatbot, has integrated its coworking and chat functionalities into a single model called Claude.",
+      "capabilities": "Claude is designed for conversational interactions and collaborative tasks, though specific performance metrics, context length, and benchmark numbers are not provided in the description.",
+      "availability": "The integration of Claude is available through an API, but specific pricing, tiers, or geographical availability are not stated.",
+      "why_it_matters": "This integration simplifies user experience by combining coworking and chat functionalities into one platform, which could enhance productivity for developers and users leveraging these capabilities.",
+      "caveats": "The announcement lacks detailed information on performance metrics and specific capabilities, making it difficult to assess the full impact or effectiveness of the new model.",
+      "release_type": "product"
+    },
+    {
+      "id": "71d5c1e7-2a06-597e-b10b-22b2d9802d85",
+      "title": "DeepSeek v4.1 Flash Is Now Our Best Hacking Model",
+      "summary": "140 points · 57 comments",
+      "source": "Hacker News",
+      "url": "https://enclave.ai/blog/deepseek-v41-flash-is-now-our-best-hacking-model",
+      "published_at": "2026-09-16T12:19:55+00:00",
+      "fetched_at": "2026-09-16T19:54:12.307949Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ea693313-ec58-5701-ab08-872597acbc26",
+      "title": "Migrating from closed to open source models, Together",
+      "summary": "Moving from closed to open source models can take weeks, not years. A five-stage playbook: discover, evaluate, adapt, decide, and production.",
+      "source": "Together AI",
+      "url": "https://www.together.ai/blog/migrating-from-closed-to-open-source-models",
+      "published_at": "2026-09-16T00:00:00+00:00",
+      "fetched_at": "2026-09-16T19:54:12.307949Z",
+      "type": "announcement",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals",
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "23bfb5fc-aa28-58ce-907d-c7960e12ea74",
+      "title": "‘Now We Can Know Everything and Do Anything,’ Jensen Huang Says at Dreamforce",
+      "summary": "Know everything. Do anything. That was the message NVIDIA founder and CEO Jensen Huang brought to Salesforce Dreamforce Tuesday, joining CEO Marc Benioff onstage in an appearance that coincided with the announcement of Koa — Salesforce’s first CRM reasoning model, built on NVIDIA Nemotron 3 Super. Huang didn’t just take the stage. He walked into […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/jensen-huang-dreamforce/",
+      "published_at": "2026-09-15T22:24:34+00:00",
+      "fetched_at": "2026-09-16T19:54:12.307949Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "989acb57-bd80-5f15-8883-4926b05dd82c",
       "title": "There's a 100% Chance AI Agents Are Ruining the Internet",
       "summary": "172 points · 117 comments",

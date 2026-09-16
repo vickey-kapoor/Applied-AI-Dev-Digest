@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-16",
+      "run_at": "2026-09-16T19:54:13.102283Z",
+      "top_paper_id": "befd0d55-c85a-5239-b42b-a235ba95b48e",
+      "papers_fetched": 4,
+      "pdf_path": "reports/16-Sep/Claude_Cowork_and_chat_are_now_one_Claude.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "35143295070"
+    },
+    {
       "date": "2026-09-15",
       "run_at": "2026-09-15T18:47:11.268822Z",
       "top_paper_id": "f1a5431d-bba0-54c9-8eb9-4ff4d5f4913d",
@@ -729,14 +738,6 @@
       "pdf_path": "reports/15-Jun/Why_Do_Naive_SFT_Filters_For_Safety_Properties_Fai.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27572220934"
-    },
-    {
-      "date": "2026-06-14",
-      "top_paper_id": "c9e539a5-6545-51bf-8854-a4e2a5a26ba4",
-      "papers_fetched": 4,
-      "pdf_path": "reports/14-Jun/Investing_in_multi-agent_AI_safety_research.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "27507581270"
     }
   ]
 }

@@ -1,6 +1,77 @@
 {
   "papers": [
     {
+      "id": "0606befe-ce9a-52b0-8f40-4e97c575a5ab",
+      "title": "python-genai v2.24.0 released",
+      "summary": "python-genai v2.24.0 was released by Google Cloud. This release adds credential APIs resource to GAOS and introduces new components such as RetrievalCallStep and RetrievalResultStep to the interactions schema and SDKs. Additionally, it implements file upload and download functionalities across Python.",
+      "source": "GitHub",
+      "url": "https://github.com/googleapis/python-genai/releases/tag/v2.24.0",
+      "published_at": "2026-09-16T22:11:13Z",
+      "fetched_at": "2026-09-17T18:02:27.692002Z",
+      "type": "release",
+      "topic_id": "product_api",
+      "topics": [
+        "Product & API",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "python-genai v2.24.0 was released by Google Cloud.",
+      "capabilities": "This release adds credential APIs resource to GAOS and introduces new components such as RetrievalCallStep and RetrievalResultStep to the interactions schema and SDKs. Additionally, it implements file upload and download functionalities across Python.",
+      "availability": "The release is available on GitHub for download. Specific pricing and tier details are not stated.",
+      "why_it_matters": "This update enhances the functionality of the SDKs, allowing for improved interaction capabilities and file management, which can facilitate better integration and usage for developers.",
+      "caveats": "The release notes do not provide benchmark numbers, performance metrics, or any claims regarding speed or quality, leaving some details unverified.",
+      "release_type": "product"
+    },
+    {
+      "id": "81919c4b-7c74-5aa3-98dc-ec151f896f4b",
+      "title": "HarnessTax: How Much Does the Harness Matter for Coding Agents?",
+      "summary": "210 points · 85 comments",
+      "source": "Hacker News",
+      "url": "https://harnesstax.github.io/",
+      "published_at": "2026-09-16T22:10:13+00:00",
+      "fetched_at": "2026-09-17T18:02:27.692002Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "04c646eb-0929-5dd3-9ffe-f2aad036792e",
+      "title": "Xiaomi Mimo 2.6 live post-training dashboard",
+      "summary": "528 points · 149 comments",
+      "source": "Hacker News",
+      "url": "https://mimo.xiaomi.com/rl/",
+      "published_at": "2026-09-16T20:09:18+00:00",
+      "fetched_at": "2026-09-17T18:02:27.692002Z",
+      "type": "discussion",
+      "topic_id": "lab_research",
+      "topics": [
+        "Lab Research"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "1b946db6-1b9a-5251-b5b7-830b5d48e906",
+      "title": "Our framework for reporting model misalignment",
+      "summary": "OpenAI shares a framework for tracking, investigating, and disclosing model misalignment, alongside six reports of unexpected or concerning model behavior.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/model-misalignment-reporting-framework",
+      "published_at": "2026-09-16T17:00:00+00:00",
+      "fetched_at": "2026-09-17T18:02:27.692002Z",
+      "type": "announcement",
+      "topic_id": "safety_system_cards",
+      "topics": [
+        "Safety & System Cards"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "befd0d55-c85a-5239-b42b-a235ba95b48e",
       "title": "Claude Cowork and chat are now one Claude",
       "summary": "Claude, the AI chatbot, has integrated its coworking and chat functionalities into a single model called Claude. Claude is designed for conversational interactions and collaborative tasks, though specific performance metrics, context length, and benchmark numbers are not provided in the description.",

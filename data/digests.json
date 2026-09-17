@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-17",
+      "run_at": "2026-09-17T18:02:28.266391Z",
+      "top_paper_id": "0606befe-ce9a-52b0-8f40-4e97c575a5ab",
+      "papers_fetched": 6,
+      "pdf_path": "reports/17-Sep/python-genai_v2240_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "35256274717"
+    },
+    {
       "date": "2026-09-16",
       "run_at": "2026-09-16T19:54:13.102283Z",
       "top_paper_id": "befd0d55-c85a-5239-b42b-a235ba95b48e",
@@ -730,14 +739,6 @@
       "pdf_path": "reports/16-Jun/Feds_freaked_over_Fable_5_after_fix_this_code_n.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27643334072"
-    },
-    {
-      "date": "2026-06-15",
-      "top_paper_id": "6290a0d2-8292-5f26-a26d-6ff79e6f48b0",
-      "papers_fetched": 3,
-      "pdf_path": "reports/15-Jun/Why_Do_Naive_SFT_Filters_For_Safety_Properties_Fai.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "27572220934"
     }
   ]
 }

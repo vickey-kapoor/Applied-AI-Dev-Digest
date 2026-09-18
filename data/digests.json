@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-18",
+      "run_at": "2026-09-18T18:10:27.767548Z",
+      "top_paper_id": "aa00da19-9818-5924-b96a-f9a8d411ddf9",
+      "papers_fetched": 6,
+      "pdf_path": "reports/18-Sep/anthropic-sdk-python_v170_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "35378559610"
+    },
+    {
       "date": "2026-09-17",
       "run_at": "2026-09-17T18:02:28.266391Z",
       "top_paper_id": "0606befe-ce9a-52b0-8f40-4e97c575a5ab",
@@ -731,14 +740,6 @@
       "pdf_path": "reports/17-Jun/GLM_52_Performance_Benchmarks.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27710731716"
-    },
-    {
-      "date": "2026-06-16",
-      "top_paper_id": "f438abb4-f330-500a-8cac-ba0d86cbf082",
-      "papers_fetched": 5,
-      "pdf_path": "reports/16-Jun/Feds_freaked_over_Fable_5_after_fix_this_code_n.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "27643334072"
     }
   ]
 }

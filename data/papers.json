@@ -1,6 +1,77 @@
 {
   "papers": [
     {
+      "id": "aa00da19-9818-5924-b96a-f9a8d411ddf9",
+      "title": "anthropic-sdk-python v1.7.0 released",
+      "summary": "Anthropic released version 1.7.0 of the anthropic-sdk-python. This version includes a new feature to add a group with display_name to rate limits and deprecates the group_type. Additionally, it introduces a function called compact_before_next_turn() for the tool runner.",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.7.0",
+      "published_at": "2026-09-18T16:12:53Z",
+      "fetched_at": "2026-09-18T18:10:26.437652Z",
+      "type": "release",
+      "topic_id": "product_api",
+      "topics": [
+        "Product & API"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Anthropic released version 1.7.0 of the anthropic-sdk-python.",
+      "capabilities": "This version includes a new feature to add a group with display_name to rate limits and deprecates the group_type. Additionally, it introduces a function called compact_before_next_turn() for the tool runner.",
+      "availability": "The SDK is available on GitHub for download. There are no specific pricing details or access tiers stated.",
+      "why_it_matters": "This release may improve user management of rate limits and enhance the functionality of the tool runner, potentially streamlining development processes for users.",
+      "caveats": "The release notes do not provide detailed benchmarks or performance metrics related to these new features, and the impact of these changes on existing workflows is not elaborated.",
+      "release_type": "product"
+    },
+    {
+      "id": "3eb467cd-9cf9-5db4-9897-7f2c503dadb8",
+      "title": "An empirical study of harness design for coding agents",
+      "summary": "183 points · 41 comments",
+      "source": "Hacker News",
+      "url": "https://arxiv.org/abs/2609.20804",
+      "published_at": "2026-09-18T13:06:30+00:00",
+      "fetched_at": "2026-09-18T18:10:26.437652Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "880e8c6b-06f1-5ae3-bf98-4a8cd819e598",
+      "title": "ZCode, the GLM coding agent, silently uploads your Git history",
+      "summary": "253 points · 64 comments",
+      "source": "Hacker News",
+      "url": "https://tokenstead.ai/guides/zcode-silent-git-history-upload",
+      "published_at": "2026-09-18T10:35:28+00:00",
+      "fetched_at": "2026-09-18T18:10:26.437652Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7334225d-2bec-5a49-8acd-4f967a173f38",
+      "title": "How a global fintech scaled coding agent traffic with Dedicated Model Inference",
+      "summary": "Inside a global bank's shift to self-serve dedicated inference: how Together's DMI gave engineering teams direct control over scaling, models, and testing.",
+      "source": "Together AI",
+      "url": "https://www.together.ai/blog/global-fintech-scales-coding-agent-traffic-with-dedicated-model-inference",
+      "published_at": "2026-09-18T00:00:00+00:00",
+      "fetched_at": "2026-09-18T18:10:26.437652Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "0606befe-ce9a-52b0-8f40-4e97c575a5ab",
       "title": "python-genai v2.24.0 released",
       "summary": "python-genai v2.24.0 was released by Google Cloud. This release adds credential APIs resource to GAOS and introduces new components such as RetrievalCallStep and RetrievalResultStep to the interactions schema and SDKs. Additionally, it implements file upload and download functionalities across Python.",

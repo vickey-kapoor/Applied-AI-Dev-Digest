@@ -1,6 +1,45 @@
 {
   "papers": [
     {
+      "id": "a18291b7-8bca-53a3-be19-f283d391f366",
+      "title": "GPT-6 Astra Solves a WWI German Radio Cipher",
+      "summary": "GPT-6 Astra, a new model by OpenAI, was announced. GPT-6 Astra reportedly solves complex problems, such as deciphering a WWI German radio cipher. Specifics on modalities, context length, benchmark numbers, or speed/quality claims are not provided.",
+      "source": "Hacker News",
+      "url": "https://www.prinzai.com/p/gpt-6-astra-solves-a-wwi-german-radio",
+      "published_at": "2026-09-19T06:41:44+00:00",
+      "fetched_at": "2026-09-19T17:05:04.211494Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "GPT-6 Astra, a new model by OpenAI, was announced.",
+      "capabilities": "GPT-6 Astra reportedly solves complex problems, such as deciphering a WWI German radio cipher. Specifics on modalities, context length, benchmark numbers, or speed/quality claims are not provided.",
+      "availability": "Not stated.",
+      "why_it_matters": "This advancement in AI capabilities could enable new applications in cryptography and problem-solving for developers working with language models.",
+      "caveats": "The announcement lacks detailed evidence or verification of the claims made regarding the model's capabilities.",
+      "release_type": "model"
+    },
+    {
+      "id": "6d261cf6-907c-592d-903b-5e4463c4bf5e",
+      "title": "Claude Code now reads AGENTS.md if there is no Claude.md",
+      "summary": "699 points · 261 comments",
+      "source": "Hacker News",
+      "url": "https://code.claude.com/docs/en/changelog",
+      "published_at": "2026-09-18T21:00:32+00:00",
+      "fetched_at": "2026-09-19T17:05:04.211494Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "aa00da19-9818-5924-b96a-f9a8d411ddf9",
       "title": "anthropic-sdk-python v1.7.0 released",
       "summary": "Anthropic released version 1.7.0 of the anthropic-sdk-python. This version includes a new feature to add a group with display_name to rate limits and deprecates the group_type. Additionally, it introduces a function called compact_before_next_turn() for the tool runner.",

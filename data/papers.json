@@ -1,6 +1,46 @@
 {
   "papers": [
     {
+      "id": "d2fee8c9-51bb-58dd-87b4-0d216457b2ab",
+      "title": "Qwen-Image-2.1: Compact, efficient, and unified image creation",
+      "summary": "Qwen-Image-2.1, an updated image generation model by a frontier AI lab. It supports unified image creation across various modalities and offers improved efficiency compared to its predecessor. Specific performance metrics and benchmarks are not provided in the description.",
+      "source": "Hacker News",
+      "url": "https://qwen.ai/blog?id=qwen-image-2.1",
+      "published_at": "2026-09-20T13:09:25+00:00",
+      "fetched_at": "2026-09-20T18:07:20.381715Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Benchmarks & Evals",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Qwen-Image-2.1, an updated image generation model by a frontier AI lab.",
+      "capabilities": "It supports unified image creation across various modalities and offers improved efficiency compared to its predecessor. Specific performance metrics and benchmarks are not provided in the description.",
+      "availability": "The release details about how to access Qwen-Image-2.1 are not stated.",
+      "why_it_matters": "This update may enhance the capabilities of developers building applications around image generation, potentially leading to more efficient workflows or improved end-user experiences.",
+      "caveats": "Claims regarding performance and efficiency improvements are unverified, and specific benchmark numbers or access details are missing.",
+      "release_type": "model"
+    },
+    {
+      "id": "f428ca86-3ee1-54af-9534-903c2cb7b5a2",
+      "title": "Btrfs/ZFS/bcachefs under workloads classic benchmarks skip",
+      "summary": "163 points · 152 comments",
+      "source": "Hacker News",
+      "url": "https://bartosz.fenski.pl/modern-fs-benchmark/",
+      "published_at": "2026-09-19T18:11:40+00:00",
+      "fetched_at": "2026-09-20T18:07:20.381715Z",
+      "type": "discussion",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "a18291b7-8bca-53a3-be19-f283d391f366",
       "title": "GPT-6 Astra Solves a WWI German Radio Cipher",
       "summary": "GPT-6 Astra, a new model by OpenAI, was announced. GPT-6 Astra reportedly solves complex problems, such as deciphering a WWI German radio cipher. Specifics on modalities, context length, benchmark numbers, or speed/quality claims are not provided.",

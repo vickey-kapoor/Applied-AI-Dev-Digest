@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-20",
+      "run_at": "2026-09-20T18:07:21.253581Z",
+      "top_paper_id": "d2fee8c9-51bb-58dd-87b4-0d216457b2ab",
+      "papers_fetched": 3,
+      "pdf_path": "reports/20-Sep/Qwen-Image-21_Compact_efficient_and_unified_im.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "35528009715"
+    },
+    {
       "date": "2026-09-19",
       "run_at": "2026-09-19T17:05:05.649218Z",
       "top_paper_id": "a18291b7-8bca-53a3-be19-f283d391f366",
@@ -733,14 +742,6 @@
       "pdf_path": "reports/19-Jun/Predicting_LLM_Safety_Before_Release_by_Simulating.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27841242878"
-    },
-    {
-      "date": "2026-06-18",
-      "top_paper_id": "82ef050f-2206-5f81-91f0-aede65e6c803",
-      "papers_fetched": 3,
-      "pdf_path": "reports/18-Jun/Improving_health_intelligence_in_ChatGPT.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "27780827554"
     }
   ]
 }

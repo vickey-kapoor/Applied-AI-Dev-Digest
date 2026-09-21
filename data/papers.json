@@ -1,6 +1,61 @@
 {
   "papers": [
     {
+      "id": "adf88220-9abf-5f0b-a118-7e41542aa0ab",
+      "title": "Amazon blocks Meta’s new Muse AI agent from shopping on amazon.com",
+      "summary": "Meta's Muse AI agent was announced but blocked from shopping on amazon.com by Amazon. The Muse AI agent is designed to assist with various tasks, but specific capabilities such as modalities or performance benchmarks are not detailed in the announcement.",
+      "source": "Hacker News",
+      "url": "https://www.forbes.com/sites/jonmarkman/2026/09/21/amazon-blocks-metas-new-muse-ai-agent-from-shopping-on-amazoncom/",
+      "published_at": "2026-09-21T17:00:23+00:00",
+      "fetched_at": "2026-09-21T20:53:16.639821Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Meta's Muse AI agent was announced but blocked from shopping on amazon.com by Amazon.",
+      "capabilities": "The Muse AI agent is designed to assist with various tasks, but specific capabilities such as modalities or performance benchmarks are not detailed in the announcement.",
+      "availability": "The Muse AI agent's availability is not stated, but it is indicated that it cannot be used for shopping on Amazon.",
+      "why_it_matters": "This situation highlights the competitive landscape between major tech companies and the implications for AI agents in e-commerce.",
+      "caveats": "Details regarding the functionalities of the Muse AI agent and its potential applications remain unverified and are not fully disclosed.",
+      "release_type": "policy"
+    },
+    {
+      "id": "3e121f67-78e6-558f-a349-a7dd85152e4e",
+      "title": "Grok 4.7",
+      "summary": "401 points · 331 comments",
+      "source": "Hacker News",
+      "url": "https://x.ai/news/grok-4-7",
+      "published_at": "2026-09-21T15:50:15+00:00",
+      "fetched_at": "2026-09-21T20:53:16.639821Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "66f9a523-8b2e-5c9a-a124-52305adbff44",
+      "title": "Building standards for the next phase of AI",
+      "summary": "OpenAI outlines a path to shared global AI standards, calling for coordinated evaluation, reporting, and governance to improve safety.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/building-standards-next-phase-ai",
+      "published_at": "2026-09-21T10:00:00+00:00",
+      "fetched_at": "2026-09-21T20:53:16.639821Z",
+      "type": "announcement",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "d2fee8c9-51bb-58dd-87b4-0d216457b2ab",
       "title": "Qwen-Image-2.1: Compact, efficient, and unified image creation",
       "summary": "Qwen-Image-2.1, an updated image generation model by a frontier AI lab. It supports unified image creation across various modalities and offers improved efficiency compared to its predecessor. Specific performance metrics and benchmarks are not provided in the description.",

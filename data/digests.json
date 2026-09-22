@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-22",
+      "run_at": "2026-09-22T18:37:40.607642Z",
+      "top_paper_id": "04e25169-8f11-5a5c-9d16-40a448e08e75",
+      "papers_fetched": 8,
+      "pdf_path": "reports/22-Sep/openai-python_v3180_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "35768353802"
+    },
+    {
       "date": "2026-09-21",
       "run_at": "2026-09-21T20:53:17.761414Z",
       "top_paper_id": "adf88220-9abf-5f0b-a118-7e41542aa0ab",
@@ -735,14 +744,6 @@
       "pdf_path": "reports/21-Jun/How_transparent_is_DiffusionGemma_and_why_it_matt.pdf",
       "telegram_sent": true,
       "workflow_run_id": "27913232226"
-    },
-    {
-      "date": "2026-06-20",
-      "top_paper_id": "",
-      "papers_fetched": 2,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "27878847930"
     }
   ]
 }

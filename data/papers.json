@@ -1,6 +1,128 @@
 {
   "papers": [
     {
+      "id": "04e25169-8f11-5a5c-9d16-40a448e08e75",
+      "title": "openai-python v3.18.0 released",
+      "summary": "OpenAI released version 3.18.0 of the openai-python library, adding GPT-6 Sol and Luna model identifiers. The inclusion of GPT-6 Sol and Luna model identifiers suggests these models may offer enhanced capabilities, but specific performance metrics, context lengths, or benchmark numbers are not provided in the release notes.",
+      "source": "GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.18.0",
+      "published_at": "2026-09-22T18:25:48Z",
+      "fetched_at": "2026-09-22T18:37:39.359702Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "OpenAI released version 3.18.0 of the openai-python library, adding GPT-6 Sol and Luna model identifiers.",
+      "capabilities": "The inclusion of GPT-6 Sol and Luna model identifiers suggests these models may offer enhanced capabilities, but specific performance metrics, context lengths, or benchmark numbers are not provided in the release notes.",
+      "availability": "The new version is available via the GitHub repository for the openai-python library. Pricing and specific tiers are not stated.",
+      "why_it_matters": "The addition of GPT-6 model identifiers potentially expands the functionality for developers integrating these models into their applications, indicating new capabilities may be accessible.",
+      "caveats": "No specific details about the performance or characteristics of the GPT-6 models are provided, and claims regarding their capabilities are unverified at this stage.",
+      "release_type": "api"
+    },
+    {
+      "id": "28da9859-39de-5af6-b0d2-e33a9ce9f7ab",
+      "title": "GPT-6 Sol and Luna",
+      "summary": "284 points · 138 comments",
+      "source": "Hacker News",
+      "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+      "published_at": "2026-09-22T18:00:34+00:00",
+      "fetched_at": "2026-09-22T18:37:39.359702Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "073386e2-e05e-5ccc-98dc-228345024966",
+      "title": "Claude Opus 5.5",
+      "summary": "533 points · 510 comments",
+      "source": "Hacker News",
+      "url": "https://www.anthropic.com/claude-opus-5-5",
+      "published_at": "2026-09-22T16:29:05+00:00",
+      "fetched_at": "2026-09-22T18:37:39.359702Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c92946c1-333a-5b8a-a511-c4ead1d215bb",
+      "title": "anthropic-sdk-python v1.8.0 released",
+      "summary": "## 1.8.0 (2026-09-22)\n\nFull Changelog: [v1.7.0...v1.8.0](https://github.com/anthropics/anthropic-sdk-python/compare/v1.7.0...v1.8.0)\n\n### Features\n\n* **api:** add support for claude-opus-5-5, inline tool definitions and MCP tool-list pinning (beta) ([b5cc700](https://github.com/anthropics/anthropic-sdk-python/commit/b5cc70071a60def1d2e93f3634d1a595919007c8))\n\n\n### Bug Fixes\n\n* **api:** share one evaluated_permission enum across Managed Agents events ([f4f51c8](https://github.com/anthropics/anthr",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.8.0",
+      "published_at": "2026-09-22T16:25:23Z",
+      "fetched_at": "2026-09-22T18:37:39.359702Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Product & API",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "5de7860f-8190-5f10-8c4a-dad4c2826be4",
+      "title": "NVIDIA Isaac ROS 5.0 Advances Agentic, Open Source Robotics Development",
+      "summary": "To build and deploy sophisticated robotics applications that can perceive, reason and act in dynamic environments, developers need new physical AI models and tools. The ROS open framework is a project from Open Robotics that helps humans build robots. NVIDIA Isaac ROS 5.0 — a collection of GPU-accelerated packages built on ROS, released today at […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/isaac-ros-5-0-agentic-open-source-robotics/",
+      "published_at": "2026-09-22T12:00:41+00:00",
+      "fetched_at": "2026-09-22T18:37:39.359702Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "9542ebdc-9eca-562a-ba38-a460275ee161",
+      "title": "Priorities and principles for effective third party assessments",
+      "summary": "OpenAI outlines priorities and principles for rigorous, secure, and independent third-party AI safety assessments of frontier models and safeguards.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/priorities-principles-third-party-assessments",
+      "published_at": "2026-09-22T00:00:00+00:00",
+      "fetched_at": "2026-09-22T18:37:39.359702Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0852ec83-d702-5ef5-ae80-1aa2b25555db",
+      "title": "How UK AISI and EvalEval Are Making Benchmark Results Reproducible",
+      "summary": "",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/evaleval-aisi",
+      "published_at": "2026-09-22T00:00:00+00:00",
+      "fetched_at": "2026-09-22T18:37:39.359702Z",
+      "type": "announcement",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals",
+        "Policy & Regulation"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "adf88220-9abf-5f0b-a118-7e41542aa0ab",
       "title": "Amazon blocks Meta’s new Muse AI agent from shopping on amazon.com",
       "summary": "Meta's Muse AI agent was announced but blocked from shopping on amazon.com by Amazon. The Muse AI agent is designed to assist with various tasks, but specific capabilities such as modalities or performance benchmarks are not detailed in the announcement.",

@@ -1,6 +1,46 @@
 {
   "papers": [
     {
+      "id": "7304146e-dad5-560b-b4bd-b18e43f80148",
+      "title": "Claude discovers a novel enzyme system with CRISPR-like repeats",
+      "summary": "Claude has discovered a novel enzyme system with CRISPR-like repeats. The new enzyme system may enable precise gene editing similar to existing CRISPR technologies. Specific performance metrics or benchmarks for this enzyme system are not provided in the description.",
+      "source": "Hacker News",
+      "url": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
+      "published_at": "2026-09-23T18:06:47+00:00",
+      "fetched_at": "2026-09-23T20:01:48.850099Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Claude has discovered a novel enzyme system with CRISPR-like repeats.",
+      "capabilities": "The new enzyme system may enable precise gene editing similar to existing CRISPR technologies. Specific performance metrics or benchmarks for this enzyme system are not provided in the description.",
+      "availability": "Not stated.",
+      "why_it_matters": "This discovery could enhance the toolkit available for genetic engineering, potentially leading to more effective and versatile gene editing applications.",
+      "caveats": "The details of the enzyme system's performance and practical applications remain unclear and unverified.",
+      "release_type": "research"
+    },
+    {
+      "id": "84096872-3970-5d94-a3db-13af94712b1d",
+      "title": "Gemini 3.8 text-to-speech",
+      "summary": "181 points · 92 comments",
+      "source": "Hacker News",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-text-to-speech/",
+      "published_at": "2026-09-23T15:29:23+00:00",
+      "fetched_at": "2026-09-23T20:01:48.850099Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "04e25169-8f11-5a5c-9d16-40a448e08e75",
       "title": "openai-python v3.18.0 released",
       "summary": "OpenAI released version 3.18.0 of the openai-python library, adding GPT-6 Sol and Luna model identifiers. The inclusion of GPT-6 Sol and Luna model identifiers suggests these models may offer enhanced capabilities, but specific performance metrics, context lengths, or benchmark numbers are not provided in the release notes.",

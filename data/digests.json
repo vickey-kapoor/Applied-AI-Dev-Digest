@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-25",
+      "run_at": "2026-09-25T18:20:53.668125Z",
+      "top_paper_id": "",
+      "papers_fetched": 0,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "36172793608"
+    },
+    {
       "date": "2026-09-24",
       "run_at": "2026-09-24T18:53:44.094364Z",
       "top_paper_id": "19428e1c-a851-5f9b-8449-adc0f5d6e294",
@@ -738,14 +747,6 @@
       "pdf_path": "reports/24-Jun/Helping_build_shared_standards_for_advanced_AI.pdf",
       "telegram_sent": true,
       "workflow_run_id": "28119068223"
-    },
-    {
-      "date": "2026-06-23",
-      "top_paper_id": "73dc97c0-f68b-52f4-a02a-d83763fc30b1",
-      "papers_fetched": 2,
-      "pdf_path": "reports/23-Jun/LLM-Driven_Feature_Discovery.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "28046521314"
     }
   ]
 }

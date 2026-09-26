@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-26",
+      "run_at": "2026-09-26T19:41:26.148262Z",
+      "top_paper_id": "fc5db527-0d29-5732-b06a-42842f9b95b1",
+      "papers_fetched": 1,
+      "pdf_path": "reports/26-Sep/Revealing_the_details_of_how_OpenAI_agents_hacked.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "36266893181"
+    },
+    {
       "date": "2026-09-25",
       "run_at": "2026-09-25T18:20:53.668125Z",
       "top_paper_id": "",
@@ -739,14 +748,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "28191166614"
-    },
-    {
-      "date": "2026-06-24",
-      "top_paper_id": "04ba2dcf-96b7-59e5-9774-e4537bbb6fe7",
-      "papers_fetched": 3,
-      "pdf_path": "reports/24-Jun/Helping_build_shared_standards_for_advanced_AI.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "28119068223"
     }
   ]
 }

@@ -1,6 +1,28 @@
 {
   "papers": [
     {
+      "id": "fc5db527-0d29-5732-b06a-42842f9b95b1",
+      "title": "Revealing the details of how OpenAI agents hacked Hugging Face",
+      "summary": "Not stated Not stated",
+      "source": "Hacker News",
+      "url": "https://swarmtraces.org/",
+      "published_at": "2026-09-25T21:09:27+00:00",
+      "fetched_at": "2026-09-26T19:41:25.245465Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Not stated",
+      "capabilities": "Not stated",
+      "availability": "Not stated",
+      "why_it_matters": "Not stated",
+      "caveats": "Not stated",
+      "release_type": "Not stated"
+    },
+    {
       "id": "19428e1c-a851-5f9b-8449-adc0f5d6e294",
       "title": "Hackers influence ChatGPT and Gemini to direct users to scam centers",
       "summary": "Not stated Not stated",

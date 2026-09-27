@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-27",
+      "run_at": "2026-09-27T18:08:50.266482Z",
+      "top_paper_id": "698b93b1-8f93-5ec6-ac82-3abb6f2d738a",
+      "papers_fetched": 2,
+      "pdf_path": "reports/27-Sep/There_are_no_rogue_AI_agents.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "36339534358"
+    },
+    {
       "date": "2026-09-26",
       "run_at": "2026-09-26T19:41:26.148262Z",
       "top_paper_id": "fc5db527-0d29-5732-b06a-42842f9b95b1",
@@ -740,14 +749,6 @@
       "pdf_path": "reports/26-Jun/The_Case_for_Model_Forensics.pdf",
       "telegram_sent": true,
       "workflow_run_id": "28255793279"
-    },
-    {
-      "date": "2026-06-25",
-      "top_paper_id": "",
-      "papers_fetched": 2,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "28191166614"
     }
   ]
 }

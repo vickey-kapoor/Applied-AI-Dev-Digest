@@ -1,6 +1,45 @@
 {
   "papers": [
     {
+      "id": "6bdcf939-beae-5b72-9fd6-4a0e1e3152be",
+      "title": "anthropic-sdk-python v1.9.0 released",
+      "summary": "Anthropic released version 1.9.0 of the anthropic-sdk-python. This SDK version introduces a new thinking type called between_tools and adds functionality for the model claude-sonnet-5-5. Additionally, it includes parameters such as include_inherited and source for works, enhancing API usability.",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.9.0",
+      "published_at": "2026-09-28T18:03:49Z",
+      "fetched_at": "2026-09-28T21:41:53.169754Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Product & API"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Anthropic released version 1.9.0 of the anthropic-sdk-python.",
+      "capabilities": "This SDK version introduces a new thinking type called between_tools and adds functionality for the model claude-sonnet-5-5. Additionally, it includes parameters such as include_inherited and source for works, enhancing API usability.",
+      "availability": "The SDK is available on GitHub for download. Specific pricing and tiers are not stated.",
+      "why_it_matters": "This release expands the capabilities of the SDK, allowing developers to integrate new features and models, potentially improving the functionality of applications built on the Anthropic API.",
+      "caveats": "Details about the performance metrics or operational benchmarks for the new features have not been provided, and the implications of these updates on existing workflows are not specified.",
+      "release_type": "product"
+    },
+    {
+      "id": "1e69c046-91bd-54dd-b279-32128e9b9d89",
+      "title": "Prompting Claude Opus 5.5",
+      "summary": "193 points · 216 comments",
+      "source": "Hacker News",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
+      "published_at": "2026-09-28T07:33:29+00:00",
+      "fetched_at": "2026-09-28T21:41:53.169754Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "698b93b1-8f93-5ec6-ac82-3abb6f2d738a",
       "title": "There are no \"rogue\" AI agents",
       "summary": "Not stated Not stated",

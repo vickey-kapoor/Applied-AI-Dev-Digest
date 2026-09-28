@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-28",
+      "run_at": "2026-09-28T21:41:54.440801Z",
+      "top_paper_id": "6bdcf939-beae-5b72-9fd6-4a0e1e3152be",
+      "papers_fetched": 2,
+      "pdf_path": "reports/28-Sep/anthropic-sdk-python_v190_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "36487762620"
+    },
+    {
       "date": "2026-09-27",
       "run_at": "2026-09-27T18:08:50.266482Z",
       "top_paper_id": "698b93b1-8f93-5ec6-ac82-3abb6f2d738a",
@@ -741,14 +750,6 @@
       "pdf_path": "reports/27-Jun/Deployment_Awareness_Matters_More_Than_Evaluation.pdf",
       "telegram_sent": true,
       "workflow_run_id": "28296236932"
-    },
-    {
-      "date": "2026-06-26",
-      "top_paper_id": "6dab8119-aa23-56a7-8447-1efecc9af6ae",
-      "papers_fetched": 2,
-      "pdf_path": "reports/26-Jun/The_Case_for_Model_Forensics.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "28255793279"
     }
   ]
 }

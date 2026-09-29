@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-29",
+      "run_at": "2026-09-29T20:33:25.688243Z",
+      "top_paper_id": "7ab62c7d-abc3-53cb-825c-fc85a07ee2fe",
+      "papers_fetched": 5,
+      "pdf_path": "reports/29-Sep/openai-python_v3220_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "36627104662"
+    },
+    {
       "date": "2026-09-28",
       "run_at": "2026-09-28T21:41:54.440801Z",
       "top_paper_id": "6bdcf939-beae-5b72-9fd6-4a0e1e3152be",
@@ -742,14 +751,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "28331131863"
-    },
-    {
-      "date": "2026-06-27",
-      "top_paper_id": "4a599e80-1cb7-5438-90f2-533205b08c34",
-      "papers_fetched": 2,
-      "pdf_path": "reports/27-Jun/Deployment_Awareness_Matters_More_Than_Evaluation.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "28296236932"
     }
   ]
 }

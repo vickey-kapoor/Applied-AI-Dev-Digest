@@ -1,6 +1,95 @@
 {
   "papers": [
     {
+      "id": "7ab62c7d-abc3-53cb-825c-fc85a07ee2fe",
+      "title": "openai-python v3.22.0 released",
+      "summary": "OpenAI released version 3.22.0 of the openai-python library on September 29, 2026. This version adds the ability to use computer resources with beta agents, enabling new functionalities for developers working with OpenAI's API. The specifics of performance improvements or benchmarks are not detailed in the release notes.",
+      "source": "GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.22.0",
+      "published_at": "2026-09-29T19:06:45Z",
+      "fetched_at": "2026-09-29T20:33:24.814189Z",
+      "type": "release",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "OpenAI released version 3.22.0 of the openai-python library on September 29, 2026.",
+      "capabilities": "This version adds the ability to use computer resources with beta agents, enabling new functionalities for developers working with OpenAI's API. The specifics of performance improvements or benchmarks are not detailed in the release notes.",
+      "availability": "The updated library is available for download from GitHub, and users can access it via the OpenAI API. Pricing and tiers for API usage are not stated in the release notes.",
+      "why_it_matters": "This update introduces enhanced capabilities for developers leveraging OpenAI's models, potentially allowing for more complex applications and interactions with computer resources within the API framework.",
+      "caveats": "The release notes do not provide detailed performance metrics or benchmark comparisons, and the feature is listed as in beta, which suggests potential limitations or instability.",
+      "release_type": "product"
+    },
+    {
+      "id": "bc220121-fd74-52be-8bac-621762f85325",
+      "title": "Claude partial outage",
+      "summary": "167 points · 142 comments",
+      "source": "Hacker News",
+      "url": "https://status.claude.com/incidents/4xvtc2gnq73l",
+      "published_at": "2026-09-29T14:25:41+00:00",
+      "fetched_at": "2026-09-29T20:33:24.814189Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "73040595-a737-5638-99bf-9d112f142424",
+      "title": "Introducing GPT-6.1 Sol",
+      "summary": "Meet GPT-6.1 Sol: near-Astra intelligence for coding, computer use, and professional work at one-fifth of Astra’s standard API input and output token prices.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-gpt-6-1-sol",
+      "published_at": "2026-09-29T10:00:00+00:00",
+      "fetched_at": "2026-09-29T20:33:24.814189Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Agents & Tooling",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "800ef9d8-9885-50c3-9c63-a05cb898836f",
+      "title": "A Privacy Analysis of Web and Mobile Conversational AI Agents [pdf]",
+      "summary": "392 points · 125 comments",
+      "source": "Hacker News",
+      "url": "https://jorgegarciaherrero.com/wp-content/interactivos/20260916-Prompt-like-a-butterfly-sting-like-a-tracker-(clean).pdf",
+      "published_at": "2026-09-29T09:03:41+00:00",
+      "fetched_at": "2026-09-29T20:33:24.814189Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ad2cef7a-ce65-5bac-8ae2-e7923cd9fc6d",
+      "title": "Towards safety cases for frontier AI training",
+      "summary": "Our early guidelines for safety cases in frontier AI training cover technical safeguards, operational practices, and investigating misalignment incidents",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/towards-safety-cases-for-frontier-ai-training",
+      "published_at": "2026-09-28T19:00:00+00:00",
+      "fetched_at": "2026-09-29T20:33:24.814189Z",
+      "type": "announcement",
+      "topic_id": "safety_system_cards",
+      "topics": [
+        "Safety & System Cards"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "6bdcf939-beae-5b72-9fd6-4a0e1e3152be",
       "title": "anthropic-sdk-python v1.9.0 released",
       "summary": "Anthropic released version 1.9.0 of the anthropic-sdk-python. This SDK version introduces a new thinking type called between_tools and adds functionality for the model claude-sonnet-5-5. Additionally, it includes parameters such as include_inherited and source for works, enhancing API usability.",

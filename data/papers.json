@@ -1,6 +1,98 @@
 {
   "papers": [
     {
+      "id": "f56d0d5e-11fa-50ee-bb6c-ca46bf5968cd",
+      "title": "anthropic-sdk-python v1.10.0 released",
+      "summary": "Anthropic released anthropic-sdk-python version 1.10.0. This version adds new features to the Managed Agents API, including a refusal stop reason and detailed stop information for session idle events. It also incorporates Claude Enterprise analytics, spend limits, and role-based access control (RBAC) for the Admin API.",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.10.0",
+      "published_at": "2026-09-30T18:28:45Z",
+      "fetched_at": "2026-09-30T18:56:34.798936Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Product & API",
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Anthropic released anthropic-sdk-python version 1.10.0.",
+      "capabilities": "This version adds new features to the Managed Agents API, including a refusal stop reason and detailed stop information for session idle events. It also incorporates Claude Enterprise analytics, spend limits, and role-based access control (RBAC) for the Admin API.",
+      "availability": "The SDK is available on GitHub for download. No specific pricing or tier information is provided in the description.",
+      "why_it_matters": "These updates enhance the functionality of the Managed Agents, allowing for better management and analysis of user interactions, which could improve user experience and administrative control.",
+      "caveats": "No performance benchmarks or specific quality claims are mentioned in the release notes, leaving some details about the impact of these new features unverified.",
+      "release_type": "product"
+    },
+    {
+      "id": "dbdfee9a-b30a-5a73-a3df-75b4b998a731",
+      "title": "transformers v5.18.0 released",
+      "summary": "## New Model additions\r\n\r\n\r\n### Nemotron 3 Diarization\r\n\r\n<img width=\"1680\" height=\"900\" alt=\"image\" src=\"https://github.com/user-attachments/assets/fe735cb3-9e5b-43ad-8f60-9dec8425aec7\" />\r\n\r\nNemotron 3 Diarization is an open-weight streaming speaker diarization model designed to determine \"who spoke when\" in real-world audio. It supports both streaming and offline inference, handles up to eight speakers, and orders speaker outputs by each speaker's first arrival in the input audio.\r\n\r\nThe mode",
+      "source": "GitHub",
+      "url": "https://github.com/huggingface/transformers/releases/tag/v5.18.0",
+      "published_at": "2026-09-30T16:46:27Z",
+      "fetched_at": "2026-09-30T18:56:34.798936Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Open Weights",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "5301896c-b54a-5f34-a056-7a18e97d969f",
+      "title": "From Training to Production, NVIDIA and CoreWeave Close the Loop on Agentic AI",
+      "summary": "Building on nearly a decade of co-engineering, CoreWeave has built NVIDIA compute, networking and software into a cloud purpose-built for AI that’s still returning on investment across multiple generations of deployment. Now, CoreWeave is bringing the next generation of NVIDIA infrastructure to production. At CoreWeave Fully Connected, running this week in San Francisco, CoreWeave announced […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/coreweave-agentic-ai-vera-rubin/",
+      "published_at": "2026-09-30T15:00:00+00:00",
+      "fetched_at": "2026-09-30T18:56:34.798936Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "01658b45-6f73-5e14-9c06-d79429a7744a",
+      "title": "Disrupting a coordinated model-distillation campaign",
+      "summary": "Learn how OpenAI disrupted a campaign to extract protected model reasoning and is strengthening defenses against adversarial distillation.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/disrupting-a-coordinated-model-distillation-campaign",
+      "published_at": "2026-09-30T10:30:00+00:00",
+      "fetched_at": "2026-09-30T18:56:34.798936Z",
+      "type": "announcement",
+      "topic_id": "lab_research",
+      "topics": [
+        "Lab Research"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b5be4d2d-d1c3-59fc-9401-0cf44633ec99",
+      "title": "Open TTS Leaderboard: Scalable Evaluation for Multilingual Text-to-Speech and Voice Cloning",
+      "summary": "",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/open-tts-leaderboard",
+      "published_at": "2026-09-30T00:00:00+00:00",
+      "fetched_at": "2026-09-30T18:56:34.798936Z",
+      "type": "announcement",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "7ab62c7d-abc3-53cb-825c-fc85a07ee2fe",
       "title": "openai-python v3.22.0 released",
       "summary": "OpenAI released version 3.22.0 of the openai-python library on September 29, 2026. This version adds the ability to use computer resources with beta agents, enabling new functionalities for developers working with OpenAI's API. The specifics of performance improvements or benchmarks are not detailed in the release notes.",

@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-09-30",
+      "run_at": "2026-09-30T18:56:35.814600Z",
+      "top_paper_id": "f56d0d5e-11fa-50ee-bb6c-ca46bf5968cd",
+      "papers_fetched": 6,
+      "pdf_path": "reports/30-Sep/anthropic-sdk-python_v1100_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "36762099509"
+    },
+    {
       "date": "2026-09-29",
       "run_at": "2026-09-29T20:33:25.688243Z",
       "top_paper_id": "7ab62c7d-abc3-53cb-825c-fc85a07ee2fe",
@@ -743,14 +752,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "28393056368"
-    },
-    {
-      "date": "2026-06-28",
-      "top_paper_id": null,
-      "papers_fetched": 2,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "28331131863"
     }
   ]
 }

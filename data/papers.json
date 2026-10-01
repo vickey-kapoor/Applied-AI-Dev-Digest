@@ -1,6 +1,77 @@
 {
   "papers": [
     {
+      "id": "a0185a63-a05c-567c-94fb-40a4ab57328f",
+      "title": "StreetComplete on iOS is now in public beta",
+      "summary": "StreetComplete on iOS is now in public beta. StreetComplete is an app that allows users to contribute to OpenStreetMap by answering simple questions about their surroundings. It enables users to add information to the map, enhancing its detail and accuracy.",
+      "source": "Hacker News",
+      "url": "https://github.com/streetcomplete/StreetComplete/issues/5421",
+      "published_at": "2026-10-01T10:59:57+00:00",
+      "fetched_at": "2026-10-01T21:40:33.538234Z",
+      "type": "discussion",
+      "topic_id": "product_api",
+      "topics": [
+        "Product & API"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "StreetComplete on iOS is now in public beta.",
+      "capabilities": "StreetComplete is an app that allows users to contribute to OpenStreetMap by answering simple questions about their surroundings. It enables users to add information to the map, enhancing its detail and accuracy.",
+      "availability": "The app is available for download on iOS in public beta. Pricing details are not stated.",
+      "why_it_matters": "This release allows iOS users to actively participate in improving OpenStreetMap data, potentially increasing the quality and quantity of map information available globally.",
+      "caveats": "As a public beta, there may be bugs or incomplete features, and the performance may not be fully optimized. Specific user feedback and data on the app's effectiveness have not been provided.",
+      "release_type": "product"
+    },
+    {
+      "id": "d0430370-1a12-59ad-97ec-c2fe2ce9249f",
+      "title": "GPT-Synopsys: Frontier Intelligence to Revolutionize Chip Design",
+      "summary": "155 points · 89 comments",
+      "source": "Hacker News",
+      "url": "https://news.synopsys.com/2026-09-30-OpenAI-and-Synopsys-Announce-GPT-Synopsys-Frontier-Intelligence-to-Revolutionize-Chip-Design",
+      "published_at": "2026-10-01T10:21:36+00:00",
+      "fetched_at": "2026-10-01T21:40:33.538234Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "686f11b4-9501-5bc8-85e2-8afa69790f6f",
+      "title": "anthropic-sdk-python v1.11.0 released",
+      "summary": "## 1.11.0 (2026-09-30)\n\nFull Changelog: [v1.10.0...v1.11.0](https://github.com/anthropics/anthropic-sdk-python/compare/v1.10.0...v1.11.0)\n\n### Features\n\n* **api:** add list spend limits endpoint ([e8f0cac](https://github.com/anthropics/anthropic-sdk-python/commit/e8f0cac35af67a083ba05a308d27328925e03568))\n\n\n### Chores\n\n* **client:** deprecate sonnet 4.5 ([22b36b1](https://github.com/anthropics/anthropic-sdk-python/commit/22b36b1a1b65cb87f2a6f3b40f61147c9e1c3e93))",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.11.0",
+      "published_at": "2026-09-30T22:58:09Z",
+      "fetched_at": "2026-10-01T21:40:33.538234Z",
+      "type": "release",
+      "topic_id": "product_api",
+      "topics": [
+        "Product & API"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "9b4d56ec-1620-5229-8ebd-e75bef0640a9",
+      "title": "python-genai v2.26.0 released",
+      "summary": "## [2.26.0](https://github.com/googleapis/python-genai/compare/v2.25.0...v2.26.0) (2026-09-30)\n\n\n### Features\n\n* Add gcs_metrics_uri for exporting tuning job metrics. ([b6535e8](https://github.com/googleapis/python-genai/commit/b6535e822a6a984bec43056551b2788cd61509f0))\n* Add Gemini 3.8 Flash TTS and Gemini 3.8 Flash Lite TTS models to SDKs ([0cad6ca](https://github.com/googleapis/python-genai/commit/0cad6ca7cfc4dce6f58784f546603d8cc8a5f921))\n* **genai-sdk:** Add environments dedicated module an",
+      "source": "GitHub",
+      "url": "https://github.com/googleapis/python-genai/releases/tag/v2.26.0",
+      "published_at": "2026-09-30T22:17:07Z",
+      "fetched_at": "2026-10-01T21:40:33.538234Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Product & API"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "f56d0d5e-11fa-50ee-bb6c-ca46bf5968cd",
       "title": "anthropic-sdk-python v1.10.0 released",
       "summary": "Anthropic released anthropic-sdk-python version 1.10.0. This version adds new features to the Managed Agents API, including a refusal stop reason and detailed stop information for session idle events. It also incorporates Claude Enterprise analytics, spend limits, and role-based access control (RBAC) for the Admin API.",

@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-01",
+      "run_at": "2026-10-01T21:40:34.257216Z",
+      "top_paper_id": "a0185a63-a05c-567c-94fb-40a4ab57328f",
+      "papers_fetched": 7,
+      "pdf_path": "reports/01-Oct/StreetComplete_on_iOS_is_now_in_public_beta.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "36930185274"
+    },
+    {
       "date": "2026-09-30",
       "run_at": "2026-09-30T18:56:35.814600Z",
       "top_paper_id": "f56d0d5e-11fa-50ee-bb6c-ca46bf5968cd",
@@ -744,14 +753,6 @@
       "pdf_path": "reports/30-Jun/Introducing_GeneBench-Pro.pdf",
       "telegram_sent": true,
       "workflow_run_id": "28465478724"
-    },
-    {
-      "date": "2026-06-29",
-      "top_paper_id": "",
-      "papers_fetched": 2,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "28393056368"
     }
   ]
 }

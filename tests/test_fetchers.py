@@ -1,15 +1,17 @@
 """Unit tests for blog fetcher module."""
 
+from datetime import datetime, timedelta, timezone
 import socket
 from unittest.mock import patch, MagicMock
 
 import pytest
 
 from src.constants import BLOG_FEEDS
+from src.constants import DIGEST_MAX_AGE_HOURS
 from src.fetchers.blog_fetcher import (
     fetch_blog_posts,
     _fetch_single_feed,
-    _is_dev_relevant,
+    _is_noise,
     _is_tutorial,
 )
 
@@ -25,7 +27,7 @@ class TestBlogFetcher:
             mock_response.entries = mock_blog_feed["entries"]
             mock_parse.return_value = mock_response
 
-            posts = _fetch_single_feed("OpenAI", "https://openai.com/blog/rss.xml", 5)
+            posts = _fetch_single_feed("OpenAI", "https://openai.com/blog/rss.xml", DIGEST_MAX_AGE_HOURS, 20)
 
             assert len(posts) == 1
             assert posts[0]["source"] == "OpenAI"
@@ -36,7 +38,7 @@ class TestBlogFetcher:
         with patch("src.fetchers.blog_fetcher.feedparser.parse") as mock_parse:
             mock_parse.side_effect = socket.timeout()
 
-            posts = _fetch_single_feed("Test Blog", "https://test.com/rss", 5)
+            posts = _fetch_single_feed("Test Blog", "https://test.com/rss", DIGEST_MAX_AGE_HOURS, 20)
 
             assert posts == []
 
@@ -67,7 +69,7 @@ class TestBlogFetcher:
             mock_response.entries = []
             mock_parse.return_value = mock_response
 
-            posts = _fetch_single_feed("Test Blog", "https://test.com/rss", 5)
+            posts = _fetch_single_feed("Test Blog", "https://test.com/rss", DIGEST_MAX_AGE_HOURS, 20)
 
             assert posts == []
 
@@ -80,77 +82,89 @@ class TestBlogFetcher:
             mock_response.entries = mock_blog_feed["entries"] * 10
             mock_parse.return_value = mock_response
 
-            posts = _fetch_single_feed("OpenAI", "https://openai.com/blog/rss.xml", 2)
+            posts = _fetch_single_feed("OpenAI", "https://openai.com/blog/rss.xml", DIGEST_MAX_AGE_HOURS, 2)
 
             assert len(posts) <= 2
 
 
-class TestDevRelevanceFilter:
-    """Tests for _is_dev_relevant filtering (AI lab developments)."""
+class TestNoiseFilter:
+    """_is_noise is deliberately NOT a topic test.
 
-    def test_is_dev_relevant_accepts_lab_release(self):
-        """Post announcing a lab model release is accepted."""
-        post = {"title": "Introducing our new frontier model", "summary": "A reasoning model now available in the developer api"}
-        assert _is_dev_relevant(post) is True
+    Everything in BLOG_FEEDS is a lab's own blog, so requiring a topic keyword
+    there dropped real launches: DeepMind's "Introducing SynthID Bio" and all
+    five of Google Research's most recent posts, while "public beta" waved
+    through an OpenStreetMap app. Only genuine noise is excluded now.
+    """
 
-    def test_is_dev_relevant_rejects_corporate_news(self):
-        """Post about hiring is rejected."""
-        post = {"title": "We are hiring across the company", "summary": "Open roles on every team"}
-        assert _is_dev_relevant(post) is False
+    def test_lab_release_is_not_noise(self):
+        post = {"title": "Introducing our new frontier model",
+                "summary": "A reasoning model, now in the API"}
+        assert _is_noise(post) is False
 
-    def test_exclude_takes_precedence_over_include(self):
-        """Post with both include and exclude keywords is rejected."""
-        post = {"title": "New model release as the company raises a funding round", "summary": "Frontier model shipped alongside a series b"}
-        assert _is_dev_relevant(post) is False
+    @pytest.mark.parametrize("title", [
+        "Introducing SynthID Bio",
+        "Advancing Private AI Compute with secure, server-side memory",
+        "Bypassing inference bottlenecks: Accelerating complex AI search",
+        "Automating coherent long-form video generation",
+        "How Diffusion Controller unifies and simplifies AI image generation",
+    ])
+    def test_real_lab_posts_with_no_topic_keyword_survive(self, title):
+        """These were all dropped in production for naming no model family."""
+        assert _is_noise({"title": title, "summary": ""}) is False
 
-    def test_no_keyword_match_rejected(self):
-        """Generic post with no matching keywords is rejected."""
-        post = {"title": "Our company vision for the future", "summary": "Thoughts on progress"}
-        assert _is_dev_relevant(post) is False
+    def test_hiring_is_noise(self):
+        post = {"title": "We are hiring across the company",
+                "summary": "Open roles on every team"}
+        assert _is_noise(post) is True
 
-    def test_filter_fallback_when_all_filtered(self, mock_blog_feed):
-        """When all posts are filtered out, unfiltered list is returned."""
-        with patch("src.fetchers.blog_fetcher.feedparser.parse") as mock_parse:
-            mock_response = MagicMock()
-            mock_response.bozo = False
-            # Create entries that won't match any filter keywords
-            entry = MagicMock()
-            entry.get = lambda k, d="": {
-                "title": "Our company culture",
-                "summary": "A day in the life",
-                "summary": "",
-                "link": "https://test.com/post",
-            }.get(k, d)
-            entry.__contains__ = lambda self, k: k in ["title", "summary"]
-            mock_response.entries = [entry]
-            mock_parse.return_value = mock_response
+    def test_funding_round_is_noise(self):
+        """A lab raising money is not a development, however big the number."""
+        post = {"title": "Mistral raises EUR 3B", "summary": "Series B led by investors"}
+        assert _is_noise(post) is True
 
-            posts = _fetch_single_feed("TestBlog", "https://test.com/rss", 5)
+    def test_tutorial_is_noise(self):
+        assert _is_noise({"title": "How to build a RAG pipeline", "summary": ""}) is True
 
-            # Should return unfiltered posts as fallback
-            assert len(posts) == 1
-            assert posts[0]["title"] == "Our company culture"
+    def test_off_domain_corporate_content_is_noise(self):
+        """NVIDIA's feed is the whole company blog, not an AI-lab feed."""
+        assert _is_noise({"title": "Fall Into 25 New Games on GeForce NOW", "summary": ""}) is True
 
-    def test_no_fallback_with_explicit_keywords(self, mock_blog_feed):
-        """An explicit topic keyword list is respected strictly — no fallback."""
-        with patch("src.fetchers.blog_fetcher.feedparser.parse") as mock_parse:
-            mock_response = MagicMock()
-            mock_response.bozo = False
-            entry = MagicMock()
-            entry.get = lambda k, d="": {
-                "title": "Our company culture",
-                "summary": "",
-                "link": "https://test.com/post",
-            }.get(k, d)
-            entry.__contains__ = lambda self, k: k in ["title", "summary"]
-            mock_response.entries = [entry]
-            mock_parse.return_value = mock_response
 
-            posts = _fetch_single_feed(
-                "TestBlog", "https://test.com/rss", 5, filter_keywords=["frontier model"]
-            )
+class TestRecencyWindow:
+    """Entries are selected by date, not by position in the feed."""
 
-            assert posts == []
+    def _feed_with(self, hours_old: int):
+        when = datetime.now(timezone.utc) - timedelta(hours=hours_old)
+        entry = {
+            "title": "A frontier model lands",
+            "summary": "Details inside",
+            "link": "https://lab.example/post",
+            "published": when.isoformat(),
+            "published_parsed": when.timetuple()[:9],
+        }
+        resp = MagicMock()
+        resp.bozo = False
+        resp.entries = [entry]
+        return resp
+
+    def test_entry_inside_the_window_is_kept(self):
+        with patch("src.fetchers.blog_fetcher.feedparser.parse", return_value=self._feed_with(5)):
+            assert len(_fetch_single_feed("Lab", "https://x/rss", 72, 20)) == 1
+
+    def test_entry_outside_the_window_is_dropped(self):
+        with patch("src.fetchers.blog_fetcher.feedparser.parse", return_value=self._feed_with(200)):
+            assert _fetch_single_feed("Lab", "https://x/rss", 72, 20) == []
+
+    def test_position_no_longer_caps_what_is_considered(self):
+        """The old code looked at entries[:5] whatever the feed held."""
+        when = datetime.now(timezone.utc) - timedelta(hours=1)
+        entries = [{
+            "title": f"Release {i}", "summary": "", "link": f"https://lab.example/{i}",
+            "published": when.isoformat(), "published_parsed": when.timetuple()[:9],
+        } for i in range(12)]
+        resp = MagicMock(); resp.bozo = False; resp.entries = entries
+        with patch("src.fetchers.blog_fetcher.feedparser.parse", return_value=resp):
+            assert len(_fetch_single_feed("Lab", "https://x/rss", 72, 20)) == 12
 
 
 class TestTutorialFilter:
@@ -181,4 +195,4 @@ class TestTutorialFilter:
             "title": "Introducing our new frontier model",
             "summary": "We show how to call the new developer api endpoint.",
         }
-        assert _is_dev_relevant(post) is True
+        assert _is_noise(post) is False

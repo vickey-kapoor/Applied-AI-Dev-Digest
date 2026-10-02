@@ -20,7 +20,11 @@ REQUEST_TIMEOUT = 30  # seconds
 DEDUP_SIMILARITY_THRESHOLD = float(os.getenv("DEDUP_SIMILARITY_THRESHOLD", "0.85"))
 
 # Digest settings
-DIGEST_MAX_RESULTS = int(os.getenv("DIGEST_MAX_RESULTS", "10"))
+# Candidates handed to the ranker. The final truncation is date-ordered, so
+# this is not a quality cut — at 10, with the pool restored to ~20 real
+# candidates, genuinely better items were being dropped for being 40 hours old
+# rather than 4. The ranker is the editorial filter; it needs to see the pool.
+DIGEST_MAX_RESULTS = int(os.getenv("DIGEST_MAX_RESULTS", "20"))
 
 # Maximum age of an item eligible for the daily pick. Blog feeds carry no
 # recency cutoff of their own (HN, HF and GitHub each cut at 24h), so without
@@ -57,41 +61,12 @@ THREAD_POOL_WORKERS = 2
 # Keywords are matched as case-insensitive substrings against title + summary,
 # so avoid short tokens that hide inside common words (e.g. "api" matches
 # "rapid"). Prefer multi-word identifiers.
-FILTER_KEYWORDS = [
-    # Model releases
-    "model release", "new model", "frontier model", "flagship model",
-    "reasoning model", "model family", "we're releasing", "introducing claude",
-    "introducing gpt", "gemini", "claude", "llama", "mistral", "qwen",
-    "deepseek", "grok", "gemma", "phi-", "command r", "nova",
-    # Product / platform
-    "developer api", "api access", "api pricing", "batch api",
-    "fine-tuning api", "responses api", "assistants api", "public beta",
-    "general availability", "context window", "developer platform",
-    "now available", "rolling out",
-    # Research
-    "technical report", "research paper", "scaling law", "pretraining",
-    "post-training", "reinforcement learning", "distillation",
-    "mixture of experts", "chain of thought", "test-time compute",
-    "long context", "rlhf",
-    # Agents / tooling
-    "agentic", "agent", "tool use", "function calling", "computer use",
-    "model context protocol", "coding agent", "multi-agent",
-    # Benchmarks
-    "benchmark", "eval", "swe-bench", "gpqa", "arc-agi", "aime",
-    "state of the art", "leaderboard", "frontiermath",
-    # Safety / system cards
-    "system card", "model card", "red-teaming", "red teaming", "jailbreak",
-    "responsible scaling", "preparedness framework", "frontier safety",
-    "interpretability", "alignment",
-    # Open weights
-    "open weights", "open-weight", "open source model", "open model",
-    # Infrastructure
-    "inference", "quantization", "training run", "tpu", "blackwell",
-    "trainium", "gpu cluster", "serving",
-    # Multimodal
-    "multimodal", "vision-language", "image generation", "video generation",
-    "text-to-video", "speech model", "world model",
-]
+# FILTER_KEYWORDS removed. Its only consumer was the blog fetcher's topic gate,
+# which is gone: a post on a frontier lab's own feed is an AI development
+# because of where it was published, and requiring a keyword there dropped real
+# launches. The open sources carry their own lists — HN_KEYWORDS for Hacker
+# News — and fetch_all passes the live topic keywords from KV, so nothing read
+# this constant any more.
 
 # Keywords to exclude non-technical corporate news (lowercase)
 EXCLUDE_KEYWORDS = [
@@ -107,6 +82,14 @@ EXCLUDE_KEYWORDS = [
     "ipo",
     "lawsuit",
     "trademark",
+    # Off-domain content from the corporate blogs. NVIDIA's feed is the whole
+    # company blog, not an AI-lab feed, so it carries consumer gaming and
+    # recruiting alongside real research; Google AI's carries prize and
+    # partnership marketing. Narrow and literal on purpose — "games" alone
+    # would drop game-theory and benchmark posts.
+    "geforce",
+    "graduate fellowship",
+    "xprize",
 ]
 
 # Tutorial and how-to shapes, matched against the TITLE ONLY.
@@ -139,17 +122,26 @@ BLOG_FEEDS = {
     "Meta AI": "https://engineering.fb.com/category/ml-applications/feed/",
     "Mistral AI": "https://mistral.ai/rss.xml",
     "Qwen": "https://qwenlm.github.io/blog/index.xml",
-    "Hugging Face": "https://huggingface.co/blog/feed.xml",
+    # "Hugging Face Blog", not "Hugging Face": the Daily Papers fetcher already
+    # reports the latter, and one name for a curated lab feed and an aggregator
+    # makes the two indistinguishable to any per-source rule.
+    "Hugging Face Blog": "https://huggingface.co/blog/feed.xml",
     "NVIDIA": "https://blogs.nvidia.com/feed/",
     "Together AI": "https://www.together.ai/blog/rss.xml",
-    "EleutherAI": "https://blog.eleuther.ai/index.xml",
+    # EleutherAI removed: blog.eleuther.ai/{index,rss,feed}.xml and
+    # eleuther.ai/index.xml all 404, so the feed contributed nothing but a
+    # parse-error warning on every run.
 }
 
 # Minimum candidate posts pulled per blog feed before keyword filtering.
 # Without a floor, adding feeds shrinks each feed's share to a single post,
 # so a lab that posted a few consumer items ahead of its release loses it.
 # The feed is fetched in full either way, so this costs no extra requests.
-BLOG_MIN_PER_SOURCE = 5
+# Safety bound only, not a selection rule: the blog fetcher selects by
+# publication date, and this exists so one pathological feed cannot flood the
+# candidate pool. It replaced a hard count of 5 that silently capped what was
+# even considered, turning 2,593 available entries into 55.
+BLOG_MAX_PER_SOURCE = int(os.getenv("BLOG_MAX_PER_SOURCE", "20"))
 
 # GitHub repos whose releases mark a shipped lab development — official model
 # SDKs plus the serving/runtime stacks new models land in first.

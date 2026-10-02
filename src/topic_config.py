@@ -24,19 +24,24 @@ DEFAULT_TOPICS = [
             "model release", "new model", "frontier model", "flagship model",
             "reasoning model", "model family", "introducing claude",
             "introducing gpt", "GPT-", "Claude", "Gemini", "Llama", "Mistral",
-            "Qwen", "DeepSeek", "Grok", "Gemma", "Command R", "checkpoint",
+            "Qwen", "DeepSeek", "Grok", "Gemma", "Command R",
         ],
         "default_enabled": True,
     },
     {
         "id": "product_api",
         "name": "Product & API",
+        # Only AI-specific terms. The eleven generic ones removed here
+        # ("public beta", "SDK", "now available", "general availability",
+        # "rolling out", "rate limit", "pricing update", "developer api",
+        # "api access", "api pricing", "developer platform") matched any
+        # software release anywhere: "public beta" admitted "StreetComplete on
+        # iOS is now in public beta", and "SDK" admitted every client-library
+        # version bump. This gate now guards only Hacker News and HF Papers,
+        # where precision matters far more than breadth.
         "keywords": [
-            "developer api", "api access", "api pricing", "batch api",
-            "fine-tuning api", "responses api", "assistants api",
-            "developer platform", "general availability", "public beta",
-            "now available", "rolling out", "context window", "SDK",
-            "rate limit", "pricing update",
+            "batch api", "fine-tuning api", "responses api", "assistants api",
+            "context window", "token pricing", "model deprecation",
         ],
         "default_enabled": True,
     },
@@ -66,7 +71,7 @@ DEFAULT_TOPICS = [
         "id": "benchmarks",
         "name": "Benchmarks & Evals",
         "keywords": [
-            "benchmark", "eval", "evaluation suite", "SWE-bench", "GPQA",
+            "benchmark", "evaluation suite", "SWE-bench", "GPQA",
             "ARC-AGI", "AIME", "FrontierMath", "MMLU", "leaderboard",
             "state of the art", "human evaluation", "model evaluation",
         ],

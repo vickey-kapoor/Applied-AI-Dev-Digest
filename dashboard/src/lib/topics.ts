@@ -25,21 +25,21 @@ export const TOPICS: Topic[] = [
       "model release", "new model", "frontier model", "flagship model",
       "reasoning model", "model family", "introducing claude",
       "introducing gpt", "GPT-", "Claude", "Gemini", "Llama", "Mistral",
-      "Qwen", "DeepSeek", "Grok", "Gemma", "Command R", "checkpoint",
+      "Qwen", "DeepSeek", "Grok", "Gemma", "Command R",
     ],
     defaultEnabled: true,
   },
   {
     id: "product_api",
     name: "Product & API",
-    description: "Developer platform launches, API surfaces, pricing, availability and rollout news",
+    description: "AI API surfaces: batch and fine-tuning endpoints, context windows, token pricing",
     category: "core",
+    // Mirrors src/topic_config.py. Generic terms were removed there because
+    // they matched any software release ("public beta" admitted an
+    // OpenStreetMap app; "SDK" admitted every client-library bump).
     keywords: [
-      "developer api", "api access", "api pricing", "batch api",
-      "fine-tuning api", "responses api", "assistants api",
-      "developer platform", "general availability", "public beta",
-      "now available", "rolling out", "context window", "SDK",
-      "rate limit", "pricing update",
+      "batch api", "fine-tuning api", "responses api", "assistants api",
+      "context window", "token pricing", "model deprecation",
     ],
     defaultEnabled: true,
   },
@@ -75,7 +75,7 @@ export const TOPICS: Topic[] = [
     description: "Capability results and eval suites — SWE-bench, GPQA, ARC-AGI, AIME, FrontierMath, leaderboards",
     category: "core",
     keywords: [
-      "benchmark", "eval", "evaluation suite", "SWE-bench", "GPQA",
+      "benchmark", "evaluation suite", "SWE-bench", "GPQA",
       "ARC-AGI", "AIME", "FrontierMath", "MMLU", "leaderboard",
       "state of the art", "human evaluation", "model evaluation",
     ],

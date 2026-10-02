@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
 
 from src.constants import (
+    BLOG_FEEDS,
     DEDUP_SIMILARITY_THRESHOLD,
     DIGEST_MAX_AGE_HOURS,
     MAX_ITEMS_PER_SOURCE,
@@ -123,6 +124,11 @@ def _deduplicate_by_url(items: list[dict]) -> list[dict]:
 # A lab's own post is preferred over coverage of it when the two collapse.
 AGGREGATOR_SOURCES = {"Hacker News", "Hugging Face", "AI Alignment Forum"}
 
+# The frontier labs' own blogs. Membership is what exempts an item from the
+# topic-keyword gate below: these feeds are curated upstream, so being in them
+# is the relevance signal.
+CURATED_SOURCES = frozenset(BLOG_FEEDS)
+
 # Version-like tokens: v1.2.0, 5.3, 3.5-turbo, GPT-4o. Two titles carrying
 # different ones describe different releases however similar they read.
 _VERSION_TOKEN = re.compile(r"\bv?\d+(?:[.\-]\d+)+\b|\bv\d+\b")
@@ -229,7 +235,7 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
         Combined, deduplicated, keyword-filtered, and sorted list of items
     """
     fetchers = [
-        ("Blogs", lambda: fetch_blog_posts(max_results=BLOG_MAX_RESULTS, filter_keywords=filter_keywords)),
+        ("Blogs", lambda: fetch_blog_posts(max_results=BLOG_MAX_RESULTS, max_age_hours=DIGEST_MAX_AGE_HOURS)),
         ("GitHub", fetch_github_releases),
         ("Hacker News", lambda: fetch_hackernews_stories(filter_keywords=filter_keywords)),
         ("HF Papers", lambda: fetch_huggingface_papers(filter_keywords=filter_keywords)),
@@ -266,16 +272,28 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
     unique = _deduplicate_by_similarity(unique, DEDUP_SIMILARITY_THRESHOLD)
     logger.info("After similarity deduplication: %d unique items", len(unique))
 
-    # Final keyword filter — drop anything that doesn't mention a topic keyword
-    # Also assign topic_id to each item based on first matching topic
+    # Keyword filter, then topic tagging.
+    #
+    # The keyword gate applies only to the open sources. Hacker News and
+    # Hugging Face Daily Papers carry everything, so a topic test is the only
+    # thing separating AI news from the rest. A frontier lab's own blog needs
+    # no such test — and applying one there was actively harmful: it admitted
+    # "StreetComplete on iOS is now in public beta" on the phrase "public beta"
+    # while dropping DeepMind's "Introducing SynthID Bio" for naming no model.
+    #
+    # Tagging still runs on everything, so curated posts keep a topic_id for
+    # the dashboard and for feedback weighting.
     if filter_keywords:
         topics = get_active_topics()
         kw_lower = [k.lower() for k in filter_keywords]
         filtered = []
+        dropped = 0
         for item in unique:
             text = (item.get("title", "") + " " + item.get("summary", "")).lower()
-            if not any(kw in text for kw in kw_lower):
-                continue
+            if item.get("source", "") not in CURATED_SOURCES:
+                if not any(kw in text for kw in kw_lower):
+                    dropped += 1
+                    continue
             # Tag with the first topic whose keywords match
             if not item.get("topic_id"):
                 for topic in topics:
@@ -284,7 +302,10 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
                         break
             filtered.append(item)
         unique = filtered
-        logger.info("After keyword filter: %d items match active topics", len(unique))
+        logger.info(
+            "After keyword filter: %d items (%d off-topic items dropped from open sources)",
+            len(unique), dropped,
+        )
 
     # Sort by published date (most recent first)
     unique.sort(key=lambda x: x.get("published", ""), reverse=True)

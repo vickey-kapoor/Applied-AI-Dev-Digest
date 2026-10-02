@@ -249,3 +249,31 @@ class TestHeadlines:
             {"title": "Second thing", "source": "S", "url": "https://x.dev/2"},
         ])
         assert "Second thing" in msg
+
+
+class TestHeadlineNotes:
+    """The ranker writes the headline line; the title is only a fallback."""
+
+    def _top(self):
+        return {"title": "Top", "source": "S", "url": "https://x.dev/t", "what_shipped": "W"}
+
+    def test_note_replaces_the_bare_title(self):
+        msg = format_digest_message(self._top(), also=[{
+            "title": "vLLM v0.12 released",
+            "headline_note": "vLLM 0.12: 2x throughput on MoE models",
+            "source": "GitHub", "url": "https://x.dev/v",
+        }])
+        assert "2x throughput on MoE models" in msg
+        assert "vLLM v0.12 released" not in msg
+
+    def test_title_is_used_when_no_note_was_written(self):
+        msg = format_digest_message(self._top(), also=[
+            {"title": "Plain title", "source": "S", "url": "https://x.dev/p"},
+        ])
+        assert "Plain title" in msg
+
+    def test_notes_are_escaped(self):
+        msg = format_digest_message(self._top(), also=[{
+            "title": "t", "headline_note": "Cuts cost 2*_fold_", "source": "S", "url": "https://x.dev/1",
+        }])
+        assert "2\\*" in msg

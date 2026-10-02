@@ -171,38 +171,55 @@ class TestVerdictParsing:
     """
 
     def test_keep_and_reject(self):
-        kept, rejected = _parse_verdict(
+        kept, notes, rejected = _parse_verdict(
             '{"keep": [3, 1], "reject": [{"index": 2, "why": "gaming post"}]}', 3
         )
         assert kept == [2, 0]
+        assert notes == {}
         assert rejected == [(1, "gaming post")]
+
+    def test_headline_lines_travel_with_the_kept_indices(self):
+        """The line is what the reader sees, so it must survive parsing."""
+        kept, notes, _ = _parse_verdict(
+            '{"keep": [{"index": 2, "line": "2x throughput on MoE"}, {"index": 1}]}', 2
+        )
+        assert kept == [1, 0]
+        assert notes == {1: "2x throughput on MoE"}
+
+    def test_duplicate_rejections_are_logged_like_any_other(self):
+        """Semantic dedup rides on the same verdict, not a separate call."""
+        kept, _, rejected = _parse_verdict(
+            '{"keep": [1], "reject": [{"index": 2, "why": "duplicate of 1"}]}', 2
+        )
+        assert kept == [0]
+        assert rejected == [(1, "duplicate of 1")]
 
     def test_rejecting_everything_is_allowed(self):
         """A skipped day beats a padded one, so an empty keep list is valid."""
-        kept, rejected = _parse_verdict('{"keep": [], "reject": [{"index": 1, "why": "ad"}]}', 1)
+        kept, _, rejected = _parse_verdict('{"keep": [], "reject": [{"index": 1, "why": "ad"}]}', 1)
         assert kept == []
         assert rejected == [(0, "ad")]
 
     def test_unjudged_items_are_kept_not_dropped(self):
         """Silently dropping an item the model never judged would be worse."""
-        kept, _ = _parse_verdict('{"keep": [1]}', 3)
+        kept, _, _ = _parse_verdict('{"keep": [1]}', 3)
         assert kept == [0, 1, 2]
 
     def test_accepts_a_bare_ranking(self):
-        kept, rejected = _parse_verdict('{"ranking": [2, 1]}', 2)
+        kept, _, rejected = _parse_verdict('{"ranking": [2, 1]}', 2)
         assert kept == [1, 0]
         assert rejected == []
 
     def test_accepts_the_older_single_index_shape(self):
-        kept, _ = _parse_verdict('{"index": 2}', 3)
+        kept, _, _ = _parse_verdict('{"index": 2}', 3)
         assert kept[0] == 1
 
     def test_accepts_a_bare_number(self):
-        kept, _ = _parse_verdict("2", 3)
+        kept, _, _ = _parse_verdict("2", 3)
         assert kept == [1]
 
     def test_ignores_out_of_range_indices(self):
-        kept, _ = _parse_verdict('{"keep": [9, 1]}', 3)
+        kept, _, _ = _parse_verdict('{"keep": [9, 1]}', 3)
         assert kept == [0, 1, 2]
 
     def test_unusable_reply_returns_none_so_caller_can_fall_back(self):

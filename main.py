@@ -12,6 +12,7 @@ from src.logger import get_logger
 from src.topic_config import get_active_keywords, is_paused, increment_topic_stat
 from src.fetcher import fetch_all
 from src.news_ranker import rank_news_ranked
+from src.article_fetcher import fetch_article_text
 from src.news_summarizer import summarize_release
 from src.telegram_sender import format_digest_message, send_telegram_message
 from src.pdf_generator import generate_digest_pdf
@@ -125,6 +126,11 @@ def main():
         # includes the structured fields rather than the raw RSS description.
         logger.info("Generating summaries...")
         try:
+            # Open the link first. The feed blurb averaged 273 characters and
+            # was sometimes empty, so the brief was being written from a title.
+            article = fetch_article_text(top_item.get("url", ""))
+            if article:
+                top_item = {**top_item, "article_text": article}
             top_item = summarize_release(top_item, openai_key)
             if "what_shipped" in top_item:
                 logger.info("Generated structured brief")

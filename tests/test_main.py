@@ -35,7 +35,7 @@ class TestMain:
     @patch("main.generate_digest_pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers")
-    @patch("main.rank_news")
+    @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
     @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
@@ -46,7 +46,7 @@ class TestMain:
         mock_get_active_keywords,
         mock_increment_stat,
         mock_fetch_all,
-        mock_rank_news,
+        mock_rank_news_ranked,
         mock_export_papers,
         mock_summarize_release,
         mock_generate_digest_pdf,
@@ -72,7 +72,7 @@ class TestMain:
         }
 
         mock_fetch_all.return_value = [paper]
-        mock_rank_news.return_value = paper
+        mock_rank_news_ranked.return_value = [paper]
         mock_export_papers.return_value = "paper-1"
         mock_summarize_release.return_value = enriched_paper
         mock_generate_digest_pdf.return_value = "reports/13-Mar/test.pdf"
@@ -91,7 +91,7 @@ class TestMain:
     @patch("main.summarize_release")
     @patch("main.export_digest")
     @patch("main.export_papers")
-    @patch("main.rank_news")
+    @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
     @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
@@ -102,7 +102,7 @@ class TestMain:
         mock_get_active_keywords,
         mock_increment_stat,
         mock_fetch_all,
-        mock_rank_news,
+        mock_rank_news_ranked,
         mock_export_papers,
         mock_export_digest,
         mock_summarize_release,
@@ -122,7 +122,7 @@ class TestMain:
         }
 
         mock_fetch_all.return_value = [paper]
-        mock_rank_news.return_value = paper
+        mock_rank_news_ranked.return_value = [paper]
         mock_export_papers.return_value = "paper-1"
         mock_summarize_release.return_value = paper
         mock_generate_digest_pdf.return_value = "reports/13-Mar/test.pdf"
@@ -169,7 +169,7 @@ class TestMain:
     @patch("main.generate_digest_pdf", return_value="reports/x.pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers", return_value="paper-1")
-    @patch("main.rank_news")
+    @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
     @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["frontier model"])
@@ -180,7 +180,7 @@ class TestMain:
         mock_get_active_keywords,
         mock_increment_stat,
         mock_fetch_all,
-        mock_rank_news,
+        mock_rank_news_ranked,
         mock_export_papers,
         mock_summarize_release,
         mock_generate_digest_pdf,
@@ -201,7 +201,7 @@ class TestMain:
         enriched = {**paper, "summary": "Generated summary", "what_shipped": "OpenAI shipped X."}
 
         mock_fetch_all.return_value = [paper]
-        mock_rank_news.return_value = paper
+        mock_rank_news_ranked.return_value = [paper]
         mock_summarize_release.return_value = enriched
 
         main.main()

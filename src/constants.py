@@ -82,15 +82,15 @@ EXCLUDE_KEYWORDS = [
     "ipo",
     "lawsuit",
     "trademark",
-    # Off-domain content from the corporate blogs. NVIDIA's feed is the whole
-    # company blog, not an AI-lab feed, so it carries consumer gaming and
-    # recruiting alongside real research; Google AI's carries prize and
-    # partnership marketing. Narrow and literal on purpose — "games" alone
-    # would drop game-theory and benchmark posts.
-    "geforce",
-    "graduate fellowship",
-    "xprize",
 ]
+
+# No off-domain blocklist here. Corporate feeds do carry consumer and marketing
+# content — NVIDIA's is the whole company blog — but keeping a literal list of
+# the junk ("geforce", "xprize") was whack-a-mole that could only ever catch
+# what had already shipped. The ranker now screens every candidate and rejects
+# what an applied engineer should not see, which is a judgement no word list
+# makes correctly. The entries above stay because they are cheap, uncontentious
+# and save the model tokens; they are not the editorial gate.
 
 # Tutorial and how-to shapes, matched against the TITLE ONLY.
 # Deliberately not folded into EXCLUDE_KEYWORDS: that list is checked against

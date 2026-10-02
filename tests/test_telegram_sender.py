@@ -8,6 +8,7 @@ from src.telegram_sender import (
     _truncate,
     _truncate_message,
     _escape_markdown,
+    HEADLINE_LIMIT,
     format_digest_message,
     send_telegram_message,
 )
@@ -191,3 +192,60 @@ class TestSendTelegramMessage:
         call_args = mock_post.call_args
         sent_message = call_args[1]["json"]["text"] if "json" in call_args[1] else call_args[0][1]["text"]
         assert len(sent_message) <= 4096
+
+
+class TestHeadlines:
+    """The pool holds ~20 candidates a day and only the top pick was shown.
+
+    'Staying up to date' needs the sweep as well as the detail, so the rest
+    arrive as one-line headlines under the brief.
+    """
+
+    def _top(self):
+        return {
+            "title": "Lab ships a model",
+            "source": "OpenAI",
+            "url": "https://openai.com/a",
+            "what_shipped": "A model.",
+            "release_type": "model",
+        }
+
+    def test_no_headlines_when_there_are_none(self):
+        """A one-item day must not render an empty section header."""
+        msg = format_digest_message(self._top())
+        assert "Also today" not in msg
+
+    def test_headlines_render_with_link_and_source(self):
+        msg = format_digest_message(self._top(), also=[
+            {"title": "vLLM 0.12 lands", "source": "Together AI", "url": "https://x.dev/v"},
+        ])
+        assert "*Also today*" in msg
+        assert "[vLLM 0.12 lands](https://x.dev/v)" in msg
+        assert "Together AI" in msg
+
+    def test_headlines_are_capped(self):
+        extras = [
+            {"title": f"Item {i}", "source": "S", "url": f"https://x.dev/{i}"}
+            for i in range(12)
+        ]
+        msg = format_digest_message(self._top(), also=extras)
+        assert msg.count("•") == HEADLINE_LIMIT
+
+    def test_headline_without_a_url_still_renders(self):
+        msg = format_digest_message(self._top(), also=[{"title": "No link", "source": "S"}])
+        assert "No link" in msg
+
+    def test_headline_titles_are_escaped(self):
+        """Unescaped markdown in a title would break the whole message."""
+        msg = format_digest_message(self._top(), also=[
+            {"title": "A *bold* claim_here", "source": "S", "url": "https://x.dev/1"},
+        ])
+        assert "\\*bold\\*" in msg
+
+    def test_headlines_appear_on_the_flat_summary_fallback_too(self):
+        """An item with no structured brief still takes the other headlines."""
+        flat = {"title": "T", "source": "S", "url": "https://x.dev/t", "summary": "Plain."}
+        msg = format_digest_message(flat, also=[
+            {"title": "Second thing", "source": "S", "url": "https://x.dev/2"},
+        ])
+        assert "Second thing" in msg

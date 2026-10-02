@@ -1,5 +1,6 @@
 """Send Telegram messages using the Bot API."""
 
+import os
 import re
 from urllib.parse import urlparse
 
@@ -120,12 +121,40 @@ MESSAGE_SECTIONS = (
 )
 
 
-def format_digest_message(item: dict) -> str:
+HEADLINE_LIMIT = int(os.getenv("DIGEST_HEADLINE_LIMIT", "5"))
+
+
+def _format_headlines(items: list[dict] | None) -> list[str]:
+    """Render the runners-up as one line each: title, link, source.
+
+    Returns a list of lines to append, empty when there is nothing to add, so
+    a day with a single worthwhile item still reads as a clean brief rather
+    than a brief with an empty section under it.
     """
-    Format an item into a Telegram message using the AI-lab-brief format.
+    if not items:
+        return []
+
+    lines = ["", "*Also today*"]
+    for entry in items[:HEADLINE_LIMIT]:
+        title = _escape_markdown((entry.get("title") or "Untitled").strip())
+        source = _escape_markdown(entry.get("source", ""))
+        link = _validate_url(entry.get("url", ""))
+        suffix = f" — {source}" if source else ""
+        lines.append(f"• [{title}]({link}){suffix}" if link else f"• {title}{suffix}")
+    return lines
+
+
+def format_digest_message(item: dict, also: list[dict] | None = None) -> str:
+    """
+    Format the daily digest: one deep brief, then the rest as headlines.
+
+    The pool holds around twenty candidates a day and only the top pick was
+    ever shown, so everything else was discarded unseen. "Staying up to date"
+    needs the sweep as well as the detail.
 
     Args:
-        item: Item dictionary with title, source, url, and structured brief fields
+        item: The top pick, with title, source, url and the structured brief
+        also: Further items, already ranked, rendered as one-line headlines
 
     Returns:
         Formatted message string with Markdown
@@ -155,13 +184,14 @@ def format_digest_message(item: dict) -> str:
     # Fall back to flat summary if the structured brief is missing
     if not any(text for _, text in sections):
         summary = _escape_markdown(item.get("summary", ""))
-        return f"""{tag} · {source}{badge_str}
+        flat = f"""{tag} · {source}{badge_str}
 
 *{title}*
 
 {summary}
 
 {url}"""
+        return flat + "\n".join(_format_headlines(also))
 
     lines = [f"{tag} · {source}{badge_str}", "", f"*{title}*"]
 
@@ -172,6 +202,7 @@ def format_digest_message(item: dict) -> str:
     if url:
         lines += ["", url]
 
+    lines += _format_headlines(also)
     return "\n".join(lines)
 
 

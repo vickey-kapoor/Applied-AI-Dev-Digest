@@ -96,7 +96,7 @@ DEFAULT_TOPICS = [
             "weights release", "Apache 2.0", "model license",
             "Hugging Face release", "OLMo", "Gemma",
         ],
-        "default_enabled": False,
+        "default_enabled": True,
     },
     {
         "id": "infrastructure",
@@ -106,7 +106,7 @@ DEFAULT_TOPICS = [
             "TPU", "Blackwell", "Trainium", "supercomputer", "datacenter",
             "serving", "kv cache", "throughput", "compute deal",
         ],
-        "default_enabled": False,
+        "default_enabled": True,
     },
     {
         "id": "multimodal",

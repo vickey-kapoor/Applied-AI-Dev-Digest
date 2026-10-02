@@ -3,7 +3,12 @@
 import pytest
 from unittest.mock import Mock, patch
 
-from src.news_ranker import rank_news, _sanitize_text
+from src.news_ranker import (
+    rank_news,
+    rank_news_ranked,
+    _parse_verdict,
+    _sanitize_text,
+)
 
 
 class TestSanitizeText:
@@ -154,3 +159,65 @@ class TestRankNews:
             call_args = mock_client.chat.completions.create.call_args
             prompt = call_args[1]["messages"][0]["content"]
             assert "[FILTERED]" in prompt
+
+
+class TestVerdictParsing:
+    """The ranker now decides what to drop, not just what to rank.
+
+    Keyword lists could not make this call: none admits "StreetComplete on iOS
+    is now in public beta" while rejecting "Introducing SynthID Bio". These
+    tests pin the reply shapes the parser has to survive, because a parse
+    failure silently falls back to date order and loses the judgement.
+    """
+
+    def test_keep_and_reject(self):
+        kept, rejected = _parse_verdict(
+            '{"keep": [3, 1], "reject": [{"index": 2, "why": "gaming post"}]}', 3
+        )
+        assert kept == [2, 0]
+        assert rejected == [(1, "gaming post")]
+
+    def test_rejecting_everything_is_allowed(self):
+        """A skipped day beats a padded one, so an empty keep list is valid."""
+        kept, rejected = _parse_verdict('{"keep": [], "reject": [{"index": 1, "why": "ad"}]}', 1)
+        assert kept == []
+        assert rejected == [(0, "ad")]
+
+    def test_unjudged_items_are_kept_not_dropped(self):
+        """Silently dropping an item the model never judged would be worse."""
+        kept, _ = _parse_verdict('{"keep": [1]}', 3)
+        assert kept == [0, 1, 2]
+
+    def test_accepts_a_bare_ranking(self):
+        kept, rejected = _parse_verdict('{"ranking": [2, 1]}', 2)
+        assert kept == [1, 0]
+        assert rejected == []
+
+    def test_accepts_the_older_single_index_shape(self):
+        kept, _ = _parse_verdict('{"index": 2}', 3)
+        assert kept[0] == 1
+
+    def test_accepts_a_bare_number(self):
+        kept, _ = _parse_verdict("2", 3)
+        assert kept == [1]
+
+    def test_ignores_out_of_range_indices(self):
+        kept, _ = _parse_verdict('{"keep": [9, 1]}', 3)
+        assert kept == [0, 1, 2]
+
+    def test_unusable_reply_returns_none_so_caller_can_fall_back(self):
+        assert _parse_verdict("not json at all", 3) is None
+        assert _parse_verdict('["a", "list"]', 3) is None
+
+
+class TestRankNewsNoneContract:
+    def test_returns_none_when_nothing_is_worth_sending(self, monkeypatch):
+        """main.py must be able to tell "send nothing" from "send the first"."""
+        monkeypatch.setattr("src.news_ranker.rank_news_ranked", lambda items, key: [])
+        assert rank_news([{"title": "x"}, {"title": "y"}], "k") is None
+
+    def test_single_item_returns_a_list_from_ranked(self):
+        """The ranked contract is a list; returning the bare dict broke rank_news."""
+        one = [{"title": "solo", "summary": ""}]
+        assert rank_news_ranked(one, "") == one
+        assert rank_news(one, "") == one[0]

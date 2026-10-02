@@ -11,7 +11,7 @@ from src.constants import DIGEST_MAX_RESULTS
 from src.logger import get_logger
 from src.topic_config import get_active_keywords, is_paused, increment_topic_stat
 from src.fetcher import fetch_all
-from src.news_ranker import rank_news
+from src.news_ranker import rank_news_ranked
 from src.news_summarizer import summarize_release
 from src.telegram_sender import format_digest_message, send_telegram_message
 from src.pdf_generator import generate_digest_pdf
@@ -92,16 +92,25 @@ def main():
     # Export all fetched items to JSON and select top pick
     top_paper_id = None
     top_item = None
+    headlines: list[dict] = []
 
     if new_items:
         # Rank and select top item from unsent items only
-        logger.info("Selecting most important item...")
+        logger.info("Screening and ranking %d candidates...", len(new_items))
         try:
-            top_item = rank_news(new_items, openai_key)
-            logger.info("Selected: %s", top_item["title"])
+            ranked = rank_news_ranked(new_items, openai_key)
+            if ranked:
+                top_item = ranked[0]
+                headlines = ranked[1:]
+                logger.info("Selected: %s", top_item["title"])
+            else:
+                # The model judged nothing here worth sending. Honour that: a
+                # skipped day beats a padded one, and tomorrow's run retries.
+                logger.info("Model rejected all %d candidates — sending nothing", len(new_items))
         except Exception as e:
             logger.error("Error ranking items: %s", e)
             top_item = new_items[0]
+            headlines = new_items[1:]
 
         # Track topic stats in KV
         try:
@@ -176,7 +185,7 @@ def main():
     if top_item:
         logger.info("Sending Telegram message...")
         try:
-            message = format_digest_message(top_item)
+            message = format_digest_message(top_item, also=headlines)
             send_telegram_message(telegram_token, telegram_chat_id, message)
             telegram_sent = True
         except Exception as e:

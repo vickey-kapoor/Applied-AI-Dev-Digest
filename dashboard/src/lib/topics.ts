@@ -105,7 +105,7 @@ export const TOPICS: Topic[] = [
       "weights release", "Apache 2.0", "model license",
       "Hugging Face release", "OLMo", "Gemma",
     ],
-    defaultEnabled: false,
+    defaultEnabled: true,
   },
   {
     id: "infrastructure",
@@ -117,7 +117,7 @@ export const TOPICS: Topic[] = [
       "TPU", "Blackwell", "Trainium", "supercomputer", "datacenter",
       "serving", "kv cache", "throughput", "compute deal",
     ],
-    defaultEnabled: false,
+    defaultEnabled: true,
   },
   // Emerging
   {

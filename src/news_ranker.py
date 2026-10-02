@@ -25,22 +25,117 @@ def _call_openai_ranking(client: OpenAI, prompt: str):
     )
 
 
-def rank_news(items: list[dict], api_key: str) -> dict:
+def _parse_verdict(content: str, count: int) -> tuple[list[int], list[tuple[int, str]]] | None:
+    """Parse the model's keep/reject verdict into 0-based indices.
+
+    Returns (kept_in_order, [(rejected_index, why), ...]), or None if the reply
+    cannot be used at all so the caller can fall back.
+
+    Tolerates the shapes seen in practice: the documented {"keep": [...],
+    "reject": [...]}, a {"ranking": [...]} ordering with no rejections, the
+    older {"index": N} single pick, and a bare number. An item the model
+    mentions in neither list is kept, in its original position — silently
+    dropping an item the model never judged would be worse than showing it.
     """
-    Use OpenAI to select the most significant AI lab development of the day.
+    try:
+        parsed = json.loads(content.strip())
+    except (json.JSONDecodeError, AttributeError):
+        try:
+            return [int(content.strip()) - 1], []
+        except ValueError:
+            return None
+
+    # A bare number parses as valid JSON, so it never reaches the except above.
+    if isinstance(parsed, (int, float)) and not isinstance(parsed, bool):
+        i = int(parsed) - 1
+        return ([i], []) if 0 <= i < count else None
+
+    if not isinstance(parsed, dict):
+        return None
+
+    def indices(raw):
+        out, seen = [], set()
+        for value in raw if isinstance(raw, list) else []:
+            if isinstance(value, dict):
+                value = value.get("index")
+            try:
+                i = int(value) - 1
+            except (TypeError, ValueError):
+                continue
+            if 0 <= i < count and i not in seen:
+                seen.add(i)
+                out.append(i)
+        return out
+
+    raw_keep = parsed.get("keep")
+    if raw_keep is None:
+        raw_keep = parsed.get("ranking")
+    if raw_keep is None and "index" in parsed:
+        raw_keep = [parsed["index"]]
+    if raw_keep is None:
+        return None
+
+    kept = indices(raw_keep)
+
+    rejected: list[tuple[int, str]] = []
+    for entry in parsed.get("reject") or []:
+        idx = entry.get("index") if isinstance(entry, dict) else entry
+        why = entry.get("why", "") if isinstance(entry, dict) else ""
+        try:
+            i = int(idx) - 1
+        except (TypeError, ValueError):
+            continue
+        if 0 <= i < count and i not in kept:
+            rejected.append((i, str(why)))
+
+    # Unjudged items are kept rather than dropped.
+    judged = set(kept) | {i for i, _ in rejected}
+    kept += [i for i in range(count) if i not in judged]
+    return kept, rejected
+
+
+def rank_news(items: list[dict], api_key: str) -> dict | None:
+    """Return the single most useful item for an applied AI engineer.
+
+    None when the model judged nothing in the list worth sending. A thin
+    wrapper over rank_news_ranked, so the daily message's headlines cost no
+    extra model call — one verdict serves both.
+    """
+    ranked = rank_news_ranked(items, api_key)
+    return ranked[0] if ranked else None
+
+
+def rank_news_ranked(items: list[dict], api_key: str) -> list[dict]:
+    """
+    Order items by usefulness to an applied AI engineer, most useful first.
+
+    Args:
+        items: List of candidate item dictionaries
+        api_key: OpenAI API key
+
+    The model also decides what to drop. This is the gate that keyword lists
+    were doing badly: no list admits "StreetComplete on iOS is now in public
+    beta" while rejecting "Introducing SynthID Bio", but a model asked whether
+    an applied engineer should see an item gets both right. Rejections are
+    logged with the model's reason so its judgement is visible and tunable.
 
     Args:
         items: List of candidate item dictionaries
         api_key: OpenAI API key
 
     Returns:
-        The most significant item
+        The items worth sending, most useful first. Empty if the model rejected
+        all of them — a short digest beats a padded one, and the caller sends
+        nothing. Falls back to the input order if the model call or its reply
+        cannot be used at all.
     """
     if not items:
         raise ValueError("No items to rank")
 
     if len(items) == 1:
-        return items[0]
+        # A list, not the bare item: this function's contract is a list, and
+        # returning the dict here made rank_news index it with [0].
+        return list(items)
 
     # Load feedback weights and reorder by preference before sending to LLM
     try:
@@ -63,51 +158,60 @@ def rank_news(items: list[dict], api_key: str) -> dict:
         for i, r in enumerate(items)
     )
 
-    prompt = f"""You are tracking what the frontier AI labs ship — OpenAI, Anthropic, Google DeepMind, Meta, Mistral, xAI, Alibaba/Qwen, DeepSeek, NVIDIA and their peers.
-Your job is to pick the single most significant AI lab development from today's list.
+    prompt = f"""You are briefing an applied AI engineer: someone who builds production systems on top of models — serving them, evaluating them, wiring them into agents and products.
 
-Rank by how much the item changes what is actually available or known today.
+Your job is to order today's items by how useful each one is to that person.
+
+Rank by what changes their decisions this week, not by what is most significant to the field in the abstract. A frontier capability they cannot access yet matters less to them than a price cut or a faster runtime they can use today.
+
 Prioritize:
-1. New frontier model releases — a lab shipping a model, version, or checkpoint, with capability or pricing detail
-2. Product and API launches that change what developers can build — new endpoints, modalities, context limits, availability, pricing moves
-3. Lab research with concrete results — technical reports, scaling findings, training or post-training methods, with numbers
-4. Agentic capability milestones — tool use, computer use, long-horizon or coding agents shipped or measured
-5. Benchmark results that move the frontier — SWE-bench, ARC-AGI, GPQA, AIME and similar, especially with verified methodology
-6. System cards, safety frameworks and evaluation reports accompanying a frontier release
-7. Open-weight releases that shift what is freely runnable
-8. Compute and infrastructure news that changes training or serving economics at frontier scale
+1. Something they can use now — a model, endpoint, or open weight they can call or run today, with the availability, limits and pricing that decide whether it fits
+2. Shifts in the cost, latency or quality tradeoffs they build against — price cuts, faster inference, longer context, small models closing the gap
+3. Serving and tooling releases that change what is practical to run — inference engines, quantization, frameworks, SDKs — when they carry a real capability or performance change
+4. Techniques and patterns with evidence behind them — evals, retrieval, fine-tuning, agent architectures — with numbers rather than claims
+5. Measured failure modes and caveats — regressions, benchmark flaws, prompt-injection and reliability findings they would otherwise hit themselves
+6. Research whose result changes how to build, not only what is known
 
 Deprioritize:
-- Third-party commentary, opinion, or speculation about a lab rather than an announcement from one
-- Incremental SDK or library point releases with no capability change
-- Reposts, roundups, and coverage of an announcement already made days ago
-- Hiring, partnerships, funding rounds, leadership changes, legal disputes
-- Marketing posts with no model, number, or shipping date
+- Frontier-scale news with nothing to act on — training compute deals, datacenter announcements, capability claims with no access
+- Commentary, opinion and speculation rather than a first-party announcement
+- Reposts and coverage of something announced days ago
+- Hiring, funding rounds, partnerships, leadership, legal and policy news
+- Marketing with no model, number, or shipping date
+- Pure version bumps with no capability or performance change. A library release carrying a real improvement is NOT this — for this reader a throughput win in an inference engine can outrank a model they cannot access.
 
-Prefer first-party lab announcements over coverage of them. When two items describe the same launch, pick the one closest to the source.
+Prefer first-party announcements over coverage of them. When two items describe the same thing, pick the one closest to the source.
 
 Items:
 {items_text}
 
-Return the single most important item as JSON: {{"index": N, "reason": "one sentence on why this is the most significant lab development today"}}"""
+First decide, for each item, whether an applied AI engineer should see it at all. Reject anything that is off-domain, pure marketing, a bare version bump, or has nothing they could act on — be willing to reject most of the list, and to reject all of it. A short honest digest beats a padded one.
+
+Then order the ones worth keeping, most useful first.
+
+Return JSON:
+{{"keep": [N, N, ...], "reject": [{{"index": N, "why": "a few words"}}, ...], "reason": "one sentence on why the first kept item is the most useful to an applied AI engineer today"}}
+
+Indices are 1-based, and every item must appear in exactly one of the two lists."""
 
     try:
         response = _call_openai_ranking(client, prompt)
 
         content = response.choices[0].message.content
         if content:
-            # Try JSON parse first, fall back to plain number
-            try:
-                result = json.loads(content.strip())
-                selected_index = int(result["index"]) - 1
-            except (json.JSONDecodeError, KeyError):
-                selected_index = int(content.strip()) - 1
-            if 0 <= selected_index < len(items):
-                return items[selected_index]
+            verdict = _parse_verdict(content, len(items))
+            if verdict is not None:
+                kept, rejected = verdict
+                for i, why in rejected:
+                    logger.info(
+                        "Rejected: %s — %s", items[i].get("title", "")[:70], why or "no reason given"
+                    )
+                logger.info("Model kept %d of %d candidates", len(kept), len(items))
+                return [items[i] for i in kept]
     except (ValueError, IndexError, TypeError, AttributeError):
         pass
     except Exception:
         logger.error("Failed to rank items with AI")
 
-    # Fallback to first paper if parsing fails
-    return items[0]
+    # Date order is the honest fallback: it is what fetch_all already produced.
+    return list(items)

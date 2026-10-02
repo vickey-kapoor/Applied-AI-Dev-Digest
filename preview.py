@@ -39,7 +39,7 @@ def main():
 
     # Rank
     try:
-        top = rank_news(items, openai_key)
+        top = rank_news(items, openai_key) or items[0]
     except Exception:
         top = items[0]
 

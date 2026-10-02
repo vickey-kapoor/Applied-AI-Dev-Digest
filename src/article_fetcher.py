@@ -16,6 +16,14 @@ not a crash.
 
 Every failure path returns "" so the caller falls back to the RSS summary. A
 paywall, a JS-rendered page or a bot block must never take the digest down.
+
+One known block, recorded so nobody re-derives it: openai.com/index/* answers
+403 with `cf-mitigated: challenge` and an `accept-ch: Sec-CH-UA-*` client-hint
+demand. That response is byte-for-byte the same for this project's user agent,
+for curl's default, and for no user agent at all, so it is Cloudflare bot
+management rather than a user-agent filter, and no header defeats it. OpenAI's
+developer news is read from their changelog instead — see
+src/fetchers/openai_changelog_fetcher.py.
 """
 
 from html.parser import HTMLParser
@@ -150,7 +158,20 @@ def fetch_article_text(url: str) -> str:
         response = _get(url)
         with response:
             if response.status_code != 200:
-                logger.info("Article fetch got HTTP %s for %s", response.status_code, url)
+                # Name the cause when the edge tells us. openai.com answers 403
+                # with `cf-mitigated: challenge` to this project's user agent,
+                # to curl's, and to no user agent at all — so a reader of these
+                # logs does not waste an afternoon trying headers. Those items
+                # fall back to the feed summary, and OpenAI's API news comes in
+                # through src/fetchers/openai_changelog_fetcher.py instead.
+                mitigated = response.headers.get("cf-mitigated", "")
+                if mitigated:
+                    logger.info(
+                        "Article fetch got HTTP %s (Cloudflare %s, not a user-agent issue) for %s",
+                        response.status_code, mitigated, url,
+                    )
+                else:
+                    logger.info("Article fetch got HTTP %s for %s", response.status_code, url)
                 return ""
 
             content_type = response.headers.get("Content-Type", "")

@@ -10,12 +10,14 @@ from src.constants import (
     DEDUP_SIMILARITY_THRESHOLD,
     DIGEST_MAX_AGE_HOURS,
     MAX_ITEMS_PER_SOURCE,
+    OPENAI_CHANGELOG_SOURCE,
     THREAD_POOL_WORKERS,
 )
 from src.fetchers.blog_fetcher import fetch_blog_posts
 from src.fetchers.github_fetcher import fetch_github_releases
 from src.fetchers.hackernews_fetcher import fetch_hackernews_stories
 from src.fetchers.huggingface_fetcher import fetch_huggingface_papers
+from src.fetchers.openai_changelog_fetcher import fetch_openai_changelog
 from src.logger import get_logger
 from src.topic_config import get_active_topics
 
@@ -106,16 +108,28 @@ def _cap_per_source(items: list[dict], max_per_source: int) -> list[dict]:
     return kept
 
 
-def _deduplicate_by_url(items: list[dict]) -> list[dict]:
-    """Remove duplicate items based on URL."""
-    seen_urls: set[str] = set()
+def _identity_of(item: dict) -> str:
+    """The key that makes two fetched items the same item.
+
+    Normally the URL. A source may override it when one URL covers many items:
+    OpenAI's changelog is a single page holding every entry, with no permalinks,
+    so keying on the URL there would collapse the whole source to one item.
+    json_exporter._paper_identity honours the same field, so an item dedupes
+    and is remembered as sent under one key rather than two.
+    """
+    return (item.get("identity") or item.get("url") or "").strip()
+
+
+def _deduplicate_by_identity(items: list[dict]) -> list[dict]:
+    """Remove items that resolve to the same identity, keeping the first."""
+    seen: set[str] = set()
     unique = []
     for item in items:
-        url = item.get("url", "")
-        if url and url in seen_urls:
+        key = _identity_of(item)
+        if key and key in seen:
             continue
-        if url:
-            seen_urls.add(url)
+        if key:
+            seen.add(key)
         unique.append(item)
     return unique
 
@@ -127,7 +141,10 @@ AGGREGATOR_SOURCES = {"Hacker News", "Hugging Face", "AI Alignment Forum"}
 # The frontier labs' own blogs. Membership is what exempts an item from the
 # topic-keyword gate below: these feeds are curated upstream, so being in them
 # is the relevance signal.
-CURATED_SOURCES = frozenset(BLOG_FEEDS)
+# The changelog joins them: it is a lab's own release notes, which is as
+# curated as a source gets, and keyword-gating it would drop a pricing change
+# for naming no topic keyword.
+CURATED_SOURCES = frozenset(BLOG_FEEDS) | {OPENAI_CHANGELOG_SOURCE}
 
 # Version-like tokens: v1.2.0, 5.3, 3.5-turbo, GPT-4o. Two titles carrying
 # different ones describe different releases however similar they read.
@@ -239,6 +256,7 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
         ("GitHub", fetch_github_releases),
         ("Hacker News", lambda: fetch_hackernews_stories(filter_keywords=filter_keywords)),
         ("HF Papers", lambda: fetch_huggingface_papers(filter_keywords=filter_keywords)),
+        ("OpenAI Changelog", fetch_openai_changelog),
     ]
 
     all_items: list[dict] = []
@@ -264,9 +282,9 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
     all_items = _filter_by_recency(all_items, DIGEST_MAX_AGE_HOURS)
     logger.info("After recency filter: %d items within %dh", len(all_items), DIGEST_MAX_AGE_HOURS)
 
-    # Deduplicate by URL
-    unique = _deduplicate_by_url(all_items)
-    logger.info("After URL deduplication: %d unique items", len(unique))
+    # Deduplicate on identity — the URL, unless a source supplies its own
+    unique = _deduplicate_by_identity(all_items)
+    logger.info("After identity deduplication: %d unique items", len(unique))
 
     # Then collapse cross-source coverage of the same launch
     unique = _deduplicate_by_similarity(unique, DEDUP_SIMILARITY_THRESHOLD)

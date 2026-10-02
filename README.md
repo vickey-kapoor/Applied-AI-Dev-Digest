@@ -7,12 +7,13 @@ The question it answers is not "what is most significant to the field" but "what
 ## Features
 
 - Fetches from **10 AI lab and platform blogs** via RSS (OpenAI, Google DeepMind, Google AI, Google Research, Meta AI, Mistral AI, Qwen, Hugging Face Blog, NVIDIA, Together AI)
+- Reads the **OpenAI platform changelog** — model releases with their token prices, new service tiers, API fixes worth re-running evals over. OpenAI's news blog answers 403 to every non-browser client, so this is where their developer news actually comes from
 - Tracks **7 GitHub repos** for releases that mark a shipped development (official model SDKs plus the serving stacks new models land in)
 - Monitors **Hacker News** for frontier lab discussions (score > 100, last 24h) — also the main channel for Anthropic, which publishes no RSS feed
 - Surfaces **Hugging Face Daily Papers** with high upvotes (20+, last 24h)
 - **11 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords; the six Core topics and both Applied ones (Open Weights, Compute & Infrastructure) are enabled by default
 - Uses GPT-4o-mini to **screen, dedupe and rank** the day's candidates in one call: each is kept or rejected for whether an applied engineer should see it, duplicate coverage is collapsed to the copy closest to the source, and the keepers are ordered by usefulness. Influenced by **user feedback weights**; rejections are logged with the model's reason
-- **Opens the link.** The brief is written from the article's own text, not the feed teaser — those ran a median of 273 characters and were sometimes empty, which left `availability` a non-answer 39% of the time. Falls back to the feed summary when a page is paywalled, JS-rendered or blocked
+- **Opens the link.** The brief is written from the article's own text, not the feed teaser — those ran a median of 273 characters and were sometimes empty, which left `availability` a non-answer 39% of the time. Falls back to the feed summary when a page is paywalled, JS-rendered or blocked, and **tells the model that is what happened**, so a thin teaser produces "Not stated" rather than five confident fields written from two sentences
 - Sends the **top pick as a full brief plus up to 5 headlines** from the rest of the ranking. The model writes each headline line, so it carries the point rather than restating the title — "vLLM 0.12: 2x throughput on MoE models", not "vLLM v0.12 released"
 - Generates a **structured lab-release brief** (What shipped / Capabilities / Availability / Why it matters / Caveats)
 - Sends to Telegram via Bot API
@@ -90,6 +91,57 @@ https://openai.com/index/gpt-4o-mini
 **EleutherAI was removed** — `blog.eleuther.ai/{index,rss,feed}.xml` and
 `eleuther.ai/index.xml` all return 404, so the feed contributed nothing but a
 parse-error warning on every run.
+
+### OpenAI Platform Changelog
+
+| Source | Page |
+|--------|------|
+| OpenAI Platform | platform.openai.com/docs/changelog |
+
+**OpenAI's news blog cannot be read, so the digest reads their changelog
+instead.** Every post on `openai.com/index/*` answers **403** with
+`cf-mitigated: challenge` and an `accept-ch: Sec-CH-UA-*` client-hint demand.
+That response is identical for this project's user agent, for curl's default
+and for no user agent at all, so it is Cloudflare bot management rather than a
+user-agent filter and no header defeats it — only a browser engine would, which
+this project does not do. Their RSS feed stays readable but carries only each
+page's meta description: 1,243 entries, every one a single sentence of about
+150 characters, with no `content:encoded`. Measured on a live candidate pool,
+the two OpenAI items reached the summarizer with 148 and 152 characters while
+the nine items from other sources gave 2,780 to 12,000.
+
+`platform.openai.com/docs/changelog` is not challenged, and for this reader it
+is the better source anyway. The news blog's three most recent entries were
+"The eternal complement", "How Albertsons Companies is reimagining retail from
+the inside out" and "The Den frees up 10-15 hours a week to grow with ChatGPT
+Work". The changelog's were a new model with its per-million-token prices, a
+service tier that cuts the time between output tokens, and an image-encoding
+bug worth re-running evaluations over.
+
+It is scraped, not fetched as a feed — one server-rendered page holds all 174
+entries, with no RSS and no per-entry permalink:
+
+- **Hashed CSS class names are matched on their stable prefix**
+  (`_ChangelogMarkdown_`, not `_ChangelogMarkdown_pvkq8_19`), and a shape change
+  yields zero entries plus a warning rather than an exception. A redesign costs
+  a day of OpenAI coverage, not the digest.
+- **Each entry carries its own identity** (`openai-changelog:<date>:<slug>`)
+  because all of them share one URL. Keying on the URL would have collapsed the
+  source to a single item, and once that item had been sent the already-sent
+  filter would have suppressed OpenAI for good.
+- **Change type and affected models are folded into the body** — `Change type:
+  Fix`, `Affects: gpt-6-sol, gpt-6-luna` — since those live in badges rather
+  than prose and are the most actionable part of the page.
+- **Dates are taken as stated, at midnight UTC.** The day badge carries no time,
+  so an entry is eligible for slightly under the full `DIGEST_MAX_AGE_HOURS`
+  window rather than being credited with a time it does not claim. Over the last
+  180 days the 72-hour window would have caught at least one changelog entry on
+  **97 of them (53%)**; OpenAI publishes every one to seven days.
+
+The OpenAI news blog stays in `BLOG_FEEDS`: it occasionally carries real
+engineering and safety work, and a title plus a 150-character teaser is still
+worth a headline line. Those items are simply labelled honestly to the
+summarizer (below) rather than dressed up as full articles.
 
 #### These feeds are not keyword-filtered
 
@@ -327,13 +379,14 @@ Applied-AI-Dev-Digest/
 │   │   ├── blog_fetcher.py       # RSS fetch from 10 AI lab/platform blogs
 │   │   ├── github_fetcher.py     # GitHub release tracking (7 repos)
 │   │   ├── hackernews_fetcher.py # HN top stories filtered to frontier labs
-│   │   └── huggingface_fetcher.py # HF Daily Papers (upvotes ≥ 20)
+│   │   ├── huggingface_fetcher.py # HF Daily Papers (upvotes ≥ 20)
+│   │   └── openai_changelog_fetcher.py  # OpenAI platform changelog (scraped; their blog 403s)
 │   ├── utils/
 │   │   └── retry.py              # Retry with exponential backoff
 │   ├── ai_text.py                # Prompt sanitization
 │   ├── article_fetcher.py        # Opens the linked page; dependency-free extraction
 │   ├── constants.py              # All config constants
-│   ├── fetcher.py                # Source aggregation + URL deduplication
+│   ├── fetcher.py                # Source aggregation + identity deduplication
 │   ├── json_exporter.py          # Atomic JSON export (papers + digests)
 │   ├── kv_client.py              # Vercel KV (Upstash Redis) client
 │   ├── logger.py                 # Centralized logging

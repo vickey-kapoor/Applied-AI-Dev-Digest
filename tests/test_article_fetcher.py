@@ -139,7 +139,7 @@ class TestSummarizerInput:
 
     def test_article_text_is_preferred(self):
         from src.news_summarizer import _prepare_inputs
-        _, _, body = _prepare_inputs({
+        _, _, body, _ = _prepare_inputs({
             "title": "T", "source": "S",
             "summary": "short feed teaser",
             "article_text": LONG * 10,
@@ -149,7 +149,7 @@ class TestSummarizerInput:
 
     def test_falls_back_to_the_feed_summary(self):
         from src.news_summarizer import _prepare_inputs
-        _, _, body = _prepare_inputs({
+        _, _, body, _ = _prepare_inputs({
             "title": "T", "source": "S", "summary": "short feed teaser",
         })
         assert "short feed teaser" in body
@@ -158,3 +158,31 @@ class TestSummarizerInput:
         """A 273-char budget was the whole problem; the article needs room."""
         from src.news_summarizer import ARTICLE_CHAR_BUDGET, SUMMARY_CHAR_BUDGET
         assert ARTICLE_CHAR_BUDGET > SUMMARY_CHAR_BUDGET
+
+
+class TestInputLabelling:
+    """The model is told which of the two it is reading.
+
+    openai.com answers 403 to every non-browser client, so those items will keep
+    arriving as ~150 characters. Labelling that "Article text" invited five
+    confident fields written from two sentences.
+    """
+
+    def test_a_retrieved_article_is_labelled_as_one(self):
+        from src.news_summarizer import FULL_TEXT_LABEL, _prepare_inputs
+        *_, label = _prepare_inputs({"title": "T", "article_text": LONG * 10})
+        assert label == FULL_TEXT_LABEL
+
+    def test_a_feed_fallback_says_so(self):
+        from src.news_summarizer import TEASER_LABEL, _prepare_inputs
+        *_, label = _prepare_inputs({"title": "T", "summary": "short feed teaser"})
+        assert label == TEASER_LABEL
+        assert "could not be retrieved" in label
+
+    def test_the_label_reaches_the_prompt(self):
+        """A label the prompt never renders would be decoration."""
+        import inspect
+        from src import news_summarizer
+        body = inspect.getsource(news_summarizer.summarize_release)
+        assert "{body_label}: {description}" in body
+        assert "Article text: {description}" not in body

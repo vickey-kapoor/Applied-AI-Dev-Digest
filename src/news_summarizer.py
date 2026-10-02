@@ -18,23 +18,38 @@ ARTICLE_CHAR_BUDGET = 8000
 SUMMARY_CHAR_BUDGET = 800
 
 
-def _prepare_inputs(item: dict) -> tuple[str, str, str]:
-    """Sanitize title, source, and the best available body text.
+# How the body text is introduced to the model. Which one is used is itself
+# information: a model told it is reading a teaser abstains where a model told
+# it is reading the article guesses.
+FULL_TEXT_LABEL = "Article text"
+TEASER_LABEL = "Feed teaser only — the full post could not be retrieved, so this is all there is"
 
-    Prefers article_text, which main.py fills by opening the link. Feed
-    summaries ran a median of 273 characters and were sometimes empty — the
-    DeepMind post announcing Gemini 4 Argon carried none at all — so five
-    structured fields were being written from a title and two sentences, and
-    `availability` came back a non-answer 39% of the time. Falls back to the
-    feed summary when the page could not be read.
+
+def _prepare_inputs(item: dict) -> tuple[str, str, str, str]:
+    """Sanitize title, source, the best available body text, and its label.
+
+    Prefers article_text, which main.py fills by opening the link and which
+    some fetchers supply directly. Feed summaries ran a median of 273
+    characters and were sometimes empty — the DeepMind post announcing Gemini 4
+    Argon carried none at all — so five structured fields were being written
+    from a title and two sentences, and `availability` came back a non-answer
+    39% of the time. Falls back to the feed summary when the page could not be
+    read, and says so in the label: OpenAI's posts are behind a bot challenge
+    that returns 403 whatever headers we send, so those items will keep
+    arriving as ~150 characters and the model should not dress that up.
     """
     title = sanitize_prompt_text(item.get("title", ""), 200)
     source = sanitize_prompt_text(item.get("source", "Unknown"), 100)
 
     article = (item.get("article_text") or "").strip()
     if article:
-        return title, source, sanitize_prompt_text(article, ARTICLE_CHAR_BUDGET)
-    return title, source, sanitize_prompt_text(item.get("summary", ""), SUMMARY_CHAR_BUDGET)
+        return title, source, sanitize_prompt_text(article, ARTICLE_CHAR_BUDGET), FULL_TEXT_LABEL
+    return (
+        title,
+        source,
+        sanitize_prompt_text(item.get("summary", ""), SUMMARY_CHAR_BUDGET),
+        TEASER_LABEL,
+    )
 
 
 @retry_with_backoff(exceptions=(Exception,))
@@ -78,15 +93,15 @@ def summarize_release(item: dict, api_key: str) -> dict:
         return item
 
     client = OpenAI(api_key=api_key)
-    title, source, description = _prepare_inputs(item)
+    title, source, description, body_label = _prepare_inputs(item)
 
     prompt = f"""You are briefing an applied AI engineer: someone who builds production systems on models — serving them, evaluating them, wiring them into agents and products. Write for what they have to decide, not for what is notable about the field.
 Be concrete and factual. No hype, no marketing language. Prefer specifics — model names, numbers, prices, dates — over adjectives.
-If the text below does not state something, say so rather than inventing it.
+If the text below does not state something, say so rather than inventing it. A thin teaser is not licence to guess — write "Not stated" and let the reader click through.
 
 Item title: {title}
 Source: {source}
-Article text: {description}
+{body_label}: {description}
 
 Return JSON (no markdown fences):
 {{

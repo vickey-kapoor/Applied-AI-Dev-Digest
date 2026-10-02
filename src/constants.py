@@ -133,6 +133,27 @@ BLOG_FEEDS = {
     # parse-error warning on every run.
 }
 
+# OpenAI's developer changelog, scraped rather than fetched as a feed.
+#
+# It is here and not in BLOG_FEEDS because it is not a feed: one server-rendered
+# page holds every entry, with no RSS and no per-entry permalink. It exists in
+# the project because openai.com/index/* — the news blog those RSS entries point
+# at — answers 403 to every non-browser client, with `cf-mitigated: challenge`
+# and a Sec-CH-UA client-hint demand, so the only OpenAI text reaching the
+# summarizer was the feed's ~150-character meta description. The changelog is
+# unchallenged and, for an applied engineer, more useful: model releases with
+# their token prices, new service tiers, and bugs worth re-running evals over.
+OPENAI_CHANGELOG_URL = "https://platform.openai.com/docs/changelog"
+
+# A source name of its own, not "OpenAI". Two reasons: the per-source cap would
+# otherwise make the changelog and the news blog compete for the same two slots,
+# and CURATED_SOURCES membership is per name.
+OPENAI_CHANGELOG_SOURCE = "OpenAI Platform"
+
+# The page carries 35 months of history. Only the newest entries can be inside
+# the recency window, and the central cap trims further.
+OPENAI_CHANGELOG_MAX_ITEMS = int(os.getenv("OPENAI_CHANGELOG_MAX_ITEMS", "15"))
+
 # Minimum candidate posts pulled per blog feed before keyword filtering.
 # Without a floor, adding feeds shrinks each feed's share to a single post,
 # so a lab that posted a few consumer items ahead of its release loses it.

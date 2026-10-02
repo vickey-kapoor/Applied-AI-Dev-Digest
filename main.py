@@ -128,9 +128,13 @@ def main():
         try:
             # Open the link first. The feed blurb averaged 273 characters and
             # was sometimes empty, so the brief was being written from a title.
-            article = fetch_article_text(top_item.get("url", ""))
-            if article:
-                top_item = {**top_item, "article_text": article}
+            # Unless the fetcher already supplied the text: OpenAI's changelog
+            # arrives as one entry per item, and opening its URL would replace
+            # that with all 170-odd entries on the page.
+            if not (top_item.get("article_text") or "").strip():
+                article = fetch_article_text(top_item.get("url", ""))
+                if article:
+                    top_item = {**top_item, "article_text": article}
             top_item = summarize_release(top_item, openai_key)
             if "what_shipped" in top_item:
                 logger.info("Generated structured brief")

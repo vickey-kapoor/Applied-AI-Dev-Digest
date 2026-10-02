@@ -7,7 +7,7 @@ from unittest.mock import patch, MagicMock
 
 from src.fetcher import (
     fetch_all,
-    _deduplicate_by_url,
+    _deduplicate_by_identity,
     _filter_by_recency,
     _parse_published,
     _cap_per_source,
@@ -26,25 +26,25 @@ def _hours_ago(hours: float) -> str:
     return (datetime.now(timezone.utc) - timedelta(hours=hours)).isoformat()
 
 
-class TestDeduplicationByUrl:
-    """Tests for URL-based deduplication."""
+class TestDeduplicationByIdentity:
+    """Tests for identity-based deduplication, which is the URL by default."""
 
     def test_empty_list(self):
-        assert _deduplicate_by_url([]) == []
+        assert _deduplicate_by_identity([]) == []
 
     def test_no_duplicates(self):
         items = [
             {"url": "https://a.com", "title": "A"},
             {"url": "https://b.com", "title": "B"},
         ]
-        assert len(_deduplicate_by_url(items)) == 2
+        assert len(_deduplicate_by_identity(items)) == 2
 
     def test_removes_url_duplicates(self):
         items = [
             {"url": "https://a.com", "title": "First"},
             {"url": "https://a.com", "title": "Duplicate"},
         ]
-        result = _deduplicate_by_url(items)
+        result = _deduplicate_by_identity(items)
         assert len(result) == 1
         assert result[0]["title"] == "First"
 
@@ -53,14 +53,36 @@ class TestDeduplicationByUrl:
             {"url": "https://a.com", "title": "A"},
             {"url": "https://b.com", "title": "B"},
         ]
-        assert len(_deduplicate_by_url(items)) == 2
+        assert len(_deduplicate_by_identity(items)) == 2
 
     def test_items_without_url_kept(self):
         items = [
             {"title": "No URL"},
             {"url": "https://a.com", "title": "With URL"},
         ]
-        assert len(_deduplicate_by_url(items)) == 2
+        assert len(_deduplicate_by_identity(items)) == 2
+
+    def test_explicit_identity_overrides_a_shared_url(self):
+        """OpenAI's changelog is one page holding every entry.
+
+        Keying on the URL collapsed the whole source to a single item.
+        """
+        items = [
+            {"url": "https://platform.openai.com/docs/changelog",
+             "identity": "openai-changelog:2026-09-29:released-gpt-6-1-sol", "title": "Sol"},
+            {"url": "https://platform.openai.com/docs/changelog",
+             "identity": "openai-changelog:2026-09-25:fixed-image-encoding", "title": "Fix"},
+        ]
+        assert len(_deduplicate_by_identity(items)) == 2
+
+    def test_a_repeated_identity_is_still_a_duplicate(self):
+        items = [
+            {"url": "https://a.example/one", "identity": "same", "title": "First"},
+            {"url": "https://b.example/two", "identity": "same", "title": "Second"},
+        ]
+        result = _deduplicate_by_identity(items)
+        assert len(result) == 1
+        assert result[0]["title"] == "First"
 
 
 class TestFetchAll:

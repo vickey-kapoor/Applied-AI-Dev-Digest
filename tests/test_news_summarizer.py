@@ -17,14 +17,14 @@ class TestPrepareInputs:
 
     def test_extracts_fields(self, sample_paper):
         """Test that title, source, and summary are extracted."""
-        title, source, summary = _prepare_inputs(sample_paper)
+        title, source, summary, _ = _prepare_inputs(sample_paper)
         assert len(title) > 0
         assert len(source) > 0
         assert len(summary) > 0
 
     def test_handles_missing_fields(self):
         """Test that missing fields get defaults."""
-        title, source, summary = _prepare_inputs({})
+        title, source, summary, _ = _prepare_inputs({})
         assert source == "Unknown"
 
     def test_sanitizes_inputs(self):
@@ -34,7 +34,7 @@ class TestPrepareInputs:
             "source": "Normal Source",
             "summary": "Normal summary",
         }
-        title, _, _ = _prepare_inputs(paper)
+        title, _, _, _ = _prepare_inputs(paper)
         assert "[FILTERED]" in title
 
 

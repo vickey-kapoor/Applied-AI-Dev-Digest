@@ -85,7 +85,19 @@ def _identity_title(title: str) -> str:
 
 
 def _paper_identity(item: dict) -> str:
-    """Build a stable identity key for a paper."""
+    """Build a stable identity key for a paper.
+
+    An explicit identity wins, for sources where one URL covers many items.
+    OpenAI's changelog is a single page with no per-entry permalinks, so keying
+    on the URL would give all 174 entries the same id — and once one had been
+    sent, get_sent_top_paper_ids would suppress the source for good.
+    src.fetcher._identity_of reads the same field, so deduplication and
+    already-sent both agree on what one item is.
+    """
+    identity = (item.get("identity") or "").strip().lower()
+    if identity:
+        return f"id:{identity}"
+
     url = (item.get("url") or "").strip().lower()
     if url:
         return f"url:{url}"
@@ -165,6 +177,14 @@ def export_papers(items: list[dict], ranked_paper: dict = None) -> str:
             "ranking_score": ranked_paper.get("ranking_score", 0) if is_top else 0,
             "status": "unread"
         }
+
+        # Persist an explicit identity so _paper_identity round-trips through
+        # the file. Without it every saved changelog row hashed back to
+        # "url:.../docs/changelog", collapsing the identity index to one entry
+        # and leaving _identity_title as the only thing stopping a re-fetch
+        # inside the recency window from appending the same entry again.
+        if item.get("identity"):
+            paper["identity"] = item["identity"]
 
         # Carry the structured brief when the summarizer has run on this item.
         # Only the top pick is summarized, so most items won't have these.

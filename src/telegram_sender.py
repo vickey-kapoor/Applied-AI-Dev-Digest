@@ -136,11 +136,14 @@ def _format_headlines(items: list[dict] | None) -> list[str]:
 
     lines = ["", "*Also today*"]
     for entry in items[:HEADLINE_LIMIT]:
-        title = _escape_markdown((entry.get("title") or "Untitled").strip())
+        # The ranker's one-liner when it wrote one, else the raw title. A title
+        # like "vLLM v0.12 released" says nothing about whether to click.
+        label = (entry.get("headline_note") or entry.get("title") or "Untitled").strip()
+        label = _escape_markdown(label)
         source = _escape_markdown(entry.get("source", ""))
         link = _validate_url(entry.get("url", ""))
         suffix = f" — {source}" if source else ""
-        lines.append(f"• [{title}]({link}){suffix}" if link else f"• {title}{suffix}")
+        lines.append(f"• [{label}]({link}){suffix}" if link else f"• {label}{suffix}")
     return lines
 
 

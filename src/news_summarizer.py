@@ -12,12 +12,29 @@ from src.utils.retry import retry_with_backoff
 logger = get_logger(__name__)
 
 
+# The feed blurb is a teaser; the article is the real input. Generous but
+# bounded, so one long post cannot dominate the prompt.
+ARTICLE_CHAR_BUDGET = 8000
+SUMMARY_CHAR_BUDGET = 800
+
+
 def _prepare_inputs(item: dict) -> tuple[str, str, str]:
-    """Sanitize and extract title, source, and summary from an item."""
+    """Sanitize title, source, and the best available body text.
+
+    Prefers article_text, which main.py fills by opening the link. Feed
+    summaries ran a median of 273 characters and were sometimes empty — the
+    DeepMind post announcing Gemini 4 Argon carried none at all — so five
+    structured fields were being written from a title and two sentences, and
+    `availability` came back a non-answer 39% of the time. Falls back to the
+    feed summary when the page could not be read.
+    """
     title = sanitize_prompt_text(item.get("title", ""), 200)
     source = sanitize_prompt_text(item.get("source", "Unknown"), 100)
-    summary = sanitize_prompt_text(item.get("summary", ""), 800)
-    return title, source, summary
+
+    article = (item.get("article_text") or "").strip()
+    if article:
+        return title, source, sanitize_prompt_text(article, ARTICLE_CHAR_BUDGET)
+    return title, source, sanitize_prompt_text(item.get("summary", ""), SUMMARY_CHAR_BUDGET)
 
 
 @retry_with_backoff(exceptions=(Exception,))
@@ -65,11 +82,11 @@ def summarize_release(item: dict, api_key: str) -> dict:
 
     prompt = f"""You are briefing an applied AI engineer: someone who builds production systems on models — serving them, evaluating them, wiring them into agents and products. Write for what they have to decide, not for what is notable about the field.
 Be concrete and factual. No hype, no marketing language. Prefer specifics — model names, numbers, prices, dates — over adjectives.
-If the description does not state something, say so rather than inventing it.
+If the text below does not state something, say so rather than inventing it.
 
 Item title: {title}
 Source: {source}
-Description: {description}
+Article text: {description}
 
 Return JSON (no markdown fences):
 {{

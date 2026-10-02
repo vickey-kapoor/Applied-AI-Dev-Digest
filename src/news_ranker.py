@@ -25,11 +25,13 @@ def _call_openai_ranking(client: OpenAI, prompt: str):
     )
 
 
-def _parse_verdict(content: str, count: int) -> tuple[list[int], list[tuple[int, str]]] | None:
+def _parse_verdict(
+    content: str, count: int
+) -> tuple[list[int], dict[int, str], list[tuple[int, str]]] | None:
     """Parse the model's keep/reject verdict into 0-based indices.
 
-    Returns (kept_in_order, [(rejected_index, why), ...]), or None if the reply
-    cannot be used at all so the caller can fall back.
+    Returns (kept_in_order, {index: headline_line}, [(rejected_index, why)]), or
+    None if the reply cannot be used at all so the caller can fall back.
 
     Tolerates the shapes seen in practice: the documented {"keep": [...],
     "reject": [...]}, a {"ranking": [...]} ordering with no rejections, the
@@ -41,22 +43,25 @@ def _parse_verdict(content: str, count: int) -> tuple[list[int], list[tuple[int,
         parsed = json.loads(content.strip())
     except (json.JSONDecodeError, AttributeError):
         try:
-            return [int(content.strip()) - 1], []
+            return [int(content.strip()) - 1], {}, []
         except ValueError:
             return None
 
     # A bare number parses as valid JSON, so it never reaches the except above.
     if isinstance(parsed, (int, float)) and not isinstance(parsed, bool):
         i = int(parsed) - 1
-        return ([i], []) if 0 <= i < count else None
+        return ([i], {}, []) if 0 <= i < count else None
 
     if not isinstance(parsed, dict):
         return None
 
     def indices(raw):
-        out, seen = [], set()
+        """Collect 0-based indices, and any one-line note travelling with them."""
+        out, seen, lines = [], set(), {}
         for value in raw if isinstance(raw, list) else []:
+            note = ""
             if isinstance(value, dict):
+                note = str(value.get("line") or "").strip()
                 value = value.get("index")
             try:
                 i = int(value) - 1
@@ -65,7 +70,9 @@ def _parse_verdict(content: str, count: int) -> tuple[list[int], list[tuple[int,
             if 0 <= i < count and i not in seen:
                 seen.add(i)
                 out.append(i)
-        return out
+                if note:
+                    lines[i] = note
+        return out, lines
 
     raw_keep = parsed.get("keep")
     if raw_keep is None:
@@ -75,7 +82,7 @@ def _parse_verdict(content: str, count: int) -> tuple[list[int], list[tuple[int,
     if raw_keep is None:
         return None
 
-    kept = indices(raw_keep)
+    kept, notes = indices(raw_keep)
 
     rejected: list[tuple[int, str]] = []
     for entry in parsed.get("reject") or []:
@@ -91,7 +98,7 @@ def _parse_verdict(content: str, count: int) -> tuple[list[int], list[tuple[int,
     # Unjudged items are kept rather than dropped.
     judged = set(kept) | {i for i, _ in rejected}
     kept += [i for i in range(count) if i not in judged]
-    return kept, rejected
+    return kept, notes, rejected
 
 
 def rank_news(items: list[dict], api_key: str) -> dict | None:
@@ -187,10 +194,14 @@ Items:
 
 First decide, for each item, whether an applied AI engineer should see it at all. Reject anything that is off-domain, pure marketing, a bare version bump, or has nothing they could act on — be willing to reject most of the list, and to reject all of it. A short honest digest beats a padded one.
 
-Then order the ones worth keeping, most useful first.
+Collapse duplicate coverage. Several items often describe the same thing in different words — a lab's own post and a news write-up of it, or two outlets on one launch. Keep the one closest to the source and reject the others with why "duplicate of N". Judge this on what the items are about, not on how similar their titles look: "Gemini 4 Argon: our next era of frontier intelligence" and "Google launches Gemini 4" are the same story.
+
+Then order the ones worth keeping, most useful first, and write one line for each.
+
+That line is what the reader sees in a list of headlines, so make it carry the point rather than restate the title. "vLLM v0.12 released" tells them nothing; "vLLM 0.12: 2x throughput on MoE models" tells them whether to click. Lead with the concrete change — a number, a price, a capability, a limit. At most 14 words, no trailing period.
 
 Return JSON:
-{{"keep": [N, N, ...], "reject": [{{"index": N, "why": "a few words"}}, ...], "reason": "one sentence on why the first kept item is the most useful to an applied AI engineer today"}}
+{{"keep": [{{"index": N, "line": "what it changes, concretely"}}, ...], "reject": [{{"index": N, "why": "a few words"}}, ...], "reason": "one sentence on why the first kept item is the most useful to an applied AI engineer today"}}
 
 Indices are 1-based, and every item must appear in exactly one of the two lists."""
 
@@ -201,13 +212,18 @@ Indices are 1-based, and every item must appear in exactly one of the two lists.
         if content:
             verdict = _parse_verdict(content, len(items))
             if verdict is not None:
-                kept, rejected = verdict
+                kept, notes, rejected = verdict
                 for i, why in rejected:
                     logger.info(
                         "Rejected: %s — %s", items[i].get("title", "")[:70], why or "no reason given"
                     )
                 logger.info("Model kept %d of %d candidates", len(kept), len(items))
-                return [items[i] for i in kept]
+                # The note rides on the item so the message layer needs no
+                # second call to render a headline that carries the point.
+                return [
+                    {**items[i], "headline_note": notes[i]} if i in notes else items[i]
+                    for i in kept
+                ]
     except (ValueError, IndexError, TypeError, AttributeError):
         pass
     except Exception:

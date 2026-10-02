@@ -11,8 +11,9 @@ The question it answers is not "what is most significant to the field" but "what
 - Monitors **Hacker News** for frontier lab discussions (score > 100, last 24h) — also the main channel for Anthropic, which publishes no RSS feed
 - Surfaces **Hugging Face Daily Papers** with high upvotes (20+, last 24h)
 - **11 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords; the six Core topics and both Applied ones (Open Weights, Compute & Infrastructure) are enabled by default
-- Uses GPT-4o-mini to **screen and rank** the day's candidates: each one is kept or rejected for whether an applied engineer should see it, then the keepers are ordered by usefulness. Influenced by **user feedback weights**, and rejections are logged with the model's reason
-- Sends the **top pick as a full brief plus up to 5 headlines** from the rest of the ranking, so the day's sweep is visible and not just its single best item
+- Uses GPT-4o-mini to **screen, dedupe and rank** the day's candidates in one call: each is kept or rejected for whether an applied engineer should see it, duplicate coverage is collapsed to the copy closest to the source, and the keepers are ordered by usefulness. Influenced by **user feedback weights**; rejections are logged with the model's reason
+- **Opens the link.** The brief is written from the article's own text, not the feed teaser — those ran a median of 273 characters and were sometimes empty, which left `availability` a non-answer 39% of the time. Falls back to the feed summary when a page is paywalled, JS-rendered or blocked
+- Sends the **top pick as a full brief plus up to 5 headlines** from the rest of the ranking. The model writes each headline line, so it carries the point rather than restating the title — "vLLM 0.12: 2x throughput on MoE models", not "vLLM v0.12 released"
 - Generates a **structured lab-release brief** (What shipped / Capabilities / Availability / Why it matters / Caveats)
 - Sends to Telegram via Bot API
 - Produces a PDF report and weekly digest roundup
@@ -330,6 +331,7 @@ Applied-AI-Dev-Digest/
 │   ├── utils/
 │   │   └── retry.py              # Retry with exponential backoff
 │   ├── ai_text.py                # Prompt sanitization
+│   ├── article_fetcher.py        # Opens the linked page; dependency-free extraction
 │   ├── constants.py              # All config constants
 │   ├── fetcher.py                # Source aggregation + URL deduplication
 │   ├── json_exporter.py          # Atomic JSON export (papers + digests)
@@ -358,7 +360,7 @@ Applied-AI-Dev-Digest/
 │       └── __tests__/            # Vitest suite (14 tests)
 ├── data/                         # papers.json, digests.json, schedule_state.json
 ├── reports/                      # Generated PDF reports
-├── tests/                        # Pytest test suite (240 tests)
+├── tests/                        # Pytest test suite (305 tests)
 ├── main.py                       # Pipeline entry point
 ├── preview.py                    # Local-only preview (outputs JSON; Vercel reads KV)
 ├── weekly_digest.py              # Sunday weekly roundup

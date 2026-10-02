@@ -120,7 +120,7 @@ class TestFullPipelineFlow:
     @patch("main.generate_digest_pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers")
-    @patch("main.rank_news")
+    @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
     def test_pipeline_runs_end_to_end(
         self,
@@ -148,7 +148,7 @@ class TestFullPipelineFlow:
         enriched = {**paper, "summary": "Short", "detailed_summary": "Detailed"}
 
         mock_fetch.return_value = [paper]
-        mock_rank.return_value = paper
+        mock_rank.return_value = [paper]
         mock_export_papers.return_value = "paper-1"
         mock_summarize.return_value = enriched
         mock_pdf.return_value = "reports/17-Mar/test.pdf"

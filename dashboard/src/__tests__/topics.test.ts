@@ -27,23 +27,29 @@ describe("TOPICS", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("enables exactly the six core topics by default", () => {
+  it("enables the six core topics plus both applied ones by default", () => {
+    // open_weights and infrastructure are "applied" and used to default off,
+    // which left the digest blind to what the reader can actually run and to
+    // the serving and inference economics they build against. Mirrors
+    // DEFAULT_TOPICS in src/topic_config.py.
     const enabled = TOPICS.filter((t) => t.defaultEnabled).map((t) => t.id);
     expect(enabled.sort()).toEqual(
       [
         "agents_tooling",
         "benchmarks",
+        "infrastructure",
         "lab_research",
         "model_releases",
+        "open_weights",
         "product_api",
         "safety_system_cards",
       ].sort(),
     );
   });
 
-  it("marks every default-enabled topic as core", () => {
+  it("enables only core and applied topics by default, never emerging", () => {
     for (const topic of TOPICS.filter((t) => t.defaultEnabled)) {
-      expect(topic.category).toBe("core");
+      expect(["core", "applied"]).toContain(topic.category);
     }
   });
 

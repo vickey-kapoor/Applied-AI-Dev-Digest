@@ -36,7 +36,12 @@ class TestDefaults:
         assert len(DEFAULT_TOPICS) == 11
 
     def test_default_enabled_count(self):
-        """Six core lab topics are enabled by default — matches dashboard TS defaults."""
+        """The six core topics plus the two applied ones — mirrors topics.ts.
+
+        open_weights and infrastructure are category "applied" and were off by
+        default, which left the digest blind to what the reader can actually
+        run and to the serving and inference economics they build against.
+        """
         enabled = {t["id"] for t in DEFAULT_TOPICS if t["default_enabled"]}
         expected = {
             "model_releases",
@@ -45,6 +50,8 @@ class TestDefaults:
             "agents_tooling",
             "benchmarks",
             "safety_system_cards",
+            "open_weights",
+            "infrastructure",
         }
         assert enabled == expected
 
@@ -57,8 +64,13 @@ class TestGetEnabledTopics:
         ids = {t["id"] for t in topics}
         assert "model_releases" in ids
         assert "product_api" in ids
+        # Applied topics are on: what the reader can run, and the serving and
+        # inference economics they build against.
+        assert "infrastructure" in ids
+        assert "open_weights" in ids
+        # Emerging topics stay off.
         assert "policy_regulation" not in ids
-        assert "infrastructure" not in ids
+        assert "multimodal" not in ids
 
     def test_respects_kv_overrides(self):
         kv_config = {
@@ -91,9 +103,11 @@ class TestGetActiveKeywords:
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_defaults_exclude_disabled_topic_keywords(self, mock_kv):
         keywords = get_active_keywords()
-        # policy_regulation and infrastructure are disabled by default
+        # policy_regulation and the other emerging topics stay off by default.
+        # infrastructure is now on — it is core to an applied engineer — so its
+        # keywords are expected here rather than absent.
         assert "EU AI Act" not in keywords
-        assert "Blackwell" not in keywords
+        assert "Blackwell" in keywords
 
     @patch("src.topic_config._fetch_kv_config")
     def test_kv_config_changes_keywords(self, mock_kv):
@@ -124,7 +138,7 @@ class TestFetchKvConfig:
     @patch("src.topic_config._fetch_kv_config", return_value=None)
     def test_graceful_fallback_when_no_kv(self, mock_kv):
         topics = get_active_topics()
-        assert len(topics) == 6  # Six core lab topics enabled by default
+        assert len(topics) == 8  # six core topics plus open_weights and infrastructure
         ids = {t["id"] for t in topics}
         assert "model_releases" in ids
         keywords = get_active_keywords()

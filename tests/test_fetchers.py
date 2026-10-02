@@ -125,9 +125,15 @@ class TestNoiseFilter:
     def test_tutorial_is_noise(self):
         assert _is_noise({"title": "How to build a RAG pipeline", "summary": ""}) is True
 
-    def test_off_domain_corporate_content_is_noise(self):
-        """NVIDIA's feed is the whole company blog, not an AI-lab feed."""
-        assert _is_noise({"title": "Fall Into 25 New Games on GeForce NOW", "summary": ""}) is True
+    def test_off_domain_corporate_content_is_left_to_the_ranker(self):
+        """NVIDIA's feed is the whole company blog, so it carries consumer posts.
+
+        _is_noise deliberately does NOT catch these. A literal blocklist
+        ("geforce", "xprize") only ever catches the junk that already shipped;
+        the ranker screens every candidate and rejects what an applied engineer
+        should not see, which is a judgement no word list makes correctly.
+        """
+        assert _is_noise({"title": "Fall Into 25 New Games on GeForce NOW", "summary": ""}) is False
 
 
 class TestRecencyWindow:

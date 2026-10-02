@@ -1,6 +1,8 @@
 # Applied AI Dev Digest
 
-Daily digest of the latest developments from the frontier AI labs — delivered to Telegram. Tracks model releases, product and API launches, research reports, and capability results from OpenAI, Google DeepMind, Meta, Mistral, Qwen, NVIDIA and their peers.
+Daily digest for an **applied AI engineer** — delivered to Telegram.
+
+The question it answers is not "what is most significant to the field" but "what changes what I build this week". A model I can call today, a price or latency shift, an inference engine that got faster, a technique with numbers behind it — those rank above a frontier capability I cannot access yet. Sources are the frontier labs' own blogs, the serving and SDK repos, Hacker News and Hugging Face Daily Papers.
 
 ## Features
 
@@ -8,8 +10,9 @@ Daily digest of the latest developments from the frontier AI labs — delivered 
 - Tracks **7 GitHub repos** for releases that mark a shipped development (official model SDKs plus the serving stacks new models land in)
 - Monitors **Hacker News** for frontier lab discussions (score > 100, last 24h) — also the main channel for Anthropic, which publishes no RSS feed
 - Surfaces **Hugging Face Daily Papers** with high upvotes (20+, last 24h)
-- **11 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords; the six Core topics are enabled by default
-- Uses GPT-4o-mini to select the most significant lab development, influenced by **user feedback weights**
+- **11 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords; the six Core topics and both Applied ones (Open Weights, Compute & Infrastructure) are enabled by default
+- Uses GPT-4o-mini to **screen and rank** the day's candidates: each one is kept or rejected for whether an applied engineer should see it, then the keepers are ordered by usefulness. Influenced by **user feedback weights**, and rejections are logged with the model's reason
+- Sends the **top pick as a full brief plus up to 5 headlines** from the rest of the ranking, so the day's sweep is visible and not just its single best item
 - Generates a **structured lab-release brief** (What shipped / Capabilities / Availability / Why it matters / Caveats)
 - Sends to Telegram via Bot API
 - Produces a PDF report and weekly digest roundup
@@ -150,8 +153,8 @@ The six **Core** topics are enabled by default; toggle the rest from the dashboa
 | agents_tooling | Agents & Tooling | Core | on | agentic, AI agent, tool use, function calling, computer use, model context protocol, coding agent, … |
 | benchmarks | Benchmarks & Evals | Core | on | benchmark, eval, SWE-bench, GPQA, ARC-AGI, AIME, FrontierMath, leaderboard, … |
 | safety_system_cards | Safety & System Cards | Core | on | system card, responsible scaling, preparedness framework, frontier safety, red-teaming, interpretability, … |
-| open_weights | Open Weights | Applied | off | open weights, open source model, weights release, Apache 2.0, OLMo, Gemma, … |
-| infrastructure | Compute & Infrastructure | Applied | off | inference, quantization, training run, gpu cluster, TPU, Blackwell, Trainium, serving, … |
+| open_weights | Open Weights | Applied | on | open weights, open source model, weights release, Apache 2.0, OLMo, Gemma, … |
+| infrastructure | Compute & Infrastructure | Applied | on | inference, quantization, training run, gpu cluster, TPU, Blackwell, Trainium, serving, … |
 | multimodal | Multimodal & Generative Media | Emerging | off | multimodal, vision-language, image generation, video generation, speech model, world model, … |
 | enterprise_deployment | Enterprise Deployment | Emerging | off | enterprise, deployment, case study, on-premise, cloud partnership, customer adoption, … |
 | policy_regulation | Policy & Regulation | Emerging | off | EU AI Act, AI regulation, executive order, AI safety institute, export controls, compute governance, … |

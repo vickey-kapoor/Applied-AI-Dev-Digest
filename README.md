@@ -4,7 +4,7 @@ Daily digest of the latest developments from the frontier AI labs — delivered 
 
 ## Features
 
-- Fetches from **11 AI lab and platform blogs** via RSS (OpenAI, Google DeepMind, Google AI, Google Research, Meta AI, Mistral AI, Qwen, Hugging Face, NVIDIA, Together AI, EleutherAI)
+- Fetches from **10 AI lab and platform blogs** via RSS (OpenAI, Google DeepMind, Google AI, Google Research, Meta AI, Mistral AI, Qwen, Hugging Face Blog, NVIDIA, Together AI)
 - Tracks **7 GitHub repos** for releases that mark a shipped development (official model SDKs plus the serving stacks new models land in)
 - Monitors **Hacker News** for frontier lab discussions (score > 100, last 24h) — also the main channel for Anthropic, which publishes no RSS feed
 - Surfaces **Hugging Face Daily Papers** with high upvotes (20+, last 24h)
@@ -77,12 +77,38 @@ https://openai.com/index/gpt-4o-mini
 | Meta AI | engineering.fb.com/category/ml-applications/feed/ |
 | Mistral AI | mistral.ai/rss.xml |
 | Qwen | qwenlm.github.io/blog/index.xml |
-| Hugging Face | huggingface.co/blog/feed.xml |
+| Hugging Face Blog | huggingface.co/blog/feed.xml |
 | NVIDIA | blogs.nvidia.com/feed/ |
 | Together AI | www.together.ai/blog/rss.xml |
-| EleutherAI | blog.eleuther.ai/index.xml |
 
 **Anthropic has no public RSS feed** for its news, research, or engineering posts, so Anthropic announcements reach the digest through the Hacker News source (which filters on `Anthropic` and `Claude`) and Hugging Face Daily Papers.
+
+**EleutherAI was removed** — `blog.eleuther.ai/{index,rss,feed}.xml` and
+`eleuther.ai/index.xml` all return 404, so the feed contributed nothing but a
+parse-error warning on every run.
+
+#### These feeds are not keyword-filtered
+
+A post on a frontier lab's own blog is an AI development because of where it
+was published; it does not have to prove it by containing a topic keyword.
+Requiring one starved the digest: across 24 days the lab feeds won the daily
+pick exactly once, while Hacker News commentary and client-library version
+bumps took 22 of 24. The gate dropped DeepMind's "Introducing SynthID Bio" and
+every one of Google Research's five most recent posts for naming no model
+family, and admitted "StreetComplete on iOS is now in public beta" — an
+OpenStreetMap editor — on the phrase "public beta".
+
+The keyword gate therefore applies only to the open sources, Hacker News and
+Hugging Face Daily Papers, where it is the only thing separating AI news from
+everything else. Curated feeds are still filtered for genuine noise: how-to
+posts, and the `EXCLUDE_KEYWORDS` blocklist (hiring, funding rounds, and the
+consumer content NVIDIA's corporate blog carries alongside its research).
+Every item is still tagged with a topic for the dashboard and feedback
+weighting.
+
+Selection within a feed is by publication date, not position. The fetcher
+previously read the first five entries of each feed regardless of how much a
+lab had published, which turned 2,593 available entries into 55 considered.
 
 ### GitHub Releases
 
@@ -119,7 +145,7 @@ The six **Core** topics are enabled by default; toggle the rest from the dashboa
 | ID | Name | Category | Default | Keywords |
 |----|------|----------|---------|----------|
 | model_releases | Model Releases | Core | on | model release, frontier model, reasoning model, GPT-, Claude, Gemini, Llama, Mistral, Qwen, DeepSeek, Grok, … |
-| product_api | Product & API | Core | on | developer api, api pricing, batch api, general availability, public beta, context window, SDK, … |
+| product_api | Product & API | Core | on | batch api, fine-tuning api, responses api, assistants api, context window, token pricing, model deprecation |
 | lab_research | Lab Research | Core | on | technical report, scaling law, pretraining, post-training, RLHF, mixture of experts, test-time compute, … |
 | agents_tooling | Agents & Tooling | Core | on | agentic, AI agent, tool use, function calling, computer use, model context protocol, coding agent, … |
 | benchmarks | Benchmarks & Evals | Core | on | benchmark, eval, SWE-bench, GPQA, ARC-AGI, AIME, FrontierMath, leaderboard, … |
@@ -294,7 +320,7 @@ Applied-AI-Dev-Digest/
 │   └── daily-news.yml            # Hourly poll; schedule_guard decides what runs
 ├── src/
 │   ├── fetchers/
-│   │   ├── blog_fetcher.py       # RSS fetch from 11 AI lab/platform blogs
+│   │   ├── blog_fetcher.py       # RSS fetch from 10 AI lab/platform blogs
 │   │   ├── github_fetcher.py     # GitHub release tracking (7 repos)
 │   │   ├── hackernews_fetcher.py # HN top stories filtered to frontier labs
 │   │   └── huggingface_fetcher.py # HF Daily Papers (upvotes ≥ 20)

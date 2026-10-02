@@ -1,5 +1,7 @@
 """Shared pytest fixtures for AI Dev Digest tests."""
 
+from datetime import datetime, timedelta, timezone
+
 import pytest
 from unittest.mock import Mock, patch
 
@@ -96,7 +98,13 @@ def mock_openai_summary_response():
 
 @pytest.fixture
 def mock_blog_feed():
-    """Mock blog RSS feed response."""
+    """Mock blog RSS feed response.
+
+    Dated relative to now: the blog fetcher selects entries by recency window,
+    so a hardcoded date silently ages out of every window and the fixture
+    quietly starts returning nothing.
+    """
+    recent = datetime.now(timezone.utc) - timedelta(hours=2)
     return {
         "bozo": False,
         "entries": [
@@ -104,8 +112,8 @@ def mock_blog_feed():
                 "title": "Introducing GPT-4o mini API",
                 "summary": "OpenAI launches a new affordable model for developers.",
                 "link": "https://openai.com/blog/gpt-4o-mini",
-                "published": "2024-07-18T00:00:00Z",
-                "published_parsed": (2024, 7, 18, 0, 0, 0, 0, 200, 0),
+                "published": recent.isoformat(),
+                "published_parsed": recent.timetuple()[:9],
             }
         ],
     }

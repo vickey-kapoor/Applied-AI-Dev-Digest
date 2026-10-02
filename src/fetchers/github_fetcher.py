@@ -49,6 +49,14 @@ def _fetch_latest_release(repo: str, headers: dict) -> dict | None:
     if re.fullmatch(r"b\d+", tag_name):
         return None
 
+    # Skip patch releases. A non-zero patch component is a bugfix by semver
+    # convention, so it cannot be the day's most significant AI development.
+    # Majors and minors still pass — those can carry real capability changes.
+    patch = re.fullmatch(r"v?\d+\.\d+\.([1-9]\d*)", tag_name)
+    if patch:
+        logger.info("Skipping patch release %s %s", repo, tag_name)
+        return None
+
     body = data.get("body", "") or ""
 
     # Skip releases with thin descriptions (< 200 chars) — not meaningful

@@ -1,6 +1,6 @@
 """Fetch development announcements from frontier AI lab blogs."""
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import html
 from html.parser import HTMLParser
 import socket
@@ -9,10 +9,10 @@ import feedparser
 
 from src.constants import (
     BLOG_FEEDS,
-    BLOG_MIN_PER_SOURCE,
+    BLOG_MAX_PER_SOURCE,
+    DIGEST_MAX_AGE_HOURS,
     EXCLUDE_KEYWORDS,
     EXCLUDE_TITLE_PATTERNS,
-    FILTER_KEYWORDS,
     REQUEST_TIMEOUT,
 )
 from src.logger import get_logger
@@ -45,15 +45,21 @@ def _is_tutorial(title: str) -> bool:
     return any(pattern in lowered for pattern in EXCLUDE_TITLE_PATTERNS)
 
 
-def _is_dev_relevant(post: dict, filter_keywords: list[str] | None = None) -> bool:
-    """Check if a post is a lab development based on keyword matching."""
+def _is_noise(post: dict) -> bool:
+    """Whether a post from a curated lab feed is noise rather than news.
+
+    Deliberately not a topic test. Everything in BLOG_FEEDS is a frontier lab's
+    own blog, so a post there is a lab development by definition and does not
+    have to prove it by containing a keyword. Requiring one dropped DeepMind's
+    "Introducing SynthID Bio" and every one of Google Research's five most
+    recent posts, while admitting anything that merely said "mistral" —
+    including a funding round. Only genuine noise is excluded here: how-to
+    posts and the explicit EXCLUDE_KEYWORDS blocklist.
+    """
     if _is_tutorial(post.get("title", "")):
-        return False
+        return True
     text = f"{post.get('title', '')} {post.get('summary', '')}".lower()
-    if any(kw in text for kw in EXCLUDE_KEYWORDS):
-        return False
-    keywords = filter_keywords if filter_keywords is not None else FILTER_KEYWORDS
-    return any(kw in text for kw in keywords)
+    return any(kw in text for kw in EXCLUDE_KEYWORDS)
 
 
 def _strip_html(text: str) -> str:
@@ -97,8 +103,14 @@ def _parse_date(entry: dict) -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def _fetch_single_feed(source: str, url: str, max_per_source: int, filter_keywords: list[str] | None = None) -> list[dict]:
-    """Fetch posts from a single RSS feed."""
+def _fetch_single_feed(source: str, url: str, max_age_hours: int, max_per_source: int) -> list[dict]:
+    """Fetch recent posts from a single lab feed.
+
+    Selection is by publication date, not by position. Taking the first N
+    entries meant 2,593 entries across the feeds became 55 considered, because
+    N was 5 regardless of how much a lab had published; max_per_source is now
+    only a safety bound against a pathological feed.
+    """
     try:
         feed = _parse_blog_feed(url)
 
@@ -110,8 +122,16 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int, filter_keywor
             logger.warning("%s returned an empty feed", source)
             return []
 
+        cutoff = datetime.now(timezone.utc) - timedelta(hours=max_age_hours)
         posts = []
         for entry in feed.entries:
+            published = _parse_date(entry)
+            try:
+                if datetime.fromisoformat(published) < cutoff:
+                    continue
+            except (TypeError, ValueError):
+                pass  # unparseable date: keep it and let fetch_all decide
+
             title = entry.get("title", "")
             summary = entry.get("summary", "") or entry.get("description", "")
 
@@ -125,7 +145,7 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int, filter_keywor
                 "summary": summary.strip(),
                 "url": entry.get("link", ""),
                 "source": source,
-                "published": _parse_date(entry),
+                "published": published,
                 "type": "announcement",
             }
             posts.append(post)
@@ -133,25 +153,20 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int, filter_keywor
             if len(posts) >= max_per_source:
                 break
 
-        filtered = [p for p in posts if _is_dev_relevant(p, filter_keywords)]
+        filtered = [p for p in posts if not _is_noise(p)]
 
         # Per-feed counts make an empty or dead feed visible in the Actions log
         # instead of it silently contributing nothing.
         logger.info(
-            "%s: %d entries in feed, %d considered, %d kept after filtering",
+            "%s: %d entries in feed, %d within %dh, %d kept after noise filter",
             source,
             len(feed.entries),
             len(posts),
+            max_age_hours,
             len(filtered),
         )
 
-        if filtered:
-            return filtered
-        # With an explicit topic keyword list, an empty result is the right
-        # answer — fetch_all re-filters anyway, and returning off-topic posts
-        # here only crowds out on-topic ones from other feeds. The permissive
-        # fallback stays for the default-keyword path.
-        return [] if filter_keywords is not None else posts
+        return filtered
 
     except socket.timeout:
         logger.error("%s blog request timed out", source)
@@ -161,22 +176,25 @@ def _fetch_single_feed(source: str, url: str, max_per_source: int, filter_keywor
         return []
 
 
-def fetch_blog_posts(max_results: int = 5, filter_keywords: list[str] | None = None) -> list[dict]:
+def fetch_blog_posts(max_results: int = 5, max_age_hours: int = DIGEST_MAX_AGE_HOURS) -> list[dict]:
     """
     Fetch recent development announcements from frontier AI lab blogs.
 
+    Takes no keyword list: these feeds are curated, so filtering them by topic
+    keyword removed real launches and kept brand-name mentions. fetch_all still
+    tags each post with a topic and filters the open sources.
+
     Args:
         max_results: Maximum total number of posts to return
-        filter_keywords: Optional keyword list for relevance filtering (defaults to FILTER_KEYWORDS)
+        max_age_hours: Only return posts published within this window
 
     Returns:
         List of normalized post dictionaries
     """
     all_posts = []
-    max_per_source = max(BLOG_MIN_PER_SOURCE, max_results // len(BLOG_FEEDS) + 1)
 
     for source, url in BLOG_FEEDS.items():
-        posts = _fetch_single_feed(source, url, max_per_source, filter_keywords)
+        posts = _fetch_single_feed(source, url, max_age_hours, BLOG_MAX_PER_SOURCE)
         all_posts.extend(posts)
 
     # Sort by published date (most recent first)

@@ -290,9 +290,11 @@ class TestRankingTokenBudget:
 class TestUnusableVerdictIsLogged:
     """Falling back to date order is a silent failure unless it is logged."""
 
-    def test_warns_when_the_reply_cannot_be_parsed(self, caplog):
-        import logging
-
+    def test_warns_when_the_reply_cannot_be_parsed(self):
+        # Asserted against the module's logger rather than caplog: get_logger
+        # returns a named "ai_research_digest.*" logger and setup_logger turns
+        # propagation off on it, so whether caplog's root handler sees the
+        # record depends on whether something configured logging first.
         items = [
             {"title": "First", "summary": "a", "source": "S", "type": "announcement"},
             {"title": "Second", "summary": "b", "source": "S", "type": "announcement"},
@@ -302,12 +304,16 @@ class TestUnusableVerdictIsLogged:
         response.choices[0].message.content = '{"keep": [{"index": 1, "line": "cut off'
         response.choices[0].finish_reason = "length"
 
+        logger = Mock()
         with patch("src.news_ranker.OpenAI"), patch(
             "src.news_ranker._call_openai_ranking", return_value=response
-        ):
-            with caplog.at_level(logging.WARNING, logger="src.news_ranker"):
-                result = rank_news_ranked(items, "test-key")
+        ), patch("src.news_ranker.logger", logger):
+            result = rank_news_ranked(items, "test-key")
 
         assert [r["title"] for r in result] == ["First", "Second"]
-        assert "falling back to date order" in caplog.text
-        assert "length" in caplog.text
+        warned = " ".join(
+            str(call.args[0]) % call.args[1:] if len(call.args) > 1 else str(call.args[0])
+            for call in logger.warning.call_args_list
+        )
+        assert "falling back to date order" in warned
+        assert "length" in warned

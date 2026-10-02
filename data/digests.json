@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-02",
+      "run_at": "2026-10-02T20:30:21.200442Z",
+      "top_paper_id": "21211411-a76d-518d-85b5-2af7cfa6dcb7",
+      "papers_fetched": 12,
+      "pdf_path": "reports/02-Oct/python-genai_v2280_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "37060953789"
+    },
+    {
       "date": "2026-10-01",
       "run_at": "2026-10-01T21:40:34.257216Z",
       "top_paper_id": "a0185a63-a05c-567c-94fb-40a4ab57328f",
@@ -745,14 +754,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "28537696418"
-    },
-    {
-      "date": "2026-06-30",
-      "top_paper_id": "2c453822-eaab-5d13-bb0d-8b66a13a23e1",
-      "papers_fetched": 3,
-      "pdf_path": "reports/30-Jun/Introducing_GeneBench-Pro.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "28465478724"
     }
   ]
 }

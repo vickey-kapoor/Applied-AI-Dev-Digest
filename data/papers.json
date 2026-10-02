@@ -1,6 +1,201 @@
 {
   "papers": [
     {
+      "id": "21211411-a76d-518d-85b5-2af7cfa6dcb7",
+      "title": "python-genai v2.28.0 released",
+      "summary": "Version 2.28.0 of python-genai released, adding support for models lyria-3.5, gemini-omni-1.1-flash, and gemini-omni-flash-preview in the Interactions Model enum. This release includes support for continuation_token in Interactions, enhancing the ability to manage state across multiple interactions. Specific performance metrics and benchmark numbers are not provided.",
+      "source": "GitHub",
+      "url": "https://github.com/googleapis/python-genai/releases/tag/v2.28.0",
+      "published_at": "2026-10-02T17:30:42Z",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Version 2.28.0 of python-genai released, adding support for models lyria-3.5, gemini-omni-1.1-flash, and gemini-omni-flash-preview in the Interactions Model enum.",
+      "capabilities": "This release includes support for continuation_token in Interactions, enhancing the ability to manage state across multiple interactions. Specific performance metrics and benchmark numbers are not provided.",
+      "availability": "The release is available on GitHub as an update to the python-genai library. Specific pricing or access details are not stated.",
+      "why_it_matters": "The addition of new models and the continuation_token feature may improve interaction handling and model integration in production systems, allowing for more robust state management.",
+      "caveats": "No specific performance benchmarks or detailed capabilities of the newly added models are provided, which may require further evaluation before integration.",
+      "release_type": "product"
+    },
+    {
+      "id": "42fa7329-8802-56cb-becb-80fdeb13e9a2",
+      "title": "A model guide for the GPT-6 family",
+      "summary": "Learn how startups can choose GPT-6 models, tune reasoning effort, improve prompts and skills, coordinate tools, and prepare workflows for production.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/practical-guide-building-gpt-6",
+      "published_at": "2026-10-02T16:15:00+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "eb48cf8f-c0c2-51b2-9beb-d57cb2c76a10",
+      "title": "Open-sourcing AstaBrief, the fast report-generation model in Asta",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/astabrief",
+      "published_at": "2026-10-02T15:19:50+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "828e81e7-b200-50a5-88ea-1b1bdf26cc9b",
+      "title": "The latest AI news we announced in September 2026",
+      "summary": "A video showing the September AI updates",
+      "source": "Google AI",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-september-2026/",
+      "published_at": "2026-10-02T15:00:00+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "cf456161-2598-5455-9bc6-e2bb171aa707",
+      "title": "Toward provably private learning from federated data",
+      "summary": "Mobile Systems",
+      "source": "Google Research",
+      "url": "https://research.google/blog/toward-provably-private-learning-from-federated-data/",
+      "published_at": "2026-10-02T14:57:41+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "382df64a-e81d-5eb7-80a9-53342af48447",
+      "title": "NVIDIA DGX Spark 64GB Gives Developers More Ways to Build and Scale Local AI",
+      "summary": "Local AI is becoming more useful by the token. As AI agents move from experiments into everyday development, increasingly capable open models are shrinking to fit on more devices, giving builders more to run locally. Coming this month, NVIDIA DGX Spark will be available with 64GB of unified memory from top manufacturer partners — Acer, […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/",
+      "published_at": "2026-10-02T13:00:39+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "45ff6082-ec90-5140-905e-2332f8e2f52c",
+      "title": "AutoSynthData: Generating Training Data for Enterprise Agents",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/ServiceNow-AI/autosynthdata",
+      "published_at": "2026-10-02T04:01:31+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7662326c-92ae-5807-89b2-3b11578812d2",
+      "title": "DeepSeek Harness Desktop for macOS and Windows",
+      "summary": "378 points · 204 comments",
+      "source": "Hacker News",
+      "url": "https://www.deepseek.com/en/harness/",
+      "published_at": "2026-10-02T03:11:20+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3ad355de-9d5e-583d-8810-b2dd460386ec",
+      "title": "Chatham scales its capital markets expertise with OpenAI",
+      "summary": "Chatham Financial uses Codex and GPT-5.6 to build technology and redesign workflows, cutting trade validation from 30 minutes to under 4.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/chatham-financial",
+      "published_at": "2026-10-02T00:00:00+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "44d78bd4-46fb-51dd-98b2-0609bbd4b6b7",
+      "title": "How NVIDIA GPUs Help Accelerate OpenAI’s GPT-6 Astra Ultrafast",
+      "summary": "GPT-6 Astra Ultrafast, running on NVIDIA Blackwell GPUs, is available now in the OpenAI API and to eligible ChatGPT Work and Codex users. Accelerated by inference optimizations through OpenAI’s models that tap into the capabilities of the NVIDIA Blackwell architecture, Ultrafast offers up to 8x faster token generation than the Astra Standard mode. For developers, […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/gpus-openai-gpt-6-astra-ultrafast/",
+      "published_at": "2026-10-01T23:44:13+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d4679a28-aa30-503b-8ee6-4b197218cbc6",
+      "title": "Gemini 4 Argon: our next era of frontier intelligence",
+      "summary": "",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/gemini-4-argon-our-next-era-of-frontier-intelligence/",
+      "published_at": "2026-09-30T20:01:45+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "cfa8235d-6c0c-5d53-b76c-92acbdb1b934",
+      "title": "Introducing SynthID Bio",
+      "summary": "Proof of concept for watermarking AI-generated proteins while preserving biological function.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/introducing-synthid-bio/",
+      "published_at": "2026-09-30T15:03:07+00:00",
+      "fetched_at": "2026-10-02T20:30:20.576197Z",
+      "type": "announcement",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "a0185a63-a05c-567c-94fb-40a4ab57328f",
       "title": "StreetComplete on iOS is now in public beta",
       "summary": "StreetComplete on iOS is now in public beta. StreetComplete is an app that allows users to contribute to OpenStreetMap by answering simple questions about their surroundings. It enables users to add information to the map, enhancing its detail and accuracy.",

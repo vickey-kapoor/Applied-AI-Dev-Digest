@@ -238,3 +238,76 @@ class TestRankNewsNoneContract:
         one = [{"title": "solo", "summary": ""}]
         assert rank_news_ranked(one, "") == one
         assert rank_news(one, "") == one[0]
+
+
+class TestRankingTokenBudget:
+    """The ranking cap has to hold the verdict the ranking prompt asks for.
+
+    A cap below it truncates the JSON, the truncated JSON does not parse, and
+    rank_news_ranked quietly returns date order — a digest that looks fine and
+    carries no editorial judgement at all. This pins the cap to the output
+    shape so the two cannot drift apart again.
+    """
+
+    def test_cap_holds_a_full_verdict_for_a_full_candidate_pool(self):
+        """A keep line and a reject reason for every candidate must fit."""
+        import json
+
+        from src.constants import DIGEST_MAX_RESULTS, OPENAI_MAX_TOKENS_RANKING
+
+        # The prompt allows 14 words per kept line; price the worst case, every
+        # candidate kept with a line that long, plus the closing reason.
+        line = " ".join(["throughput"] * 14)
+        verdict = json.dumps(
+            {
+                "keep": [
+                    {"index": i + 1, "line": line} for i in range(DIGEST_MAX_RESULTS)
+                ],
+                "reject": [
+                    {"index": i + 1, "why": "duplicate of 1"}
+                    for i in range(DIGEST_MAX_RESULTS)
+                ],
+                "reason": "one sentence on why the first kept item is the most useful today",
+            }
+        )
+        # 4 characters per token is the usual English approximation.
+        assert OPENAI_MAX_TOKENS_RANKING >= len(verdict) / 4
+
+    def test_truncated_verdict_is_unusable(self):
+        """Cutting the reply mid-JSON gives no verdict — hence the budget above."""
+        import json
+
+        full = json.dumps(
+            {
+                "keep": [{"index": 1, "line": "vLLM 0.12 doubles MoE throughput"}],
+                "reject": [{"index": 2, "why": "funding news"}],
+            }
+        )
+        assert _parse_verdict(full, 5) is not None
+        assert _parse_verdict(full[: len(full) // 2], 5) is None
+
+
+class TestUnusableVerdictIsLogged:
+    """Falling back to date order is a silent failure unless it is logged."""
+
+    def test_warns_when_the_reply_cannot_be_parsed(self, caplog):
+        import logging
+
+        items = [
+            {"title": "First", "summary": "a", "source": "S", "type": "announcement"},
+            {"title": "Second", "summary": "b", "source": "S", "type": "announcement"},
+        ]
+        response = Mock()
+        response.choices = [Mock()]
+        response.choices[0].message.content = '{"keep": [{"index": 1, "line": "cut off'
+        response.choices[0].finish_reason = "length"
+
+        with patch("src.news_ranker.OpenAI"), patch(
+            "src.news_ranker._call_openai_ranking", return_value=response
+        ):
+            with caplog.at_level(logging.WARNING, logger="src.news_ranker"):
+                result = rank_news_ranked(items, "test-key")
+
+        assert [r["title"] for r in result] == ["First", "Second"]
+        assert "falling back to date order" in caplog.text
+        assert "length" in caplog.text

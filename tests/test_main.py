@@ -5,6 +5,7 @@ from unittest.mock import Mock, patch
 import pytest
 
 import main
+from src.constants import HISTORY_MAX_ENTRIES
 
 
 class TestMain:
@@ -210,3 +211,110 @@ class TestMain:
         assert exported_items == [enriched]
         assert exported_top is enriched
         assert exported_items[0]["what_shipped"] == "OpenAI shipped X."
+
+
+class TestHistoryList:
+    """The KV list behind the dashboard's History page.
+
+    The Sunday roundup used to send and then clear this list every week. It
+    was removed, so the append side is now the only thing bounding it — an
+    unbounded list would grow by one entry a day and the History page reads
+    the whole of it.
+    """
+
+    @patch("main.kv_trim_to_last")
+    @patch("main.kv_append")
+    @patch("main.export_digest")
+    @patch("main.send_telegram_message")
+    @patch("main.format_digest_message", return_value="formatted")
+    @patch("main.generate_digest_pdf", return_value="reports/13-Mar/test.pdf")
+    @patch("main.summarize_release")
+    @patch("main.export_papers", return_value="paper-1")
+    @patch("main.rank_news_ranked")
+    @patch("main.fetch_all")
+    @patch("main.increment_topic_stat")
+    @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
+    @patch("main.is_paused", return_value=False)
+    def test_the_append_is_followed_by_a_trim(
+        self,
+        mock_paused,
+        mock_get_active_keywords,
+        mock_increment_stat,
+        mock_fetch_all,
+        mock_rank_news_ranked,
+        mock_export_papers,
+        mock_summarize_release,
+        mock_generate_digest_pdf,
+        mock_format_digest_message,
+        mock_send_telegram_message,
+        mock_export_digest,
+        mock_kv_append,
+        mock_kv_trim,
+        env_vars,
+    ):
+        paper = {
+            "title": "Test Paper",
+            "summary": "Test summary",
+            "url": "https://openai.com/blog/test",
+            "source": "OpenAI",
+            "published": "2024-07-18T00:00:00",
+            "type": "announcement",
+        }
+        mock_fetch_all.return_value = [paper]
+        mock_rank_news_ranked.return_value = [paper]
+        mock_summarize_release.return_value = dict(paper)
+
+        main.main()
+
+        mock_kv_append.assert_called_once()
+        assert mock_kv_append.call_args[0][0] == "digest:weekly"
+
+        mock_kv_trim.assert_called_once_with("digest:weekly", HISTORY_MAX_ENTRIES)
+
+    @patch("main.kv_trim_to_last")
+    @patch("main.kv_append", side_effect=RuntimeError("KV not configured"))
+    @patch("main.export_digest")
+    @patch("main.send_telegram_message")
+    @patch("main.format_digest_message", return_value="formatted")
+    @patch("main.generate_digest_pdf", return_value="reports/13-Mar/test.pdf")
+    @patch("main.summarize_release")
+    @patch("main.export_papers", return_value="paper-1")
+    @patch("main.rank_news_ranked")
+    @patch("main.fetch_all")
+    @patch("main.increment_topic_stat")
+    @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
+    @patch("main.is_paused", return_value=False)
+    def test_a_failed_append_does_not_stop_the_digest(
+        self,
+        mock_paused,
+        mock_get_active_keywords,
+        mock_increment_stat,
+        mock_fetch_all,
+        mock_rank_news_ranked,
+        mock_export_papers,
+        mock_summarize_release,
+        mock_generate_digest_pdf,
+        mock_format_digest_message,
+        mock_send_telegram_message,
+        mock_export_digest,
+        mock_kv_append,
+        mock_kv_trim,
+        env_vars,
+    ):
+        """KV is optional for the pipeline, so neither call may be fatal."""
+        paper = {
+            "title": "Test Paper",
+            "summary": "Test summary",
+            "url": "https://openai.com/blog/test",
+            "source": "OpenAI",
+            "published": "2024-07-18T00:00:00",
+            "type": "announcement",
+        }
+        mock_fetch_all.return_value = [paper]
+        mock_rank_news_ranked.return_value = [paper]
+        mock_summarize_release.return_value = dict(paper)
+
+        main.main()
+
+        mock_kv_trim.assert_not_called()
+        mock_send_telegram_message.assert_called_once()

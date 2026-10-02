@@ -198,3 +198,8 @@ HN_MAX_STORIES = 5
 # permissive so lab technical reports surface the day they drop.
 HF_MIN_UPVOTES = 20
 HF_MAX_PAPERS = 5
+
+# Dashboard history list (KV key `digest:weekly`) — one entry per digest sent.
+# The Sunday roundup used to clear this list each week; with the roundup gone
+# the append side caps it, so the History page stays a bounded read.
+HISTORY_MAX_ENTRIES = int(os.getenv("HISTORY_MAX_ENTRIES", "90"))

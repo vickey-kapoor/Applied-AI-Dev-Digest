@@ -46,30 +46,6 @@ class TestDailyDue:
         assert is_due("daily", at(2026, 9, 8, 0, 30), state) is False
 
 
-class TestWeeklyDue:
-    """The weekly roundup is Sundays only."""
-
-    def test_due_on_sunday_after_target(self):
-        assert is_due("weekly", at(2026, 9, 6, 13, 0), {}) is True
-
-    def test_not_due_on_sunday_before_target(self):
-        assert is_due("weekly", at(2026, 9, 6, 12, 0), {}) is False
-
-    @pytest.mark.parametrize("day", [7, 8, 9, 10, 11, 12])
-    def test_not_due_on_other_days(self, day):
-        assert is_due("weekly", at(2026, 9, day, 13, 0), {}) is False
-
-    def test_not_due_once_it_has_run(self):
-        state = {"last_weekly_date": "2026-09-06"}
-        assert is_due("weekly", at(2026, 9, 6, 13, 0), state) is False
-
-    def test_daily_and_weekly_track_separately(self):
-        """Sunday's daily run must not suppress the weekly roundup."""
-        state = {"last_daily_date": "2026-09-06"}
-        assert is_due("daily", at(2026, 9, 6, 13, 0), state) is False
-        assert is_due("weekly", at(2026, 9, 6, 13, 0), state) is True
-
-
 class TestDaylightSaving:
     """Noon local must stay noon local across the CDT/CST switch.
 
@@ -111,12 +87,11 @@ class TestState:
         assert load_state(path) == {"last_daily_date": "2026-09-07"}
 
     def test_mark_ran_does_not_mutate_the_input(self):
-        original = {"last_weekly_date": "2026-09-06"}
+        original = {"last_daily_date": "2026-09-06"}
         updated = mark_ran("daily", at(2026, 9, 7, 12, 5), original)
 
-        assert original == {"last_weekly_date": "2026-09-06"}
+        assert original == {"last_daily_date": "2026-09-06"}
         assert updated["last_daily_date"] == "2026-09-07"
-        assert updated["last_weekly_date"] == "2026-09-06"
 
     def test_marking_makes_it_not_due(self):
         now = at(2026, 9, 7, 12, 5)
@@ -124,9 +99,12 @@ class TestState:
 
 
 class TestUnknownJob:
-    def test_is_due_rejects_unknown_job(self):
+    """`daily` is the only job. A weekly roundup used to share this guard."""
+
+    @pytest.mark.parametrize("job", ["hourly", "weekly"])
+    def test_is_due_rejects_unknown_job(self, job):
         with pytest.raises(ValueError):
-            is_due("hourly", at(2026, 9, 7, 12, 0), {})
+            is_due(job, at(2026, 9, 7, 12, 0), {})
 
 
 class TestCommandLineContract:
@@ -155,8 +133,9 @@ class TestCommandLineContract:
         result = self._run("check", "daily", cwd=REPO_ROOT)
         assert "due=" in result.stderr
 
-    def test_unknown_job_exits_nonzero(self):
-        assert self._run("check", "hourly", cwd=REPO_ROOT).returncode == 2
+    @pytest.mark.parametrize("job", ["hourly", "weekly"])
+    def test_unknown_job_exits_nonzero(self, job):
+        assert self._run("check", job, cwd=REPO_ROOT).returncode == 2
 
     def test_missing_arguments_exit_nonzero(self):
         assert self._run("check", cwd=REPO_ROOT).returncode == 2

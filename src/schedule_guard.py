@@ -1,11 +1,11 @@
-"""Decide whether a scheduled digest is due.
+"""Decide whether the daily digest is due.
 
 GitHub's scheduled delivery is best-effort: measured on this repo, a single
 daily cron arrived between 30 minutes and 5h23m after its slot, which put the
-"daily" digest anywhere from late morning to evening. Firing a cheap hourly
-poll and running the digest on the first poll that lands after the target local
-time converts that into "within roughly an hour of noon", because a delayed
-poll is simply followed by another one.
+digest anywhere from late morning to evening. Firing a cheap hourly poll and
+running the digest on the first poll that lands after the target local time
+converts that into "within roughly an hour of noon", because a delayed poll is
+simply followed by another one.
 
 The poll ran every 15 minutes at first. GitHub honoured about one tick in
 twelve at that rate — measured gaps of 1.5 to 4.5 hours — so the finer
@@ -19,6 +19,10 @@ State lives in data/schedule_state.json, which the workflow commits alongside
 the digest output. A run that sends but fails to commit would let the next poll
 run again; main.py already filters items sent as a previous top pick, so that
 repeat finds nothing new and sends nothing.
+
+There is one job. A Sunday roundup used to share this guard, which is why the
+job name survives in the state keys and the CLI: dropping the argument would
+have made every stored `last_daily_date` unreadable for nothing.
 """
 
 import json
@@ -31,16 +35,12 @@ from zoneinfo import ZoneInfo
 # time holds across daylight-saving transitions.
 DIGEST_TIMEZONE = ZoneInfo(os.getenv("DIGEST_TIMEZONE", "America/Chicago"))
 DAILY_TARGET_HOUR = int(os.getenv("DAILY_TARGET_HOUR", "12"))
-WEEKLY_TARGET_HOUR = int(os.getenv("WEEKLY_TARGET_HOUR", "13"))
-
-# Sunday, matching datetime.isoweekday().
-WEEKLY_ISOWEEKDAY = 7
 
 STATE_PATH = os.path.join(
     os.path.dirname(os.path.dirname(__file__)), "data", "schedule_state.json"
 )
 
-JOBS = ("daily", "weekly")
+JOBS = ("daily",)
 
 
 def load_state(path: str | None = None) -> dict:
@@ -67,23 +67,16 @@ def save_state(state: dict, path: str | None = None) -> None:
         f.write("\n")
 
 
-def _target_hour(job: str) -> int:
-    return WEEKLY_TARGET_HOUR if job == "weekly" else DAILY_TARGET_HOUR
-
-
 def is_due(job: str, now_local: datetime, state: dict) -> bool:
     """Whether `job` should run at `now_local`, given what has already run.
 
     Due when the local target hour has passed today and today's run has not
-    happened. The weekly roundup additionally requires it to be Sunday.
+    happened.
     """
     if job not in JOBS:
         raise ValueError(f"Unknown job: {job!r}")
 
-    if job == "weekly" and now_local.isoweekday() != WEEKLY_ISOWEEKDAY:
-        return False
-
-    if now_local.hour < _target_hour(job):
+    if now_local.hour < DAILY_TARGET_HOUR:
         return False
 
     return state.get(f"last_{job}_date") != now_local.date().isoformat()
@@ -102,14 +95,14 @@ def now_local() -> datetime:
 
 
 def main() -> int:
-    """CLI: `check <job>` prints true/false; `mark <job>` records a run.
+    """CLI: `check daily` prints true/false; `mark daily` records a run.
 
     `check` always exits 0 and reports the decision on stdout, so the workflow
     can branch on the value rather than on an exit code that would read as a
     step failure.
     """
     if len(sys.argv) != 3 or sys.argv[1] not in ("check", "mark"):
-        print("usage: python -m src.schedule_guard {check|mark} {daily|weekly}", file=sys.stderr)
+        print("usage: python -m src.schedule_guard {check|mark} daily", file=sys.stderr)
         return 2
 
     command, job = sys.argv[1], sys.argv[2]
@@ -127,7 +120,7 @@ def main() -> int:
         # Anything else on stdout would corrupt that value.
         print(
             f"{job} due={due} at {current:%Y-%m-%d %H:%M %Z} "
-            f"(target {_target_hour(job):02d}:00, "
+            f"(target {DAILY_TARGET_HOUR:02d}:00, "
             f"last run {state.get(f'last_{job}_date', 'never')})",
             file=sys.stderr,
         )

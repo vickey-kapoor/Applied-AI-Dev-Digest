@@ -5,7 +5,7 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from src.kv_client import kv_append, kv_get, kv_get_list, kv_delete
+from src.kv_client import kv_append, kv_get, kv_get_list, kv_delete, kv_trim_to_last
 
 
 @pytest.fixture(autouse=True)
@@ -116,3 +116,22 @@ class TestKvDelete:
 
         body = json.loads(mock_urlopen.call_args[0][0].data.decode())
         assert body == ["DEL", "digest:weekly"]
+
+
+class TestKvTrimToLast:
+    """Nothing else bounds the history list now that the Sunday roundup,
+    which cleared it, is gone."""
+
+    @patch("src.kv_client.urlopen")
+    def test_trims_to_the_last_n_items(self, mock_urlopen):
+        mock_urlopen.return_value = _mock_urlopen("OK")
+        assert kv_trim_to_last("digest:weekly", 90) == "OK"
+
+        body = json.loads(mock_urlopen.call_args[0][0].data.decode())
+        assert body == ["LTRIM", "digest:weekly", "-90", "-1"]
+
+    def test_rejects_a_count_that_would_empty_the_list(self):
+        """LTRIM 0 -1 keeps everything and LTRIM with a positive start would
+        drop the newest entries, so neither is a safe reading of count=0."""
+        with pytest.raises(ValueError):
+            kv_trim_to_last("digest:weekly", 0)

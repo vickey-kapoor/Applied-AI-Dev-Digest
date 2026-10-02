@@ -119,3 +119,19 @@ def kv_delete(key):
     result = _kv_request("POST", "/", ["DEL", key])
     logger.info("KV DEL %s → %s", key, result.get("result"))
     return result.get("result")
+
+
+@retry_with_backoff(exceptions=(URLError, OSError))
+def kv_trim_to_last(key, count):
+    """Keep only the last `count` items of a KV list (Redis LTRIM -count -1).
+
+    The list this is used for, `digest:weekly`, is appended to once per digest
+    and read whole by the dashboard's History page. The Sunday roundup used to
+    clear it every week; with the roundup gone nothing else bounds it, so the
+    append side caps it instead.
+    """
+    if count < 1:
+        raise ValueError("count must be at least 1")
+    result = _kv_request("POST", "/", ["LTRIM", key, str(-count), "-1"])
+    logger.info("KV LTRIM %s to last %d → %s", key, count, result.get("result"))
+    return result.get("result")

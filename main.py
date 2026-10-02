@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 from datetime import datetime, timezone
 
-from src.constants import DIGEST_MAX_RESULTS
+from src.constants import DIGEST_MAX_RESULTS, HISTORY_MAX_ENTRIES
 from src.logger import get_logger
 from src.topic_config import get_active_keywords, is_paused, increment_topic_stat
 from src.fetcher import fetch_all
@@ -17,7 +17,7 @@ from src.news_summarizer import summarize_release
 from src.telegram_sender import format_digest_message, send_telegram_message
 from src.pdf_generator import generate_digest_pdf
 from src.json_exporter import export_papers, export_digest, get_sent_top_paper_ids, _paper_id_for_item
-from src.kv_client import kv_append, kv_set
+from src.kv_client import kv_append, kv_set, kv_trim_to_last
 
 logger = get_logger(__name__)
 
@@ -122,7 +122,7 @@ def main():
             logger.warning("Could not update topic stats: %s", e)
 
         # Generate summaries in one model call. This must run before both the
-        # papers.json export and the weekly-KV append so each saved entry
+        # papers.json export and the history-KV append so each saved entry
         # includes the structured fields rather than the raw RSS description.
         logger.info("Generating summaries...")
         try:
@@ -156,7 +156,9 @@ def main():
         except Exception as e:
             logger.warning("Could not export items to JSON: %s", e)
 
-        # Append top item to weekly KV list for Sunday digest
+        # Append the top item to the KV list the dashboard's History page
+        # reads. The key name is historical: it fed the Sunday roundup, which
+        # also cleared it. Renaming it would orphan the entries already stored.
         try:
             kv_append("digest:weekly", {
                 "title": top_item.get("title", ""),
@@ -169,9 +171,12 @@ def main():
                 "release_type": top_item.get("release_type", ""),
                 "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
             })
-            logger.info("Appended top item to weekly KV list")
+            logger.info("Appended top item to the KV history list")
+            # Trimmed on every append rather than on a schedule, so there is
+            # no second job to lose.
+            kv_trim_to_last("digest:weekly", HISTORY_MAX_ENTRIES)
         except Exception as e:
-            logger.warning("Could not append to weekly KV: %s", e)
+            logger.warning("Could not append to the KV history list: %s", e)
     else:
         # Still export items for the dashboard, but no top pick
         try:

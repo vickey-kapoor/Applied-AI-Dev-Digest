@@ -1,8 +1,8 @@
 name: Daily Applied AI Dev Digest
 
-# Sends daily AI research digest to Telegram
+# Sends the daily AI research digest to Telegram. One digest a day, nothing else.
 
-# Polls hourly; src/schedule_guard.py decides whether anything is
+# Polls hourly; src/schedule_guard.py decides whether the digest is
 # actually due. A single daily cron cannot hold a delivery time here: GitHub's
 # scheduled delivery is best-effort and this workflow has arrived between 30
 # minutes and 5h23m after its slot, which put the digest anywhere from late
@@ -21,15 +21,6 @@ on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
-    inputs:
-      job:
-        description: 'Send a digest now, ignoring the schedule guard'
-        required: false
-        default: 'daily'
-        type: choice
-        options:
-          - daily
-          - weekly
 
 # One digest run at a time. Without this a slow run could still be sending
 # while the next tick starts, and both would see the same "not yet run" state.
@@ -56,21 +47,18 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             # A manual run is an explicit instruction; skip the guard.
-            REQUESTED="${{ github.event.inputs.job || 'daily' }}"
-            echo "Manual dispatch: $REQUESTED"
-            [ "$REQUESTED" = "daily" ] && echo "daily=true" >> "$GITHUB_OUTPUT" || echo "daily=false" >> "$GITHUB_OUTPUT"
-            [ "$REQUESTED" = "weekly" ] && echo "weekly=true" >> "$GITHUB_OUTPUT" || echo "weekly=false" >> "$GITHUB_OUTPUT"
+            echo "Manual dispatch: sending the daily digest"
+            echo "daily=true" >> "$GITHUB_OUTPUT"
           else
             echo "daily=$(python3 -m src.schedule_guard check daily)" >> "$GITHUB_OUTPUT"
-            echo "weekly=$(python3 -m src.schedule_guard check weekly)" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Nothing due
-        if: steps.guard.outputs.daily != 'true' && steps.guard.outputs.weekly != 'true'
-        run: echo "Neither digest is due yet — exiting."
+        if: steps.guard.outputs.daily != 'true'
+        run: echo "The digest is not due yet — exiting."
 
       - name: Validate secrets
-        if: steps.guard.outputs.daily == 'true' || steps.guard.outputs.weekly == 'true' 
+        if: steps.guard.outputs.daily == 'true'
         run: |
           missing=""
           [ -z "${{ secrets.OPENAI_API_KEY }}" ] && missing="$missing OPENAI_API_KEY"
@@ -84,22 +72,21 @@ jobs:
           fi
 
       - name: Set up Python
-        if: steps.guard.outputs.daily == 'true' || steps.guard.outputs.weekly == 'true'
+        if: steps.guard.outputs.daily == 'true'
         uses: actions/setup-python@v5.6.0
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        if: steps.guard.outputs.daily == 'true' || steps.guard.outputs.weekly == 'true'
+        if: steps.guard.outputs.daily == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Routing is driven by the guard's own decision, not by which cron
-      # fired. Keying off github.event.schedule broke the moment the two
-      # daily/weekly crons collapsed into a single polling cron: the string
-      # never matched again, so every tick took the daily branch and the
-      # weekly roundup stopped running entirely.
+      # Sending is driven by the guard's own decision, not by which cron
+      # fired. Keying off github.event.schedule broke once before, when two
+      # crons collapsed into a single polling cron and the string stopped
+      # matching anything at all.
       - name: Send the daily digest
         if: steps.guard.outputs.daily == 'true'
         env:
@@ -119,24 +106,8 @@ jobs:
         if: steps.guard.outputs.daily == 'true'
         run: python -m src.schedule_guard mark daily
 
-      - name: Send the weekly roundup
-        if: steps.guard.outputs.weekly == 'true'
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_RUN_ID: ${{ github.run_id }}
-          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
-          KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
-        run: python weekly_digest.py
-
-      - name: Record the weekly run
-        if: steps.guard.outputs.weekly == 'true'
-        run: python -m src.schedule_guard mark weekly
-
       - name: Commit and push reports and data
-        if: steps.guard.outputs.daily == 'true' || steps.guard.outputs.weekly == 'true'
+        if: steps.guard.outputs.daily == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -150,4 +121,3 @@ jobs:
         if: failure()
         run: |
           echo "::error::Applied AI Dev Digest pipeline failed. Check the logs above for details."
-

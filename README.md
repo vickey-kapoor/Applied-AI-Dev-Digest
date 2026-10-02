@@ -17,13 +17,12 @@ The question it answers is not "what is most significant to the field" but "what
 - Sends the **top pick as a full brief plus up to 5 headlines** from the rest of the ranking. The model writes each headline line, so it carries the point rather than restating the title — "vLLM 0.12: 2x throughput on MoE models", not "vLLM v0.12 released"
 - Generates a **structured lab-release brief** (What shipped / Capabilities / Availability / Why it matters / Caveats)
 - Sends to Telegram via Bot API
-- Produces a PDF report and weekly digest roundup
+- Produces a PDF report
 - Exports structured data to JSON (papers + digests)
 - Runs via GitHub Actions at **12:00 noon America/Chicago**, held steady across daylight saving (see **Scheduling**)
 - **Pause/resume** digest from the dashboard
 - **Send test** button re-sends the last digest to Telegram
 - **Digest preview** page shows the last sent digest as a Telegram message mockup
-- **Sunday weekly digest** — rounds up the week's top picks into a single Telegram message
 - **Feedback-driven ranking** — thumbs up/down on past digests adjusts topic weights, influencing future picks
 
 ## Dashboard
@@ -34,7 +33,7 @@ Next.js app deployed on Vercel with top nav: **Topics · Preview · History · S
 |------|-------------|
 | **Topics** | Toggle 11 lab-development topics on/off, add custom keywords per topic |
 | **Preview** | Shows the last sent digest as a Telegram message mockup, re-send it |
-| **History** | Weekly list of sent items with feedback buttons |
+| **History** | Past sent items, grouped by week, with feedback buttons |
 | **Stats** | Bar chart showing which topics win the daily ranking most often |
 | **Settings** | Blog sources, GitHub repos, HN config, schedule, Telegram, Actions link |
 
@@ -256,9 +255,9 @@ Add `KV_REST_API_URL`, `KV_REST_API_TOKEN`, `TELEGRAM_BOT_TOKEN`, and `TELEGRAM_
 
 ### 3. Scheduling
 
-The digest is delivered at **12:00 noon America/Chicago**, and the weekly
-roundup at **13:00 on Sundays**. No secrets, tokens or third-party services are
-involved.
+The digest is delivered once a day at **12:00 noon America/Chicago**. That is
+the only scheduled send: there is no weekly roundup. No secrets, tokens or
+third-party services are involved in the scheduling.
 
 **How.** A single daily cron cannot hold a delivery time on GitHub Actions.
 Scheduled delivery is best-effort, and measured on this repo runs arrived
@@ -266,14 +265,13 @@ between 30 minutes and 5h23m after their slot — enough to put a "daily" digest
 anywhere from late morning to evening, and occasionally past midnight onto the
 next date.
 
-So the workflow polls hourly and `src/schedule_guard.py` decides whether
-anything is actually due:
+So the workflow polls hourly and `src/schedule_guard.py` decides whether the
+digest is actually due:
 
-| Condition | Daily | Weekly |
-|---|---|---|
-| Local time has passed | 12:00 | 13:00 |
-| Day | any | Sunday |
-| Already ran today | skip | skip |
+| Condition | Due |
+|---|---|
+| Local time has passed 12:00 | yes |
+| Already sent today | skip |
 
 A late tick is simply followed by another, so the digest lands within roughly
 an hour of the target rather than anywhere in the day. Almost every tick exits
@@ -285,8 +283,8 @@ fixed UTC hour. Cron only understands UTC, so a fixed hour would silently slip
 by one when CDT gives way to CST in November. Evaluating locally keeps noon at
 noon year-round.
 
-**State.** `data/schedule_state.json` records the last run date per job and is
-committed with the digest output. Each job is marked only after its script
+**State.** `data/schedule_state.json` records the last run date and is
+committed with the digest output. The day is marked only after `main.py`
 succeeds, so a failure leaves it due and the next tick retries rather than
 skipping the day. If a run sends but fails to commit, the next tick runs again;
 `get_sent_top_paper_ids()` filters items already sent as a top pick, so that
@@ -299,11 +297,10 @@ the cron:
 |---|---|
 | `DIGEST_TIMEZONE` | `America/Chicago` |
 | `DAILY_TARGET_HOUR` | `12` |
-| `WEEKLY_TARGET_HOUR` | `13` |
 
-**Running by hand.** The Actions tab offers a `daily`/`weekly` dropdown. A
-manual dispatch bypasses the guard, so it sends immediately regardless of the
-time or whether today's digest already went out.
+**Running by hand.** The Actions tab offers **Run workflow** on *Daily Applied
+AI Dev Digest*. A manual dispatch bypasses the guard, so it sends immediately
+regardless of the time or whether today's digest already went out.
 
 **Why hourly, not every 15 minutes.** The poll started at `*/15`. GitHub
 honoured roughly one tick in twelve at that rate, with observed gaps of 1.5 to
@@ -360,7 +357,7 @@ npm test          # Vitest unit tests
 
 | Job | Runs |
 |---|---|
-| Python tests | `pytest` on 3.11 (240 tests) |
+| Python tests | `pytest` on 3.11 (331 tests) |
 | Dashboard typecheck and lint | `npm ci`, `tsc --noEmit`, `npm run lint`, `npm test` (14 tests) |
 
 The suite mocks every network and OpenAI call, so CI needs no secrets and the
@@ -373,7 +370,7 @@ digest.
 Applied-AI-Dev-Digest/
 ├── .github/workflows/
 │   ├── ci.yml                    # Tests + typecheck/lint on every PR
-│   └── daily-news.yml            # Hourly poll; schedule_guard decides what runs
+│   └── daily-news.yml            # Hourly poll; schedule_guard decides if it sends
 ├── src/
 │   ├── fetchers/
 │   │   ├── blog_fetcher.py       # RSS fetch from 10 AI lab/platform blogs
@@ -393,7 +390,7 @@ Applied-AI-Dev-Digest/
 │   ├── news_ranker.py            # GPT-4o-mini ranking + feedback weights
 │   ├── news_summarizer.py        # Structured lab-release brief generation
 │   ├── pdf_generator.py          # PDF report generation
-│   ├── schedule_guard.py         # Decides whether a digest is due (stdlib only)
+│   ├── schedule_guard.py         # Decides whether the digest is due (stdlib only)
 │   ├── telegram_sender.py        # Telegram Bot API
 │   └── topic_config.py           # Dynamic topic config from KV
 ├── dashboard/                    # Next.js dashboard (Vercel)
@@ -401,7 +398,7 @@ Applied-AI-Dev-Digest/
 │       ├── app/
 │       │   ├── topics/           # Topic toggle UI + custom keywords
 │       │   ├── preview/          # Digest preview + Telegram mockup
-│       │   ├── history/          # Weekly history + feedback buttons
+│       │   ├── history/          # Past items by week + feedback buttons
 │       │   ├── stats/            # Topic performance bar chart
 │       │   ├── settings/         # Pipeline config overview
 │       │   └── api/              # API routes (topics, pause, feedback, etc.)
@@ -413,10 +410,9 @@ Applied-AI-Dev-Digest/
 │       └── __tests__/            # Vitest suite (14 tests)
 ├── data/                         # papers.json, digests.json, schedule_state.json
 ├── reports/                      # Generated PDF reports
-├── tests/                        # Pytest test suite (305 tests)
+├── tests/                        # Pytest test suite (331 tests)
 ├── main.py                       # Pipeline entry point
 ├── preview.py                    # Local-only preview (outputs JSON; Vercel reads KV)
-├── weekly_digest.py              # Sunday weekly roundup
 └── requirements.txt
 ```
 

@@ -36,8 +36,19 @@ DIGEST_MAX_AGE_HOURS = int(os.getenv("DIGEST_MAX_AGE_HOURS", "72"))
 
 # OpenAI model settings
 OPENAI_MODEL = "gpt-4o-mini"
-OPENAI_TEMPERATURE = 0.7
-OPENAI_MAX_TOKENS_RANKING = 150
+# Zero, not 0.7: the summarizer extracts stated facts — model names, prices,
+# context lengths — from an article. Sampling variance there buys nothing and
+# costs accuracy, and the prompt already tells the model to write "Not stated"
+# rather than guess.
+OPENAI_TEMPERATURE = 0.0
+# Headroom for the ranker's whole verdict. This was 150, set when the ranking
+# reply was just {"index": N}. The reply now carries a keep list with a
+# ~14-word line per item, a reject list with a reason per item, and a summary
+# sentence — about 300 tokens for DIGEST_MAX_RESULTS items, more when the model
+# writes to the full line length. Truncated JSON does not parse, and the
+# unusable verdict silently falls back to date order, so the editorial filter
+# was being thrown away rather than failing loudly.
+OPENAI_MAX_TOKENS_RANKING = 1200
 # OPENAI_MAX_TOKENS_SUMMARY and _DETAILED removed: superseded when the
 # summarizer moved to a single bundled call using _BUNDLE below.
 OPENAI_MAX_TOKENS_BUNDLE = 1800

@@ -209,8 +209,19 @@ Indices are 1-based, and every item must appear in exactly one of the two lists.
         response = _call_openai_ranking(client, prompt)
 
         content = response.choices[0].message.content
+        finish_reason = getattr(response.choices[0], "finish_reason", None)
         if content:
             verdict = _parse_verdict(content, len(items))
+            if verdict is None:
+                # The fallback below is date order, which looks like a working
+                # digest. Say so out loud: a verdict cut off by max_tokens
+                # ("length") reads exactly like a model that answered badly.
+                logger.warning(
+                    "Unusable ranking verdict (finish_reason=%s, %d chars) — "
+                    "falling back to date order",
+                    finish_reason,
+                    len(content),
+                )
             if verdict is not None:
                 kept, notes, rejected = verdict
                 for i, why in rejected:

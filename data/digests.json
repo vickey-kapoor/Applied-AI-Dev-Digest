@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-03",
+      "run_at": "2026-10-03T17:05:49.478027Z",
+      "top_paper_id": "44d78bd4-46fb-51dd-98b2-0609bbd4b6b7",
+      "papers_fetched": 12,
+      "pdf_path": "reports/03-Oct/How_NVIDIA_GPUs_Help_Accelerate_OpenAIs_GPT-6_Ast.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "37139226332"
+    },
+    {
       "date": "2026-10-02",
       "run_at": "2026-10-02T20:30:21.200442Z",
       "top_paper_id": "21211411-a76d-518d-85b5-2af7cfa6dcb7",
@@ -746,14 +755,6 @@
       "pdf_path": "reports/02-Jul/Senior_SWE-Bench_open-source_benchmark_that_asses.pdf",
       "telegram_sent": true,
       "workflow_run_id": "28610833664"
-    },
-    {
-      "date": "2026-07-01",
-      "top_paper_id": "",
-      "papers_fetched": 3,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "28537696418"
     }
   ]
 }

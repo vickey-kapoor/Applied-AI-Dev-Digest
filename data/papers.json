@@ -1,6 +1,38 @@
 {
   "papers": [
     {
+      "id": "03ca7cd2-6699-5767-90d7-2e074abcba05",
+      "title": "Kolibri is an open-weight LLM from Aleph Alpha for German and English",
+      "summary": "345 points · 138 comments",
+      "source": "Hacker News",
+      "url": "https://tej.as/blog/aleph-alpha-kolibri",
+      "published_at": "2026-10-03T10:43:51+00:00",
+      "fetched_at": "2026-10-03T17:05:48.805949Z",
+      "type": "discussion",
+      "topic_id": "open_weights",
+      "topics": [
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c6924bc7-b2f4-5610-8bea-e92c10b6af8c",
+      "title": "Kolibri Has Landed: A Sovereign Open-Weight Model",
+      "summary": "224 points · 37 comments",
+      "source": "Hacker News",
+      "url": "https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/",
+      "published_at": "2026-10-03T09:36:04+00:00",
+      "fetched_at": "2026-10-03T17:05:48.805949Z",
+      "type": "discussion",
+      "topic_id": "open_weights",
+      "topics": [
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "21211411-a76d-518d-85b5-2af7cfa6dcb7",
       "title": "python-genai v2.28.0 released",
       "summary": "Version 2.28.0 of python-genai released, adding support for models lyria-3.5, gemini-omni-1.1-flash, and gemini-omni-flash-preview in the Interactions Model enum. This release includes support for continuation_token in Interactions, enhancing the ability to manage state across multiple interactions. Specific performance metrics and benchmark numbers are not provided.",

@@ -9,7 +9,13 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src.schedule_guard import is_due, load_state, mark_ran, save_state
+from src.schedule_guard import (
+    is_due,
+    load_state,
+    mark_ran,
+    save_state,
+    seconds_until_target,
+)
 
 CHICAGO = ZoneInfo("America/Chicago")
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -151,3 +157,60 @@ class TestCommandLineContract:
 
         saved = json.loads(state_file.read_text(encoding="utf-8"))
         assert "last_daily_date" in saved
+
+
+class TestWaitingForTheTarget:
+    """A tick honoured before noon holds for it rather than exiting.
+
+    This is the half that puts the digest *at* noon instead of after it: on its
+    own, polling can only send on the first tick past the target, which is how
+    sends landed from 12:05 to 16:41 local.
+    """
+
+    def test_holds_until_the_target(self):
+        """One hour early means one hour of waiting, plus the overshoot."""
+        wait = seconds_until_target("daily", at(2026, 9, 7, 11, 0), {})
+        assert wait == 3600 + 30
+
+    def test_the_overshoot_lands_past_the_target_not_on_it(self):
+        """is_due compares whole hours, so 11:59:59 would waste the tick."""
+        now = at(2026, 9, 7, 11, 59)
+        wait = seconds_until_target("daily", now, {})
+        from datetime import timedelta
+
+        assert is_due("daily", now + timedelta(seconds=wait), {}) is True
+
+    def test_no_hold_once_the_target_has_passed(self):
+        """Past noon the tick should send, not wait for tomorrow."""
+        assert seconds_until_target("daily", at(2026, 9, 7, 12, 1), {}) == 0
+
+    def test_no_hold_exactly_at_the_target(self):
+        assert seconds_until_target("daily", at(2026, 9, 7, 12, 0), {}) == 0
+
+    def test_no_hold_once_today_has_run(self):
+        """Otherwise an early tick would hold three hours to send nothing."""
+        state = {"last_daily_date": "2026-09-07"}
+        assert seconds_until_target("daily", at(2026, 9, 7, 9, 0), state) == 0
+
+    def test_a_hold_longer_than_the_cap_is_declined(self):
+        """A 02:00 tick must not sit on a runner for ten hours."""
+        assert seconds_until_target("daily", at(2026, 9, 7, 2, 0), {}) == 0
+
+    def test_the_cap_is_the_boundary_not_a_suggestion(self):
+        now = at(2026, 9, 7, 9, 0)
+        assert seconds_until_target("daily", now, {}, max_wait=10800) > 0
+        assert seconds_until_target("daily", now, {}, max_wait=3599) == 0
+
+    def test_yesterdays_run_does_not_suppress_the_hold(self):
+        state = {"last_daily_date": "2026-09-06"}
+        assert seconds_until_target("daily", at(2026, 9, 7, 11, 0), state) > 0
+
+    def test_unknown_job_raises(self):
+        with pytest.raises(ValueError):
+            seconds_until_target("weekly", at(2026, 9, 7, 11, 0), {})
+
+    def test_the_hold_follows_local_time_across_the_cst_change(self):
+        """1 Nov is CDT and 2 Nov is CST; 11:00 local is an hour out either
+        way from noon, which a fixed UTC target could not manage."""
+        for day in (1, 2):
+            assert seconds_until_target("daily", at(2026, 11, day, 11, 0), {}) == 3630

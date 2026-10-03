@@ -7,12 +7,16 @@ name: Daily Applied AI Dev Digest
 #   workflow_dispatch  an external scheduler calls this at 12:01 local time.
 #                      This is what makes the digest land at noon: dispatches
 #                      are delivered immediately, unlike scheduled runs.
-#   schedule           an hourly poll, the safety net for a day when nothing
-#                      dispatches. On its own it only gets the digest out
-#                      "sometime after noon": GitHub's scheduled delivery is
-#                      best-effort and this workflow has arrived between 30
-#                      minutes and 5h23m after its slot, which put past
-#                      digests anywhere from 12:05 to 16:41 local.
+#   schedule           an hourly poll, for a day when nothing dispatches.
+#                      GitHub's scheduled delivery is best-effort and this
+#                      workflow has arrived between 30 minutes and 5h23m
+#                      after its slot, which put past digests anywhere from
+#                      12:05 to 16:41 local.
+#
+# A tick that lands in the hours before the target holds until it, so the
+# digest goes out on the minute without anything external. A tick that lands
+# after it sends straight away, which is the old behaviour and the floor on
+# how late the digest can be. See src/schedule_guard.seconds_until_target.
 #
 # The poll was every 15 minutes at first. GitHub honoured roughly one tick
 # in twelve at that rate, with gaps of 1.5 to 4.5 hours, so the nominal
@@ -48,14 +52,33 @@ permissions:
 jobs:
   send-news:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Generous because the hold step can wait up to DAILY_MAX_WAIT_SECONDS
+    # (3h) for the target hour. The steps that can actually run away carry
+    # their own timeout-minutes, so this ceiling is not the only protection.
+    timeout-minutes: 215
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      # Runs on the runner's system Python with no dependencies installed —
-      # the guard is stdlib-only, so a tick with nothing due costs seconds.
+      # Both of these run on the runner's system Python with no dependencies
+      # installed — the guard is stdlib-only, so a tick with nothing due costs
+      # seconds.
+
+      # Prints 0 unless this tick landed before the target hour with today's
+      # digest still unsent, in which case it prints the seconds to the target
+      # and we hold. A dispatch skips the hold: a scheduler calls this at the
+      # target already, and a person running it by hand wants it now.
+      - name: Hold until the target hour
+        if: github.event_name == 'schedule'
+        timeout-minutes: 185
+        run: |
+          seconds=$(python3 -m src.schedule_guard sleep daily)
+          if [ "$seconds" -gt 0 ]; then
+            echo "Landed early. Holding ${seconds}s for the target hour."
+            sleep "$seconds"
+          fi
+
       - name: Check what is due
         id: guard
         run: |
@@ -104,6 +127,7 @@ jobs:
       # matching anything at all.
       - name: Send the daily digest
         if: steps.guard.outputs.daily == 'true'
+        timeout-minutes: 10
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}

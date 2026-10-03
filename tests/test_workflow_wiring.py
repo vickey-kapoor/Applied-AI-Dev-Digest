@@ -111,6 +111,31 @@ class TestDispatchIsGuarded:
         )
 
 
+class TestHoldingForTheTarget:
+    """The hold is what moves the digest from "after noon" to "at noon"."""
+
+    def test_a_step_holds_for_the_target(self, steps):
+        _step_running(steps, "src.schedule_guard sleep daily")
+
+    def test_the_hold_comes_before_the_due_check(self, workflow):
+        """Holding after the check would read the decision made too early."""
+        assert workflow.index("sleep daily") < workflow.index("check daily")
+
+    def test_only_scheduled_ticks_hold(self, steps):
+        """A dispatch is already at the target, or is a person wanting it now;
+        either way it must not sit for hours."""
+        step = _step_running(steps, "src.schedule_guard sleep daily")
+        assert "github.event_name == 'schedule'" in step
+
+    def test_the_job_outlives_the_longest_hold(self, executable):
+        """A job timeout below the wait cap would kill the tick mid-hold."""
+        import re
+
+        match = re.search(r"timeout-minutes: (\d+)", executable)
+        assert match, "the job needs a timeout"
+        assert int(match.group(1)) > 180, "3h of holding needs more than 3h of job"
+
+
 class TestGuardContract:
     """The check step feeds $GITHUB_OUTPUT, which the guard's CLI relies on."""
 

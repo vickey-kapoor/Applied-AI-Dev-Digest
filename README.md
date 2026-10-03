@@ -266,24 +266,39 @@ midnight onto the next date. Polling hourly narrowed that to "sometime after
 noon", with observed sends from 12:05 to 16:41 local, but no cron interval
 fixes it, because the lateness is in the delivery and not in the schedule.
 
-**How.** `workflow_dispatch` is not best-effort: a dispatch starts within
-seconds. So an external scheduler dispatches the workflow at 12:01 local time,
-and the hourly cron stays on as the safety net for a day when nothing
-dispatches. Either way in, `src/schedule_guard.py` decides whether the digest
-is actually due:
+**How.** Two things, and `src/schedule_guard.py` decides in both:
 
-| Condition | Due |
+| Condition | Result |
 |---|---|
-| Local time has passed 12:00 | yes |
 | Already sent today | skip |
+| Local time has passed 12:00 | send |
+| Target is within 3 hours | hold for it, then send |
+| Target is further off than that | skip |
 
-Because the guard runs on a dispatch too, a scheduler that fires twice — or
-fires on a day the hourly poll already sent — cannot produce a second digest.
+*An early tick holds.* A cron tick honoured during the morning waits for noon
+and sends on the minute, so the digest lands at noon with nothing external
+involved. The hold is capped at three hours (`DAILY_MAX_WAIT_SECONDS`), so a
+tick honoured at 02:00 exits rather than occupying a runner all morning, and
+GitHub kills any job at six hours regardless. This is better odds, not a
+guarantee: on a day GitHub honours no tick before noon, the first one after it
+sends immediately, which is the old behaviour and the floor on how late the
+digest can be.
+
+*A dispatch is immediate.* `workflow_dispatch` is not best-effort — a dispatch
+starts within seconds — so an external scheduler calling the workflow at 12:01
+local pins the digest to noon every day rather than most days. A dispatch skips
+the hold, since it either arrives at the target already or is a person who
+wants the digest now.
+
+Because the guard runs on a dispatch as well, a scheduler that fires twice — or
+fires on a day a cron tick already sent — cannot produce a second digest.
 Almost every tick exits at the guard step, with no dependency install and no
 fetching, so a no-op costs seconds.
 
-**Setting up the dispatcher.** Anything that can make one authenticated POST a
-day will do; it needs a token with `actions: write` on this repo.
+**Setting up the dispatcher.** Optional — the hold above covers most days
+without it. Anything that can make one authenticated POST a day will do; it
+needs a token with `actions: write` on this repo, which a GitHub App
+installation token does not get by default.
 
 ```
 POST https://api.github.com/repos/<owner>/Applied-AI-Dev-Digest/actions/workflows/daily-news.yml/dispatches
@@ -299,8 +314,8 @@ past noon rather than exactly noon: the guard reads whole hours, so a
 dispatcher that fires a few seconds early would find nothing due and the day
 would fall through to the hourly poll.
 
-If the dispatcher goes quiet, nothing breaks — the digest reverts to arriving
-sometime after noon via the cron, which is the behaviour described above.
+If the dispatcher goes quiet, nothing breaks — the digest falls back to the
+holding cron described above.
 
 **Daylight saving.** The target is evaluated in `America/Chicago`, not as a
 fixed UTC hour. Cron only understands UTC, so a fixed hour would silently slip
@@ -321,6 +336,7 @@ the cron:
 |---|---|
 | `DIGEST_TIMEZONE` | `America/Chicago` |
 | `DAILY_TARGET_HOUR` | `12` |
+| `DAILY_MAX_WAIT_SECONDS` | `10800` |
 
 **Running by hand.** The Actions tab offers **Run workflow** on *Daily Applied
 AI Dev Digest*. By default it behaves like any tick: the guard still decides,
@@ -396,7 +412,7 @@ digest.
 Applied-AI-Dev-Digest/
 ├── .github/workflows/
 │   ├── ci.yml                    # Tests + typecheck/lint on every PR
-│   └── daily-news.yml            # Noon dispatch + hourly poll; schedule_guard decides
+│   └── daily-news.yml            # Hourly poll that holds for noon, plus dispatch
 ├── src/
 │   ├── fetchers/
 │   │   ├── blog_fetcher.py       # RSS fetch from 10 AI lab/platform blogs
@@ -416,7 +432,7 @@ Applied-AI-Dev-Digest/
 │   ├── news_ranker.py            # GPT-4o-mini ranking + feedback weights
 │   ├── news_summarizer.py        # Structured lab-release brief generation
 │   ├── pdf_generator.py          # PDF report generation
-│   ├── schedule_guard.py         # Decides whether the digest is due (stdlib only)
+│   ├── schedule_guard.py         # Decides if the digest is due, or worth holding for
 │   ├── telegram_sender.py        # Telegram Bot API
 │   └── topic_config.py           # Dynamic topic config from KV
 ├── dashboard/                    # Next.js dashboard (Vercel)

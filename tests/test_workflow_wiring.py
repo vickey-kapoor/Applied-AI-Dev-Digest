@@ -87,6 +87,30 @@ class TestRouting:
         assert not re.search(r'"\d+ \d+ \* \* \d+"', executable)
 
 
+class TestDispatchIsGuarded:
+    """An external scheduler dispatches this workflow at noon local time.
+
+    Dispatch used to mean "send, whatever the guard says", which was fine while
+    the only caller was a person clicking Run workflow. Once a scheduler calls
+    it every day, that bypass would send a second digest on any day the hourly
+    poll got there first. So a dispatch runs the guard like a tick does, and
+    only the explicit `force` input skips it.
+    """
+
+    def test_dispatch_accepts_a_force_input(self, executable):
+        assert "force:" in executable, "workflow_dispatch needs a force input"
+
+    def test_force_defaults_to_off(self, executable):
+        assert "default: false" in executable
+
+    def test_the_guard_decides_unless_force_is_set(self, steps):
+        step = _step_running(steps, "src.schedule_guard check daily")
+        assert "inputs.force" in step, "the bypass must key off force"
+        assert "github.event_name" not in step, (
+            "being a dispatch is not itself a reason to skip the guard"
+        )
+
+
 class TestGuardContract:
     """The check step feeds $GITHUB_OUTPUT, which the guard's CLI relies on."""
 

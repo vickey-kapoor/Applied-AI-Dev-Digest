@@ -1,6 +1,59 @@
 {
   "papers": [
     {
+      "id": "eee2e636-fb51-5f4e-b965-387343f427bd",
+      "title": "Run Qwen 3.8 Flash Next (125B) on consumer hardware (RTX 4090) at 100T/s",
+      "summary": "Qwen 3.8 Flash Next, a 125-billion-parameter AI model, is available for use on consumer hardware. The model can chat, write code, read images, and interact with applications, with a context length of up to 32K tokens. Performance benchmarks show it can write answers at speeds of up to 94 tokens per second on an RTX 5070 and read prompts at speeds of up to 2,650 tokens per second.",
+      "source": "Hacker News",
+      "url": "https://github.com/Niko1221/Strata",
+      "published_at": "2026-10-04T12:51:53+00:00",
+      "fetched_at": "2026-10-04T17:21:36.185448Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Qwen 3.8 Flash Next, a 125-billion-parameter AI model, is available for use on consumer hardware.",
+      "capabilities": "The model can chat, write code, read images, and interact with applications, with a context length of up to 32K tokens. Performance benchmarks show it can write answers at speeds of up to 94 tokens per second on an RTX 5070 and read prompts at speeds of up to 2,650 tokens per second.",
+      "availability": "Strata, the software to run the model, is free and open source, available for download from GitHub. It requires a compatible graphics card with at least 12 GB of VRAM and can be set up on Windows or Linux.",
+      "why_it_matters": "This allows developers to run a powerful AI model locally, reducing reliance on cloud services and potentially lowering costs associated with API usage. It also enables faster iterations and testing of AI applications directly on consumer-grade hardware.",
+      "caveats": "Performance may vary significantly based on hardware specifications, and the model's capabilities are dependent on the available RAM and VRAM. Some features, like reading images on AMD cards, are still experimental.",
+      "release_type": "product"
+    },
+    {
+      "id": "f645b4cf-76a9-50b0-8da1-d5080d953132",
+      "title": "The Agent Said It Was Done. The Database Disagreed.",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/microsoft/thinkingbox",
+      "published_at": "2026-10-03T22:56:48+00:00",
+      "fetched_at": "2026-10-04T17:21:36.185448Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a8cf2caf-6bdc-547d-a5a2-1cb330ed07b6",
+      "title": "Getting the most out of Opus 5.5 in Claude and Claude Code",
+      "summary": "227 points · 154 comments",
+      "source": "Hacker News",
+      "url": "https://claude.dev/blog/getting-the-most-out-of-opus-5-5/",
+      "published_at": "2026-10-03T18:29:30+00:00",
+      "fetched_at": "2026-10-04T17:21:36.185448Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "03ca7cd2-6699-5767-90d7-2e074abcba05",
       "title": "Kolibri is an open-weight LLM from Aleph Alpha for German and English",
       "summary": "345 points · 138 comments",

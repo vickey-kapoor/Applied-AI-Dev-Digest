@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-04",
+      "run_at": "2026-10-04T17:21:37.069613Z",
+      "top_paper_id": "eee2e636-fb51-5f4e-b965-387343f427bd",
+      "papers_fetched": 10,
+      "pdf_path": "reports/04-Oct/Run_Qwen_38_Flash_Next_125B_on_consumer_hardwar.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "37220181758"
+    },
+    {
       "date": "2026-10-03",
       "run_at": "2026-10-03T17:05:49.478027Z",
       "top_paper_id": "44d78bd4-46fb-51dd-98b2-0609bbd4b6b7",
@@ -747,14 +756,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "28675557094"
-    },
-    {
-      "date": "2026-07-02",
-      "top_paper_id": "a3d759dc-da45-5041-af88-082efc33476a",
-      "papers_fetched": 3,
-      "pdf_path": "reports/02-Jul/Senior_SWE-Bench_open-source_benchmark_that_asses.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "28610833664"
     }
   ]
 }

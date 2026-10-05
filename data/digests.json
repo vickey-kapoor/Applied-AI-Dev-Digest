@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-05",
+      "run_at": "2026-10-05T22:23:27.699577Z",
+      "top_paper_id": "cd70d423-d6e2-5691-b048-224fa84d6941",
+      "papers_fetched": 10,
+      "pdf_path": "reports/05-Oct/llamacpp_v060_released.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "37382102468"
+    },
+    {
       "date": "2026-10-04",
       "run_at": "2026-10-04T17:21:37.069613Z",
       "top_paper_id": "eee2e636-fb51-5f4e-b965-387343f427bd",
@@ -748,14 +757,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "28713640577"
-    },
-    {
-      "date": "2026-07-03",
-      "top_paper_id": "",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "28675557094"
     }
   ]
 }

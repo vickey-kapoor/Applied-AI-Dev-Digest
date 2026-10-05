@@ -1,6 +1,151 @@
 {
   "papers": [
     {
+      "id": "71048077-c765-5130-a7c2-ec10e3a320fa",
+      "title": "Open and Emergent Problems in Agentic Privacy and Security: A Contextual Angle",
+      "summary": "Education Innovation",
+      "source": "Google Research",
+      "url": "https://research.google/blog/open-and-emergent-problems-in-agentic-privacy-and-security-a-contextual-angle/",
+      "published_at": "2026-10-05T21:08:31+00:00",
+      "fetched_at": "2026-10-05T22:23:26.191265Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "469cb842-c77f-5af0-8443-ecf0b50eb5f0",
+      "title": "Beam: Reflection's 501B open-weight model",
+      "summary": "214 points · 58 comments",
+      "source": "Hacker News",
+      "url": "https://reflection.ai/blog/introducing-beam",
+      "published_at": "2026-10-05T19:16:35+00:00",
+      "fetched_at": "2026-10-05T22:23:26.191265Z",
+      "type": "discussion",
+      "topic_id": "open_weights",
+      "topics": [
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "cd70d423-d6e2-5691-b048-224fa84d6941",
+      "title": "llama.cpp v0.6.0 released",
+      "summary": "llama.cpp v0.6.0 was released, introducing new features and models including the GLM-5.3-Flash (GLM5-Next) and Clef decision model. The new GLM-5.3-Flash is a 320B hybrid text+vision model, while the Clef decision model supports both text and vision inputs. The update includes a new llama_batch_ext API for mixed token/embedding inputs and MTP/deepstack state embeddings, as well as MTP speculative decoding for Qwen4Exp, which reportedly achieves a ~1.5x decode speedup on DGX Spark.",
+      "source": "GitHub",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/v0.6.0",
+      "published_at": "2026-10-05T16:56:22Z",
+      "fetched_at": "2026-10-05T22:23:26.191265Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "llama.cpp v0.6.0 was released, introducing new features and models including the GLM-5.3-Flash (GLM5-Next) and Clef decision model.",
+      "capabilities": "The new GLM-5.3-Flash is a 320B hybrid text+vision model, while the Clef decision model supports both text and vision inputs. The update includes a new llama_batch_ext API for mixed token/embedding inputs and MTP/deepstack state embeddings, as well as MTP speculative decoding for Qwen4Exp, which reportedly achieves a ~1.5x decode speedup on DGX Spark.",
+      "availability": "The updated llama.cpp v0.6.0 and its features are available on GitHub. Specific pricing and access details are not stated.",
+      "why_it_matters": "The introduction of the llama_batch_ext API allows for more flexible input handling, which can improve the efficiency of model serving and integration into applications. The performance improvements in decoding speed may also reduce latency in production environments.",
+      "caveats": "Claims regarding speed improvements and model performance have not been independently verified, and specific benchmark results are not provided. Additionally, access to the new models and features may depend on the user's setup and environment.",
+      "release_type": "product"
+    },
+    {
+      "id": "e5ca18fa-5698-5c3f-b9c0-b335ea37f7c9",
+      "title": "Our approach to EU text provenance rules",
+      "summary": "How OpenAI is approaching text watermarking under EU rules. Learn where watermarks apply, how detection works, and why access starts with researchers.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/eu-text-provenance",
+      "published_at": "2026-10-05T15:00:00+00:00",
+      "fetched_at": "2026-10-05T22:23:26.191265Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "96c06915-8ec9-509b-a206-e63f290fb403",
+      "title": "From Scan to Treatment Plan, AI Helps Close Breast Cancer’s Deadliest Gaps",
+      "summary": "Breast cancer is the most commonly diagnosed cancer among American women — yet the gaps in care are wide. A majority of women over age 40 skip the recommended annual screening. Radiologists are reading more mammograms with fewer colleagues. And when a diagnosis arrives, the tests that inform treatment can take weeks to return results. […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/ai-breast-cancer-startups/",
+      "published_at": "2026-10-05T13:00:57+00:00",
+      "fetched_at": "2026-10-05T22:23:26.191265Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "256ab5a1-656b-5fa8-97e3-561a6186ed1e",
+      "title": "Building advertising for the way people use AI",
+      "summary": "OpenAI introduces a new visual ad format in ChatGPT and expands measurement tools, attribution partnerships, and brand suitability for advertisers.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/new-chatgpt-ads-format-and-measurement",
+      "published_at": "2026-10-05T10:00:00+00:00",
+      "fetched_at": "2026-10-05T22:23:26.191265Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "cbc8c843-c308-51f2-a483-fabd50a7ae3c",
+      "title": "vllm v0.31.0 released",
+      "summary": "# v0.31.0\r\n\r\n## Highlights\r\n\r\nThis release features 717 commits from 307 contributors (96 new)!\r\n\r\n* **DeepSeek-V4.1-Flash performance**: FlashMLA mega attention with the V4.1 NVFP4 compressed KV cache is now the SM100 default (#56935); DeepGEMM sparse MQA logits for the indexer (#56254) and Mega-Gate fusing the gate GEMM with expert selection (#56266); decoder boundaries fuse the TP all-reduce, mHC input preparation (#57643) and the MoE finalize (#58586); a fused small-batch WO-A with inverse R",
+      "source": "GitHub",
+      "url": "https://github.com/vllm-project/vllm/releases/tag/v0.31.0",
+      "published_at": "2026-10-05T06:44:55Z",
+      "fetched_at": "2026-10-05T22:23:26.191265Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2820584b-eaf1-5aa2-8265-76dcc1f8d8a9",
+      "title": "Together Link: open models in the harness you already use. Start with one command today.",
+      "summary": "Together Link brings frontier open models like GLM 5.3 and Kimi K3 into the coding agent your team already uses, cutting model spend by over 50%.",
+      "source": "Together AI",
+      "url": "https://www.together.ai/blog/together-link-frontier-quality-open-models-in-the-harness-you-already-use",
+      "published_at": "2026-10-05T00:00:00+00:00",
+      "fetched_at": "2026-10-05T22:23:26.191265Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a8b20c87-6b12-525f-84bb-7c2239ea5d6e",
+      "title": "Added an in-product flow for HIPAA compliance support in API Organization settings > General.",
+      "summary": "Added an in-product flow for HIPAA compliance support in API Organization settings > General. Admins of eligible organizations can now accept the standard Business Associate Agreement (BAA) and enable HIPAA compliance support for their organization. See the Help Center for eligibility, covered services, and configuration requirements.",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-05T00:00:00+00:00",
+      "fetched_at": "2026-10-05T22:23:26.191265Z",
+      "type": "changelog",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-05:added-an-in-product-flow-for-hipaa-compliance-support-in-api"
+    },
+    {
       "id": "eee2e636-fb51-5f4e-b965-387343f427bd",
       "title": "Run Qwen 3.8 Flash Next (125B) on consumer hardware (RTX 4090) at 100T/s",
       "summary": "Qwen 3.8 Flash Next, a 125-billion-parameter AI model, is available for use on consumer hardware. The model can chat, write code, read images, and interact with applications, with a context length of up to 32K tokens. Performance benchmarks show it can write answers at speeds of up to 94 tokens per second on an RTX 5070 and read prompts at speeds of up to 2,650 tokens per second.",

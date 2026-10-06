@@ -1,6 +1,226 @@
 {
   "papers": [
     {
+      "id": "4be9508d-2b39-5a1d-845b-831c15666a91",
+      "title": "EmbeddingGemma 2: an open, lightweight multimodal embedding model",
+      "summary": "Google DeepMind shipped EmbeddingGemma 2, an open, lightweight multimodal embedding model. EmbeddingGemma 2 can process text, images, audio, and video in a unified embedding space with 740 million parameters. It features an 8K token context window and achieves a 9.92-point improvement in code performance on the MTEB Code benchmark, scoring 78.68.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/",
+      "published_at": "2026-10-06T19:57:04+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Product & API",
+        "Benchmarks & Evals",
+        "Open Weights",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Google DeepMind shipped EmbeddingGemma 2, an open, lightweight multimodal embedding model.",
+      "capabilities": "EmbeddingGemma 2 can process text, images, audio, and video in a unified embedding space with 740 million parameters. It features an 8K token context window and achieves a 9.92-point improvement in code performance on the MTEB Code benchmark, scoring 78.68.",
+      "availability": "The model weights are available for download on Hugging Face and Kaggle, with Gemini Enterprise Agent Platform Model Garden availability coming soon. Not stated if there are any pricing tiers.",
+      "why_it_matters": "This model enables developers to build robust on-device multimodal applications that ensure data privacy and reduce latency, allowing for efficient local search and retrieval capabilities.",
+      "caveats": "Claims regarding performance improvements and benchmarks are unverified, and specific details on the model's limitations or potential issues are not provided.",
+      "release_type": "model"
+    },
+    {
+      "id": "69445c70-3c67-53ba-8435-6f81eb3c0811",
+      "title": "transformers v5.19.0 released",
+      "summary": "# Release v5.19.0\r\n\r\n\r\n## New Model additions\r\n\r\n### EmbeddingGemma2\r\n\r\n<img width=\"2716\" height=\"2308\" alt=\"image\" src=\"https://github.com/user-attachments/assets/84734e74-163d-4d12-b166-ffcf6749d563\" />\r\n\r\nEmbeddingGemma 2 is a multimodal embedding model from Google built on the Gemma 4 architecture. It encodes text, images, audio, and video, individually or combined in one input, into a shared 768-dimensional vector space for cross-modal retrieval, semantic similarity, clustering, and classif",
+      "source": "GitHub",
+      "url": "https://github.com/huggingface/transformers/releases/tag/v5.19.0",
+      "published_at": "2026-10-06T16:39:23Z",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Open Weights",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b6724eb8-7d65-58c4-a2e9-6e4da74b1194",
+      "title": "AI is now capable of developing its own inference hardware",
+      "summary": "170 points · 226 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/FeSens/openTPU",
+      "published_at": "2026-10-06T16:23:25+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "discussion",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3d987c5c-1b88-5df7-a3af-1f39ac35781a",
+      "title": "Atlassian and OpenAI expand partnership to turn enterprise knowledge into action",
+      "summary": "Atlassian and OpenAI are expanding their partnership to connect frontier models with enterprise knowledge and help teams plan, build, and deliver work.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/atlassian-partnership",
+      "published_at": "2026-10-06T16:00:00+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "e6c31b18-7bff-5946-8be1-3278dc20b8df",
+      "title": "Unlocking Earth AI’s planetary geospatial foundation models for global public health",
+      "summary": "Earth AI",
+      "source": "Google Research",
+      "url": "https://research.google/blog/earth-ais-planetary-geospatial-foundation-models-for-global-public-health/",
+      "published_at": "2026-10-06T15:05:11+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "fc9a3dbf-c05d-599a-96f4-414fedbd601d",
+      "title": "Mistral Large 4",
+      "summary": "1407 points · 883 comments",
+      "source": "Hacker News",
+      "url": "https://mistral.ai/news/mistral-large-4/\\",
+      "published_at": "2026-10-06T13:15:49+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "30f24974-c825-5845-8ba1-d4abdcc63911",
+      "title": "Why Telecom Operators Are Building Their AI Strategy on Open Models",
+      "summary": "Telecom operators are increasingly building their AI strategies on open models — and the reasons go beyond mere cost. Open models give telcos the ability to trust, control and customize AI across their most critical workloads — from autonomous networks to customer care. NVIDIA’s latest State of AI in Telecommunications report reflects this shift, with […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/telecom-operators-open-models/",
+      "published_at": "2026-10-06T13:00:19+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "announcement",
+      "topic_id": "open_weights",
+      "topics": [
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "48b5e4cb-bade-5052-9492-81d1dd831348",
+      "title": "Introducing Mistral Large 4",
+      "summary": "",
+      "source": "Mistral AI",
+      "url": "https://mistral.ai/news/mistral-large-4/",
+      "published_at": "2026-10-06T12:00:27+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a4cf7bff-00ec-5abe-a677-081e5b4a8355",
+      "title": "Advancing computer use with Ironclad",
+      "summary": "Learn how OpenAI and Ironclad are training and evaluating AI agents on complex contracting workflows to advance computer use for professional work.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/advancing-computer-use-with-ironclad",
+      "published_at": "2026-10-06T10:00:00+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8057fd89-9655-57ac-bf85-83dc04a8969a",
+      "title": "Falcon-Emirati: When an LLM Learns the Dialect, the Culture, and the Nuance",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/tiiuae/falcon-emirati",
+      "published_at": "2026-10-06T06:44:39+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "1500971d-c241-5879-ac98-68736fd68ef8",
+      "title": "Expanding our enterprise inference capacity with IBM Cloud and NVIDIA",
+      "summary": "Enterprises can now run open models at production scale on a dedicated B300 inference cluster, built by Together AI, IBM Cloud, and NVIDIA",
+      "source": "Together AI",
+      "url": "https://www.together.ai/blog/expanding-our-enterprise-inference-capacity-with-ibm-cloud-and-nvidia",
+      "published_at": "2026-10-06T00:00:00+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "announcement",
+      "topic_id": "open_weights",
+      "topics": [
+        "Open Weights",
+        "Compute & Infrastructure",
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "55e47687-789d-5d27-b8cd-f2ce20fa7652",
+      "title": "Released the Decisions API in beta with gpt-6-luna.",
+      "summary": "Released the Decisions API in beta with gpt-6-luna. Turn text and images into typed answers 10x faster than the Responses API.",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-06T00:00:00+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "changelog",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Product & API"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-06:released-the-decisions-api-in-beta-with-gpt-6-luna"
+    },
+    {
+      "id": "74f0b9a9-a1e4-53a5-80cf-b095e2f88522",
+      "title": "Simplified API usage tiers from five to three: Build, Launch, and Grow.",
+      "summary": "Simplified API usage tiers from five to three: Build, Launch, and Grow. Organizations automatically upgrade as total credit purchases reach tier minimums. See usage tiers for monthly usage limits and how to view rate limits for each model.",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-06T00:00:00+00:00",
+      "fetched_at": "2026-10-06T21:29:19.923089Z",
+      "type": "changelog",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-06:simplified-api-usage-tiers-from-five-to-three-build-launch-a"
+    },
+    {
       "id": "71048077-c765-5130-a7c2-ec10e3a320fa",
       "title": "Open and Emergent Problems in Agentic Privacy and Security: A Contextual Angle",
       "summary": "Education Innovation",

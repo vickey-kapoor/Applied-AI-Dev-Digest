@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-06",
+      "run_at": "2026-10-06T21:29:21.008833Z",
+      "top_paper_id": "4be9508d-2b39-5a1d-845b-831c15666a91",
+      "papers_fetched": 17,
+      "pdf_path": "reports/06-Oct/EmbeddingGemma_2_an_open_lightweight_multimodal.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "37534169837"
+    },
+    {
       "date": "2026-10-05",
       "run_at": "2026-10-05T22:23:27.699577Z",
       "top_paper_id": "cd70d423-d6e2-5691-b048-224fa84d6941",
@@ -749,14 +758,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "28749770672"
-    },
-    {
-      "date": "2026-07-04",
-      "top_paper_id": "",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "28713640577"
     }
   ]
 }

@@ -209,6 +209,19 @@ def format_digest_message(item: dict, also: list[dict] | None = None) -> str:
     return "\n".join(lines)
 
 
+def format_quiet_day_message(reason: str) -> str:
+    """One line saying no digest is coming today, and why.
+
+    A day with nothing to send used to pass in silence, which is
+    indistinguishable from the pipeline being broken: three days in the 45 to
+    07-Oct-2026 sent nothing and each looked green in the Actions tab. The
+    notice costs one message and turns "did it break?" into a read of one line.
+
+    It carries no link and no brief, so it cannot be mistaken for the digest.
+    """
+    return f"*AI Dev Digest*\n\nNo digest today — {_escape_markdown(reason)}."
+
+
 @retry_with_backoff(exceptions=(requests.RequestException,))
 def send_telegram_message(bot_token: str, chat_id: str, message: str) -> bool:
     """

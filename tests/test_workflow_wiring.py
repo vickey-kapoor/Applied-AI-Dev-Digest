@@ -87,6 +87,55 @@ class TestRouting:
         assert not re.search(r'"\d+ \d+ \* \* \d+"', executable)
 
 
+class TestDispatchIsGuarded:
+    """An external scheduler dispatches this workflow at noon local time.
+
+    Dispatch used to mean "send, whatever the guard says", which was fine while
+    the only caller was a person clicking Run workflow. Once a scheduler calls
+    it every day, that bypass would send a second digest on any day the hourly
+    poll got there first. So a dispatch runs the guard like a tick does, and
+    only the explicit `force` input skips it.
+    """
+
+    def test_dispatch_accepts_a_force_input(self, executable):
+        assert "force:" in executable, "workflow_dispatch needs a force input"
+
+    def test_force_defaults_to_off(self, executable):
+        assert "default: false" in executable
+
+    def test_the_guard_decides_unless_force_is_set(self, steps):
+        step = _step_running(steps, "src.schedule_guard check daily")
+        assert "inputs.force" in step, "the bypass must key off force"
+        assert "github.event_name" not in step, (
+            "being a dispatch is not itself a reason to skip the guard"
+        )
+
+
+class TestHoldingForTheTarget:
+    """The hold is what moves the digest from "after noon" to "at noon"."""
+
+    def test_a_step_holds_for_the_target(self, steps):
+        _step_running(steps, "src.schedule_guard sleep daily")
+
+    def test_the_hold_comes_before_the_due_check(self, workflow):
+        """Holding after the check would read the decision made too early."""
+        assert workflow.index("sleep daily") < workflow.index("check daily")
+
+    def test_only_scheduled_ticks_hold(self, steps):
+        """A dispatch is already at the target, or is a person wanting it now;
+        either way it must not sit for hours."""
+        step = _step_running(steps, "src.schedule_guard sleep daily")
+        assert "github.event_name == 'schedule'" in step
+
+    def test_the_job_outlives_the_longest_hold(self, executable):
+        """A job timeout below the wait cap would kill the tick mid-hold."""
+        import re
+
+        match = re.search(r"timeout-minutes: (\d+)", executable)
+        assert match, "the job needs a timeout"
+        assert int(match.group(1)) > 180, "3h of holding needs more than 3h of job"
+
+
 class TestGuardContract:
     """The check step feeds $GITHUB_OUTPUT, which the guard's CLI relies on."""
 

@@ -2,16 +2,29 @@ name: Daily Applied AI Dev Digest
 
 # Sends the daily AI research digest to Telegram. One digest a day, nothing else.
 
-# Polls hourly; src/schedule_guard.py decides whether the digest is
-# actually due. A single daily cron cannot hold a delivery time here: GitHub's
-# scheduled delivery is best-effort and this workflow has arrived between 30
-# minutes and 5h23m after its slot, which put the digest anywhere from late
-# morning to evening. Polling means a late tick is simply followed by another,
-# so the digest lands within about an hour of the target.
+# Two ways in, and src/schedule_guard.py decides in both:
+#
+#   workflow_dispatch  an external scheduler calls this at 12:01 local time.
+#                      This is what makes the digest land at noon: dispatches
+#                      are delivered immediately, unlike scheduled runs.
+#   schedule           an hourly poll, for a day when nothing dispatches.
+#                      GitHub's scheduled delivery is best-effort and this
+#                      workflow has arrived between 30 minutes and 5h23m
+#                      after its slot, which put past digests anywhere from
+#                      12:05 to 16:41 local.
+#
+# A tick that lands in the hours before the target holds until it, so the
+# digest goes out on the minute without anything external. A tick that lands
+# after it sends straight away, which is the old behaviour and the floor on
+# how late the digest can be. See src/schedule_guard.seconds_until_target.
 #
 # The poll was every 15 minutes at first. GitHub honoured roughly one tick
 # in twelve at that rate, with gaps of 1.5 to 4.5 hours, so the nominal
 # precision was fiction. Asking for less appears to get more.
+#
+# A dispatch runs the guard like any tick, so an external scheduler that fires
+# twice, or fires after the hourly poll already sent, cannot double-send. The
+# `force` input is the one bypass, for sending by hand off-schedule.
 #
 # The target is local noon evaluated in America/Chicago, not a fixed UTC hour,
 # so it stays at noon when CDT gives way to CST in November.
@@ -21,6 +34,11 @@ on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Send now, even if the guard says the digest is not due'
+        type: boolean
+        default: false
 
 # One digest run at a time. Without this a slow run could still be sending
 # while the next tick starts, and both would see the same "not yet run" state.
@@ -34,20 +52,40 @@ permissions:
 jobs:
   send-news:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Generous because the hold step can wait up to DAILY_MAX_WAIT_SECONDS
+    # (3h) for the target hour. The steps that can actually run away carry
+    # their own timeout-minutes, so this ceiling is not the only protection.
+    timeout-minutes: 215
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
-      # Runs on the runner's system Python with no dependencies installed —
-      # the guard is stdlib-only, so a tick with nothing due costs seconds.
+      # Both of these run on the runner's system Python with no dependencies
+      # installed — the guard is stdlib-only, so a tick with nothing due costs
+      # seconds.
+
+      # Prints 0 unless this tick landed before the target hour with today's
+      # digest still unsent, in which case it prints the seconds to the target
+      # and we hold. A dispatch skips the hold: a scheduler calls this at the
+      # target already, and a person running it by hand wants it now.
+      - name: Hold until the target hour
+        if: github.event_name == 'schedule'
+        timeout-minutes: 185
+        run: |
+          seconds=$(python3 -m src.schedule_guard sleep daily)
+          if [ "$seconds" -gt 0 ]; then
+            echo "Landed early. Holding ${seconds}s for the target hour."
+            sleep "$seconds"
+          fi
+
       - name: Check what is due
         id: guard
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            # A manual run is an explicit instruction; skip the guard.
-            echo "Manual dispatch: sending the daily digest"
+          if [ "${{ inputs.force }}" = "true" ]; then
+            # Someone ticked "force" on the Run workflow form: an explicit
+            # instruction to send regardless of the time or today's state.
+            echo "Forced dispatch: sending the daily digest"
             echo "daily=true" >> "$GITHUB_OUTPUT"
           else
             echo "daily=$(python3 -m src.schedule_guard check daily)" >> "$GITHUB_OUTPUT"
@@ -89,6 +127,7 @@ jobs:
       # matching anything at all.
       - name: Send the daily digest
         if: steps.guard.outputs.daily == 'true'
+        timeout-minutes: 10
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}

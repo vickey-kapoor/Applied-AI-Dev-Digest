@@ -19,7 +19,7 @@ The question it answers is not "what is most significant to the field" but "what
 - Sends to Telegram via Bot API
 - Produces a PDF report
 - Exports structured data to JSON (papers + digests)
-- Runs via GitHub Actions at **12:00 noon America/Chicago**, held steady across daylight saving (see **Scheduling**)
+- Runs via GitHub Actions at **12:00 noon America/Chicago**, dispatched on time and held steady across daylight saving (see **Scheduling**)
 - **Pause/resume** digest from the dashboard
 - **Send test** button re-sends the last digest to Telegram
 - **Digest preview** page shows the last sent digest as a Telegram message mockup
@@ -256,27 +256,66 @@ Add `KV_REST_API_URL`, `KV_REST_API_TOKEN`, `TELEGRAM_BOT_TOKEN`, and `TELEGRAM_
 ### 3. Scheduling
 
 The digest is delivered once a day at **12:00 noon America/Chicago**. That is
-the only scheduled send: there is no weekly roundup. No secrets, tokens or
-third-party services are involved in the scheduling.
+the only scheduled send: there is no weekly roundup.
 
-**How.** A single daily cron cannot hold a delivery time on GitHub Actions.
-Scheduled delivery is best-effort, and measured on this repo runs arrived
-between 30 minutes and 5h23m after their slot — enough to put a "daily" digest
-anywhere from late morning to evening, and occasionally past midnight onto the
-next date.
+**Why this is not just a cron.** A cron cannot hold a delivery time on GitHub
+Actions. Scheduled delivery is best-effort, and measured on this repo runs
+arrived between 30 minutes and 5h23m after their slot — enough to put a
+"daily" digest anywhere from late morning to evening, and occasionally past
+midnight onto the next date. Polling hourly narrowed that to "sometime after
+noon", with observed sends from 12:05 to 16:41 local, but no cron interval
+fixes it, because the lateness is in the delivery and not in the schedule.
 
-So the workflow polls hourly and `src/schedule_guard.py` decides whether the
-digest is actually due:
+**How.** Two things, and `src/schedule_guard.py` decides in both:
 
-| Condition | Due |
+| Condition | Result |
 |---|---|
-| Local time has passed 12:00 | yes |
 | Already sent today | skip |
+| Local time has passed 12:00 | send |
+| Target is within 3 hours | hold for it, then send |
+| Target is further off than that | skip |
 
-A late tick is simply followed by another, so the digest lands within roughly
-an hour of the target rather than anywhere in the day. Almost every tick exits
-at the guard step — no dependency install, no fetching — so a no-op costs
-seconds.
+*An early tick holds.* A cron tick honoured during the morning waits for noon
+and sends on the minute, so the digest lands at noon with nothing external
+involved. The hold is capped at three hours (`DAILY_MAX_WAIT_SECONDS`), so a
+tick honoured at 02:00 exits rather than occupying a runner all morning, and
+GitHub kills any job at six hours regardless. This is better odds, not a
+guarantee: on a day GitHub honours no tick before noon, the first one after it
+sends immediately, which is the old behaviour and the floor on how late the
+digest can be.
+
+*A dispatch is immediate.* `workflow_dispatch` is not best-effort — a dispatch
+starts within seconds — so an external scheduler calling the workflow at 12:01
+local pins the digest to noon every day rather than most days. A dispatch skips
+the hold, since it either arrives at the target already or is a person who
+wants the digest now.
+
+Because the guard runs on a dispatch as well, a scheduler that fires twice — or
+fires on a day a cron tick already sent — cannot produce a second digest.
+Almost every tick exits at the guard step, with no dependency install and no
+fetching, so a no-op costs seconds.
+
+**Setting up the dispatcher.** Optional — the hold above covers most days
+without it. Anything that can make one authenticated POST a day will do; it
+needs a token with `actions: write` on this repo, which a GitHub App
+installation token does not get by default.
+
+```
+POST https://api.github.com/repos/<owner>/Applied-AI-Dev-Digest/actions/workflows/daily-news.yml/dispatches
+Authorization: Bearer <token>
+Accept: application/vnd.github+json
+
+{"ref": "master", "inputs": {}}
+```
+
+Schedule that for 12:01 America/Chicago, in local time rather than a fixed UTC
+hour, so it follows the November CST change along with the guard. One minute
+past noon rather than exactly noon: the guard reads whole hours, so a
+dispatcher that fires a few seconds early would find nothing due and the day
+would fall through to the hourly poll.
+
+If the dispatcher goes quiet, nothing breaks — the digest falls back to the
+holding cron described above.
 
 **Daylight saving.** The target is evaluated in `America/Chicago`, not as a
 fixed UTC hour. Cron only understands UTC, so a fixed hour would silently slip
@@ -297,10 +336,13 @@ the cron:
 |---|---|
 | `DIGEST_TIMEZONE` | `America/Chicago` |
 | `DAILY_TARGET_HOUR` | `12` |
+| `DAILY_MAX_WAIT_SECONDS` | `10800` |
 
 **Running by hand.** The Actions tab offers **Run workflow** on *Daily Applied
-AI Dev Digest*. A manual dispatch bypasses the guard, so it sends immediately
-regardless of the time or whether today's digest already went out.
+AI Dev Digest*. By default it behaves like any tick: the guard still decides,
+so running it at 09:00, or a second time after today's digest went out, sends
+nothing. Tick **force** to send immediately regardless of the time or of
+today's state.
 
 **Why hourly, not every 15 minutes.** The poll started at `*/15`. GitHub
 honoured roughly one tick in twelve at that rate, with observed gaps of 1.5 to
@@ -370,7 +412,7 @@ digest.
 Applied-AI-Dev-Digest/
 ├── .github/workflows/
 │   ├── ci.yml                    # Tests + typecheck/lint on every PR
-│   └── daily-news.yml            # Hourly poll; schedule_guard decides if it sends
+│   └── daily-news.yml            # Hourly poll that holds for noon, plus dispatch
 ├── src/
 │   ├── fetchers/
 │   │   ├── blog_fetcher.py       # RSS fetch from 10 AI lab/platform blogs
@@ -390,7 +432,7 @@ Applied-AI-Dev-Digest/
 │   ├── news_ranker.py            # GPT-4o-mini ranking + feedback weights
 │   ├── news_summarizer.py        # Structured lab-release brief generation
 │   ├── pdf_generator.py          # PDF report generation
-│   ├── schedule_guard.py         # Decides whether the digest is due (stdlib only)
+│   ├── schedule_guard.py         # Decides if the digest is due, or worth holding for
 │   ├── telegram_sender.py        # Telegram Bot API
 │   └── topic_config.py           # Dynamic topic config from KV
 ├── dashboard/                    # Next.js dashboard (Vercel)

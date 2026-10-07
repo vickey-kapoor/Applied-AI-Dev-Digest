@@ -1,6 +1,82 @@
 {
   "papers": [
     {
+      "id": "59a03e42-f0f7-5e85-a1ad-1259e37a4d9c",
+      "title": "Multimodal open d1 decision models for the edge",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/LiquidAI/open-d1",
+      "published_at": "2026-10-07T16:54:33+00:00",
+      "fetched_at": "2026-10-07T17:00:55.894310Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "56fc69ad-7d95-5e3c-812b-cfc4f8a89905",
+      "title": "One Model Family, Two Gold-Level Results: Fine-Tuning Nemotron for IOI and IMO",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/nvidia/nemotron-ioi-and-imo-2026",
+      "published_at": "2026-10-07T12:45:31+00:00",
+      "fetched_at": "2026-10-07T17:00:55.894310Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "99aa621e-d713-588b-90d4-3c5990168fff",
+      "title": "Helping teens learn, plan, and shape the future of AI",
+      "summary": "College Planner is coming to ChatGPT for Teens to help students manage college applications, alongside new flashcards, quizzes, and a teen AI council.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/teens-learn-and-plan",
+      "published_at": "2026-10-07T12:00:00+00:00",
+      "fetched_at": "2026-10-07T17:00:55.894310Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "734328af-8aad-5bab-96d1-454fa5ace573",
+      "title": "Introducing Playground: Create and play custom games",
+      "summary": "Overview of Playground",
+      "source": "Google AI",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/playground-experimental-gaming-platform/",
+      "published_at": "2026-10-07T12:00:00+00:00",
+      "fetched_at": "2026-10-07T17:00:55.894310Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "e4d10b04-6fae-5dbe-a587-9cac6a2fb81d",
+      "title": "Claude Code’s suggested message feature: I think the real customer is the model",
+      "summary": "255 points · 149 comments",
+      "source": "Hacker News",
+      "url": "https://www.zohaib.cc/blog/smartest-claude-code-feature",
+      "published_at": "2026-10-06T18:00:34+00:00",
+      "fetched_at": "2026-10-07T17:00:55.894310Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "4be9508d-2b39-5a1d-845b-831c15666a91",
       "title": "EmbeddingGemma 2: an open, lightweight multimodal embedding model",
       "summary": "Google DeepMind shipped EmbeddingGemma 2, an open, lightweight multimodal embedding model. EmbeddingGemma 2 can process text, images, audio, and video in a unified embedding space with 740 million parameters. It features an 8K token context window and achieves a 9.92-point improvement in code performance on the MTEB Code benchmark, scoring 78.68.",

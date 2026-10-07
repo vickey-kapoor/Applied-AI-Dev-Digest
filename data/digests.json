@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-07",
+      "run_at": "2026-10-07T17:00:56.650611Z",
+      "top_paper_id": "55e47687-789d-5d27-b8cd-f2ce20fa7652",
+      "papers_fetched": 16,
+      "pdf_path": "reports/07-Oct/Released_the_Decisions_API_in_beta_with_gpt-6-luna.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "37650061033"
+    },
+    {
       "date": "2026-10-06",
       "run_at": "2026-10-06T21:29:21.008833Z",
       "top_paper_id": "4be9508d-2b39-5a1d-845b-831c15666a91",
@@ -750,14 +759,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "28813244817"
-    },
-    {
-      "date": "2026-07-05",
-      "top_paper_id": null,
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "28749770672"
     }
   ]
 }

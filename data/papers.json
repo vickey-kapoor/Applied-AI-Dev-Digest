@@ -1,6 +1,134 @@
 {
   "papers": [
     {
+      "id": "acaf40f2-f486-5ca8-9536-882029b66dba",
+      "title": "Rally Up: ‘Gears of War: E-Day’ Launches on GeForce NOW",
+      "summary": "Gears of War: E-Day launched on GeForce NOW on October 6, 2023. The game features GeForce RTX 5080-class performance in the cloud, utilizing NVIDIA DLSS and NVIDIA Reflex technologies. It supports various gameplay modes including campaign, cooperative, and competitive.",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-gears-of-war-e-day/",
+      "published_at": "2026-10-08T13:00:46+00:00",
+      "fetched_at": "2026-10-08T17:01:01.671148Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Gears of War: E-Day launched on GeForce NOW on October 6, 2023.",
+      "capabilities": "The game features GeForce RTX 5080-class performance in the cloud, utilizing NVIDIA DLSS and NVIDIA Reflex technologies. It supports various gameplay modes including campaign, cooperative, and competitive.",
+      "availability": "Gears of War: E-Day is available on GeForce NOW for members, with a day pass option for new users. Membership details and pricing are not specified.",
+      "why_it_matters": "This launch allows developers to integrate high-performance gaming experiences into their applications without requiring users to have powerful local hardware, potentially expanding the user base for cloud gaming solutions.",
+      "caveats": "Availability of games on GeForce NOW may vary, as they are onboarded after release. Specific pricing for memberships and day passes is not provided.",
+      "release_type": "product"
+    },
+    {
+      "id": "f2197da4-dde3-5e41-a64d-7d32a354104f",
+      "title": "Disrupting AI-enabled “false front” operations",
+      "summary": "OpenAI disrupted two AI-enabled influence operations that used false-front journalists and a think tank to spread geopolitical messaging.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/disrupting-ai-enabled-false-front-operations",
+      "published_at": "2026-10-08T00:00:00+00:00",
+      "fetched_at": "2026-10-08T17:01:01.671148Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "bf1a9b73-ad04-5d69-becf-2e1873661951",
+      "title": "Does better work always mean better workers?",
+      "summary": "",
+      "source": "Google Research",
+      "url": "https://research.google/blog/does-better-work-always-mean-better-workers/",
+      "published_at": "2026-10-07T20:19:57+00:00",
+      "fetched_at": "2026-10-08T17:01:01.671148Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7cae35e8-e91b-5b98-85af-8b3a1a6dcce4",
+      "title": "Meta and Microsoft take steps to reduce employee usage of Claude AI",
+      "summary": "359 points · 374 comments",
+      "source": "Hacker News",
+      "url": "https://www.rswebsols.com/news/meta-and-microsoft-take-steps-to-reduce-employee-usage-of-claude-ai/",
+      "published_at": "2026-10-07T18:49:40+00:00",
+      "fetched_at": "2026-10-08T17:01:01.671148Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f8442db0-7ebc-5670-88ea-d2d3f2c79b5d",
+      "title": "NVIDIA, Microsoft Kick Off a New Beginning for Windows PCs With RTX Spark and AI Agents",
+      "summary": "At a Microsoft event in San Francisco on Wednesday, NVIDIA founder and CEO Jensen Huang and Microsoft CEO Satya Nadella outlined how NVIDIA and Microsoft are co-engineering hardware and software for AI agents to run on Windows PCs. NVIDIA was founded because of Windows, Huang said. Now AI agents are coming to Windows. “If you […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/",
+      "published_at": "2026-10-07T18:45:28+00:00",
+      "fetched_at": "2026-10-08T17:01:01.671148Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f9757256-1694-5c2b-b9c7-c64817057193",
+      "title": "Claude Haiku 5.5",
+      "summary": "996 points · 471 comments",
+      "source": "Hacker News",
+      "url": "https://www.anthropic.com/claude-haiku-5-5",
+      "published_at": "2026-10-07T18:01:32+00:00",
+      "fetched_at": "2026-10-08T17:01:01.671148Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d04342e0-6442-55be-bdf0-6edb1fb8ccc0",
+      "title": "Introducing Falcon ASR",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/tiiuae/falcon-asr",
+      "published_at": "2026-10-07T13:21:03+00:00",
+      "fetched_at": "2026-10-08T17:01:01.671148Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2a19ccf4-faf6-52d6-b531-b653e618e0ea",
+      "title": "Updated the chat-latest snapshot, which points to the latest model available in ChatGPT for Plus, Pro, Business and…",
+      "summary": "Updated the chat-latest snapshot, which points to the latest model available in ChatGPT for Plus, Pro, Business and Enterprise users. We recommend leveraging the GPT-6 model family for production API usage, but feel free to use this model to test the latest improvements for chat use cases. The underlying model snapshot will be regularly updated. Read more here.",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-07T00:00:00+00:00",
+      "fetched_at": "2026-10-08T17:01:01.671148Z",
+      "type": "changelog",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-07:updated-the-chat-latest-snapshot-which-points-to-the-latest-"
+    },
+    {
       "id": "59a03e42-f0f7-5e85-a1ad-1259e37a4d9c",
       "title": "Multimodal open d1 decision models for the edge",
       "summary": "",

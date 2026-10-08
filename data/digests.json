@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-08",
+      "run_at": "2026-10-08T17:01:02.857846Z",
+      "top_paper_id": "acaf40f2-f486-5ca8-9536-882029b66dba",
+      "papers_fetched": 16,
+      "pdf_path": "reports/08-Oct/Rally_Up_Gears_of_War_E-Day_Launches_on_GeForc.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "37807000835"
+    },
+    {
       "date": "2026-10-07",
       "run_at": "2026-10-07T17:00:56.650611Z",
       "top_paper_id": "55e47687-789d-5d27-b8cd-f2ce20fa7652",
@@ -751,14 +760,6 @@
       "pdf_path": "reports/09-Jul/Announcing_our_160M_grant_from_Coefficient_Giving.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29039144772"
-    },
-    {
-      "date": "2026-07-06",
-      "top_paper_id": "",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "28813244817"
     }
   ]
 }

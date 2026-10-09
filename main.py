@@ -14,12 +14,32 @@ from src.fetcher import fetch_all
 from src.news_ranker import rank_news_ranked
 from src.article_fetcher import fetch_article_text
 from src.news_summarizer import summarize_release
-from src.telegram_sender import format_digest_message, send_telegram_message
+from src.telegram_sender import (
+    format_digest_message,
+    format_quiet_day_message,
+    send_telegram_message,
+)
 from src.pdf_generator import generate_digest_pdf
 from src.json_exporter import export_papers, export_digest, get_sent_top_paper_ids, _paper_id_for_item
 from src.kv_client import kv_append, kv_set, kv_trim_to_last
 
 logger = get_logger(__name__)
+
+
+def _notify_quiet_day(telegram_token: str, telegram_chat_id: str, reason: str) -> None:
+    """Tell Telegram that no digest is coming today, and why.
+
+    Best-effort: a quiet day is already the mild outcome, so a failure to
+    announce it is logged and otherwise ignored. A *digest* that fails to send
+    is the loud one and is handled separately, by failing the run.
+    """
+    try:
+        send_telegram_message(
+            telegram_token, telegram_chat_id, format_quiet_day_message(reason)
+        )
+        logger.info("Sent the quiet-day notice: %s", reason)
+    except Exception as e:
+        logger.warning("Could not send the quiet-day notice: %s", e)
 
 
 def main():
@@ -80,15 +100,20 @@ def main():
             logger.info("Recorded empty digest in data/digests.json")
         except Exception as e:
             logger.warning("Could not record empty digest: %s", e)
+        _notify_quiet_day(
+            telegram_token, telegram_chat_id, "no source had anything today"
+        )
         sys.exit(0)
 
     # Filter out papers already sent as top pick
     sent_ids = get_sent_top_paper_ids()
+    skip_reason = ""
     new_items = [item for item in items if _paper_id_for_item(item) not in sent_ids]
     if new_items:
         logger.info("Filtered out %d already-sent items", len(items) - len(new_items))
     else:
         logger.info("All %d items were previously sent, skipping digest", len(items))
+        skip_reason = "everything today had already been sent"
 
     # Export all fetched items to JSON and select top pick
     top_paper_id = None
@@ -108,10 +133,18 @@ def main():
                 # The model judged nothing here worth sending. Honour that: a
                 # skipped day beats a padded one, and tomorrow's run retries.
                 logger.info("Model rejected all %d candidates — sending nothing", len(new_items))
+                skip_reason = "nothing today was worth sending"
         except Exception as e:
             logger.error("Error ranking items: %s", e)
             top_item = new_items[0]
             headlines = new_items[1:]
+
+    if top_item:
+        # Everything from here needs a top pick. The ranker can legitimately
+        # return none — it rejects a thin pool rather than padding the digest —
+        # and this block used to run anyway, dying on `None.get` at the
+        # papers.json swap below. That took a quiet day and made it a red run
+        # that every later tick repeated.
 
         # Track topic stats in KV
         try:
@@ -178,7 +211,9 @@ def main():
         except Exception as e:
             logger.warning("Could not append to the KV history list: %s", e)
     else:
-        # Still export items for the dashboard, but no top pick
+        # No top pick, from an empty pool or a ranker that rejected it. The
+        # dashboard still gets the candidates, so the day shows what was
+        # considered rather than looking like nothing ran.
         try:
             export_papers(items)
             logger.info("Items exported to data/papers.json")
@@ -242,6 +277,27 @@ def main():
         logger.info("Digest exported to data/digests.json")
     except Exception as e:
         logger.warning("Could not export digest to JSON: %s", e)
+
+    # Nothing reached Telegram. Two situations that look identical in the
+    # Actions tab and want opposite handling.
+    if top_item and not telegram_sent:
+        # There was a digest and the send failed. Everything above is already
+        # recorded, so fail the run here: the workflow then leaves the day
+        # unmarked and the next tick retries it, which is what the workflow's
+        # own comment has always claimed happens. Exiting 0 marked the day as
+        # done and the digest was simply never seen — green run, no digest,
+        # no retry, no word to anyone.
+        logger.error("The digest could not be sent — failing the run so the day retries")
+        sys.exit(1)
+
+    if not top_item:
+        # A legitimately quiet day. Say so rather than leaving silence that
+        # reads exactly like a broken pipeline.
+        _notify_quiet_day(
+            telegram_token,
+            telegram_chat_id,
+            skip_reason or "nothing was selected today",
+        )
 
 
 if __name__ == "__main__":

@@ -86,12 +86,23 @@ class TestDeduplicationByIdentity:
 
 
 class TestFetchAll:
-    """Tests for the main fetch_all function."""
+    """Tests for the main fetch_all function.
 
+    Every source fetch_all calls is mocked, including the ones a test does not
+    care about. Two of them were left live when they were added, so these
+    tests opened real connections and their assertions counted whatever the
+    internet happened to be serving. They passed only while the OpenAI
+    changelog had nothing published inside DIGEST_MAX_AGE_HOURS; entries on
+    6 and 7 Oct 2026 turned every count assertion here red on master, in a
+    file nobody had touched.
+    """
+
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_aggregates_blog_sources(self, mock_blogs, mock_gh, mock_hn):
+    def test_aggregates_blog_sources(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog):
         mock_blogs.return_value = [
             {"title": "OpenAI Update", "url": "https://a.com", "published": _hours_ago(1)},
             {"title": "Anthropic Update", "url": "https://b.com", "published": _hours_ago(2)},
@@ -99,10 +110,12 @@ class TestFetchAll:
         result = fetch_all(max_results=10)
         assert len(result) == 2
 
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases")
     @patch("src.fetcher.fetch_blog_posts")
-    def test_aggregates_all_sources(self, mock_blogs, mock_gh, mock_hn):
+    def test_aggregates_all_sources(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog):
         mock_blogs.return_value = [
             {"title": "Blog Post", "url": "https://a.com", "published": _hours_ago(1)},
         ]
@@ -112,18 +125,22 @@ class TestFetchAll:
         result = fetch_all(max_results=10)
         assert len(result) == 2
 
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_handles_source_failure(self, mock_blogs, mock_gh, mock_hn):
+    def test_handles_source_failure(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog):
         mock_blogs.side_effect = Exception("API Error")
         result = fetch_all(max_results=10)
         assert len(result) == 0
 
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_deduplicates_by_url(self, mock_blogs, mock_gh, mock_hn):
+    def test_deduplicates_by_url(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog):
         mock_blogs.return_value = [
             {"title": "Same URL A", "url": "https://same.com", "published": _hours_ago(1)},
             {"title": "Same URL B", "url": "https://same.com", "published": _hours_ago(2)},
@@ -131,10 +148,12 @@ class TestFetchAll:
         result = fetch_all(max_results=10)
         assert len(result) == 1
 
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_respects_max_results(self, mock_blogs, mock_gh, mock_hn):
+    def test_respects_max_results(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog):
         mock_blogs.return_value = [
             # Distinct sources: this test covers max_results, not the
             # per-source cap, which would otherwise trim a single-source batch.
@@ -149,10 +168,12 @@ class TestFetchAll:
         result = fetch_all(max_results=3)
         assert len(result) == 3
 
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_sorts_by_date(self, mock_blogs, mock_gh, mock_hn):
+    def test_sorts_by_date(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog):
         mock_blogs.return_value = [
             {"title": "Old", "url": "https://a.com", "published": _hours_ago(48)},
             {"title": "New", "url": "https://b.com", "published": _hours_ago(1)},
@@ -227,10 +248,12 @@ class TestFilterByRecency:
         items = [{"title": "ancient", "published": _hours_ago(10_000)}]
         assert len(_filter_by_recency(items, 0)) == 1
 
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_fetch_all_applies_the_cutoff(self, mock_blogs, mock_gh, mock_hn):
+    def test_fetch_all_applies_the_cutoff(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog):
         """A week-old blog post must not reach the daily pick."""
         mock_blogs.return_value = [
             {"title": "Today", "url": "https://a.com", "published": _hours_ago(3)},

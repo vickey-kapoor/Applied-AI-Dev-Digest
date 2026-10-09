@@ -112,7 +112,12 @@ class TestMain:
         mock_send_telegram_message,
         env_vars,
     ):
-        """The app should log error but continue if Telegram send fails."""
+        """A digest that cannot be sent fails the run, after recording it.
+
+        This used to exit 0. The day was then marked as done by the workflow,
+        so nothing retried and nothing was sent — a green run with no digest.
+        The recording still happens first, so the dashboard keeps the attempt.
+        """
         paper = {
             "title": "Test Paper",
             "summary": "Test summary",
@@ -130,13 +135,17 @@ class TestMain:
         mock_format_digest_message.return_value = "formatted"
         mock_send_telegram_message.side_effect = RuntimeError("send failed")
 
-        # Pipeline continues despite Telegram failure (no sys.exit)
-        main.main()
+        with pytest.raises(SystemExit) as exc_info:
+            main.main()
 
+        assert exc_info.value.code == 1
         mock_send_telegram_message.assert_called_once()
-        # Digest still exported even on send failure
+        # Digest still exported even on send failure, so the day is not lost
+        # from the dashboard just because Telegram was unreachable.
         mock_export_digest.assert_called_once()
+        assert mock_export_digest.call_args.kwargs["telegram_sent"] is False
 
+    @patch("main.send_telegram_message")
     @patch("main.export_digest")
     @patch("main.get_active_keywords", return_value=["frontier model"])
     @patch("main.fetch_all", return_value=[])
@@ -147,6 +156,7 @@ class TestMain:
         mock_fetch_all,
         mock_get_active_keywords,
         mock_export_digest,
+        mock_send_telegram_message,
         env_vars,
         monkeypatch,
     ):
@@ -318,3 +328,220 @@ class TestHistoryList:
 
         mock_kv_trim.assert_not_called()
         mock_send_telegram_message.assert_called_once()
+
+
+class TestQuietDayNotice:
+    """A day with nothing to send says so, instead of passing in silence.
+
+    Three days in the 45 to 07-Oct-2026 sent nothing — the pool came back
+    empty — and every one of them is a green run in the Actions tab. The only
+    signal reaching anyone was the absence of a message, which reads exactly
+    like a broken pipeline.
+    """
+
+    @patch("main.send_telegram_message")
+    @patch("main.export_digest")
+    @patch("main.get_active_keywords", return_value=["frontier model"])
+    @patch("main.fetch_all", return_value=[])
+    @patch("main.is_paused", return_value=False)
+    def test_an_empty_pool_is_announced(
+        self,
+        mock_paused,
+        mock_fetch_all,
+        mock_get_active_keywords,
+        mock_export_digest,
+        mock_send,
+        env_vars,
+    ):
+        with pytest.raises(SystemExit) as exc_info:
+            main.main()
+
+        assert exc_info.value.code == 0
+        mock_send.assert_called_once()
+        assert "No digest today" in mock_send.call_args.args[2]
+
+    @patch("main.send_telegram_message")
+    @patch("main.export_digest")
+    @patch("main.export_papers", return_value="paper-1")
+    @patch("main.get_sent_top_paper_ids")
+    @patch("main.fetch_all")
+    @patch("main.get_active_keywords", return_value=["frontier model"])
+    @patch("main.is_paused", return_value=False)
+    def test_an_all_seen_day_is_announced(
+        self,
+        mock_paused,
+        mock_get_active_keywords,
+        mock_fetch_all,
+        mock_sent_ids,
+        mock_export_papers,
+        mock_export_digest,
+        mock_send,
+        env_vars,
+    ):
+        """Every candidate was already sent as a previous top pick."""
+        paper = {
+            "title": "Already sent",
+            "url": "https://openai.com/blog/old",
+            "source": "OpenAI",
+            "published": "2024-07-18T00:00:00",
+            "type": "announcement",
+        }
+        mock_fetch_all.return_value = [paper]
+        mock_sent_ids.return_value = {main._paper_id_for_item(paper)}
+
+        main.main()
+
+        mock_send.assert_called_once()
+        assert "already been sent" in mock_send.call_args.args[2]
+
+    @patch("main.send_telegram_message")
+    @patch("main.export_digest")
+    @patch("main.export_papers", return_value="paper-1")
+    @patch("main.rank_news_ranked", return_value=[])
+    @patch("main.get_sent_top_paper_ids", return_value=set())
+    @patch("main.fetch_all")
+    @patch("main.get_active_keywords", return_value=["frontier model"])
+    @patch("main.is_paused", return_value=False)
+    def test_a_rejected_pool_is_announced(
+        self,
+        mock_paused,
+        mock_get_active_keywords,
+        mock_fetch_all,
+        mock_sent_ids,
+        mock_rank,
+        mock_export_papers,
+        mock_export_digest,
+        mock_send,
+        env_vars,
+    ):
+        """The ranker judged nothing worth sending."""
+        mock_fetch_all.return_value = [
+            {
+                "title": "Thin release note",
+                "url": "https://example.com/x",
+                "source": "Somewhere",
+                "published": "2024-07-18T00:00:00",
+                "type": "release",
+            }
+        ]
+
+        main.main()
+
+        mock_send.assert_called_once()
+        assert "worth sending" in mock_send.call_args.args[2]
+
+    @patch("main.send_telegram_message", side_effect=RuntimeError("telegram down"))
+    @patch("main.export_digest")
+    @patch("main.get_active_keywords", return_value=["frontier model"])
+    @patch("main.fetch_all", return_value=[])
+    @patch("main.is_paused", return_value=False)
+    def test_a_failed_notice_does_not_fail_the_run(
+        self,
+        mock_paused,
+        mock_fetch_all,
+        mock_get_active_keywords,
+        mock_export_digest,
+        mock_send,
+        env_vars,
+    ):
+        """A quiet day is already the mild outcome; failing to announce it is
+        not worth turning into a red run and a retry."""
+        with pytest.raises(SystemExit) as exc_info:
+            main.main()
+
+        assert exc_info.value.code == 0
+
+    @patch("main.send_telegram_message")
+    @patch("main.format_digest_message", return_value="formatted")
+    @patch("main.export_digest")
+    @patch("main.generate_digest_pdf", return_value="reports/x.pdf")
+    @patch("main.summarize_release")
+    @patch("main.export_papers", return_value="paper-1")
+    @patch("main.rank_news_ranked")
+    @patch("main.get_sent_top_paper_ids", return_value=set())
+    @patch("main.fetch_all")
+    @patch("main.increment_topic_stat")
+    @patch("main.get_active_keywords", return_value=["frontier model"])
+    @patch("main.is_paused", return_value=False)
+    def test_a_normal_day_sends_no_notice(
+        self,
+        mock_paused,
+        mock_get_active_keywords,
+        mock_increment,
+        mock_fetch_all,
+        mock_sent_ids,
+        mock_rank,
+        mock_export_papers,
+        mock_summarize,
+        mock_pdf,
+        mock_export_digest,
+        mock_format,
+        mock_send,
+        env_vars,
+    ):
+        """The digest itself is the only message on a day that has one."""
+        paper = {
+            "title": "Something shipped",
+            "url": "https://openai.com/blog/new",
+            "source": "OpenAI",
+            "published": "2024-07-18T00:00:00",
+            "type": "announcement",
+        }
+        mock_fetch_all.return_value = [paper]
+        mock_rank.return_value = [paper]
+        mock_summarize.return_value = paper
+
+        main.main()
+
+        mock_send.assert_called_once()
+        assert mock_send.call_args.args[2] == "formatted"
+
+
+class TestRejectedPoolDoesNotCrash:
+    """The ranker returning nothing is a quiet day, not a broken run.
+
+    `rank_news_ranked` can legitimately return an empty list — it rejects a
+    thin pool rather than padding the digest. Everything downstream of the
+    ranker still ran, and the papers.json swap died on `None.get`. The
+    exception was uncaught, so the workflow step failed and every later tick
+    that day repeated it: a red run, no digest, and no explanation.
+    """
+
+    @patch("main.send_telegram_message")
+    @patch("main.export_digest")
+    @patch("main.export_papers", return_value=None)
+    @patch("main.rank_news_ranked", return_value=[])
+    @patch("main.get_sent_top_paper_ids", return_value=set())
+    @patch("main.fetch_all")
+    @patch("main.get_active_keywords", return_value=["frontier model"])
+    @patch("main.is_paused", return_value=False)
+    def test_the_run_completes(
+        self,
+        mock_paused,
+        mock_get_active_keywords,
+        mock_fetch_all,
+        mock_sent_ids,
+        mock_rank,
+        mock_export_papers,
+        mock_export_digest,
+        mock_send,
+        env_vars,
+    ):
+        mock_fetch_all.return_value = [
+            {
+                "title": "Thin release note",
+                "url": "https://example.com/x",
+                "source": "Somewhere",
+                "published": "2024-07-18T00:00:00",
+                "type": "release",
+            }
+        ]
+
+        main.main()  # must not raise
+
+        # The candidates are still recorded, so the dashboard shows what was
+        # considered rather than an empty day.
+        mock_export_papers.assert_called_once()
+        mock_export_digest.assert_called_once()
+        assert mock_export_digest.call_args.kwargs["telegram_sent"] is False
+        assert mock_export_digest.call_args.kwargs["top_paper_id"] is None

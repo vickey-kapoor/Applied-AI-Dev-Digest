@@ -1,6 +1,124 @@
 {
   "papers": [
     {
+      "id": "ab978491-d3a1-5433-805b-2b1064a481f7",
+      "title": "Impactful scheduling for GPU clusters",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/impactful-scheduling",
+      "published_at": "2026-10-09T15:20:29+00:00",
+      "fetched_at": "2026-10-09T17:00:57.261459Z",
+      "type": "announcement",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f16e0ba4-a727-5b4b-80d1-4508631bea7a",
+      "title": "Let your AI agents paint big arrows, boxes and text on your screen",
+      "summary": "273 points · 112 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/franzenzenhofer/big-arrow-on-the-screen",
+      "published_at": "2026-10-09T11:03:48+00:00",
+      "fetched_at": "2026-10-09T17:00:57.261459Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8dcca7b9-456a-5d60-b5c3-bb261dd5f7f9",
+      "title": "Sophos cuts threat investigation time by 96% with OpenAI Daybreak",
+      "summary": "Discover how Sophos uses OpenAI’s Daybreak to cut cyber-threat investigation time by 96% and automate 52% of MDR cases while preserving human oversight.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/sophos",
+      "published_at": "2026-10-09T07:00:00+00:00",
+      "fetched_at": "2026-10-09T17:00:57.261459Z",
+      "type": "announcement",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a4c277bc-61a1-5f04-92ac-9409badb3eda",
+      "title": "Into the Omniverse: How Developers Turn Ideas Into Simulations With Frontier AI Agents",
+      "summary": "Turning a simulation idea into a working application means assembling assets, connecting physics and rendering, and checking that the scene behaves as intended. Developers are combining frontier AI models with NVIDIA Omniverse libraries to help carry out that work — building applications for exploring scenarios, investigating failures and improving designs. Developers direct AI agents through […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/developers-simulation-frontier-ai-agents/",
+      "published_at": "2026-10-08T21:06:35+00:00",
+      "fetched_at": "2026-10-09T17:00:57.261459Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7320a01a-3be5-5631-8a15-abde737f3e2d",
+      "title": "How Oracle turns days of work into minutes with ChatGPT and Codex",
+      "summary": "Across recruiting, engineering, and operations, Oracle turns specialist knowledge into fast, repeatable workflows with ChatGPT Work and Codex.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/oracle",
+      "published_at": "2026-10-08T16:00:00+00:00",
+      "fetched_at": "2026-10-09T17:00:57.261459Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "cbb10ba2-f18c-51be-a857-f8f24b27f0d1",
+      "title": "The model that didn't exist, so you made it yourself",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/building-with-ml-intern",
+      "published_at": "2026-10-08T00:00:00+00:00",
+      "fetched_at": "2026-10-09T17:00:57.261459Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4a0d56d3-1d1b-5452-82da-ecee676b381f",
+      "title": "Added Ultrafast mode for GPT-6.1 Sol in the Responses API.",
+      "summary": "OpenAI shipped the Ultrafast mode for the gpt-6.1-sol model in the Responses API. The Ultrafast mode reduces the time between generated output tokens, enhancing response speed. Specific speed improvements or benchmark numbers are not stated.",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-08T00:00:00+00:00",
+      "fetched_at": "2026-10-09T17:00:57.261459Z",
+      "type": "changelog",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Product & API",
+        "Benchmarks & Evals",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-08:added-ultrafast-mode-for-gpt-6-1-sol-in-the-responses-api",
+      "what_shipped": "OpenAI shipped the Ultrafast mode for the gpt-6.1-sol model in the Responses API.",
+      "capabilities": "The Ultrafast mode reduces the time between generated output tokens, enhancing response speed. Specific speed improvements or benchmark numbers are not stated.",
+      "availability": "The Ultrafast mode is available to all API users with service_tier set to 'ultrafast', subject to rate limits. Pricing details for Ultrafast mode are not stated.",
+      "why_it_matters": "This feature allows developers to optimize for lower latency in applications that require rapid responses, potentially improving user experience in real-time applications.",
+      "caveats": "Details on the exact performance improvements and any limitations of the Ultrafast mode are not provided, which may affect expectations.",
+      "release_type": "product"
+    },
+    {
       "id": "acaf40f2-f486-5ca8-9536-882029b66dba",
       "title": "Rally Up: ‘Gears of War: E-Day’ Launches on GeForce NOW",
       "summary": "Gears of War: E-Day launched on GeForce NOW on October 6, 2023. The game features GeForce RTX 5080-class performance in the cloud, utilizing NVIDIA DLSS and NVIDIA Reflex technologies. It supports various gameplay modes including campaign, cooperative, and competitive.",

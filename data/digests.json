@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-09",
+      "run_at": "2026-10-09T17:00:58.344400Z",
+      "top_paper_id": "4a0d56d3-1d1b-5452-82da-ecee676b381f",
+      "papers_fetched": 12,
+      "pdf_path": "reports/09-Oct/Added_Ultrafast_mode_for_GPT-61_Sol_in_the_Respon.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "37955455193"
+    },
+    {
       "date": "2026-10-08",
       "run_at": "2026-10-08T17:01:02.857846Z",
       "top_paper_id": "acaf40f2-f486-5ca8-9536-882029b66dba",
@@ -752,14 +761,6 @@
       "pdf_path": "reports/10-Jul/Value_generalisation_value_correction.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29112404801"
-    },
-    {
-      "date": "2026-07-09",
-      "top_paper_id": "a0417d69-c7d2-5d7c-9309-7a374d22e5e8",
-      "papers_fetched": 4,
-      "pdf_path": "reports/09-Jul/Announcing_our_160M_grant_from_Coefficient_Giving.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "29039144772"
     }
   ]
 }

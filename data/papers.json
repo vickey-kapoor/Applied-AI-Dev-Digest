@@ -1,6 +1,45 @@
 {
   "papers": [
     {
+      "id": "55c51a2f-e2d0-562a-b409-4925df1bb9ed",
+      "title": "Talorys – A self-hosted personal AI agent on Cloudflare's free tier",
+      "summary": "145 points · 77 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/rociiu/talorys",
+      "published_at": "2026-10-10T10:52:09+00:00",
+      "fetched_at": "2026-10-10T17:01:31.834659Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b53bf1be-4f23-58e3-9c83-ce6aa9ab28a1",
+      "title": "Asana cuts model costs 76x in browser tests with GPT-6.1 Sol",
+      "summary": "OpenAI shipped the GPT-6.1 Sol model, which was optimized by Asana for use in their browser agent. GPT-6.1 Sol runs 76x cheaper and 5x faster than the previous Model B, with an average estimated model cost of $0.47 per run and a runtime of about four minutes per run. The model supports larger history budgets, allowing for improved performance in retaining browsing history, which increased the number of successful runs from three of 18 to all 18 with the larger budget.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/asana-browser-agent",
+      "published_at": "2026-10-09T07:00:00+00:00",
+      "fetched_at": "2026-10-10T17:01:31.834659Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "OpenAI shipped the GPT-6.1 Sol model, which was optimized by Asana for use in their browser agent.",
+      "capabilities": "GPT-6.1 Sol runs 76x cheaper and 5x faster than the previous Model B, with an average estimated model cost of $0.47 per run and a runtime of about four minutes per run. The model supports larger history budgets, allowing for improved performance in retaining browsing history, which increased the number of successful runs from three of 18 to all 18 with the larger budget.",
+      "availability": "Not stated.",
+      "why_it_matters": "The optimization allows for significant cost savings and faster processing times, enabling developers to offer more capable models to customers while maintaining sustainable operating costs. This could influence decisions on model selection and deployment strategies in production systems.",
+      "caveats": "The study's results are based on a specific set of configurations and may not generalize to all use cases. Additionally, the details on how to access GPT-6.1 Sol are not provided.",
+      "release_type": "model"
+    },
+    {
       "id": "ab978491-d3a1-5433-805b-2b1064a481f7",
       "title": "Impactful scheduling for GPU clusters",
       "summary": "",

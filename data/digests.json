@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-10",
+      "run_at": "2026-10-10T17:01:32.914683Z",
+      "top_paper_id": "b53bf1be-4f23-58e3-9c83-ce6aa9ab28a1",
+      "papers_fetched": 9,
+      "pdf_path": "reports/10-Oct/Asana_cuts_model_costs_76x_in_browser_tests_with_G.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "38070007618"
+    },
+    {
       "date": "2026-10-09",
       "run_at": "2026-10-09T17:00:58.344400Z",
       "top_paper_id": "4a0d56d3-1d1b-5452-82da-ecee676b381f",
@@ -753,14 +762,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "29160902543"
-    },
-    {
-      "date": "2026-07-10",
-      "top_paper_id": "4a250582-49a0-5ac0-bfcf-9bb5e96fb657",
-      "papers_fetched": 1,
-      "pdf_path": "reports/10-Jul/Value_generalisation_value_correction.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "29112404801"
     }
   ]
 }

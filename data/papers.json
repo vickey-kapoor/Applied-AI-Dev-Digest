@@ -1,6 +1,22 @@
 {
   "papers": [
     {
+      "id": "cca2990a-69e2-54e7-bb69-8dedc82874b5",
+      "title": "500B Tokens Later: Letting AI Agents Decompile a First-Person Shooter",
+      "summary": "122 points · 90 comments",
+      "source": "Hacker News",
+      "url": "https://momo5502.com/posts/2026-10-09-game-decompilation/",
+      "published_at": "2026-10-11T02:02:38+00:00",
+      "fetched_at": "2026-10-11T17:00:45.952032Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "55c51a2f-e2d0-562a-b409-4925df1bb9ed",
       "title": "Talorys – A self-hosted personal AI agent on Cloudflare's free tier",
       "summary": "145 points · 77 comments",

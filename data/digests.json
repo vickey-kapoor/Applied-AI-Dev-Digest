@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-11",
+      "run_at": "2026-10-11T17:00:45.959962Z",
+      "top_paper_id": "",
+      "papers_fetched": 5,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "38151299743"
+    },
+    {
       "date": "2026-10-10",
       "run_at": "2026-10-10T17:01:32.914683Z",
       "top_paper_id": "b53bf1be-4f23-58e3-9c83-ce6aa9ab28a1",
@@ -754,14 +763,6 @@
       "pdf_path": "reports/12-Jul/Independent_alignment_of_language_models.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29202915197"
-    },
-    {
-      "date": "2026-07-11",
-      "top_paper_id": "",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "29160902543"
     }
   ]
 }

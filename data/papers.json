@@ -1,6 +1,38 @@
 {
   "papers": [
     {
+      "id": "446e291a-9f8d-5d8d-9ccb-c17f30424e16",
+      "title": "OCP Global Summit: Amid Ecosystem Adoption, NVIDIA Opens Vera Rubin Architecture to Help Scale AI Factories Worldwide",
+      "summary": "As AI factories grow from megawatts to gigawatts, building them takes more than advanced computing. Open standards are helping the industry scale AI infrastructure faster, more efficiently and more reliably. At the Open Compute Project (OCP) Global Summit, taking place in the San Jose McEnery Convention Center, NVIDIA announced new partnerships and contributions aimed at […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/ocp-global-summit-vera-rubin-scale-ai-factories/",
+      "published_at": "2026-10-12T15:00:25+00:00",
+      "fetched_at": "2026-10-12T17:01:28.405050Z",
+      "type": "announcement",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "5853eb3a-ee45-510f-ac77-e093c5f8aad1",
+      "title": "Local Indexing to reduce tool calling and token usage",
+      "summary": "113 points · 42 comments",
+      "source": "Hacker News",
+      "url": "https://tedhaley.ca/pensieve/",
+      "published_at": "2026-10-12T00:03:53+00:00",
+      "fetched_at": "2026-10-12T17:01:28.405050Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "cca2990a-69e2-54e7-bb69-8dedc82874b5",
       "title": "500B Tokens Later: Letting AI Agents Decompile a First-Person Shooter",
       "summary": "122 points · 90 comments",

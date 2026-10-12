@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-12",
+      "run_at": "2026-10-12T17:01:28.411172Z",
+      "top_paper_id": "",
+      "papers_fetched": 2,
+      "pdf_path": "",
+      "telegram_sent": false,
+      "workflow_run_id": "38281395920"
+    },
+    {
       "date": "2026-10-11",
       "run_at": "2026-10-11T17:00:45.959962Z",
       "top_paper_id": "",
@@ -755,14 +764,6 @@
       "pdf_path": "reports/13-Jul/Apples_new_SpeechAnalyzer_API_benchmarked_agains.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29272615492"
-    },
-    {
-      "date": "2026-07-12",
-      "top_paper_id": "ddac2075-dd54-5ff8-acd9-f0047a78aedf",
-      "papers_fetched": 1,
-      "pdf_path": "reports/12-Jul/Independent_alignment_of_language_models.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "29202915197"
     }
   ]
 }

@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-13",
+      "run_at": "2026-10-13T17:00:56.387463Z",
+      "top_paper_id": "be2f9a4e-792d-59d2-b686-26b509d6a662",
+      "papers_fetched": 8,
+      "pdf_path": "reports/13-Oct/Gemini_4_Argon.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "38424432936"
+    },
+    {
       "date": "2026-10-12",
       "run_at": "2026-10-12T17:01:28.411172Z",
       "top_paper_id": "",
@@ -756,14 +765,6 @@
       "pdf_path": "reports/14-Jul/Open_Distillation_of_Hereditary_Traits.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29353282875"
-    },
-    {
-      "date": "2026-07-13",
-      "top_paper_id": "6bdcdebc-349d-5393-b688-9add2faa955b",
-      "papers_fetched": 3,
-      "pdf_path": "reports/13-Jul/Apples_new_SpeechAnalyzer_API_benchmarked_agains.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "29272615492"
     }
   ]
 }

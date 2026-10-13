@@ -1,6 +1,138 @@
 {
   "papers": [
     {
+      "id": "be2f9a4e-792d-59d2-b686-26b509d6a662",
+      "title": "Gemini 4 Argon",
+      "summary": "Gemini 4 Argon, a new AI model developed by Google. Argon can autonomously generate physics-accurate simulations from raw video, achieve a 2.85x end-to-end inference speedup on an A100 GPU, and has shown improvements in spatial reasoning and visual coding. It scored 68% on CWE-Bench for vulnerability remediation and is noted for its performance in complex engineering tasks, such as refactoring a 40 million-line codebase.",
+      "source": "Hacker News",
+      "url": "https://deepmind.google/models/gemini/",
+      "published_at": "2026-10-13T16:03:16+00:00",
+      "fetched_at": "2026-10-13T17:00:55.192566Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Gemini 4 Argon, a new AI model developed by Google.",
+      "capabilities": "Argon can autonomously generate physics-accurate simulations from raw video, achieve a 2.85x end-to-end inference speedup on an A100 GPU, and has shown improvements in spatial reasoning and visual coding. It scored 68% on CWE-Bench for vulnerability remediation and is noted for its performance in complex engineering tasks, such as refactoring a 40 million-line codebase.",
+      "availability": "Not stated.",
+      "why_it_matters": "Argon enables engineers to accelerate software engineering tasks significantly, reducing months of work to weeks and improving the efficiency of complex workflows in various domains, including drug discovery and 3D modeling.",
+      "caveats": "Claims regarding performance improvements and speedup are based on specific use cases and may not generalize across all applications. The availability and access details for Argon are not provided.",
+      "release_type": "model"
+    },
+    {
+      "id": "73432c67-cdc4-54d2-afbf-7c08ad42c1ec",
+      "title": "Gemini 4 Argon for Robotics",
+      "summary": "",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/gemini-4-argon-for-robotics/",
+      "published_at": "2026-10-13T16:01:58+00:00",
+      "fetched_at": "2026-10-13T17:00:55.192566Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f41d3501-a536-5d7e-8fcc-97361f6ac276",
+      "title": "Gemini 4 Argon: Built to solve your hardest problems",
+      "summary": "",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/introducing-gemini-4-argon/",
+      "published_at": "2026-10-13T16:01:52+00:00",
+      "fetched_at": "2026-10-13T17:00:55.192566Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d689a48e-65ca-55a1-9123-b9dcef0e14de",
+      "title": "Meta’s Generative Ads Model (GEM): Scaling the Central Model and Compute Engine for Frontier Ads AI",
+      "summary": "Last year, we introduced GEM, the industry’s largest recommendation system (RecSys) foundation model. GEM established Meta’s first LLM-inspired paradigm for ads recommendation, driving major performance gains. Building on this foundation, our next goal is to further scale both compute and intelligence transfer with next-generation hardware, and expand this capability across Meta’s entire ads ecosystem. This [...] Read More... The post Meta’s Generative Ads Model (GEM): Scaling the Central Mod...",
+      "source": "Meta AI",
+      "url": "https://engineering.fb.com/2026/10/13/ml-applications/generative-ads-model-gem-scaling-frontier-ads-ai/",
+      "published_at": "2026-10-13T16:01:00+00:00",
+      "fetched_at": "2026-10-13T17:00:55.192566Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "72225ff0-1ac8-5194-9839-24a610f5046a",
+      "title": "All Systems Go: Global PC App Ecosystem Ready for NVIDIA RTX Spark",
+      "summary": "NVIDIA RTX Spark is a new beginning for the PC — a reinvention combining the capabilities of a gaming PC, a creative studio and a personal AI supercomputer into a single superchip. With up to 128GB of unified memory and 1 petaflop of AI compute, RTX Spark delivers the full stack of NVIDIA RTX and […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-laptops-software-updates/",
+      "published_at": "2026-10-13T12:00:49+00:00",
+      "fetched_at": "2026-10-13T17:00:55.192566Z",
+      "type": "announcement",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "18f0a4c7-9ed9-5ef9-8d46-f78316934e9e",
+      "title": "We turned EmbeddingGemma 2 into a speech-to-text model",
+      "summary": "296 points · 69 comments",
+      "source": "Hacker News",
+      "url": "https://eg2.haku.sh/",
+      "published_at": "2026-10-13T11:27:14+00:00",
+      "fetched_at": "2026-10-13T17:00:55.192566Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d57cc85e-9865-5742-8a77-706e109c09e2",
+      "title": "NVIDIA Announces New Investments in France’s Startup Ecosystem",
+      "summary": "Companies in France are deploying agentic computing across industries spanning space, financial services, the public sector and scientific research, demonstrating how the country’s ecosystem has moved from ambition to application. France’s progress sits on deliberate groundwork. The AI Action Summit in February 2025 and Choose France Summits in 2025 and 2026 anchored major compute commitments […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/france-ecosystem-agentic-computing/",
+      "published_at": "2026-10-13T05:00:31+00:00",
+      "fetched_at": "2026-10-13T17:00:55.192566Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "55239ecb-29fd-5f70-b927-d671be2eff9d",
+      "title": "OCP Summit 2026: Powering AI with Open Innovations in Scale-Up, Scale-Out, and Scale-Across Networks",
+      "summary": "At the 2026 Open Compute Project Global Summit, Meta is sharing the next generation of open networking infrastructure, including: Our first liquid-cooled network rack (IcePack), and 102.4T switch platform (IceCube). Flattened Planar Fabric (FPF), a multiplane backend scale-out fabric that fundamentally changes how GPUs connect to the network MetaRoCE, our open-source AI transport protocol. Launching [...] Read More... The post OCP Summit 2026: Powering AI with Open Innovations in Scale-Up, Sc...",
+      "source": "Meta AI",
+      "url": "https://engineering.fb.com/2026/10/12/open-source/ocp-summit-2026-powering-ai-with-open-innovations-in-scale-up-scale-out-and-scale-across-networks/",
+      "published_at": "2026-10-12T21:19:18+00:00",
+      "fetched_at": "2026-10-13T17:00:55.192566Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "446e291a-9f8d-5d8d-9ccb-c17f30424e16",
       "title": "OCP Global Summit: Amid Ecosystem Adoption, NVIDIA Opens Vera Rubin Architecture to Help Scale AI Factories Worldwide",
       "summary": "As AI factories grow from megawatts to gigawatts, building them takes more than advanced computing. Open standards are helping the industry scale AI infrastructure faster, more efficiently and more reliably. At the Open Compute Project (OCP) Global Summit, taking place in the San Jose McEnery Convention Center, NVIDIA announced new partnerships and contributions aimed at […]",

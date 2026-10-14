@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-14",
+      "run_at": "2026-10-14T17:01:46.379820Z",
+      "top_paper_id": "b6319f99-39a3-5320-b6f7-310596632cf3",
+      "papers_fetched": 13,
+      "pdf_path": "reports/14-Oct/Putting_Earth_AI_to_work_Geospatial_agents_for_ou.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "38603021825"
+    },
+    {
       "date": "2026-10-13",
       "run_at": "2026-10-13T17:00:56.387463Z",
       "top_paper_id": "be2f9a4e-792d-59d2-b686-26b509d6a662",
@@ -757,14 +766,6 @@
       "pdf_path": "reports/15-Jul/GPT-Red_Unlocking_Self-Improvement_for_Robustness.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29436215742"
-    },
-    {
-      "date": "2026-07-14",
-      "top_paper_id": "5183a5a8-44fd-5565-974b-33a6eb625f71",
-      "papers_fetched": 2,
-      "pdf_path": "reports/14-Jul/Open_Distillation_of_Hereditary_Traits.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "29353282875"
     }
   ]
 }

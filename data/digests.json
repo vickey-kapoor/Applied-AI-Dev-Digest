@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-15",
+      "run_at": "2026-10-15T17:00:57.074600Z",
+      "top_paper_id": "ba9c4861-1178-56a8-b30f-3dced0d937fb",
+      "papers_fetched": 12,
+      "pdf_path": "reports/15-Oct/Accelerating_the_search_for_antimicrobial_peptides.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "38770342334"
+    },
+    {
       "date": "2026-10-14",
       "run_at": "2026-10-14T17:01:46.379820Z",
       "top_paper_id": "b6319f99-39a3-5320-b6f7-310596632cf3",
@@ -758,14 +767,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "29519606825"
-    },
-    {
-      "date": "2026-07-15",
-      "top_paper_id": "b9ca6b63-5066-5d73-8c51-105cd2d017ad",
-      "papers_fetched": 3,
-      "pdf_path": "reports/15-Jul/GPT-Red_Unlocking_Self-Improvement_for_Robustness.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "29436215742"
     }
   ]
 }

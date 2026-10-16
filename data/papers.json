@@ -1,6 +1,164 @@
 {
   "papers": [
     {
+      "id": "ece3ea5e-795b-52d5-bcd0-618e91acd1d2",
+      "title": "Scaling Indic Pretraining: 2.8 Trillion Tokens and an Open Data Generation Pipeline",
+      "summary": "AI4Bharat and NVIDIA shipped the Nemotron-pretraining-Indic-v1 model, which includes approximately 2.8 trillion tokens across 22 Indian languages. The model supports native-script and romanized data for 22 Indian languages, with a total of 2,601.0 billion native-script tokens and 224.6 billion romanized tokens. It utilizes the Gemma-4 tokenizer and incorporates a four-stage synthetic data generation pipeline that includes translation, quality assessment, and targeted repair.",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/nvidia/scaling-indic-pretraining",
+      "published_at": "2026-10-16T01:44:47+00:00",
+      "fetched_at": "2026-10-16T17:01:39.951271Z",
+      "type": "announcement",
+      "topic_id": "lab_research",
+      "topics": [
+        "Lab Research",
+        "Model Releases",
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "AI4Bharat and NVIDIA shipped the Nemotron-pretraining-Indic-v1 model, which includes approximately 2.8 trillion tokens across 22 Indian languages.",
+      "capabilities": "The model supports native-script and romanized data for 22 Indian languages, with a total of 2,601.0 billion native-script tokens and 224.6 billion romanized tokens. It utilizes the Gemma-4 tokenizer and incorporates a four-stage synthetic data generation pipeline that includes translation, quality assessment, and targeted repair.",
+      "availability": "The model and the open GPU-accelerated data generation pipeline will be released soon, but specific details on access, such as API availability or pricing, are not stated.",
+      "why_it_matters": "This release provides a substantial resource for building models in Indic languages, addressing the data scarcity issue and enabling developers to generate more training data tailored to their needs.",
+      "caveats": "The announcement does not provide specific benchmark numbers or performance metrics for the model, and details on the exact process for accessing the resources are not stated.",
+      "release_type": "model, open-weights, infrastructure"
+    },
+    {
+      "id": "9a178896-f966-5944-a215-f272dd2f10a9",
+      "title": "Welcome Beam: a 501B open model you can own, customize, and scale",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/reflection-beam",
+      "published_at": "2026-10-16T00:00:00+00:00",
+      "fetched_at": "2026-10-16T17:01:39.951271Z",
+      "type": "announcement",
+      "topic_id": "open_weights",
+      "topics": [
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0a7738c7-694e-581b-80cc-b80f5f714c4b",
+      "title": "Released prompt-to-voice for all API customers.",
+      "summary": "Released prompt-to-voice for all API customers. Create a custom voice from a text description through the API or voice Playground, then reuse it in GPT-Live sessions. Creating a prompt-generated voice is free; speech generation uses regular GPT-Live session billing.\nAdded nine natural voices for GPT-Live: Nuri, Juni, and Flitz (German); Brise and Sillage (French); Nira (Hindi); Harema and Shida (Japanese); and Noeul (Korean).",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-16T00:00:00+00:00",
+      "fetched_at": "2026-10-16T17:01:39.951271Z",
+      "type": "changelog",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-16:released-prompt-to-voice-for-all-api-customers"
+    },
+    {
+      "id": "252fef4a-d05c-59b9-b30b-17bdc62194e3",
+      "title": "How Meta Built Forum With AI-Native Engineering",
+      "summary": "Meta’s newest app, Forum, is for anyone who wants to go deeper into the conversations in their Facebook groups. To build Forum, Meta engineers adopted a whole new way of working by bringing an AI agent into the development cycle. We’re sharing insights into what it took to build Forum with agentic AI: how we [...] Read More... The post How Meta Built Forum With AI-Native Engineering appeared first on Engineering at Meta.",
+      "source": "Meta AI",
+      "url": "https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/",
+      "published_at": "2026-10-15T19:00:03+00:00",
+      "fetched_at": "2026-10-16T17:01:39.951271Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "bfd51649-cbcd-52b7-9fdf-e68701bd0041",
+      "title": "Bringing GPT-Rosalind to academic research labs",
+      "summary": "Introducing the Rosalind Academic Plan, offering eligible academic labs sponsored access to GPT-Rosalind and tools to advance life sciences research.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-the-rosalind-academic-plan",
+      "published_at": "2026-10-15T19:00:00+00:00",
+      "fetched_at": "2026-10-16T17:01:39.951271Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3d7c8012-7de8-51f3-87d4-83def00cd074",
+      "title": "llama.cpp v0.7.0 released",
+      "summary": "## Overview\r\n\r\nllama.cpp v0.7.0 adds the LiliCorr speculative decoding technique and MTP for GLM5-Next, a new GPU cache for MoE experts kept in host memory (`--moe-cache-mib`, up to ~2.2x decode speedup when experts are offloaded), and a large batch of new models: K2 Horizon (dense and MoVA), Prism Bonsai 2 27B, EmbeddingGemma-2 (text+vision+audio), the LiquidAI d1/d1-omni and vLLM decision 2/d3 decision models, pplx-decider, MiniCPM-V 4.7, Nemotron Super 3.5 VL / Nemotron Bolt and maion-coder. ",
+      "source": "GitHub",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/v0.7.0",
+      "published_at": "2026-10-15T17:13:19Z",
+      "fetched_at": "2026-10-16T17:01:39.951271Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c540d8b7-cb4f-580c-aba1-21be4afe9324",
+      "title": "Be There for the Beginning: Celebrate the Launch of NVIDIA RTX Spark",
+      "summary": "A new beginning for Windows PCs starts tomorrow with the launch of NVIDIA RTX Spark — one PC built for creators, gamers and AI agents. All are invited to celebrate with NVIDIA and partners at launch events around the world. Share Your Spark Every PC has a story. What was your first Windows PC, and […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-launch-event-invite/",
+      "published_at": "2026-10-15T17:00:23+00:00",
+      "fetched_at": "2026-10-16T17:01:39.951271Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a7778d2b-9eeb-5fe4-a9a6-456883601681",
+      "title": "Meta Muse Spark Open is live on Together AI",
+      "summary": "Meta Muse Spark Open, Meta's open-weight model for agentic coding, is live on Together AI with a 1M-token context window on serverless and dedicated infrastructure.",
+      "source": "Together AI",
+      "url": "https://www.together.ai/blog/meta-muse-spark-open",
+      "published_at": "2026-10-15T00:00:00+00:00",
+      "fetched_at": "2026-10-16T17:01:39.951271Z",
+      "type": "announcement",
+      "topic_id": "product_api",
+      "topics": [
+        "Product & API",
+        "Agents & Tooling",
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "db766632-93c6-595f-9df3-f911609fba3f",
+      "title": "Added native Decisions integration in GPT-Live.",
+      "summary": "Added native Decisions integration in GPT-Live. Your app can act while your user is speaking or react to what Live says. Let Live call Decisions directly through native delegation, or trigger decisions as input or output transcript deltas arrive.",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-15T00:00:00+00:00",
+      "fetched_at": "2026-10-16T17:01:39.951271Z",
+      "type": "changelog",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-15:added-native-decisions-integration-in-gpt-live"
+    },
+    {
       "id": "ba9c4861-1178-56a8-b30f-3dced0d937fb",
       "title": "Accelerating the search for antimicrobial peptides with Google Antigravity",
       "summary": "Google Antigravity, an agentic development platform for discovering antimicrobial peptides. Google Antigravity allows biologists to discover, evaluate, and prioritize antimicrobial peptide candidates by querying millions of protein sequences in the UniProt database using the ProtNLM model, which predicts biological function from amino acid sequences. It integrates structural analysis and literature synthesis in a single interactive session, significantly reducing the time required for candidate identification.",

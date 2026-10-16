@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-16",
+      "run_at": "2026-10-16T17:01:41.520355Z",
+      "top_paper_id": "ece3ea5e-795b-52d5-bcd0-618e91acd1d2",
+      "papers_fetched": 15,
+      "pdf_path": "reports/16-Oct/Scaling_Indic_Pretraining_28_Trillion_Tokens_and.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "38936421676"
+    },
+    {
       "date": "2026-10-15",
       "run_at": "2026-10-15T17:00:57.074600Z",
       "top_paper_id": "ba9c4861-1178-56a8-b30f-3dced0d937fb",
@@ -759,14 +768,6 @@
       "pdf_path": "reports/17-Jul/Evidence_of_inconsistencies_in_evaluation_process.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29599431521"
-    },
-    {
-      "date": "2026-07-16",
-      "top_paper_id": "",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "29519606825"
     }
   ]
 }

@@ -545,3 +545,107 @@ class TestRejectedPoolDoesNotCrash:
         mock_export_digest.assert_called_once()
         assert mock_export_digest.call_args.kwargs["telegram_sent"] is False
         assert mock_export_digest.call_args.kwargs["top_paper_id"] is None
+
+
+class TestCandidatesAreOpenedBeforeRanking:
+    """The ranker judges on what it is shown, so it is shown the articles.
+
+    Until this, only the winner's link was opened, and only after the verdict.
+    The ranker saw feed summaries, which are not comparable across sources:
+    the Hugging Face blog sends none, Google Research sends a category label.
+    """
+
+    @staticmethod
+    def _candidates():
+        return [
+            {"title": "Welcome Beam", "summary": "", "url": "https://hf.co/blog/beam",
+             "source": "Hugging Face Blog", "published": "2026-10-17T00:00:00+00:00"},
+            {"title": "Other news", "summary": "blurb", "url": "https://lab.example/x",
+             "source": "NVIDIA", "published": "2026-10-17T00:00:00+00:00"},
+        ]
+
+    @patch("main.export_digest")
+    @patch("main.send_telegram_message")
+    @patch("main.format_digest_message")
+    @patch("main.generate_digest_pdf")
+    @patch("main.export_papers")
+    @patch("main.summarize_release", side_effect=lambda item, key: item)
+    @patch("main.fetch_article_text", return_value="fetched late")
+    @patch("main.attach_article_text")
+    @patch("main.rank_news_ranked")
+    @patch("main.fetch_all")
+    @patch("main.increment_topic_stat")
+    @patch("main.get_active_keywords", return_value=["api"])
+    @patch("main.is_paused", return_value=False)
+    def test_the_ranker_receives_items_carrying_article_text(
+        self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_attach,
+        _fetch_late, _summarize, _papers, _pdf, _format, _send, _digest, env_vars,
+    ):
+        candidates = self._candidates()
+        mock_fetch_all.return_value = candidates
+        mock_attach.side_effect = lambda items: [
+            {**item, "article_text": f"body of {item['title']}"} for item in items
+        ]
+        mock_rank.side_effect = lambda items, key: items
+
+        main.main()
+
+        ranked_input = mock_rank.call_args[0][0]
+        assert [i["article_text"] for i in ranked_input] == [
+            "body of Welcome Beam",
+            "body of Other news",
+        ]
+
+    @patch("main.export_digest")
+    @patch("main.send_telegram_message")
+    @patch("main.format_digest_message")
+    @patch("main.generate_digest_pdf")
+    @patch("main.export_papers")
+    @patch("main.summarize_release", side_effect=lambda item, key: item)
+    @patch("main.fetch_article_text", return_value="fetched late")
+    @patch("main.attach_article_text")
+    @patch("main.rank_news_ranked")
+    @patch("main.fetch_all")
+    @patch("main.increment_topic_stat")
+    @patch("main.get_active_keywords", return_value=["api"])
+    @patch("main.is_paused", return_value=False)
+    def test_the_winner_is_not_opened_a_second_time(
+        self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_attach,
+        mock_fetch_late, _summarize, _papers, _pdf, _format, _send, _digest, env_vars,
+    ):
+        """summarize_release reads the same field the pre-ranking fetch filled."""
+        candidates = self._candidates()
+        mock_fetch_all.return_value = candidates
+        mock_attach.side_effect = lambda items: [
+            {**item, "article_text": "already have it"} for item in items
+        ]
+        mock_rank.side_effect = lambda items, key: items
+
+        main.main()
+
+        mock_fetch_late.assert_not_called()
+
+    @patch("main.export_digest")
+    @patch("main.send_telegram_message")
+    @patch("main.format_digest_message")
+    @patch("main.generate_digest_pdf")
+    @patch("main.export_papers")
+    @patch("main.summarize_release", side_effect=lambda item, key: item)
+    @patch("main.fetch_article_text", return_value="fetched late")
+    @patch("main.attach_article_text", side_effect=Exception("every host down"))
+    @patch("main.rank_news_ranked")
+    @patch("main.fetch_all")
+    @patch("main.increment_topic_stat")
+    @patch("main.get_active_keywords", return_value=["api"])
+    @patch("main.is_paused", return_value=False)
+    def test_a_failure_to_open_the_links_still_sends_a_digest(
+        self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, _attach,
+        _fetch_late, _summarize, _papers, _pdf, _format, mock_send, _digest, env_vars,
+    ):
+        """Ranking on feed summaries is the old behaviour: worse, not broken."""
+        mock_fetch_all.return_value = self._candidates()
+        mock_rank.side_effect = lambda items, key: items
+
+        main.main()
+
+        mock_send.assert_called_once()

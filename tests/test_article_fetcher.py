@@ -13,6 +13,7 @@ from unittest.mock import MagicMock, patch
 
 from src.article_fetcher import (
     MIN_USEFUL_CHARS,
+    attach_article_text,
     extract_text,
     fetch_article_text,
 )
@@ -186,3 +187,65 @@ class TestInputLabelling:
         body = inspect.getsource(news_summarizer.summarize_release)
         assert "{body_label}: {description}" in body
         assert "Article text: {description}" not in body
+
+
+class TestAttachArticleText:
+    """Candidates are opened before ranking, not only the winner after it."""
+
+    @patch("src.article_fetcher.fetch_article_text", return_value="the body text")
+    def test_attaches_text_to_every_candidate(self, mock_fetch):
+        items = [
+            {"title": "a", "url": "https://lab.example/a"},
+            {"title": "b", "url": "https://lab.example/b"},
+        ]
+
+        result = attach_article_text(items)
+
+        assert [r["article_text"] for r in result] == ["the body text"] * 2
+        assert mock_fetch.call_count == 2
+
+    @patch("src.article_fetcher.fetch_article_text", return_value="fetched")
+    def test_does_not_refetch_text_a_fetcher_already_supplied(self, mock_fetch):
+        """The OpenAI changelog carries its own; its URL holds all 180 entries."""
+        items = [
+            {"title": "a", "url": "https://lab.example/a", "article_text": "own text"},
+            {"title": "b", "url": "https://lab.example/b"},
+        ]
+
+        result = attach_article_text(items)
+
+        assert result[0]["article_text"] == "own text"
+        assert result[1]["article_text"] == "fetched"
+        mock_fetch.assert_called_once_with("https://lab.example/b")
+
+    @patch("src.article_fetcher.fetch_article_text", return_value="")
+    def test_a_failed_fetch_leaves_the_item_on_its_summary(self, _mock_fetch):
+        items = [{"title": "a", "url": "https://lab.example/a", "summary": "the blurb"}]
+
+        result = attach_article_text(items)
+
+        assert "article_text" not in result[0]
+        assert result[0]["summary"] == "the blurb"
+
+    @patch("src.article_fetcher.fetch_article_text", return_value="body")
+    def test_order_survives_concurrent_fetching(self, _mock_fetch):
+        items = [{"title": str(i), "url": f"https://lab.example/{i}"} for i in range(12)]
+
+        result = attach_article_text(items)
+
+        assert [r["title"] for r in result] == [str(i) for i in range(12)]
+
+    @patch("src.article_fetcher.fetch_article_text", return_value="body")
+    def test_does_not_mutate_the_input_items(self, _mock_fetch):
+        item = {"title": "a", "url": "https://lab.example/a"}
+
+        attach_article_text([item])
+
+        assert "article_text" not in item
+
+    @patch("src.article_fetcher.fetch_article_text")
+    def test_skips_items_with_no_url(self, mock_fetch):
+        result = attach_article_text([{"title": "a", "summary": "s"}])
+
+        assert result == [{"title": "a", "summary": "s"}]
+        mock_fetch.assert_not_called()

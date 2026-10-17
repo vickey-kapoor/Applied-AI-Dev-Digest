@@ -26,6 +26,7 @@ developer news is read from their changelog instead — see
 src/fetchers/openai_changelog_fetcher.py.
 """
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from html.parser import HTMLParser
 import html as html_module
 
@@ -47,6 +48,12 @@ MAX_DOWNLOAD_BYTES = 2_000_000
 # Below this, extraction effectively failed — a cookie wall or a JS shell — and
 # the RSS summary is the better input.
 MIN_USEFUL_CHARS = 400
+
+# Concurrency for attach_article_text. The candidate pool is around 20 items
+# and this sits on the critical path of a scheduled job, so the fetches run in
+# parallel; the bound is low because these are a dozen different hosts being
+# read once each, not a crawl.
+ARTICLE_FETCH_WORKERS = 6
 
 _SKIP_TAGS = {
     "script", "style", "noscript", "svg", "nav", "header", "footer",
@@ -203,3 +210,51 @@ def fetch_article_text(url: str) -> str:
 
     logger.info("Read %d chars from %s", len(text), url)
     return text
+
+
+def attach_article_text(items: list[dict], max_workers: int = ARTICLE_FETCH_WORKERS) -> list[dict]:
+    """Open every candidate's link and attach its text as `article_text`.
+
+    The ranker used to judge candidates on the feed summary alone, and the
+    feeds are not comparable: the Hugging Face blog's carries no description
+    at all, Google Research's carries the category label ("General Science"),
+    OpenAI's carries a ~150-character meta description, while NVIDIA's and
+    Meta's run to 300-400. An item was being rejected for saying nothing when
+    its feed had said nothing — on 17-Oct-2026 a 501B open-weights release was
+    rejected as "lacking specific capabilities" while its post yielded 12,000
+    characters.
+
+    Fetches run concurrently because this is 20-odd requests on the critical
+    path of a scheduled job. An item that already carries `article_text` is
+    left alone: the OpenAI changelog fetcher supplies its own, and opening
+    that URL would replace one entry with all 180 on the page.
+
+    Returns a new list; input dictionaries are not mutated. A fetch that fails
+    leaves the item without `article_text`, which is the pre-existing
+    behaviour — the summary is still there.
+    """
+    pending = [
+        i
+        for i, item in enumerate(items)
+        if not (item.get("article_text") or "").strip() and item.get("url")
+    ]
+    if not pending:
+        return list(items)
+
+    enriched = list(items)
+    with ThreadPoolExecutor(max_workers=max(1, min(max_workers, len(pending)))) as pool:
+        futures = {pool.submit(fetch_article_text, items[i]["url"]): i for i in pending}
+        for future in as_completed(futures):
+            index = futures[future]
+            try:
+                text = future.result()
+            except Exception:
+                # fetch_article_text swallows its own failures; this guards
+                # only against the pool itself going wrong.
+                continue
+            if text:
+                enriched[index] = {**enriched[index], "article_text": text}
+
+    attached = sum(1 for item in enriched if (item.get("article_text") or "").strip())
+    logger.info("Article text available for %d of %d candidates", attached, len(items))
+    return enriched

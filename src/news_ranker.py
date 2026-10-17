@@ -164,6 +164,40 @@ def rank_news(items: list[dict], api_key: str) -> dict | None:
     return ranked[0] if ranked else None
 
 
+# What the ranker is shown per item. The feed summary was the only input here
+# and the feeds are not comparable: the Hugging Face blog's carries no
+# description at all, Google Research's carries the category label, OpenAI's
+# a ~150-character meta description. Items were being rejected for saying
+# nothing when it was their feed that had said nothing. main.py now opens
+# every candidate's link before ranking, so the article's own opening is
+# available; this is how much of it the verdict is worth spending.
+#
+# Not the whole article: at ~20 candidates the full 12,000-character cap would
+# put a quarter of a million characters in one prompt to decide an ordering.
+# The opening carries the lede — what shipped, the number, the price — which
+# is what this judgement turns on.
+RANKING_ARTICLE_CHARS = 900
+
+# The feed summary when there is nothing better.
+RANKING_SUMMARY_CHARS = 400
+
+
+def _describe(item: dict) -> str:
+    """The item's labelled text for the ranking prompt, best source first.
+
+    The label is part of the answer: an excerpt that stops mid-sentence reads
+    as a truncated article, while the same text under "Summary" reads as a
+    complete one that simply says little.
+
+    Sanitization matters more here than it did for feed blurbs — this is the
+    body of a third-party web page going into a prompt.
+    """
+    article = (item.get("article_text") or "").strip()
+    if article:
+        return f"Article excerpt: {_sanitize_text(article, RANKING_ARTICLE_CHARS)}"
+    return f"Summary: {_sanitize_text(item.get('summary', ''), RANKING_SUMMARY_CHARS)}"
+
+
 def rank_news_ranked(items: list[dict], api_key: str) -> list[dict]:
     """
     Order items by usefulness to an applied AI engineer, most useful first.
@@ -213,7 +247,10 @@ def rank_news_ranked(items: list[dict], api_key: str) -> list[dict]:
 
     # Prepare item summary for the prompt (with sanitization)
     items_text = "\n\n".join(
-        f"[{i+1}] Title: {_sanitize_text(r.get('title', ''), 200)}\nSource: {_sanitize_text(r.get('source', ''), 50)}\nType: {r.get('type', 'announcement')}\nSummary: {_sanitize_text(r.get('summary', ''), 400)}"
+        f"[{i+1}] Title: {_sanitize_text(r.get('title', ''), 200)}\n"
+        f"Source: {_sanitize_text(r.get('source', ''), 50)}\n"
+        f"Type: {r.get('type', 'announcement')}\n"
+        f"{_describe(r)}"
         for i, r in enumerate(items)
     )
 

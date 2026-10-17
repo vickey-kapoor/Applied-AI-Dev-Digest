@@ -6,6 +6,27 @@ import pytest
 from unittest.mock import Mock, patch
 
 
+@pytest.fixture(autouse=True)
+def no_outbound_article_fetches():
+    """Keep the suite hermetic now that ranking opens every candidate's link.
+
+    main.py fetches article text for the whole candidate pool before ranking,
+    so any test that drives the pipeline would otherwise make one real HTTP
+    request per fixture URL. They would still pass — fetch_article_text
+    swallows every failure — but the suite would be slow and dependent on the
+    network, and a test asserting on what the ranker saw would depend on what
+    a live page happened to say.
+
+    Tests that exercise fetching patch `_get` themselves; that patch is
+    applied inside this one and wins for its duration.
+    """
+    with patch(
+        "src.article_fetcher._get",
+        side_effect=AssertionError("tests must not make real HTTP requests"),
+    ):
+        yield
+
+
 @pytest.fixture
 def sample_paper():
     """Sample item dictionary."""

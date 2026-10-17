@@ -131,7 +131,6 @@ BLOG_FEEDS = {
     "Google Research": "https://research.google/blog/rss/",
     "Meta AI": "https://engineering.fb.com/category/ml-applications/feed/",
     "Mistral AI": "https://mistral.ai/rss.xml",
-    "Qwen": "https://qwenlm.github.io/blog/index.xml",
     # "Hugging Face Blog", not "Hugging Face": the Daily Papers fetcher already
     # reports the latter, and one name for a curated lab feed and an aggregator
     # makes the two indistinguishable to any per-source rule.
@@ -141,6 +140,13 @@ BLOG_FEEDS = {
     # EleutherAI removed: blog.eleuther.ai/{index,rss,feed}.xml and
     # eleuther.ai/index.xml all 404, so the feed contributed nothing but a
     # parse-error warning on every run.
+    # Qwen removed: qwenlm.github.io/blog/index.xml still parses, but its
+    # newest entry is 23-Sep-2025 — the team moved to qwen.ai, which is
+    # client-rendered and serves the SPA shell for /rss.xml, /index.xml and
+    # /blog alike, so there is no feed to point at. The feed was contributing
+    # "0 within 72h" on every run while reading as a live source. Qwen
+    # releases still reach the digest through Hacker News (HN_KEYWORDS lists
+    # "Qwen") and the Hugging Face blog.
 }
 
 # OpenAI's developer changelog, scraped rather than fetched as a feed.

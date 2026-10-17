@@ -19,12 +19,9 @@ const BLOG_SOURCES = [
   "Google Research",
   "Meta AI",
   "Mistral AI",
-  "Qwen",
-  "Hugging Face",
+  "Hugging Face Blog",
   "NVIDIA",
   "Together AI",
-  "EleutherAI",
-  "AWS Machine Learning",
 ];
 
 // Mirrors GITHUB_REPOS in src/constants.py

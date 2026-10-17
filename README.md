@@ -8,8 +8,9 @@ The question it answers is not "what is most significant to the field" but "what
 
 - Fetches from **10 AI lab and platform blogs** via RSS (OpenAI, Google DeepMind, Google AI, Google Research, Meta AI, Mistral AI, Qwen, Hugging Face Blog, NVIDIA, Together AI)
 - Reads the **OpenAI platform changelog** — model releases with their token prices, new service tiers, API fixes worth re-running evals over. OpenAI's news blog answers 403 to every non-browser client, so this is where their developer news actually comes from
+- Reads **Anthropic's news and engineering listings** — they carry no RSS feed, so the pages are read directly. Anthropic contributed 1 item in the project's whole history before this; Hacker News contributed 179
 - Tracks **7 GitHub repos** for releases that mark a shipped development (official model SDKs plus the serving stacks new models land in)
-- Monitors **Hacker News** for frontier lab discussions (score > 100, last 24h) — also the main channel for Anthropic, which publishes no RSS feed
+- Monitors **Hacker News** for frontier lab discussions (score > 100, last 24h)
 - Surfaces **Hugging Face Daily Papers** with high upvotes (20+, last 24h)
 - **11 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords; the six Core topics and both Applied ones (Open Weights, Compute & Infrastructure) are enabled by default
 - Uses GPT-4o-mini to **screen, dedupe and rank** the day's candidates in one call: each is kept or rejected for whether an applied engineer should see it, duplicate coverage is collapsed to the copy closest to the source, and the keepers are ordered by usefulness. Influenced by **user feedback weights**; rejections are logged with the model's reason
@@ -85,11 +86,54 @@ https://openai.com/index/gpt-4o-mini
 | NVIDIA | blogs.nvidia.com/feed/ |
 | Together AI | www.together.ai/blog/rss.xml |
 
-**Anthropic has no public RSS feed** for its news, research, or engineering posts, so Anthropic announcements reach the digest through the Hacker News source (which filters on `Anthropic` and `Claude`) and Hugging Face Daily Papers.
+**Anthropic is read from its listing pages**, not from a feed — see below.
 
 **EleutherAI was removed** — `blog.eleuther.ai/{index,rss,feed}.xml` and
 `eleuther.ai/index.xml` all return 404, so the feed contributed nothing but a
 parse-error warning on every run.
+
+### Anthropic
+
+| Source | Page |
+|--------|------|
+| Anthropic | www.anthropic.com/news |
+| Anthropic Engineering | www.anthropic.com/engineering |
+
+**Anthropic has no feed, so the listing pages are read directly.**
+`/rss.xml`, `/feed.xml`, `/index.xml`, `/news/rss.xml`, `/news/feed.xml` and
+`/engineering/rss.xml` all answer 404. The cost of that gap was measurable:
+across the project's whole history Anthropic contributed **1 item** while Hacker
+News contributed **179**, and a digest for an applied engineer missing one of
+the two labs whose SDKs it tracks is a hole in the source list, not a quirk.
+
+Reading them is straightforward where OpenAI's blog is not. `robots.txt` says
+`Allow: /`, both listings answer **200** to a plain client, and so do the post
+pages — the summarizer reads **7,000 to 12,000 characters** from them, against
+the ~150 an OpenAI feed entry gives.
+
+- **The content payload is parsed, not the markup.** Each listing streams its
+  posts as JSON carrying `title`, `summary`, `publishedOn` and `slug` — the
+  site's content model, which outlives a redesign. The visible markup names
+  classes like `PublicationList-module-scss-module__KxYrHG__date`, whose hash
+  changes on every rebuild, and the visible list is also the short one: 10 posts
+  against the payload's 276, with a day-resolution date against the payload's
+  timestamp.
+- **The scan is not anchored to how Next.js streams it.** Any JSON object in the
+  page carrying both `publishedOn` and `slug` is read as a post, so the payload
+  moving between `self.__next_f`, an inline `__NEXT_DATA__` or whatever comes
+  next costs nothing. A shape change that defeats it yields zero posts plus a
+  warning rather than an exception, and one listing failing leaves the other's
+  items in place.
+- **Two sources, not one**, for the same reason the OpenAI changelog is separate
+  from the OpenAI blog. `/news` is mostly policy, partnerships and offices;
+  `/engineering` is the applied-engineering writing this reader is here for.
+  Under one name the per-source cap of 2 would let a week of policy posts crowd
+  the engineering post out.
+- **Dates arrive in two shapes.** `/news` gives a timestamp with a trailing `Z`;
+  `/engineering` gives a bare date, which `_parse_published` treats as midnight
+  UTC. A post tagged both News and Research resolves under either prefix — both
+  `/news/alignment-faking` and `/research/alignment-faking` return the same page
+  — so the listing a post was found on always yields a working URL.
 
 ### OpenAI Platform Changelog
 
@@ -415,6 +459,7 @@ Applied-AI-Dev-Digest/
 │   └── daily-news.yml            # Hourly poll that holds for noon, plus dispatch
 ├── src/
 │   ├── fetchers/
+│   │   ├── anthropic_fetcher.py  # Anthropic news + engineering (scraped; no feed exists)
 │   │   ├── blog_fetcher.py       # RSS fetch from 10 AI lab/platform blogs
 │   │   ├── github_fetcher.py     # GitHub release tracking (7 repos)
 │   │   ├── hackernews_fetcher.py # HN top stories filtered to frontier labs

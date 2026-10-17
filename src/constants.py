@@ -122,9 +122,8 @@ EXCLUDE_TITLE_PATTERNS = [
 MAX_ITEMS_PER_SOURCE = int(os.getenv("MAX_ITEMS_PER_SOURCE", "2"))
 
 # Blog RSS feeds — frontier AI labs and the platforms they ship on.
-# Every URL here was verified to return a parseable feed. Anthropic publishes
-# no public RSS feed for its news/research/engineering posts, so Anthropic
-# coverage comes through Hacker News keywords and Hugging Face papers instead.
+# Every URL here was verified to return a parseable feed. Anthropic has no feed
+# at all, so it is not here: ANTHROPIC_LISTINGS below reads its pages instead.
 BLOG_FEEDS = {
     "OpenAI": "https://openai.com/news/rss.xml",
     "Google DeepMind": "https://deepmind.google/blog/rss.xml",
@@ -164,6 +163,37 @@ OPENAI_CHANGELOG_SOURCE = "OpenAI Platform"
 # The page carries 35 months of history. Only the newest entries can be inside
 # the recency window, and the central cap trims further.
 OPENAI_CHANGELOG_MAX_ITEMS = int(os.getenv("OPENAI_CHANGELOG_MAX_ITEMS", "15"))
+
+# Anthropic's own posts, scraped rather than fetched as a feed.
+#
+# Anthropic published 1 item into this digest's whole history, against 179 from
+# Hacker News, because it has no feed: /rss.xml, /feed.xml, /index.xml and the
+# per-section variants all 404. The listing pages are server-rendered and
+# robots.txt says `Allow: /`, so they are read directly. Unlike openai.com/index/*
+# the post pages answer 200 to a plain client, and the summarizer gets 7,000 to
+# 12,000 characters from them rather than a meta description.
+#
+# Two sources, not one, for the same reason the OpenAI changelog is separate
+# from the OpenAI blog: /news is mostly policy, partnerships and offices, while
+# /engineering is the applied-engineering writing this reader is here for. Under
+# one name the per-source cap of 2 would let a week of policy posts crowd the
+# engineering post out.
+ANTHROPIC_SOURCE = "Anthropic"
+ANTHROPIC_ENGINEERING_SOURCE = "Anthropic Engineering"
+
+# listing URL -> (source name, path prefix for a post's permalink).
+# A post tagged both News and Research resolves under either prefix — both
+# /news/alignment-faking and /research/alignment-faking return the same page —
+# so the listing a post was found on always gives a working URL.
+ANTHROPIC_LISTINGS = {
+    "https://www.anthropic.com/news": (ANTHROPIC_SOURCE, "/news/"),
+    "https://www.anthropic.com/engineering": (ANTHROPIC_ENGINEERING_SOURCE, "/engineering/"),
+}
+
+# The news listing embeds its whole archive — 276 posts on 17-Oct-2026 — so the
+# newest few are the only ones that can be inside the recency window, and the
+# central per-source cap trims further.
+ANTHROPIC_MAX_ITEMS = int(os.getenv("ANTHROPIC_MAX_ITEMS", "15"))
 
 # Minimum candidate posts pulled per blog feed before keyword filtering.
 # Without a floor, adding feeds shrinks each feed's share to a single post,

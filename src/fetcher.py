@@ -1,4 +1,4 @@
-"""Aggregate items from all fetcher sources (blogs, GitHub, Hacker News)."""
+"""Aggregate items from every fetcher source, deduplicate them, and sort by date."""
 
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -6,6 +6,8 @@ from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
 
 from src.constants import (
+    ANTHROPIC_ENGINEERING_SOURCE,
+    ANTHROPIC_SOURCE,
     BLOG_FEEDS,
     DEDUP_SIMILARITY_THRESHOLD,
     DIGEST_MAX_AGE_HOURS,
@@ -13,6 +15,7 @@ from src.constants import (
     OPENAI_CHANGELOG_SOURCE,
     THREAD_POOL_WORKERS,
 )
+from src.fetchers.anthropic_fetcher import fetch_anthropic_posts
 from src.fetchers.blog_fetcher import fetch_blog_posts
 from src.fetchers.github_fetcher import fetch_github_releases
 from src.fetchers.hackernews_fetcher import fetch_hackernews_stories
@@ -144,7 +147,13 @@ AGGREGATOR_SOURCES = {"Hacker News", "Hugging Face", "AI Alignment Forum"}
 # The changelog joins them: it is a lab's own release notes, which is as
 # curated as a source gets, and keyword-gating it would drop a pricing change
 # for naming no topic keyword.
-CURATED_SOURCES = frozenset(BLOG_FEEDS) | {OPENAI_CHANGELOG_SOURCE}
+# Anthropic joins them for the same reason: its two listings are a lab's own
+# writing, scraped only because the lab publishes no feed.
+CURATED_SOURCES = frozenset(BLOG_FEEDS) | {
+    OPENAI_CHANGELOG_SOURCE,
+    ANTHROPIC_SOURCE,
+    ANTHROPIC_ENGINEERING_SOURCE,
+}
 
 # Version-like tokens: v1.2.0, 5.3, 3.5-turbo, GPT-4o. Two titles carrying
 # different ones describe different releases however similar they read.
@@ -257,6 +266,7 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
         ("Hacker News", lambda: fetch_hackernews_stories(filter_keywords=filter_keywords)),
         ("HF Papers", lambda: fetch_huggingface_papers(filter_keywords=filter_keywords)),
         ("OpenAI Changelog", fetch_openai_changelog),
+        ("Anthropic", fetch_anthropic_posts),
     ]
 
     all_items: list[dict] = []

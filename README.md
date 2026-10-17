@@ -1,506 +1,130 @@
 # Applied AI Dev Digest
 
-Daily digest for an **applied AI engineer** — delivered to Telegram.
+A daily digest for applied AI engineers, delivered to Telegram at **12:00 noon
+America/Chicago**. It answers "what changes what I build this week" rather than
+"what matters most to the field", so a callable model, a price shift or a faster
+inference engine ranks above a capability no one can access yet.
 
-The question it answers is not "what is most significant to the field" but "what changes what I build this week". A model I can call today, a price or latency shift, an inference engine that got faster, a technique with numbers behind it — those rank above a frontier capability I cannot access yet. Sources are the frontier labs' own blogs, the serving and SDK repos, Hacker News and Hugging Face Daily Papers.
+Every run fetches the day's candidates, has GPT-4o-mini screen, dedupe and rank
+them, opens the top link to write a structured brief from the article itself,
+and sends that brief plus up to 5 headlines to Telegram. It also writes a PDF
+report and appends to `data/papers.json` and `data/digests.json`.
 
-## Features
+## Sources
 
-- Fetches from **10 AI lab and platform blogs** via RSS (OpenAI, Google DeepMind, Google AI, Google Research, Meta AI, Mistral AI, Qwen, Hugging Face Blog, NVIDIA, Together AI)
-- Reads the **OpenAI platform changelog** — model releases with their token prices, new service tiers, API fixes worth re-running evals over. OpenAI's news blog answers 403 to every non-browser client, so this is where their developer news actually comes from
-- Reads **Anthropic's news and engineering listings** — they carry no RSS feed, so the pages are read directly. Anthropic contributed 1 item in the project's whole history before this; Hacker News contributed 179
-- Tracks **7 GitHub repos** for releases that mark a shipped development (official model SDKs plus the serving stacks new models land in)
-- Monitors **Hacker News** for frontier lab discussions (score > 100, last 24h)
-- Surfaces **Hugging Face Daily Papers** with high upvotes (20+, last 24h)
-- **11 configurable topics** (Core / Applied / Emerging) with toggle UI and custom keywords; the six Core topics and both Applied ones (Open Weights, Compute & Infrastructure) are enabled by default
-- Uses GPT-4o-mini to **screen, dedupe and rank** the day's candidates in one call: each is kept or rejected for whether an applied engineer should see it, duplicate coverage is collapsed to the copy closest to the source, and the keepers are ordered by usefulness. Influenced by **user feedback weights**; rejections are logged with the model's reason
-- **Opens the link.** The brief is written from the article's own text, not the feed teaser — those ran a median of 273 characters and were sometimes empty, which left `availability` a non-answer 39% of the time. Falls back to the feed summary when a page is paywalled, JS-rendered or blocked, and **tells the model that is what happened**, so a thin teaser produces "Not stated" rather than five confident fields written from two sentences
-- Sends the **top pick as a full brief plus up to 5 headlines** from the rest of the ranking. The model writes each headline line, so it carries the point rather than restating the title — "vLLM 0.12: 2x throughput on MoE models", not "vLLM v0.12 released"
-- Generates a **structured lab-release brief** (What shipped / Capabilities / Availability / Why it matters / Caveats)
-- Sends to Telegram via Bot API
-- Produces a PDF report
-- Exports structured data to JSON (papers + digests)
-- Runs via GitHub Actions at **12:00 noon America/Chicago**, dispatched on time and held steady across daylight saving (see **Scheduling**)
-- **Pause/resume** digest from the dashboard
-- **Send test** button re-sends the last digest to Telegram
-- **Digest preview** page shows the last sent digest as a Telegram message mockup
-- **Feedback-driven ranking** — thumbs up/down on past digests adjusts topic weights, influencing future picks
+| Kind | What |
+|---|---|
+| Blog feeds (RSS) | OpenAI, Google DeepMind, Google AI, Google Research, Meta AI, Mistral, Qwen, Hugging Face, NVIDIA, Together AI |
+| Scraped pages | Anthropic news + engineering, OpenAI platform changelog (neither has a usable feed) |
+| GitHub releases | openai-python, anthropic-sdk-python, python-genai, transformers, vllm, llama.cpp, mcp/servers |
+| Hacker News | Top stories, frontier-lab keywords, score > 100, last 24h |
+| Hugging Face | Daily Papers, 20+ upvotes, last 24h |
+
+Lab feeds are not keyword-filtered (publication venue is the signal); the open
+sources — HN and HF papers — are. 11 topics across Core / Applied / Emerging are
+defined in `src/topic_config.py` and mirrored in `dashboard/src/lib/topics.ts`;
+keep the two in sync when editing. The six Core topics and both Applied ones are
+on by default.
 
 ## Dashboard
 
-Next.js app deployed on Vercel with top nav: **Topics · Preview · History · Stats · Settings**
-
-| Page | Description |
-|------|-------------|
-| **Topics** | Toggle 11 lab-development topics on/off, add custom keywords per topic |
-| **Preview** | Shows the last sent digest as a Telegram message mockup, re-send it |
-| **History** | Past sent items, grouped by week, with feedback buttons |
-| **Stats** | Bar chart showing which topics win the daily ranking most often |
-| **Settings** | Blog sources, GitHub repos, HN config, schedule, Telegram, Actions link |
-
-All state (topics, pause, feedback, stats) stored in **Vercel KV** (Upstash Redis).
-
-## Example Message
-
-```
-#ModelRelease · OpenAI · 🧠 model
-
-*Introducing GPT-4o mini*
-
-*What shipped*
-OpenAI released GPT-4o mini, a smaller GPT-4-class model, in the API.
-
-*Capabilities*
-128K context with function calling, JSON mode, and structured outputs.
-Reported close to GPT-4o on coding and reasoning benchmarks.
-
-*Availability*
-Generally available in the API today at $0.15/1M input tokens.
-
-*Why it matters*
-Drops the price floor for GPT-4-class quality, making high-volume
-classification, extraction, and chat workloads viable.
-
-*Caveats*
-Benchmark numbers are self-reported; no independent evaluation yet.
-
-https://openai.com/index/gpt-4o-mini
-```
-
-> This is an illustrative example. Actual messages are generated by the pipeline.
-
-## Data Sources
-
-### Blog Feeds
-
-| Source | Feed |
-|--------|------|
-| OpenAI | openai.com/news/rss.xml |
-| Google DeepMind | deepmind.google/blog/rss.xml |
-| Google AI | blog.google/technology/ai/rss/ |
-| Google Research | research.google/blog/rss/ |
-| Meta AI | engineering.fb.com/category/ml-applications/feed/ |
-| Mistral AI | mistral.ai/rss.xml |
-| Qwen | qwenlm.github.io/blog/index.xml |
-| Hugging Face Blog | huggingface.co/blog/feed.xml |
-| NVIDIA | blogs.nvidia.com/feed/ |
-| Together AI | www.together.ai/blog/rss.xml |
-
-**Anthropic is read from its listing pages**, not from a feed — see below.
-
-**EleutherAI was removed** — `blog.eleuther.ai/{index,rss,feed}.xml` and
-`eleuther.ai/index.xml` all return 404, so the feed contributed nothing but a
-parse-error warning on every run.
-
-### Anthropic
-
-| Source | Page |
-|--------|------|
-| Anthropic | www.anthropic.com/news |
-| Anthropic Engineering | www.anthropic.com/engineering |
-
-**Anthropic has no feed, so the listing pages are read directly.**
-`/rss.xml`, `/feed.xml`, `/index.xml`, `/news/rss.xml`, `/news/feed.xml` and
-`/engineering/rss.xml` all answer 404. The cost of that gap was measurable:
-across the project's whole history Anthropic contributed **1 item** while Hacker
-News contributed **179**, and a digest for an applied engineer missing one of
-the two labs whose SDKs it tracks is a hole in the source list, not a quirk.
-
-Reading them is straightforward where OpenAI's blog is not. `robots.txt` says
-`Allow: /`, both listings answer **200** to a plain client, and so do the post
-pages — the summarizer reads **7,000 to 12,000 characters** from them, against
-the ~150 an OpenAI feed entry gives.
-
-- **The content payload is parsed, not the markup.** Each listing streams its
-  posts as JSON carrying `title`, `summary`, `publishedOn` and `slug` — the
-  site's content model, which outlives a redesign. The visible markup names
-  classes like `PublicationList-module-scss-module__KxYrHG__date`, whose hash
-  changes on every rebuild, and the visible list is also the short one: 10 posts
-  against the payload's 276, with a day-resolution date against the payload's
-  timestamp.
-- **The scan is not anchored to how Next.js streams it.** Any JSON object in the
-  page carrying both `publishedOn` and `slug` is read as a post, so the payload
-  moving between `self.__next_f`, an inline `__NEXT_DATA__` or whatever comes
-  next costs nothing. A shape change that defeats it yields zero posts plus a
-  warning rather than an exception, and one listing failing leaves the other's
-  items in place.
-- **Two sources, not one**, for the same reason the OpenAI changelog is separate
-  from the OpenAI blog. `/news` is mostly policy, partnerships and offices;
-  `/engineering` is the applied-engineering writing this reader is here for.
-  Under one name the per-source cap of 2 would let a week of policy posts crowd
-  the engineering post out.
-- **Dates arrive in two shapes.** `/news` gives a timestamp with a trailing `Z`;
-  `/engineering` gives a bare date, which `_parse_published` treats as midnight
-  UTC. A post tagged both News and Research resolves under either prefix — both
-  `/news/alignment-faking` and `/research/alignment-faking` return the same page
-  — so the listing a post was found on always yields a working URL.
-
-### OpenAI Platform Changelog
-
-| Source | Page |
-|--------|------|
-| OpenAI Platform | platform.openai.com/docs/changelog |
-
-**OpenAI's news blog cannot be read, so the digest reads their changelog
-instead.** Every post on `openai.com/index/*` answers **403** with
-`cf-mitigated: challenge` and an `accept-ch: Sec-CH-UA-*` client-hint demand.
-That response is identical for this project's user agent, for curl's default
-and for no user agent at all, so it is Cloudflare bot management rather than a
-user-agent filter and no header defeats it — only a browser engine would, which
-this project does not do. Their RSS feed stays readable but carries only each
-page's meta description: 1,243 entries, every one a single sentence of about
-150 characters, with no `content:encoded`. Measured on a live candidate pool,
-the two OpenAI items reached the summarizer with 148 and 152 characters while
-the nine items from other sources gave 2,780 to 12,000.
-
-`platform.openai.com/docs/changelog` is not challenged, and for this reader it
-is the better source anyway. The news blog's three most recent entries were
-"The eternal complement", "How Albertsons Companies is reimagining retail from
-the inside out" and "The Den frees up 10-15 hours a week to grow with ChatGPT
-Work". The changelog's were a new model with its per-million-token prices, a
-service tier that cuts the time between output tokens, and an image-encoding
-bug worth re-running evaluations over.
-
-It is scraped, not fetched as a feed — one server-rendered page holds all 174
-entries, with no RSS and no per-entry permalink:
-
-- **Hashed CSS class names are matched on their stable prefix**
-  (`_ChangelogMarkdown_`, not `_ChangelogMarkdown_pvkq8_19`), and a shape change
-  yields zero entries plus a warning rather than an exception. A redesign costs
-  a day of OpenAI coverage, not the digest.
-- **Each entry carries its own identity** (`openai-changelog:<date>:<slug>`)
-  because all of them share one URL. Keying on the URL would have collapsed the
-  source to a single item, and once that item had been sent the already-sent
-  filter would have suppressed OpenAI for good.
-- **Change type and affected models are folded into the body** — `Change type:
-  Fix`, `Affects: gpt-6-sol, gpt-6-luna` — since those live in badges rather
-  than prose and are the most actionable part of the page.
-- **Dates are taken as stated, at midnight UTC.** The day badge carries no time,
-  so an entry is eligible for slightly under the full `DIGEST_MAX_AGE_HOURS`
-  window rather than being credited with a time it does not claim. Over the last
-  180 days the 72-hour window would have caught at least one changelog entry on
-  **97 of them (53%)**; OpenAI publishes every one to seven days.
-
-The OpenAI news blog stays in `BLOG_FEEDS`: it occasionally carries real
-engineering and safety work, and a title plus a 150-character teaser is still
-worth a headline line. Those items are simply labelled honestly to the
-summarizer (below) rather than dressed up as full articles.
-
-#### These feeds are not keyword-filtered
-
-A post on a frontier lab's own blog is an AI development because of where it
-was published; it does not have to prove it by containing a topic keyword.
-Requiring one starved the digest: across 24 days the lab feeds won the daily
-pick exactly once, while Hacker News commentary and client-library version
-bumps took 22 of 24. The gate dropped DeepMind's "Introducing SynthID Bio" and
-every one of Google Research's five most recent posts for naming no model
-family, and admitted "StreetComplete on iOS is now in public beta" — an
-OpenStreetMap editor — on the phrase "public beta".
-
-The keyword gate therefore applies only to the open sources, Hacker News and
-Hugging Face Daily Papers, where it is the only thing separating AI news from
-everything else. Curated feeds are still filtered for genuine noise: how-to
-posts, and the `EXCLUDE_KEYWORDS` blocklist (hiring, funding rounds, and the
-consumer content NVIDIA's corporate blog carries alongside its research).
-Every item is still tagged with a topic for the dashboard and feedback
-weighting.
-
-Selection within a feed is by publication date, not position. The fetcher
-previously read the first five entries of each feed regardless of how much a
-lab had published, which turned 2,593 available entries into 55 considered.
-
-### GitHub Releases
-
-| Repo | Why |
-|------|-----|
-| openai/openai-python | OpenAI SDK — new model IDs and API surfaces land here |
-| anthropics/anthropic-sdk-python | Anthropic SDK |
-| googleapis/python-genai | Google Gemini SDK |
-| huggingface/transformers | New open-weight architectures land here first |
-| vllm-project/vllm | Serving support for new models |
-| ggml-org/llama.cpp | Local inference support for new models |
-| modelcontextprotocol/servers | MCP ecosystem |
-
-### Hugging Face Daily Papers
-
-Trending papers from `huggingface.co/api/daily_papers`, filtered to 20+ upvotes, last 24 hours. Top 5 returned.
-
-### Hacker News
-
-Top 100 stories filtered by frontier-lab keywords, score > 100, last 24 hours. Top 5 returned.
-
-### GitHub Release Filters
-
-Releases are skipped if any of these apply:
-- Pre-release flag set
-- Older than 24 hours
-- Build-number tag (e.g. `b8671`) — incremental builds, not real releases
-- Release body under 200 characters — too thin to be meaningful
-
-## Topics
-
-The six **Core** topics are enabled by default; toggle the rest from the dashboard.
-
-| ID | Name | Category | Default | Keywords |
-|----|------|----------|---------|----------|
-| model_releases | Model Releases | Core | on | model release, frontier model, reasoning model, GPT-, Claude, Gemini, Llama, Mistral, Qwen, DeepSeek, Grok, … |
-| product_api | Product & API | Core | on | batch api, fine-tuning api, responses api, assistants api, context window, token pricing, model deprecation |
-| lab_research | Lab Research | Core | on | technical report, scaling law, pretraining, post-training, RLHF, mixture of experts, test-time compute, … |
-| agents_tooling | Agents & Tooling | Core | on | agentic, AI agent, tool use, function calling, computer use, model context protocol, coding agent, … |
-| benchmarks | Benchmarks & Evals | Core | on | benchmark, eval, SWE-bench, GPQA, ARC-AGI, AIME, FrontierMath, leaderboard, … |
-| safety_system_cards | Safety & System Cards | Core | on | system card, responsible scaling, preparedness framework, frontier safety, red-teaming, interpretability, … |
-| open_weights | Open Weights | Applied | on | open weights, open source model, weights release, Apache 2.0, OLMo, Gemma, … |
-| infrastructure | Compute & Infrastructure | Applied | on | inference, quantization, training run, gpu cluster, TPU, Blackwell, Trainium, serving, … |
-| multimodal | Multimodal & Generative Media | Emerging | off | multimodal, vision-language, image generation, video generation, speech model, world model, … |
-| enterprise_deployment | Enterprise Deployment | Emerging | off | enterprise, deployment, case study, on-premise, cloud partnership, customer adoption, … |
-| policy_regulation | Policy & Regulation | Emerging | off | EU AI Act, AI regulation, executive order, AI safety institute, export controls, compute governance, … |
-
-Topic definitions live in `src/topic_config.py` and are mirrored in `dashboard/src/lib/topics.ts` — keep the two in sync when editing.
-
-Keywords are matched as case-insensitive **substrings** against an item's title and summary, so avoid short tokens that hide inside common words (e.g. `api` matches "rapid"). Prefer multi-word identifiers.
+Next.js app on Vercel: **Topics · Preview · History · Stats · Settings** — toggle
+topics and keywords, see the last digest as a Telegram mockup and re-send it,
+give thumbs up/down on past items (which reweights ranking), view topic stats,
+and pause or resume the digest. State lives in Vercel KV (Upstash Redis).
 
 ## Setup
 
-### 1. Get API Keys
+1. **Telegram** — create a bot with [BotFather](https://t.me/BotFather), save the
+   token, and get your chat ID from
+   `https://api.telegram.org/bot<TOKEN>/getUpdates`.
+2. **OpenAI** — create an API key at
+   [platform.openai.com](https://platform.openai.com/).
+3. **Vercel KV** — in your Vercel project, Storage → Create Database → Upstash
+   KV. Vercel sets `KV_REST_API_URL` and `KV_REST_API_TOKEN`; copy the same
+   values into GitHub Secrets.
 
-**Telegram:**
-- Create a bot via [BotFather](https://t.me/BotFather) on Telegram
-- Save the Bot Token
-- Get your Chat ID (send a message to your bot, then check `https://api.telegram.org/bot<TOKEN>/getUpdates`)
+**GitHub Secrets** (Settings → Secrets → Actions):
 
-**OpenAI:**
-- Sign up at [platform.openai.com](https://platform.openai.com/)
-- Create an API key
+| Secret | Notes |
+|---|---|
+| `TELEGRAM_BOT_TOKEN` | required |
+| `TELEGRAM_CHAT_ID` | required |
+| `OPENAI_API_KEY` | required — ranking and summaries |
+| `KV_REST_API_URL` | optional — enables dynamic topics |
+| `KV_REST_API_TOKEN` | optional — enables dynamic topics |
 
-**Vercel KV (for dashboard features):**
-- In your Vercel project, go to **Storage** tab → **Create Database** → select **Upstash KV**
-- Vercel automatically sets `KV_REST_API_URL` and `KV_REST_API_TOKEN` as environment variables
-- Copy these same values to GitHub Secrets for the pipeline to read/write topic config and stats
+`GITHUB_TOKEN` is provided automatically by Actions. Locally, setting one in
+`.env` only raises the rate limit for release fetching.
 
-### 2. Configure Secrets
+**Vercel env vars**: add `KV_REST_API_URL`, `KV_REST_API_TOKEN`,
+`TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` for the dashboard features.
 
-**GitHub Secrets** (Settings > Secrets > Actions):
+## Scheduling
 
-| Secret | Description |
-|--------|-------------|
-| `TELEGRAM_BOT_TOKEN` | Telegram Bot Token from BotFather |
-| `TELEGRAM_CHAT_ID` | Target Telegram chat ID |
-| `OPENAI_API_KEY` | OpenAI API key (required for ranking & summaries) |
-| `KV_REST_API_URL` | Upstash Redis REST URL (optional — enables dynamic topics) |
-| `KV_REST_API_TOKEN` | Upstash Redis REST token (optional — enables dynamic topics) |
-
-`GITHUB_TOKEN` is automatically provided by GitHub Actions — no manual secret needed for release tracking.
-
-**Vercel Environment Variables** (Project Settings > Environment Variables):
-
-Add `KV_REST_API_URL`, `KV_REST_API_TOKEN`, `TELEGRAM_BOT_TOKEN`, and `TELEGRAM_CHAT_ID` to enable dashboard features (send test, pause, feedback, stats).
-
-**For local development:** Set `GITHUB_TOKEN` in `.env` to a personal access token for GitHub release fetching. This is optional — the fetcher works without auth but has lower rate limits.
-
-### 3. Scheduling
-
-The digest is delivered once a day at **12:00 noon America/Chicago**. That is
-the only scheduled send: there is no weekly roundup.
-
-**Why this is not just a cron.** A cron cannot hold a delivery time on GitHub
-Actions. Scheduled delivery is best-effort, and measured on this repo runs
-arrived between 30 minutes and 5h23m after their slot — enough to put a
-"daily" digest anywhere from late morning to evening, and occasionally past
-midnight onto the next date. Polling hourly narrowed that to "sometime after
-noon", with observed sends from 12:05 to 16:41 local, but no cron interval
-fixes it, because the lateness is in the delivery and not in the schedule.
-
-**How.** Two things, and `src/schedule_guard.py` decides in both:
+`daily-news.yml` polls hourly and `src/schedule_guard.py` decides each tick:
 
 | Condition | Result |
 |---|---|
 | Already sent today | skip |
 | Local time has passed 12:00 | send |
-| Target is within 3 hours | hold for it, then send |
-| Target is further off than that | skip |
+| Target within 3 hours | hold, then send |
+| Otherwise | skip |
 
-*An early tick holds.* A cron tick honoured during the morning waits for noon
-and sends on the minute, so the digest lands at noon with nothing external
-involved. The hold is capped at three hours (`DAILY_MAX_WAIT_SECONDS`), so a
-tick honoured at 02:00 exits rather than occupying a runner all morning, and
-GitHub kills any job at six hours regardless. This is better odds, not a
-guarantee: on a day GitHub honours no tick before noon, the first one after it
-sends immediately, which is the old behaviour and the floor on how late the
-digest can be.
+Scheduled runs on GitHub Actions are best-effort, so an external scheduler
+POSTing `workflow_dispatch` at 12:01 local pins delivery to noon; the hourly
+hold is the fallback when it doesn't fire. The guard also runs on dispatch, so a
+double fire cannot send twice. The target is evaluated in `America/Chicago`, so
+noon stays noon across daylight saving. `data/schedule_state.json` records the
+last sent date and is committed with the output.
 
-*A dispatch is immediate.* `workflow_dispatch` is not best-effort — a dispatch
-starts within seconds — so an external scheduler calling the workflow at 12:01
-local pins the digest to noon every day rather than most days. A dispatch skips
-the hold, since it either arrives at the target already or is a person who
-wants the digest now.
+Overrides: `DIGEST_TIMEZONE` (`America/Chicago`), `DAILY_TARGET_HOUR` (`12`),
+`DAILY_MAX_WAIT_SECONDS` (`10800`).
 
-Because the guard runs on a dispatch as well, a scheduler that fires twice — or
-fires on a day a cron tick already sent — cannot produce a second digest.
-Almost every tick exits at the guard step, with no dependency install and no
-fetching, so a no-op costs seconds.
+To run by hand, use **Run workflow** on *Daily Applied AI Dev Digest* in the
+Actions tab; the guard still applies unless you tick **force**.
 
-**Setting up the dispatcher.** Optional — the hold above covers most days
-without it. Anything that can make one authenticated POST a day will do; it
-needs a token with `actions: write` on this repo, which a GitHub App
-installation token does not get by default.
-
-```
-POST https://api.github.com/repos/<owner>/Applied-AI-Dev-Digest/actions/workflows/daily-news.yml/dispatches
-Authorization: Bearer <token>
-Accept: application/vnd.github+json
-
-{"ref": "master", "inputs": {}}
-```
-
-Schedule that for 12:01 America/Chicago, in local time rather than a fixed UTC
-hour, so it follows the November CST change along with the guard. One minute
-past noon rather than exactly noon: the guard reads whole hours, so a
-dispatcher that fires a few seconds early would find nothing due and the day
-would fall through to the hourly poll.
-
-If the dispatcher goes quiet, nothing breaks — the digest falls back to the
-holding cron described above.
-
-**Daylight saving.** The target is evaluated in `America/Chicago`, not as a
-fixed UTC hour. Cron only understands UTC, so a fixed hour would silently slip
-by one when CDT gives way to CST in November. Evaluating locally keeps noon at
-noon year-round.
-
-**State.** `data/schedule_state.json` records the last run date and is
-committed with the digest output. The day is marked only after `main.py`
-succeeds, so a failure leaves it due and the next tick retries rather than
-skipping the day. If a run sends but fails to commit, the next tick runs again;
-`get_sent_top_paper_ids()` filters items already sent as a top pick, so that
-repeat finds nothing new and sends nothing.
-
-**Changing the times.** Override with environment variables rather than editing
-the cron:
-
-| Variable | Default |
-|---|---|
-| `DIGEST_TIMEZONE` | `America/Chicago` |
-| `DAILY_TARGET_HOUR` | `12` |
-| `DAILY_MAX_WAIT_SECONDS` | `10800` |
-
-**Running by hand.** The Actions tab offers **Run workflow** on *Daily Applied
-AI Dev Digest*. By default it behaves like any tick: the guard still decides,
-so running it at 09:00, or a second time after today's digest went out, sends
-nothing. Tick **force** to send immediately regardless of the time or of
-today's state.
-
-**Why hourly, not every 15 minutes.** The poll started at `*/15`. GitHub
-honoured roughly one tick in twelve at that rate, with observed gaps of 1.5 to
-4.5 hours, so the finer interval was precision on paper only. Asking for less
-appears to get more.
-
-**Trade-off.** The Actions tab gets ~24 entries a day instead of one. Actions
-minutes are free on public repositories, so this costs nothing but list noise.
-
-## Local Development
+## Local development
 
 ```bash
-# Clone the repository
 git clone https://github.com/vickey-kapoor/Applied-AI-Dev-Digest.git
 cd Applied-AI-Dev-Digest
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
+python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
+cp .env.example .env            # then add your keys
 
-# Create .env file with your keys
-cp .env.example .env
-# Edit .env with your API keys
-
-# Run the pipeline
-python main.py
-
-# Preview without sending (local only, outputs JSON to stdout)
-# Note: the Vercel dashboard reads from KV instead
-python preview.py
-
-# Run tests
-pytest
+python main.py                  # run the pipeline
+python preview.py               # preview without sending (JSON to stdout)
+pytest                          # run the tests
 ```
 
-### Dashboard
+Dashboard:
 
 ```bash
 cd dashboard
 npm install
-npm run dev       # Dev server (Turbopack)
-npm run build     # Production build
-npm run lint      # ESLint
-npm test          # Vitest unit tests
+npm run dev     # dev server
+npm run build   # production build
+npm run lint    # ESLint
+npm test        # Vitest
 ```
 
-### Continuous Integration
+**CI** (`.github/workflows/ci.yml`) runs on every PR and on pushes to `master`:
+`pytest` on Python 3.11, plus `tsc --noEmit`, `npm run lint` and `npm test` for
+the dashboard. Every network and OpenAI call is mocked, so CI needs no secrets
+and never sends a digest.
 
-`.github/workflows/ci.yml` runs on every pull request and on pushes to
-`master`, in two parallel jobs:
-
-| Job | Runs |
-|---|---|
-| Python tests | `pytest` on 3.11 (331 tests) |
-| Dashboard typecheck and lint | `npm ci`, `tsc --noEmit`, `npm run lint`, `npm test` (14 tests) |
-
-The suite mocks every network and OpenAI call, so CI needs no secrets and the
-workflow runs read-only. It is separate from `daily-news.yml` and never sends a
-digest.
-
-## Project Structure
+## Layout
 
 ```
-Applied-AI-Dev-Digest/
-├── .github/workflows/
-│   ├── ci.yml                    # Tests + typecheck/lint on every PR
-│   └── daily-news.yml            # Hourly poll that holds for noon, plus dispatch
-├── src/
-│   ├── fetchers/
-│   │   ├── anthropic_fetcher.py  # Anthropic news + engineering (scraped; no feed exists)
-│   │   ├── blog_fetcher.py       # RSS fetch from 10 AI lab/platform blogs
-│   │   ├── github_fetcher.py     # GitHub release tracking (7 repos)
-│   │   ├── hackernews_fetcher.py # HN top stories filtered to frontier labs
-│   │   ├── huggingface_fetcher.py # HF Daily Papers (upvotes ≥ 20)
-│   │   └── openai_changelog_fetcher.py  # OpenAI platform changelog (scraped; their blog 403s)
-│   ├── utils/
-│   │   └── retry.py              # Retry with exponential backoff
-│   ├── ai_text.py                # Prompt sanitization
-│   ├── article_fetcher.py        # Opens the linked page; dependency-free extraction
-│   ├── constants.py              # All config constants
-│   ├── fetcher.py                # Source aggregation + identity deduplication
-│   ├── json_exporter.py          # Atomic JSON export (papers + digests)
-│   ├── kv_client.py              # Vercel KV (Upstash Redis) client
-│   ├── logger.py                 # Centralized logging
-│   ├── news_ranker.py            # GPT-4o-mini ranking + feedback weights
-│   ├── news_summarizer.py        # Structured lab-release brief generation
-│   ├── pdf_generator.py          # PDF report generation
-│   ├── schedule_guard.py         # Decides if the digest is due, or worth holding for
-│   ├── telegram_sender.py        # Telegram Bot API
-│   └── topic_config.py           # Dynamic topic config from KV
-├── dashboard/                    # Next.js dashboard (Vercel)
-│   └── src/
-│       ├── app/
-│       │   ├── topics/           # Topic toggle UI + custom keywords
-│       │   ├── preview/          # Digest preview + Telegram mockup
-│       │   ├── history/          # Past items by week + feedback buttons
-│       │   ├── stats/            # Topic performance bar chart
-│       │   ├── settings/         # Pipeline config overview
-│       │   └── api/              # API routes (topics, pause, feedback, etc.)
-│       ├── components/
-│       │   └── nav.tsx           # Top nav with pause toggle + send test
-│       ├── lib/
-│       │   ├── topics.ts         # Topic definitions + helpers
-│       │   └── kv.ts             # Shared Redis client
-│       └── __tests__/            # Vitest suite (14 tests)
-├── data/                         # papers.json, digests.json, schedule_state.json
-├── reports/                      # Generated PDF reports
-├── tests/                        # Pytest test suite (331 tests)
-├── main.py                       # Pipeline entry point
-├── preview.py                    # Local-only preview (outputs JSON; Vercel reads KV)
-└── requirements.txt
+src/fetchers/   one module per source
+src/            ranking, summarizing, article extraction, Telegram, PDF, KV, schedule guard
+dashboard/      Next.js dashboard (Vercel)
+data/           papers.json, digests.json, schedule_state.json
+reports/        generated PDFs
+tests/          pytest suite
+main.py         pipeline entry point
+preview.py      local preview
 ```
 
 ## License

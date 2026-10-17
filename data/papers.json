@@ -1,6 +1,82 @@
 {
   "papers": [
     {
+      "id": "bf4a06f8-f043-59f2-8882-8235f5317bc9",
+      "title": "DeepSeek-v4.1-Flash-1017",
+      "summary": "393 points · 410 comments",
+      "source": "Hacker News",
+      "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "published_at": "2026-10-17T08:21:25+00:00",
+      "fetched_at": "2026-10-17T17:01:36.476414Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "86433d10-ef9e-5c1b-9350-fe4e4d63e589",
+      "title": "How the Claude Code team does code review",
+      "summary": "436 points · 412 comments",
+      "source": "Hacker News",
+      "url": "https://claude.dev/blog/solving-code-review-at-anthropic/",
+      "published_at": "2026-10-16T19:04:47+00:00",
+      "fetched_at": "2026-10-17T17:01:36.476414Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "26b81eff-0fa7-5b16-97fb-c570de413735",
+      "title": "How Itaú is building generative AI for its entire customer base",
+      "summary": "With ia.i, a conversational interface, and the IARA governance platform, Itaú is applying its AI First strategy to customers and employees — in one of Brazil’s most regulated sectors.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/itau-generative-ai",
+      "published_at": "2026-10-16T19:00:00+00:00",
+      "fetched_at": "2026-10-17T17:01:36.476414Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "91104158-ae8d-5144-b81f-69c10563721d",
+      "title": "Grounding AI agents in biological reality: Building blocks for autonomous wet labs",
+      "summary": "General Science",
+      "source": "Google Research",
+      "url": "https://research.google/blog/grounding-ai-agents-in-biological-reality-building-blocks-for-autonomous-wet-labs/",
+      "published_at": "2026-10-16T18:11:34+00:00",
+      "fetched_at": "2026-10-17T17:01:36.476414Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b8cf82ef-251f-5409-9415-0ff474d2835c",
+      "title": "Benefit Street Partners answers questions faster with Codex",
+      "summary": "Anant Kumar builds tools to compare loan valuations and analyze credit agreements, using Codex for code review and faster follow-ups.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/benefit-street-partners",
+      "published_at": "2026-10-16T00:00:00+00:00",
+      "fetched_at": "2026-10-17T17:01:36.476414Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "ece3ea5e-795b-52d5-bcd0-618e91acd1d2",
       "title": "Scaling Indic Pretraining: 2.8 Trillion Tokens and an Open Data Generation Pipeline",
       "summary": "AI4Bharat and NVIDIA shipped the Nemotron-pretraining-Indic-v1 model, which includes approximately 2.8 trillion tokens across 22 Indian languages. The model supports native-script and romanized data for 22 Indian languages, with a total of 2,601.0 billion native-script tokens and 224.6 billion romanized tokens. It utilizes the Gemma-4 tokenizer and incorporates a four-stage synthetic data generation pipeline that includes translation, quality assessment, and targeted repair.",

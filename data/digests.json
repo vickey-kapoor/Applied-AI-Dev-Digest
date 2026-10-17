@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-17",
+      "run_at": "2026-10-17T17:01:37.532983Z",
+      "top_paper_id": "a7778d2b-9eeb-5fe4-a9a6-456883601681",
+      "papers_fetched": 15,
+      "pdf_path": "reports/17-Oct/Meta_Muse_Spark_Open_is_live_on_Together_AI.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "39051905843"
+    },
+    {
       "date": "2026-10-16",
       "run_at": "2026-10-16T17:01:41.520355Z",
       "top_paper_id": "ece3ea5e-795b-52d5-bcd0-618e91acd1d2",
@@ -760,14 +769,6 @@
       "pdf_path": "reports/18-Jul/Endogenous_Alignment.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29653125258"
-    },
-    {
-      "date": "2026-07-17",
-      "top_paper_id": "e0281b64-27f0-5942-af5b-920c8e0524e7",
-      "papers_fetched": 2,
-      "pdf_path": "reports/17-Jul/Evidence_of_inconsistencies_in_evaluation_process.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "29599431521"
     }
   ]
 }

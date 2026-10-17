@@ -1,11 +1,14 @@
 """Unit tests for news ranker module."""
 
+import json
+
 import pytest
 from unittest.mock import Mock, patch
 
 from src.news_ranker import (
     rank_news,
     rank_news_ranked,
+    _call_openai_ranking,
     _parse_verdict,
     _sanitize_text,
 )
@@ -317,3 +320,65 @@ class TestUnusableVerdictIsLogged:
         )
         assert "falling back to date order" in warned
         assert "length" in warned
+
+
+class TestRepliesThatAreNotBareJson:
+    """A verdict wrapped in markdown or prose must still count as a verdict.
+
+    On 08-Oct-2026 the ranker logged "Unusable ranking verdict
+    (finish_reason=stop, 1414 chars)" and fell back to date order, and the
+    digest went out with a cloud-gaming promo as the day's top pick while
+    Claude Haiku 5.5 sat in the same candidate pool. The reply was complete,
+    not truncated — it just was not bare JSON.
+    """
+
+    VERDICT = {
+        "keep": [{"index": 1, "line": "vLLM 0.12 doubles MoE throughput"}],
+        "reject": [{"index": 2, "why": "funding news"}],
+    }
+
+    def test_a_fenced_verdict_is_read(self):
+        body = f"```json\n{json.dumps(self.VERDICT)}\n```"
+        kept, notes, rejected = _parse_verdict(body, 2)
+        assert kept == [0]
+        assert rejected == [(1, "funding news")]
+        assert notes[0] == "vLLM 0.12 doubles MoE throughput"
+
+    def test_a_fence_without_a_language_is_read(self):
+        body = f"```\n{json.dumps(self.VERDICT)}\n```"
+        assert _parse_verdict(body, 2)[0] == [0]
+
+    def test_a_verdict_behind_a_sentence_of_prose_is_read(self):
+        body = f"Here is my verdict:\n\n{json.dumps(self.VERDICT)}\n\nHope that helps."
+        assert _parse_verdict(body, 2)[0] == [0]
+
+    def test_a_truncated_verdict_is_still_unusable(self):
+        """Salvaging must not turn a cut-off reply into a confident verdict."""
+        cut = f"```json\n{json.dumps(self.VERDICT)[:40]}"
+        assert _parse_verdict(cut, 2) is None
+
+    def test_non_text_content_is_unusable_rather_than_an_error(self):
+        assert _parse_verdict(None, 2) is None
+
+
+class TestRankingAsksForJson:
+    """The fence above is better prevented than salvaged."""
+
+    def test_the_call_requests_a_json_object(self, sample_papers):
+        client = Mock()
+        response = Mock()
+        response.choices = [Mock()]
+        response.choices[0].message.content = '{"keep": [{"index": 1, "line": "x"}]}'
+        response.choices[0].finish_reason = "stop"
+        client.chat.completions.create.return_value = response
+
+        _call_openai_ranking(client, "prompt")
+
+        kwargs = client.chat.completions.create.call_args.kwargs
+        assert kwargs["response_format"] == {"type": "json_object"}
+
+    def test_a_bare_ordering_array_is_read(self):
+        body = json.dumps([{"index": 2, "line": "second item wins"}])
+        kept, notes, _ = _parse_verdict(body, 2)
+        assert kept == [1, 0]
+        assert notes[1] == "second item wins"

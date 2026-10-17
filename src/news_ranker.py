@@ -1,6 +1,7 @@
 """Rank AI lab developments by significance using OpenAI."""
 
 import json
+import re
 
 from openai import OpenAI
 
@@ -22,7 +23,34 @@ def _call_openai_ranking(client: OpenAI, prompt: str):
         messages=[{"role": "user", "content": prompt}],
         max_tokens=OPENAI_MAX_TOKENS_RANKING,
         temperature=0,
+        # Ask for a bare JSON object. Without this the model sometimes wraps
+        # the verdict in a ```json fence or opens with a line of prose, which
+        # parses as nothing and drops the digest to date order.
+        response_format={"type": "json_object"},
     )
+
+
+_FENCE = re.compile(r"```(?:json)?\s*(.*?)\s*```", re.DOTALL)
+
+
+def _json_candidates(content: str):
+    """Yield the plausible JSON bodies in a reply, most literal first.
+
+    The reply is asked to be a bare JSON object and usually is. When it is
+    not, it is wrapped in a markdown fence or preceded by a sentence, and the
+    object itself is still intact — worth one more look before giving up,
+    because giving up means sending date order.
+    """
+    text = content.strip()
+    yield text
+
+    fenced = _FENCE.search(text)
+    if fenced:
+        yield fenced.group(1).strip()
+
+    start, end = text.find("{"), text.rfind("}")
+    if 0 <= start < end:
+        yield text[start : end + 1]
 
 
 def _parse_verdict(
@@ -35,13 +63,27 @@ def _parse_verdict(
 
     Tolerates the shapes seen in practice: the documented {"keep": [...],
     "reject": [...]}, a {"ranking": [...]} ordering with no rejections, the
-    older {"index": N} single pick, and a bare number. An item the model
-    mentions in neither list is kept, in its original position — silently
-    dropping an item the model never judged would be worse than showing it.
+    older {"index": N} single pick, a bare ordering array, and a bare number.
+    The body is also found inside a markdown fence or behind a sentence of
+    prose, because a reply that is otherwise complete should not cost the day
+    its editorial judgement.
+
+    An item the model mentions in neither list is kept, in its original
+    position — silently dropping an item the model never judged would be
+    worse than showing it.
     """
-    try:
-        parsed = json.loads(content.strip())
-    except (json.JSONDecodeError, AttributeError):
+    if not isinstance(content, str):
+        return None
+
+    parsed = None
+    for candidate in _json_candidates(content):
+        try:
+            parsed = json.loads(candidate)
+        except (json.JSONDecodeError, TypeError):
+            continue
+        break
+
+    if parsed is None:
         try:
             return [int(content.strip()) - 1], {}, []
         except ValueError:
@@ -51,6 +93,14 @@ def _parse_verdict(
     if isinstance(parsed, (int, float)) and not isinstance(parsed, bool):
         i = int(parsed) - 1
         return ([i], {}, []) if 0 <= i < count else None
+
+    # A bare ordering array, with no wrapping object, is the keep list. It is
+    # only a verdict if it holds an index, though: a list of strings carries no
+    # judgement, and treating it as one would hide an unusable reply behind
+    # "every item unjudged, so keep them all" — date order wearing a verdict.
+    bare_list = isinstance(parsed, list)
+    if bare_list:
+        parsed = {"keep": parsed}
 
     if not isinstance(parsed, dict):
         return None
@@ -83,6 +133,8 @@ def _parse_verdict(
         return None
 
     kept, notes = indices(raw_keep)
+    if bare_list and not kept:
+        return None
 
     rejected: list[tuple[int, str]] = []
     for entry in parsed.get("reject") or []:
@@ -218,9 +270,10 @@ Indices are 1-based, and every item must appear in exactly one of the two lists.
                 # ("length") reads exactly like a model that answered badly.
                 logger.warning(
                     "Unusable ranking verdict (finish_reason=%s, %d chars) — "
-                    "falling back to date order",
+                    "falling back to date order. Reply began: %r",
                     finish_reason,
                     len(content),
+                    content[:120],
                 )
             if verdict is not None:
                 kept, notes, rejected = verdict

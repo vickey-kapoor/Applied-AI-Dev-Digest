@@ -43,21 +43,41 @@ DIGEST_MAX_AGE_HOURS = int(os.getenv("DIGEST_MAX_AGE_HOURS", "72"))
 # order what is left by use to an applied engineer. Summarizing is extraction
 # from a single article the ranker already chose.
 #
-# gpt-4o-mini is deprecated: OpenAI's deprecations page dated 14-Oct-2026 gives
-# gpt-4o-mini-2024-07-18 a shutdown date of 14-Jan-2027 and names gpt-6-luna as
-# its replacement. The default below is unchanged because no live call can be
-# made from CI to prove a replacement behaves, but the model is now an
-# environment variable per step so switching one is a workflow edit and a
-# rollback is the same edit back. Verify a candidate with `python preview.py`,
-# which runs both calls and prints the result without sending anything.
+# Both steps ran on gpt-4o-mini, which is deprecated: OpenAI's deprecations
+# page dated 14-Oct-2026 gives gpt-4o-mini-2024-07-18 a shutdown date of
+# 14-Jan-2027 and names gpt-6-luna as its replacement. So the defaults below
+# are the replacements, one per step rather than one for both.
+#
+# gpt-6.1-sol for ranking: that call is the digest's editorial judgement and
+# the only one whose mistakes the reader sees as a bad pick. At $2/$10 per
+# million tokens and one call a day it runs around a dollar a month, against
+# eight cents for the whole pipeline before. gpt-6-luna for the summary, at
+# $0.10/$0.50 — extraction from one article the ranker already chose, and
+# cheaper than the gpt-4o-mini it replaces.
+#
+# Both are reasoning models, which is why the ceilings below are generous and
+# why openai_call drops an argument the model will not take: the generations
+# disagree about temperature and about the ceiling's own name.
+#
+# Every one of these is an environment variable, passed through from a
+# repository variable, so a model is changed and changed back in the
+# repository's settings rather than in a commit. `python preview.py` runs both
+# calls and prints the result without sending anything, which is how to look
+# at a candidate's output before a daily run uses it.
+#
 # `or` rather than a getenv default throughout: the workflow passes these
 # through from repository variables, and an unset GitHub variable arrives as
 # an empty string rather than as nothing at all.
-OPENAI_MODEL = os.getenv("OPENAI_MODEL") or "gpt-4o-mini"
-# Per-step overrides. Ranking is where a stronger model earns its keep and
-# where the whole digest's quality is decided; the summarizer can stay cheap.
-OPENAI_MODEL_RANKING = os.getenv("OPENAI_MODEL_RANKING") or OPENAI_MODEL
-OPENAI_MODEL_SUMMARY = os.getenv("OPENAI_MODEL_SUMMARY") or OPENAI_MODEL
+
+# Both steps at once — the one-line rollback, e.g. OPENAI_MODEL=gpt-4o-mini
+# while that model still answers. Unset by default; the per-step defaults win.
+OPENAI_MODEL = os.getenv("OPENAI_MODEL") or ""
+OPENAI_MODEL_RANKING = (
+    os.getenv("OPENAI_MODEL_RANKING") or OPENAI_MODEL or "gpt-6.1-sol"
+)
+OPENAI_MODEL_SUMMARY = (
+    os.getenv("OPENAI_MODEL_SUMMARY") or OPENAI_MODEL or "gpt-6-luna"
+)
 
 # Zero, not 0.7: the summarizer extracts stated facts — model names, prices,
 # context lengths — from an article. Sampling variance there buys nothing and

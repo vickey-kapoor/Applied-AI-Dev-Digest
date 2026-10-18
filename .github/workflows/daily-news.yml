@@ -133,9 +133,9 @@ jobs:
           # Repository variables, not secrets, and unset by default: the code
           # falls back to its own default when these arrive empty. They are
           # here so the model can be changed in the repository's settings
-          # without a commit, and changed back the same way — which is what
-          # makes trying a replacement for the deprecated gpt-4o-mini a
-          # reversible decision rather than a deploy.
+          # without a commit, and changed back the same way. OPENAI_MODEL
+          # overrides both steps at once and is the one-line rollback.
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
           OPENAI_MODEL_RANKING: ${{ vars.OPENAI_MODEL_RANKING }}
           OPENAI_MODEL_SUMMARY: ${{ vars.OPENAI_MODEL_SUMMARY }}
           OPENAI_REASONING_EFFORT: ${{ vars.OPENAI_REASONING_EFFORT }}

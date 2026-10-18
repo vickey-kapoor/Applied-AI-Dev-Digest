@@ -186,6 +186,7 @@ class TestModelChoiceIsAWorkflowSetting:
     def test_the_send_step_passes_the_model_variables(self, steps):
         send = _step_running(steps, "python main.py")
         for name in (
+            "OPENAI_MODEL",
             "OPENAI_MODEL_RANKING",
             "OPENAI_MODEL_SUMMARY",
             "OPENAI_REASONING_EFFORT",
@@ -198,17 +199,65 @@ class TestModelChoiceIsAWorkflowSetting:
         send = _step_running(steps, "python main.py")
         assert "secrets.OPENAI_MODEL_RANKING" not in send
 
+    def _constants_with(self, monkeypatch, **env):
+        import importlib
+
+        for name, value in env.items():
+            monkeypatch.setenv(name, value)
+        return importlib.reload(importlib.import_module("src.constants"))
+
+    def teardown_method(self):
+        import importlib
+
+        importlib.reload(importlib.import_module("src.constants"))
+
     def test_an_unset_variable_leaves_the_code_default_in_place(self, monkeypatch):
         """GitHub passes an unset variable as an empty string, which a
         getenv default would not catch."""
-        import importlib
+        constants = self._constants_with(
+            monkeypatch,
+            OPENAI_MODEL="",
+            OPENAI_MODEL_RANKING="",
+            OPENAI_MODEL_SUMMARY="",
+            OPENAI_REASONING_EFFORT="",
+        )
+        assert constants.OPENAI_MODEL_RANKING == "gpt-6.1-sol"
+        assert constants.OPENAI_MODEL_SUMMARY == "gpt-6-luna"
+        assert constants.OPENAI_REASONING_EFFORT is None
 
-        monkeypatch.setenv("OPENAI_MODEL_RANKING", "")
-        monkeypatch.setenv("OPENAI_REASONING_EFFORT", "")
-        constants = importlib.reload(importlib.import_module("src.constants"))
-        try:
-            assert constants.OPENAI_MODEL_RANKING == constants.OPENAI_MODEL
-            assert constants.OPENAI_REASONING_EFFORT is None
-        finally:
-            monkeypatch.undo()
-            importlib.reload(constants)
+    def test_the_two_steps_default_to_different_models(self, monkeypatch):
+        """Ranking is the editorial judgement and the only call whose mistakes
+        the reader sees as a bad pick; the summary extracts from one article
+        the ranker already chose. One model for both was the old shape."""
+        constants = self._constants_with(
+            monkeypatch, OPENAI_MODEL="", OPENAI_MODEL_RANKING="", OPENAI_MODEL_SUMMARY=""
+        )
+        assert constants.OPENAI_MODEL_RANKING != constants.OPENAI_MODEL_SUMMARY
+
+    def test_neither_default_is_the_model_being_switched_off(self, monkeypatch):
+        """gpt-4o-mini shuts down on 14-Jan-2027."""
+        constants = self._constants_with(
+            monkeypatch, OPENAI_MODEL="", OPENAI_MODEL_RANKING="", OPENAI_MODEL_SUMMARY=""
+        )
+        assert "gpt-4o-mini" not in (
+            constants.OPENAI_MODEL_RANKING,
+            constants.OPENAI_MODEL_SUMMARY,
+        )
+
+    def test_one_variable_rolls_both_steps_back(self, monkeypatch):
+        """The rollback has to be one edit, not a race to remember both names."""
+        constants = self._constants_with(
+            monkeypatch,
+            OPENAI_MODEL="gpt-4o-mini",
+            OPENAI_MODEL_RANKING="",
+            OPENAI_MODEL_SUMMARY="",
+        )
+        assert constants.OPENAI_MODEL_RANKING == "gpt-4o-mini"
+        assert constants.OPENAI_MODEL_SUMMARY == "gpt-4o-mini"
+
+    def test_a_per_step_variable_beats_the_shared_one(self, monkeypatch):
+        constants = self._constants_with(
+            monkeypatch, OPENAI_MODEL="gpt-4o-mini", OPENAI_MODEL_RANKING="gpt-6-astra"
+        )
+        assert constants.OPENAI_MODEL_RANKING == "gpt-6-astra"
+        assert constants.OPENAI_MODEL_SUMMARY == "gpt-4o-mini"

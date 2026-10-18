@@ -1,6 +1,75 @@
 {
   "papers": [
     {
+      "id": "a4de2c1c-4291-5214-a69a-ada4b62be6c6",
+      "title": "vllm v0.32.0 released",
+      "summary": "# v0.32.0\r\n\r\n## Highlights\r\n\r\nThis release features 814 commits from 363 contributors (121 new)!\r\n\r\n* **Structured decisions and generic parsers**: the new `POST /v1/systemone` endpoint answers `choice`, `noul` and `score` questions over a structured state (#59299), is served by default (#60677, #60696), and also runs on `Cloudflare/clef-omni` (#61064), `LiquidAI/d1-3B` (#60676) and DiffusionGemma (#60466). The new `hf` tool and reasoning parser (`--tool-call-parser hf`, `--reasoning-parser hf`)",
+      "source": "GitHub",
+      "url": "https://github.com/vllm-project/vllm/releases/tag/v0.32.0",
+      "published_at": "2026-10-18T06:50:48Z",
+      "fetched_at": "2026-10-18T17:00:53.503256Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "e5050e6b-1e7f-5d13-8a26-65131f364ee6",
+      "title": "DeepSeek search and fetch – $0.75 per 1000 successful requests",
+      "summary": "DeepSeek shipped the Search API and Fetch API for accessing live web content. The Search API retrieves structured results for web queries, returning up to 50 results per request. The Fetch API retrieves the content of a single web page in Markdown format. Both APIs support bearer authentication and return results in raw JSON format.",
+      "source": "Hacker News",
+      "url": "https://api-docs.deepseek.com/guides/search/",
+      "published_at": "2026-10-18T06:50:36+00:00",
+      "fetched_at": "2026-10-18T17:00:53.503256Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "DeepSeek shipped the Search API and Fetch API for accessing live web content.",
+      "capabilities": "The Search API retrieves structured results for web queries, returning up to 50 results per request. The Fetch API retrieves the content of a single web page in Markdown format. Both APIs support bearer authentication and return results in raw JSON format.",
+      "availability": "The APIs are available at https://api.deepseek.com with a pricing model of $0.75 per 1,000 successful requests. Billing starts on November 1, 2026, for server-side tool calls made through DeepSeek Harness, Claude Code, or Codex.",
+      "why_it_matters": "These APIs enable developers to integrate live web content into their applications, enhancing the capabilities of agents and retrieval-augmented generation (RAG) systems. The cost structure allows for scalable access to web data without incurring charges for failed requests.",
+      "caveats": "The APIs are read-only and subject to rate limits, including a per-domain QPS limit for the Fetch API. Successful requests are billed only when they return HTTP 200 with valid results, meaning developers must manage their queries carefully to avoid unnecessary costs.",
+      "release_type": "api"
+    },
+    {
+      "id": "6257ec1a-196e-5dca-905b-aca8ff00457f",
+      "title": "RTX Spark Ignites Global Celebration as New Windows PCs Arrive",
+      "summary": "NVIDIA RTX Spark laptops are now available, bringing NVIDIA Blackwell RTX graphics, up to 128GB of unified memory and the full NVIDIA AI platform to slim, premium Windows PCs. Starting at $2,399, laptops from ASUS, Dell, HP, Lenovo, Microsoft and MSI bring powerful local AI, content creation and gaming capabilities to a portable device, with […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-windows-laptops-celebration/",
+      "published_at": "2026-10-17T21:00:13+00:00",
+      "fetched_at": "2026-10-18T17:00:53.503256Z",
+      "type": "announcement",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "ad3cf15a-9cdf-5407-9df4-b9e702a51581",
+      "title": "An update on independent evaluators",
+      "summary": "To evaluate the safety of our systems, Anthropic is giving employee-like access to a team from METR, a nonprofit that evaluates frontier AI models, and we're in early discussions with several other organizations, including Hugging Face.",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
+      "published_at": "2026-10-15T17:20:00.000Z",
+      "fetched_at": "2026-10-18T17:00:53.503256Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "bf4a06f8-f043-59f2-8882-8235f5317bc9",
       "title": "DeepSeek-v4.1-Flash-1017",
       "summary": "393 points · 410 comments",

@@ -130,6 +130,15 @@ jobs:
         timeout-minutes: 10
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Repository variables, not secrets, and unset by default: the code
+          # falls back to its own default when these arrive empty. They are
+          # here so the model can be changed in the repository's settings
+          # without a commit, and changed back the same way — which is what
+          # makes trying a replacement for the deprecated gpt-4o-mini a
+          # reversible decision rather than a deploy.
+          OPENAI_MODEL_RANKING: ${{ vars.OPENAI_MODEL_RANKING }}
+          OPENAI_MODEL_SUMMARY: ${{ vars.OPENAI_MODEL_SUMMARY }}
+          OPENAI_REASONING_EFFORT: ${{ vars.OPENAI_REASONING_EFFORT }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

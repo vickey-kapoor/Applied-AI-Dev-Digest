@@ -5,8 +5,14 @@ import json
 from openai import OpenAI
 
 from src.ai_text import sanitize_prompt_text
-from src.constants import OPENAI_MODEL, OPENAI_TEMPERATURE, OPENAI_MAX_TOKENS_BUNDLE
+from src.constants import (
+    OPENAI_MODEL_SUMMARY,
+    OPENAI_TEMPERATURE,
+    OPENAI_MAX_TOKENS_BUNDLE,
+    OPENAI_REASONING_EFFORT,
+)
 from src.logger import get_logger
+from src.openai_call import call_json, json_schema_format, reply_text
 from src.utils.retry import retry_with_backoff
 
 logger = get_logger(__name__)
@@ -52,18 +58,6 @@ def _prepare_inputs(item: dict) -> tuple[str, str, str, str]:
     )
 
 
-@retry_with_backoff(exceptions=(Exception,))
-def _call_openai(client: OpenAI, prompt: str) -> str:
-    """Make an OpenAI API call with retry logic."""
-    response = client.chat.completions.create(
-        model=OPENAI_MODEL,
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=OPENAI_MAX_TOKENS_BUNDLE,
-        temperature=OPENAI_TEMPERATURE,
-    )
-    return response.choices[0].message.content.strip()
-
-
 # Structured fields produced by the model, in the order they read best.
 SUMMARY_FIELDS = (
     "what_shipped",
@@ -73,6 +67,58 @@ SUMMARY_FIELDS = (
     "caveats",
     "release_type",
 )
+
+RELEASE_TYPES = (
+    "model",
+    "product",
+    "api",
+    "research",
+    "open-weights",
+    "infrastructure",
+    "safety",
+    "policy",
+)
+
+# The brief's shape, enforced by the API rather than asked for in prose.
+#
+# This call asked for JSON in the prompt and sent no response_format at all,
+# so the reply arrived fenced often enough that the parser below strips fences
+# by hand. Worse, a reply that did not parse was swallowed: summarize_release
+# returns the item unchanged, main.py logs "Could not generate summaries", and
+# the digest goes out with the raw feed blurb in place of the five fields —
+# the same silent degradation the ranker had. The schema makes the five fields
+# and the release_type vocabulary the API's problem.
+SUMMARY_SCHEMA = {
+    "type": "object",
+    "properties": {
+        **{field: {"type": "string"} for field in SUMMARY_FIELDS if field != "release_type"},
+        "release_type": {"type": "string", "enum": list(RELEASE_TYPES)},
+    },
+    "required": list(SUMMARY_FIELDS),
+    "additionalProperties": False,
+}
+
+
+@retry_with_backoff(exceptions=(Exception,))
+def _call_openai(client: OpenAI, prompt: str) -> str:
+    """Make an OpenAI API call with retry logic."""
+    response = call_json(
+        client,
+        model=OPENAI_MODEL_SUMMARY,
+        prompt=prompt,
+        max_output_tokens=OPENAI_MAX_TOKENS_BUNDLE,
+        response_format=json_schema_format("release_brief", SUMMARY_SCHEMA),
+        temperature=OPENAI_TEMPERATURE,
+        reasoning_effort=OPENAI_REASONING_EFFORT,
+    )
+    content, finish_reason = reply_text(response)
+    if not content:
+        # Same empty-reply shape the ranker guards against. Here the cost is
+        # the brief, and the caller's handler says only "Could not generate
+        # summaries", so the reason has to be logged where it is known.
+        logger.warning("Empty summary reply (finish_reason=%s)", finish_reason)
+    return content
+
 
 # Fields rendered into the long-form PDF body, with their display labels.
 DETAIL_SECTIONS = (
@@ -152,6 +198,9 @@ Return JSON (no markdown fences):
             enriched["detailed_summary"] = "\n\n".join(detail_parts)
 
         return enriched
-    except Exception:
-        logger.warning("Could not generate summaries")
+    except Exception as e:
+        # With the reason: this handler covers the API call, the JSON parse and
+        # the field extraction alike, and "Could not generate summaries" told
+        # the three apart not at all. The digest still ships, on the feed blurb.
+        logger.warning("Could not generate summaries: %s: %s", type(e).__name__, e)
         return item

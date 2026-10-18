@@ -174,3 +174,41 @@ class TestOneDigestADay:
         from src.schedule_guard import JOBS
 
         assert JOBS == ("daily",)
+
+
+class TestModelChoiceIsAWorkflowSetting:
+    """gpt-4o-mini shuts down on 14-Jan-2027, so a replacement has to be
+    tried in production — no CI job can make a live call to prove one
+    behaves. These are repository variables rather than secrets or code so
+    that trying one, and changing back, are both a settings edit.
+    """
+
+    def test_the_send_step_passes_the_model_variables(self, steps):
+        send = _step_running(steps, "python main.py")
+        for name in (
+            "OPENAI_MODEL_RANKING",
+            "OPENAI_MODEL_SUMMARY",
+            "OPENAI_REASONING_EFFORT",
+        ):
+            assert f"{name}: ${{{{ vars.{name} }}}}" in send
+
+    def test_they_are_variables_rather_than_secrets(self, steps):
+        """A model name is not a credential, and a secret cannot be read back
+        to see which model a run actually used."""
+        send = _step_running(steps, "python main.py")
+        assert "secrets.OPENAI_MODEL_RANKING" not in send
+
+    def test_an_unset_variable_leaves_the_code_default_in_place(self, monkeypatch):
+        """GitHub passes an unset variable as an empty string, which a
+        getenv default would not catch."""
+        import importlib
+
+        monkeypatch.setenv("OPENAI_MODEL_RANKING", "")
+        monkeypatch.setenv("OPENAI_REASONING_EFFORT", "")
+        constants = importlib.reload(importlib.import_module("src.constants"))
+        try:
+            assert constants.OPENAI_MODEL_RANKING == constants.OPENAI_MODEL
+            assert constants.OPENAI_REASONING_EFFORT is None
+        finally:
+            monkeypatch.undo()
+            importlib.reload(constants)

@@ -12,7 +12,7 @@ from src.logger import get_logger
 from src.topic_config import get_active_keywords, is_paused, increment_topic_stat
 from src.fetcher import fetch_all
 from src.news_ranker import rank_news_ranked
-from src.article_fetcher import fetch_article_text
+from src.article_fetcher import attach_article_text, fetch_article_text
 from src.news_summarizer import summarize_release
 from src.telegram_sender import (
     format_digest_message,
@@ -123,6 +123,19 @@ def main():
     if new_items:
         # Rank and select top item from unsent items only
         logger.info("Screening and ranking %d candidates...", len(new_items))
+        # Open every candidate's link first. The ranker judges on what it is
+        # shown, and the feeds are not comparable — the Hugging Face blog
+        # sends no description at all, Google Research sends a category label
+        # — so a post was being rejected for saying nothing when it was its
+        # feed that had said nothing. The text also saves the winner's fetch
+        # below, since summarize_release reads the same field.
+        try:
+            new_items = attach_article_text(new_items)
+        except Exception as e:
+            # Ranking on feed summaries alone is the old behaviour, which is
+            # worse but not broken. It must not cost the day its digest.
+            logger.warning("Could not attach article text to candidates: %s", e)
+
         try:
             ranked = rank_news_ranked(new_items, openai_key)
             if ranked:

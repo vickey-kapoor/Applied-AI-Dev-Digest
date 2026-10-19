@@ -1,0 +1,33 @@
+# Keeps dependencies and GitHub Actions current so known-vulnerable versions
+# don't sit in the pipeline unnoticed. The repo pins everything for
+# reproducibility; without update automation those pins quietly go stale.
+version: 2
+updates:
+  # Python pipeline dependencies (requirements.txt at the repo root).
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      python-dependencies:
+        patterns:
+          - "*"
+
+  # Dashboard JavaScript/TypeScript dependencies.
+  - package-ecosystem: "npm"
+    directory: "/dashboard"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
+
+  # The workflow actions themselves (checkout, setup-python, setup-node).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5

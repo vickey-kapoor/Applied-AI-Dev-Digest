@@ -6,7 +6,7 @@ feedparser==6.0.14
 fpdf2==2.8.9
 
 # Testing dependencies
-pytest==8.3.5
+pytest==9.1.1
 pytest-mock==3.16.0
-pytest-cov==6.0.0
+pytest-cov==7.1.0
 responses==0.26.3

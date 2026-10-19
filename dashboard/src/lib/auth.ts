@@ -1,45 +1,91 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createHmac, timingSafeEqual } from "node:crypto";
 import { Ratelimit } from "@upstash/ratelimit";
 import { getRedis } from "@/lib/kv";
 
+/** Cookie carrying proof of a dashboard login — set by POST /api/login. */
+export const SESSION_COOKIE = "dashboard_auth";
+
 /**
- * Validate that the request carries a valid API secret.
+ * Constant-time string comparison. Avoids leaking, through response timing,
+ * how many leading characters of a guessed secret are correct. The length
+ * branch still runs a dummy compare so timing does not reveal the length
+ * either.
+ */
+export function safeEqual(a: string, b: string): boolean {
+  const ab = Buffer.from(a);
+  const bb = Buffer.from(b);
+  if (ab.length !== bb.length) {
+    timingSafeEqual(ab, ab);
+    return false;
+  }
+  return timingSafeEqual(ab, bb);
+}
+
+/**
+ * The value stored in the session cookie: an HMAC of the secret, not the
+ * secret itself. So a leaked cookie (a proxy log, say) cannot be replayed as
+ * the Bearer token that API clients use.
+ */
+export function sessionToken(secret: string): string {
+  return createHmac("sha256", secret).update("dashboard-session-v1").digest("hex");
+}
+
+/**
+ * Gate a mutating request.
  *
- * Checks the Authorization header for a Bearer token matching
- * DASHBOARD_API_SECRET. If the env var is not set, all requests
- * are allowed (open mode for local dev).
+ * Two accepted credentials:
+ *   - `Authorization: Bearer <DASHBOARD_API_SECRET>` for non-browser clients.
+ *     A header, not a cookie, so CSRF cannot reach it.
+ *   - The `dashboard_auth` session cookie (httpOnly, SameSite=Strict) set by
+ *     /api/login, for the dashboard UI. SameSite=Strict means the browser
+ *     never sends it on a cross-site request, which is what defends these
+ *     writes against CSRF.
+ *
+ * This replaces the previous "same-origin Origin/Referer is sufficient" path.
+ * `Origin` is set freely by any non-browser client, so it could never
+ * authenticate — it only looked like a check. It is kept here solely as a
+ * defence-in-depth check layered on top of the cookie, never as a credential
+ * on its own.
+ *
+ * When no secret is configured the endpoints are open only outside
+ * production (a local-dev convenience). In production a missing secret is a
+ * misconfiguration and fails closed rather than exposing every mutating
+ * endpoint to the internet.
  */
 export function requireAuth(request: NextRequest): NextResponse | null {
+  const unauthorized = () =>
+    NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   const secret = process.env.DASHBOARD_API_SECRET;
   if (!secret) {
-    // No secret configured — allow all (local dev / open mode)
+    return process.env.NODE_ENV === "production" ? unauthorized() : null;
+  }
+
+  // Non-browser clients: Bearer token.
+  const auth = request.headers.get("authorization");
+  if (auth?.startsWith("Bearer ") && safeEqual(auth.slice(7), secret)) {
     return null;
   }
 
-  const auth = request.headers.get("authorization");
-  if (auth === `Bearer ${secret}`) {
-    return null; // Authorized
-  }
-
-  // Check origin for same-origin browser requests (CSRF protection)
-  const origin = request.headers.get("origin");
-  const referer = request.headers.get("referer");
-  const host = request.headers.get("host");
-
-  if (host && (origin || referer)) {
-    const requestOrigin = (origin || new URL(referer!).origin).toLowerCase();
-    const hostLower = host.toLowerCase();
-    if (requestOrigin === `https://${hostLower}` || requestOrigin === `http://${hostLower}`) {
-      return null; // Same-origin browser request — allow
+  // Browser clients: the session cookie, plus a same-origin check as an
+  // extra layer (the cookie's SameSite=Strict is the real CSRF defence).
+  const cookie = request.cookies.get(SESSION_COOKIE)?.value;
+  if (cookie && safeEqual(cookie, sessionToken(secret))) {
+    const origin = request.headers.get("origin");
+    const referer = request.headers.get("referer");
+    const host = request.headers.get("host");
+    if ((origin || referer) && host) {
+      const reqOrigin = (origin || new URL(referer!).origin).toLowerCase();
+      const h = host.toLowerCase();
+      if (reqOrigin !== `https://${h}` && reqOrigin !== `http://${h}`) {
+        return unauthorized(); // cookie presented on a cross-site request
+      }
     }
+    return null;
   }
 
-  // No origin/referer = non-browser request without Bearer token
-  if (!origin && !referer && !auth) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  return unauthorized();
 }
 
 /**

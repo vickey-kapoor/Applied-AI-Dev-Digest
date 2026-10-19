@@ -35,23 +35,80 @@ DIGEST_MAX_RESULTS = int(os.getenv("DIGEST_MAX_RESULTS", "20"))
 DIGEST_MAX_AGE_HOURS = int(os.getenv("DIGEST_MAX_AGE_HOURS", "72"))
 
 # OpenAI model settings
-OPENAI_MODEL = "gpt-4o-mini"
+#
+# Two calls a day, so the bill is not what picks the model: the whole pipeline
+# ran at about 8.5 cents a month on gpt-4o-mini. What picks it is that the two
+# calls are not the same job. Ranking is the hard one — screen ~20 candidates
+# on their article text, collapse duplicate coverage of one announcement, and
+# order what is left by use to an applied engineer. Summarizing is extraction
+# from a single article the ranker already chose.
+#
+# Both steps ran on gpt-4o-mini, which is deprecated: OpenAI's deprecations
+# page dated 14-Oct-2026 gives gpt-4o-mini-2024-07-18 a shutdown date of
+# 14-Jan-2027 and names gpt-6-luna as its replacement. So the defaults below
+# are the replacements, one per step rather than one for both.
+#
+# gpt-6.1-sol for ranking: that call is the digest's editorial judgement and
+# the only one whose mistakes the reader sees as a bad pick. At $2/$10 per
+# million tokens and one call a day it runs around a dollar a month, against
+# eight cents for the whole pipeline before. gpt-6-luna for the summary, at
+# $0.10/$0.50 — extraction from one article the ranker already chose, and
+# cheaper than the gpt-4o-mini it replaces.
+#
+# Both are reasoning models, which is why the ceilings below are generous and
+# why openai_call drops an argument the model will not take: the generations
+# disagree about temperature and about the ceiling's own name.
+#
+# Every one of these is an environment variable, passed through from a
+# repository variable, so a model is changed and changed back in the
+# repository's settings rather than in a commit. `python preview.py` runs both
+# calls and prints the result without sending anything, which is how to look
+# at a candidate's output before a daily run uses it.
+#
+# `or` rather than a getenv default throughout: the workflow passes these
+# through from repository variables, and an unset GitHub variable arrives as
+# an empty string rather than as nothing at all.
+
+# Both steps at once — the one-line rollback, e.g. OPENAI_MODEL=gpt-4o-mini
+# while that model still answers. Unset by default; the per-step defaults win.
+OPENAI_MODEL = os.getenv("OPENAI_MODEL") or ""
+OPENAI_MODEL_RANKING = (
+    os.getenv("OPENAI_MODEL_RANKING") or OPENAI_MODEL or "gpt-6.1-sol"
+)
+OPENAI_MODEL_SUMMARY = (
+    os.getenv("OPENAI_MODEL_SUMMARY") or OPENAI_MODEL or "gpt-6-luna"
+)
+
 # Zero, not 0.7: the summarizer extracts stated facts — model names, prices,
 # context lengths — from an article. Sampling variance there buys nothing and
 # costs accuracy, and the prompt already tells the model to write "Not stated"
-# rather than guess.
-OPENAI_TEMPERATURE = 0.0
-# Headroom for the ranker's whole verdict. This was 150, set when the ranking
-# reply was just {"index": N}. The reply now carries a keep list with a
-# ~14-word line per item, a reject list with a reason per item, and a summary
-# sentence — about 300 tokens for DIGEST_MAX_RESULTS items, more when the model
-# writes to the full line length. Truncated JSON does not parse, and the
-# unusable verdict silently falls back to date order, so the editorial filter
-# was being thrown away rather than failing loudly.
-OPENAI_MAX_TOKENS_RANKING = 1200
+# rather than guess. Sent only when the model accepts it: the reasoning models
+# reject temperature, and openai_call drops an argument the model refuses.
+OPENAI_TEMPERATURE = float(os.getenv("OPENAI_TEMPERATURE") or 0)
+
+# Reasoning effort, for a model that has one. Unset by default so each model
+# keeps its own default; openai_call drops it for a model that has none.
+OPENAI_REASONING_EFFORT = os.getenv("OPENAI_REASONING_EFFORT") or None
+
+# Ceiling on each reply, not a target — an unused ceiling costs nothing, since
+# output is billed on what the model writes.
+#
+# These were sized to the visible answer: 150 when the ranking reply was
+# {"index": N}, then 1200 when PR #30 found 150 truncating a verdict that had
+# grown a line per kept item and a reason per rejected one. Sizing a ceiling to
+# the answer is the bug, not the number — it has now been wrong twice, both
+# times silently, because truncated JSON does not parse and the ranker's
+# fallback is date order, which reads as a working digest.
+#
+# A reasoning model makes that worse: its reasoning tokens are billed as output
+# and come out of this same ceiling before it writes a visible character, so a
+# ceiling sized for the answer returns no answer at all. These are now set near
+# the output limit of the smallest model in play (gpt-4o-mini caps at 16,384)
+# and are not meant to be reached.
+OPENAI_MAX_TOKENS_RANKING = int(os.getenv("OPENAI_MAX_TOKENS_RANKING") or 16000)
 # OPENAI_MAX_TOKENS_SUMMARY and _DETAILED removed: superseded when the
 # summarizer moved to a single bundled call using _BUNDLE below.
-OPENAI_MAX_TOKENS_BUNDLE = 1800
+OPENAI_MAX_TOKENS_BUNDLE = int(os.getenv("OPENAI_MAX_TOKENS_BUNDLE") or 16000)
 
 # Telegram settings
 TELEGRAM_API_URL = "https://api.telegram.org/bot{token}/sendMessage"

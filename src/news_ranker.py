@@ -6,8 +6,13 @@ import re
 from openai import OpenAI
 
 from src.ai_text import sanitize_prompt_text
-from src.constants import OPENAI_MODEL, OPENAI_MAX_TOKENS_RANKING
+from src.constants import (
+    OPENAI_MODEL_RANKING,
+    OPENAI_MAX_TOKENS_RANKING,
+    OPENAI_REASONING_EFFORT,
+)
 from src.logger import get_logger
+from src.openai_call import call_json, json_schema_format, reply_text
 from src.topic_config import get_feedback_weights
 from src.utils.retry import retry_with_backoff
 
@@ -15,18 +20,64 @@ logger = get_logger(__name__)
 _sanitize_text = sanitize_prompt_text
 
 
+# The verdict's shape, enforced by the API rather than hoped for.
+#
+# JSON mode (PR #33) guarantees the reply parses as JSON, not that it carries
+# the keys the prompt asked for, and the cost of the wrong keys here is the
+# whole editorial filter: _parse_verdict returns None and the digest drops to
+# date order, which reads to the reader exactly like a ranked one. A strict
+# schema removes that failure instead of tolerating it. _parse_verdict stays,
+# because openai_call downgrades to JSON mode for a model that will not take a
+# schema, and because it is what reads the verdict either way.
+#
+# "line" and "why" are required rather than optional: strict mode requires
+# every property to be required, and a model with nothing to say fills them
+# with an empty string, which the parser already treats as no note.
+RANKING_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "keep": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "index": {"type": "integer"},
+                    "line": {"type": "string"},
+                },
+                "required": ["index", "line"],
+                "additionalProperties": False,
+            },
+        },
+        "reject": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "index": {"type": "integer"},
+                    "why": {"type": "string"},
+                },
+                "required": ["index", "why"],
+                "additionalProperties": False,
+            },
+        },
+        "reason": {"type": "string"},
+    },
+    "required": ["keep", "reject", "reason"],
+    "additionalProperties": False,
+}
+
+
 @retry_with_backoff(exceptions=(Exception,))
 def _call_openai_ranking(client: OpenAI, prompt: str):
     """Make an OpenAI API call for ranking with retry logic."""
-    return client.chat.completions.create(
-        model=OPENAI_MODEL,
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=OPENAI_MAX_TOKENS_RANKING,
+    return call_json(
+        client,
+        model=OPENAI_MODEL_RANKING,
+        prompt=prompt,
+        max_output_tokens=OPENAI_MAX_TOKENS_RANKING,
+        response_format=json_schema_format("ranking_verdict", RANKING_SCHEMA),
         temperature=0,
-        # Ask for a bare JSON object. Without this the model sometimes wraps
-        # the verdict in a ```json fence or opens with a line of prose, which
-        # parses as nothing and drops the digest to date order.
-        response_format={"type": "json_object"},
+        reasoning_effort=OPENAI_REASONING_EFFORT,
     )
 
 
@@ -297,8 +348,16 @@ Indices are 1-based, and every item must appear in exactly one of the two lists.
     try:
         response = _call_openai_ranking(client, prompt)
 
-        content = response.choices[0].message.content
-        finish_reason = getattr(response.choices[0], "finish_reason", None)
+        content, finish_reason = reply_text(response)
+        if not content:
+            # An empty reply used to fall through to date order without a word.
+            # It is the shape a reasoning model returns when the token ceiling
+            # ran out during reasoning, which is worth telling apart from a
+            # model that answered badly.
+            logger.warning(
+                "Empty ranking reply (finish_reason=%s) — falling back to date order",
+                finish_reason,
+            )
         if content:
             verdict = _parse_verdict(content, len(items))
             if verdict is None:

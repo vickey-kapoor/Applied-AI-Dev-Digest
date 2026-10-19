@@ -174,3 +174,90 @@ class TestOneDigestADay:
         from src.schedule_guard import JOBS
 
         assert JOBS == ("daily",)
+
+
+class TestModelChoiceIsAWorkflowSetting:
+    """gpt-4o-mini shuts down on 14-Jan-2027, so a replacement has to be
+    tried in production — no CI job can make a live call to prove one
+    behaves. These are repository variables rather than secrets or code so
+    that trying one, and changing back, are both a settings edit.
+    """
+
+    def test_the_send_step_passes_the_model_variables(self, steps):
+        send = _step_running(steps, "python main.py")
+        for name in (
+            "OPENAI_MODEL",
+            "OPENAI_MODEL_RANKING",
+            "OPENAI_MODEL_SUMMARY",
+            "OPENAI_REASONING_EFFORT",
+        ):
+            assert f"{name}: ${{{{ vars.{name} }}}}" in send
+
+    def test_they_are_variables_rather_than_secrets(self, steps):
+        """A model name is not a credential, and a secret cannot be read back
+        to see which model a run actually used."""
+        send = _step_running(steps, "python main.py")
+        assert "secrets.OPENAI_MODEL_RANKING" not in send
+
+    def _constants_with(self, monkeypatch, **env):
+        import importlib
+
+        for name, value in env.items():
+            monkeypatch.setenv(name, value)
+        return importlib.reload(importlib.import_module("src.constants"))
+
+    def teardown_method(self):
+        import importlib
+
+        importlib.reload(importlib.import_module("src.constants"))
+
+    def test_an_unset_variable_leaves_the_code_default_in_place(self, monkeypatch):
+        """GitHub passes an unset variable as an empty string, which a
+        getenv default would not catch."""
+        constants = self._constants_with(
+            monkeypatch,
+            OPENAI_MODEL="",
+            OPENAI_MODEL_RANKING="",
+            OPENAI_MODEL_SUMMARY="",
+            OPENAI_REASONING_EFFORT="",
+        )
+        assert constants.OPENAI_MODEL_RANKING == "gpt-6.1-sol"
+        assert constants.OPENAI_MODEL_SUMMARY == "gpt-6-luna"
+        assert constants.OPENAI_REASONING_EFFORT is None
+
+    def test_the_two_steps_default_to_different_models(self, monkeypatch):
+        """Ranking is the editorial judgement and the only call whose mistakes
+        the reader sees as a bad pick; the summary extracts from one article
+        the ranker already chose. One model for both was the old shape."""
+        constants = self._constants_with(
+            monkeypatch, OPENAI_MODEL="", OPENAI_MODEL_RANKING="", OPENAI_MODEL_SUMMARY=""
+        )
+        assert constants.OPENAI_MODEL_RANKING != constants.OPENAI_MODEL_SUMMARY
+
+    def test_neither_default_is_the_model_being_switched_off(self, monkeypatch):
+        """gpt-4o-mini shuts down on 14-Jan-2027."""
+        constants = self._constants_with(
+            monkeypatch, OPENAI_MODEL="", OPENAI_MODEL_RANKING="", OPENAI_MODEL_SUMMARY=""
+        )
+        assert "gpt-4o-mini" not in (
+            constants.OPENAI_MODEL_RANKING,
+            constants.OPENAI_MODEL_SUMMARY,
+        )
+
+    def test_one_variable_rolls_both_steps_back(self, monkeypatch):
+        """The rollback has to be one edit, not a race to remember both names."""
+        constants = self._constants_with(
+            monkeypatch,
+            OPENAI_MODEL="gpt-4o-mini",
+            OPENAI_MODEL_RANKING="",
+            OPENAI_MODEL_SUMMARY="",
+        )
+        assert constants.OPENAI_MODEL_RANKING == "gpt-4o-mini"
+        assert constants.OPENAI_MODEL_SUMMARY == "gpt-4o-mini"
+
+    def test_a_per_step_variable_beats_the_shared_one(self, monkeypatch):
+        constants = self._constants_with(
+            monkeypatch, OPENAI_MODEL="gpt-4o-mini", OPENAI_MODEL_RANKING="gpt-6-astra"
+        )
+        assert constants.OPENAI_MODEL_RANKING == "gpt-6-astra"
+        assert constants.OPENAI_MODEL_SUMMARY == "gpt-4o-mini"

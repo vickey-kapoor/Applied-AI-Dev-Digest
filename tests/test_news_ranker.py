@@ -5,8 +5,10 @@ import json
 import pytest
 from unittest.mock import Mock, patch
 
+from src.constants import OPENAI_MAX_TOKENS_RANKING
 from src.news_ranker import (
     RANKING_ARTICLE_CHARS,
+    RANKING_SCHEMA,
     rank_news,
     rank_news_ranked,
     _call_openai_ranking,
@@ -364,20 +366,79 @@ class TestRepliesThatAreNotBareJson:
 
 
 class TestRankingAsksForJson:
-    """The fence above is better prevented than salvaged."""
+    """The fence above is better prevented than salvaged.
 
-    def test_the_call_requests_a_json_object(self, sample_papers):
+    JSON mode prevented the fence. A strict schema prevents the whole class:
+    the reply cannot arrive with keys the parser does not know, so the date-
+    order fallback stops being reachable by a model that answered in the
+    wrong shape.
+    """
+
+    def _ranking_client(self):
         client = Mock()
         response = Mock()
         response.choices = [Mock()]
         response.choices[0].message.content = '{"keep": [{"index": 1, "line": "x"}]}'
         response.choices[0].finish_reason = "stop"
         client.chat.completions.create.return_value = response
+        return client
+
+    def test_the_call_requests_a_strict_schema(self, sample_papers):
+        client = self._ranking_client()
+
+        _call_openai_ranking(client, "prompt")
+
+        fmt = client.chat.completions.create.call_args.kwargs["response_format"]
+        assert fmt["type"] == "json_schema"
+        assert fmt["json_schema"]["strict"] is True
+        assert fmt["json_schema"]["schema"] == RANKING_SCHEMA
+
+    def test_the_schema_matches_the_verdict_the_parser_reads(self):
+        """A schema the parser cannot read would be worse than none at all."""
+        props = RANKING_SCHEMA["properties"]
+        verdict = json.dumps(
+            {
+                "keep": [{"index": 1, "line": "vLLM 0.12: 2x MoE throughput"}],
+                "reject": [{"index": 2, "why": "funding news"}],
+                "reason": "it is the only item they can use today",
+            }
+        )
+        assert set(RANKING_SCHEMA["required"]) == set(props)
+        assert RANKING_SCHEMA["additionalProperties"] is False
+        kept, notes, rejected = _parse_verdict(verdict, 2)
+        assert kept == [0]
+        assert notes[0] == "vLLM 0.12: 2x MoE throughput"
+        assert rejected == [(1, "funding news")]
+
+    def test_the_reply_is_capped_by_max_completion_tokens(self):
+        """max_tokens is the deprecated spelling and the reasoning models
+        reject it, so the ceiling has to go out under the current name."""
+        client = self._ranking_client()
 
         _call_openai_ranking(client, "prompt")
 
         kwargs = client.chat.completions.create.call_args.kwargs
-        assert kwargs["response_format"] == {"type": "json_object"}
+        assert kwargs["max_completion_tokens"] == OPENAI_MAX_TOKENS_RANKING
+        assert "max_tokens" not in kwargs
+
+    def test_an_empty_reply_is_logged_rather_than_silently_date_ordered(self):
+        """A reasoning model that spends its ceiling on reasoning returns no
+        content at all, which used to reach the fallback without a word."""
+        client = Mock()
+        response = Mock()
+        response.choices = [Mock()]
+        response.choices[0].message.content = ""
+        response.choices[0].finish_reason = "length"
+        client.chat.completions.create.return_value = response
+
+        items = [{"title": "a", "summary": "x"}, {"title": "b", "summary": "y"}]
+        with patch("src.news_ranker.OpenAI", return_value=client), \
+                patch("src.news_ranker.logger") as log:
+            assert rank_news_ranked(items, "key") == items
+
+        warning = " ".join(str(c) for c in log.warning.call_args_list)
+        assert "Empty ranking reply" in warning
+        assert "length" in warning
 
     def test_a_bare_ordering_array_is_read(self):
         body = json.dumps([{"index": 2, "line": "second item wins"}])

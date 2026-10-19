@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-19",
+      "run_at": "2026-10-19T17:01:53.856959Z",
+      "top_paper_id": "a5114807-e200-57fe-893f-c844f9948c91",
+      "papers_fetched": 11,
+      "pdf_path": "reports/19-Oct/Timestral_Mistral_release_time-series_foundation.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "39290488760"
+    },
+    {
       "date": "2026-10-18",
       "run_at": "2026-10-18T17:00:54.069971Z",
       "top_paper_id": "e5050e6b-1e7f-5d13-8a26-65131f364ee6",
@@ -762,14 +771,6 @@
       "pdf_path": "reports/20-Jul/Safety_and_alignment_in_an_era_of_long-horizon_mod.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29766541387"
-    },
-    {
-      "date": "2026-07-19",
-      "top_paper_id": null,
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "29697737165"
     }
   ]
 }

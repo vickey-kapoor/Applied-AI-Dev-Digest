@@ -7,7 +7,7 @@ a 400 there is a missing digest, and the ranker's own fallback would turn it
 into a date-ordered digest nobody can tell from a ranked one.
 """
 
-import httpx
+import httpx2 as httpx  # openai 3.x ships httpx2 in place of httpx
 import pytest
 from unittest.mock import Mock, patch
 

@@ -5,11 +5,11 @@ import {
   Database,
   Clock,
   Send,
-  Github,
   ExternalLink,
   Newspaper,
   BookOpen,
 } from "lucide-react";
+import { GithubIcon } from "@/components/icons/github";
 
 // Mirrors BLOG_FEEDS in src/constants.py
 const BLOG_SOURCES = [
@@ -74,7 +74,7 @@ export default function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Github className="h-5 w-5 text-foreground" />
+              <GithubIcon className="h-5 w-5 text-foreground" />
               GitHub Releases
             </CardTitle>
             <CardDescription>Repos tracked for new releases</CardDescription>
@@ -214,7 +214,7 @@ export default function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Github className="h-5 w-5 text-foreground" />
+              <GithubIcon className="h-5 w-5 text-foreground" />
               GitHub Actions
             </CardTitle>
             <CardDescription>Workflow automation</CardDescription>
@@ -245,7 +245,7 @@ export default function SettingsPage() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background rounded-lg hover:opacity-80 transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <Github className="h-4 w-4" />
+                <GithubIcon className="h-4 w-4" />
                 Run Workflow on GitHub
               </a>
             </div>

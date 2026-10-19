@@ -1,6 +1,12 @@
 # Keeps dependencies and GitHub Actions current so known-vulnerable versions
 # don't sit in the pipeline unnoticed. The repo pins everything for
 # reproducibility; without update automation those pins quietly go stale.
+#
+# Grouping covers minor and patch updates only. Major updates are deliberately
+# left out of the groups so each arrives as its own PR: a single grouped PR
+# that bundles majors (React 18->19, Tailwind 3->4, TypeScript 5->7, ...) is
+# unmergeable in one go and breaks the dashboard build, so majors are reviewed
+# and taken one at a time instead.
 version: 2
 updates:
   # Python pipeline dependencies (requirements.txt at the repo root).
@@ -10,9 +16,10 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     groups:
-      python-dependencies:
-        patterns:
-          - "*"
+      python-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
 
   # Dashboard JavaScript/TypeScript dependencies.
   - package-ecosystem: "npm"
@@ -21,9 +28,10 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     groups:
-      npm-dependencies:
-        patterns:
-          - "*"
+      npm-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
 
   # The workflow actions themselves (checkout, setup-python, setup-node).
   - package-ecosystem: "github-actions"
@@ -31,3 +39,8 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    groups:
+      actions-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"

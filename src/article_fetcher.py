@@ -21,14 +21,18 @@ One known block, recorded so nobody re-derives it: openai.com/index/* answers
 403 with `cf-mitigated: challenge` and an `accept-ch: Sec-CH-UA-*` client-hint
 demand. That response is byte-for-byte the same for this project's user agent,
 for curl's default, and for no user agent at all, so it is Cloudflare bot
-management rather than a user-agent filter, and no header defeats it. OpenAI's
-developer news is read from their changelog instead — see
-src/fetchers/openai_changelog_fetcher.py.
+management rather than a user-agent filter, and no header defeats it. When a
+fetch is turned away this way, fetch_article_text falls back to a reader proxy
+(READER_PROXY_URL) that renders the page and returns its text, so these posts
+now reach the digest with a real body. OpenAI's developer changelog is read
+directly besides — see src/fetchers/openai_changelog_fetcher.py.
 """
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from html.parser import HTMLParser
 import html as html_module
+
+import os
 
 import requests
 
@@ -41,6 +45,24 @@ logger = get_logger(__name__)
 # Enough for a long launch post; well past what any brief needs, and a bound on
 # what a hostile or generated page can push into the prompt.
 MAX_ARTICLE_CHARS = 12000
+
+# A reader proxy that renders a page and returns its text, used only as a
+# fallback when a direct fetch hits a Cloudflare challenge (see
+# fetch_article_text). openai.com/index/* — OpenAI's news blog — answers 403
+# with `cf-mitigated: challenge` to every non-browser client, so those posts
+# reached the ranker and summarizer with nothing but the RSS feed's
+# ~150-character meta description. The proxy returns the rendered body, which
+# is what defeats the challenge without this project running a browser engine
+# of its own.
+#
+# A prefix: the target URL is appended to it. Set READER_PROXY_URL="" to turn
+# the fallback off (the behaviour then reverts to the feed summary). The
+# default is Jina AI's reader, which needs no key.
+READER_PROXY_URL = os.getenv("READER_PROXY_URL", "https://r.jina.ai/")
+
+# Rendering is slower than a plain GET, so the proxy gets its own, larger
+# timeout rather than the shared REQUEST_TIMEOUT.
+READER_PROXY_TIMEOUT = int(os.getenv("READER_PROXY_TIMEOUT", "45"))
 
 # Stop reading a response this large: a page bigger than this is not an article.
 MAX_DOWNLOAD_BYTES = 2_000_000
@@ -152,6 +174,52 @@ def _get(url: str) -> requests.Response:
     )
 
 
+# Jina's reader prefixes its output with a few header lines ("Title:",
+# "URL Source:") and then "Markdown Content:". Everything after that marker is
+# the body; drop the preamble so the summarizer reads the article, not the
+# proxy's framing.
+_READER_BODY_MARKER = "Markdown Content:"
+
+
+def _fetch_via_reader(url: str) -> str:
+    """Retrieve a page's readable text through the reader proxy. Never raises.
+
+    Used only when a direct fetch is turned away by a Cloudflare challenge. The
+    proxy returns rendered text (not HTML), so this does not run it through the
+    HTML extractor — it takes the body, drops the proxy's header preamble, and
+    applies the same length bounds a direct fetch would.
+    """
+    if not READER_PROXY_URL:
+        return ""
+
+    try:
+        response = requests.get(
+            f"{READER_PROXY_URL}{url}",
+            timeout=READER_PROXY_TIMEOUT,
+            headers={"User-Agent": USER_AGENT},
+        )
+    except Exception:
+        logger.info("Reader proxy could not fetch %s", url)
+        return ""
+
+    if response.status_code != 200:
+        logger.info("Reader proxy got HTTP %s for %s", response.status_code, url)
+        return ""
+
+    text = response.text or ""
+    marker = text.find(_READER_BODY_MARKER)
+    if marker != -1:
+        text = text[marker + len(_READER_BODY_MARKER):]
+    text = text.strip()[:MAX_ARTICLE_CHARS]
+
+    if len(text) < MIN_USEFUL_CHARS:
+        logger.info("Reader proxy result too thin (%d chars) for %s", len(text), url)
+        return ""
+
+    logger.info("Read %d chars via the reader proxy for %s", len(text), url)
+    return text
+
+
 def fetch_article_text(url: str) -> str:
     """Return the article's readable text, or "" if it cannot be had.
 
@@ -173,12 +241,16 @@ def fetch_article_text(url: str) -> str:
                 # through src/fetchers/openai_changelog_fetcher.py instead.
                 mitigated = response.headers.get("cf-mitigated", "")
                 if mitigated:
+                    # A Cloudflare challenge, not a user-agent issue — no header
+                    # defeats it, so fall back to the reader proxy, which
+                    # renders the page and returns its text. This is what lets
+                    # openai.com/index/* reach the digest with a real body.
                     logger.info(
-                        "Article fetch got HTTP %s (Cloudflare %s, not a user-agent issue) for %s",
+                        "Article fetch got HTTP %s (Cloudflare %s) for %s — trying the reader proxy",
                         response.status_code, mitigated, url,
                     )
-                else:
-                    logger.info("Article fetch got HTTP %s for %s", response.status_code, url)
+                    return _fetch_via_reader(url)
+                logger.info("Article fetch got HTTP %s for %s", response.status_code, url)
                 return ""
 
             content_type = response.headers.get("Content-Type", "")

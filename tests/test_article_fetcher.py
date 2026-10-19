@@ -94,9 +94,27 @@ class TestFetching:
 
     @patch("src.article_fetcher._get")
     def test_non_200_falls_back(self, mock_get):
-        """OpenAI's edge returns 403 to our user agent; that is a fallback, not a crash."""
+        """A plain non-200 (no Cloudflare challenge) is a fallback, not a crash."""
         mock_get.return_value = self._response("<p>blocked</p>", status=403)
         assert fetch_article_text("https://openai.com/index/x") == ""
+
+    @patch("src.article_fetcher._fetch_via_reader", return_value="")
+    @patch("src.article_fetcher._get")
+    def test_cloudflare_challenge_tries_the_reader_proxy(self, mock_get, mock_reader):
+        """A 403 carrying cf-mitigated routes to the reader proxy fallback."""
+        r = self._response("<p>blocked</p>", status=403)
+        r.headers = {"Content-Type": "text/html", "cf-mitigated": "challenge"}
+        mock_get.return_value = r
+        fetch_article_text("https://openai.com/index/x")
+        mock_reader.assert_called_once_with("https://openai.com/index/x")
+
+    @patch("src.article_fetcher._fetch_via_reader", return_value=LONG * 10)
+    @patch("src.article_fetcher._get")
+    def test_cloudflare_challenge_returns_reader_text(self, mock_get, mock_reader):
+        r = self._response("<p>blocked</p>", status=403)
+        r.headers = {"Content-Type": "text/html", "cf-mitigated": "challenge"}
+        mock_get.return_value = r
+        assert "real paragraph of body text" in fetch_article_text("https://openai.com/index/x")
 
     @patch("src.article_fetcher._get")
     def test_non_html_falls_back(self, mock_get):
@@ -133,6 +151,47 @@ class TestFetching:
         text = fetch_article_text("https://lab.example/huge")
         from src.article_fetcher import MAX_ARTICLE_CHARS
         assert 0 < len(text) <= MAX_ARTICLE_CHARS
+
+
+class TestReaderProxy:
+    """The reader-proxy fallback for Cloudflare-challenged pages."""
+
+    def _reader(self, text: str, status=200):
+        r = MagicMock()
+        r.status_code = status
+        r.text = text
+        return r
+
+    @patch("src.article_fetcher.requests.get")
+    def test_returns_body_after_the_marker(self, mock_get):
+        from src.article_fetcher import _fetch_via_reader
+        payload = f"Title: X\nURL Source: https://openai.com/index/x\nMarkdown Content:\n{LONG * 10}"
+        mock_get.return_value = self._reader(payload)
+        body = _fetch_via_reader("https://openai.com/index/x")
+        assert "real paragraph of body text" in body
+        assert "URL Source:" not in body
+
+    @patch("src.article_fetcher.requests.get")
+    def test_thin_result_is_rejected(self, mock_get):
+        from src.article_fetcher import _fetch_via_reader
+        mock_get.return_value = self._reader("Markdown Content:\ntoo short")
+        assert _fetch_via_reader("https://openai.com/index/x") == ""
+
+    @patch("src.article_fetcher.requests.get")
+    def test_non_200_from_proxy_is_empty(self, mock_get):
+        from src.article_fetcher import _fetch_via_reader
+        mock_get.return_value = self._reader(LONG * 10, status=503)
+        assert _fetch_via_reader("https://openai.com/index/x") == ""
+
+    @patch("src.article_fetcher.requests.get", side_effect=Exception("boom"))
+    def test_proxy_failure_is_empty(self, mock_get):
+        from src.article_fetcher import _fetch_via_reader
+        assert _fetch_via_reader("https://openai.com/index/x") == ""
+
+    def test_empty_proxy_url_disables_the_fallback(self, monkeypatch):
+        import src.article_fetcher as af
+        monkeypatch.setattr(af, "READER_PROXY_URL", "")
+        assert af._fetch_via_reader("https://openai.com/index/x") == ""
 
 
 class TestSummarizerInput:

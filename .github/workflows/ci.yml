@@ -60,7 +60,7 @@ jobs:
       # of setup-node in the repo and no existing pin to match. Pin to a patch
       # version once a known-good one has run here.
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '20'
           cache: npm

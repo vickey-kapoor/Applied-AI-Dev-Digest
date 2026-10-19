@@ -1,7 +1,7 @@
 # Pinned versions for security and reproducibility
 requests==2.34.2
 python-dotenv==1.2.4
-openai==2.26.0
+openai==3.31.0
 feedparser==6.0.14
 fpdf2==2.8.9
 

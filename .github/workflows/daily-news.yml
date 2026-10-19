@@ -59,7 +59,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v7.0.1
 
       # Both of these run on the runner's system Python with no dependencies
       # installed — the guard is stdlib-only, so a tick with nothing due costs

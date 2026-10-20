@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-20",
+      "run_at": "2026-10-20T17:01:19.442514Z",
+      "top_paper_id": "a12bd062-c872-5906-8739-f4d75431b3ef",
+      "papers_fetched": 13,
+      "pdf_path": "reports/20-Oct/Together_Post-Training_frontier-grade_model_shapi.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "39442783131"
+    },
+    {
       "date": "2026-10-19",
       "run_at": "2026-10-19T17:01:53.856959Z",
       "top_paper_id": "a5114807-e200-57fe-893f-c844f9948c91",
@@ -763,14 +772,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "29852955917"
-    },
-    {
-      "date": "2026-07-20",
-      "top_paper_id": "c38473b4-b6c1-5430-8609-f23d3dadb80e",
-      "papers_fetched": 2,
-      "pdf_path": "reports/20-Jul/Safety_and_alignment_in_an_era_of_long-horizon_mod.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "29766541387"
     }
   ]
 }

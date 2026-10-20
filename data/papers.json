@@ -1,6 +1,168 @@
 {
   "papers": [
     {
+      "id": "adcfa48f-c202-5bb2-9e1b-725024f9ba31",
+      "title": "FairStress: A deeper evaluation of fairness in LLM decision-making",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/fairstress",
+      "published_at": "2026-10-20T16:09:19+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4203d4a4-8e1c-575a-9eb9-72aa01a91e1d",
+      "title": "ALTK-Evolve: How learned memory tops the τ²-bench leaderboard on customer service tasks without a frontier model",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/ibm-research/altk-evolve-bc",
+      "published_at": "2026-10-20T15:19:48+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0aaed9cc-4e22-567f-bb0a-a2103d085dbf",
+      "title": "Voxtral 3",
+      "summary": "Voxtral 3: Mistral's voice agent SDK for real-time speech in 50+ languages — accurate transcription, emotional TTS, deep tool use. EU-hosted or self-deployed.",
+      "source": "Mistral AI",
+      "url": "https://mistral.ai/news/voxtral-3/",
+      "published_at": "2026-10-20T12:00:22+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f79200b4-1ad3-513b-ab68-04fe41751706",
+      "title": "DeepSeek just open-sourced its inference engine",
+      "summary": "1758 points · 637 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/deepseek-ai/DeepInfer",
+      "published_at": "2026-10-20T09:08:54+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "13a45864-e06a-51b3-959c-caab432aa791",
+      "title": "Spain-Based Startups Advance Regional Innovation With Barcelona Supercomputing Center",
+      "summary": "The Barcelona Supercomputing Center (BSC)’s AI Factory Accelerator Programme, now in full operation following a pilot initiative, gives startups access to sovereign compute, technical support and training to support innovation across industries. Many of these companies are also members of the NVIDIA Inception program for cutting-edge startups — and as of today, access to some […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/spain-startups-barcelona-supercomputing-center/",
+      "published_at": "2026-10-20T05:00:00+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "10fb2994-0a14-5897-91c1-3847d158f162",
+      "title": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding",
+      "summary": "Brain encoding models aim to predict neural responses to stimuli. The most widely used approach fits readouts from frozen pretrained backbones. Using neural data to train large models from scratch or fully fine-tune them after task-pretraining has proven difficult because neural data is costly and limited. We show that parameter-efficient fine-tuning (PEFT) enables us to effectively adapt very large pretrained backbones for brain encoding with a small number of trainable parameters. To make it c",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.26802",
+      "published_at": "2026-10-20T00:00:00+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "paper",
+      "topic_id": "lab_research",
+      "topics": [
+        "Lab Research"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "97b9dd01-53fd-54a2-8ca0-4a6bbf133e64",
+      "title": "ScaleNav: Scalable Internet Video Pretraining for Language-Conditioned Local Navigation",
+      "summary": "We study language-conditioned local navigation, where a robot must navigate to a text-specified target visible in its initial observation and stop at the described location. End-to-end navigation policies require diverse training data to generalize across scenes, yet real-robot data is costly to collect and simulated data leaves a sim-to-real gap. Internet egocentric videos offer a scalable source of real-world navigation experience. Our key insight is to learn goal-directed visual dynamics from",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.25690",
+      "published_at": "2026-10-20T00:00:00+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "paper",
+      "topic_id": "lab_research",
+      "topics": [
+        "Lab Research"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4a14cd6b-fc03-5687-aa30-f7710c9f9b89",
+      "title": "Germany Wants to Lead the World in Industrial AI: How NVIDIA Will Help",
+      "summary": "In the cavernous hall of Kraftwerk, a former power station in Berlin, German Chancellor Friedrich Merz and NVIDIA founder and CEO Jensen Huang sat down to discuss Germany’s AI roadmap, and in particular, the industrial applications of AI. Huang opened by tracing NVIDIA’s longstanding relationship with German industry, beginning with gaming systems, workstations and automotive […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/germany-wants-to-lead-the-world-in-industrial-ai-how-nvidia-will-help/",
+      "published_at": "2026-10-19T19:27:08+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "45507ac8-95ad-5cda-a776-cef3a92aa0a8",
+      "title": "Advancing coding in low‑resource programming languages",
+      "summary": "Learn how OpenAI is improving ChatGPT across low-resource programming languages, with new evaluations for software engineering, SQLite, and COBOL migration.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/low-resource-programming-languages",
+      "published_at": "2026-10-19T12:00:00+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a12bd062-c872-5906-8739-f4d75431b3ef",
+      "title": "Together Post-Training: frontier-grade model shaping, the way that fits you",
+      "summary": "Together AI introduced Together Post-Training, a platform service for building custom models with supervised fine-tuning (SFT) and reinforcement learning (RL). Users define the training loop and can run LoRA experiments—including multiple adapters sharing a GPU allocation—or full-weight training for select models. The service supports standard losses including cross-entropy, GRPO, CISPO, and DPPO, custom objectives with gradients sent to its Trainer, and asynchronous RL; launch models include Muse Spark Open, GLM 5.3, Kimi K3, and Qwen 3.8-27B.",
+      "source": "Together AI",
+      "url": "https://www.together.ai/blog/together-post-training",
+      "published_at": "2026-10-19T00:00:00+00:00",
+      "fetched_at": "2026-10-20T17:01:18.319043Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Lab Research"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Together AI introduced Together Post-Training, a platform service for building custom models with supervised fine-tuning (SFT) and reinforcement learning (RL).",
+      "capabilities": "Users define the training loop and can run LoRA experiments—including multiple adapters sharing a GPU allocation—or full-weight training for select models. The service supports standard losses including cross-entropy, GRPO, CISPO, and DPPO, custom objectives with gradients sent to its Trainer, and asynchronous RL; launch models include Muse Spark Open, GLM 5.3, Kimi K3, and Qwen 3.8-27B.",
+      "availability": "The service is offered on the Together platform, and model resources are billed per GPU-minute; rates are not stated. The article does not state access requirements, regions, or whether availability is preview or general availability.",
+      "why_it_matters": "Teams can bring their own data, environments, and agent harnesses while using Together-managed training and rollout infrastructure, rather than building that stack themselves. Dedicated GPU allocations avoid competing with other users, and the resulting checkpoint can be deployed elsewhere or further refined, according to the article.",
+      "caveats": "The article gives no benchmark results, measured speedups, or model-quality comparisons to substantiate its performance claims. Full-weight training is limited to select models, and GPU-minute prices are not provided.",
+      "release_type": "product"
+    },
+    {
       "id": "23223634-27fe-504a-81bc-c0aedcd6ae56",
       "title": "GenRecs Tokenization: Transforming Ads Recommendation at Meta with Stable Model Vocabulary",
       "summary": "Generative Recommenders (GenRecs) represent a paradigm shift from scoring every ad to reasoning about ad content and user preferences together in order to predict the best outcome for advertisers. Leveraging the world knowledge built into LLMs makes ad matching more intelligent and precise, compounding gains for advertisers. GenRecs Tokenization is the foundational data representation that [...] Read More... The post GenRecs Tokenization: Transforming Ads Recommendation at Meta with Stable Mo...",
@@ -7828,82 +7990,6 @@
       "authors": "OpenAI",
       "topics": [
         "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "863bb8fc-14ae-533d-9a07-3fee09e222df",
-      "title": "Creating with Sora Safely",
-      "description": "To address the novel safety challenges posed by a state-of-the-art video model as well as a new social creation platform, we’ve built Sora 2 and the Sora app with safety at the foundation. Our approach is anchored in concrete protections.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/creating-with-sora-safely",
-      "published_at": "2026-03-23T00:00:00",
-      "fetched_at": "2026-03-23T17:00:57.343087Z",
-      "authors": "OpenAI",
-      "topics": [
-        "Model Release",
-        "Multimodal"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "681f674d-b176-561d-bdb7-fa9f1939d6bf",
-      "title": "OpenAI to acquire Astral",
-      "description": "Accelerates Codex growth to power the next generation of Python developer tools",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/openai-to-acquire-astral",
-      "published_at": "2026-03-19T00:00:00",
-      "fetched_at": "2026-03-19T17:03:54.228387Z",
-      "authors": "OpenAI",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "ad9f23f1-659a-5080-a0d4-e6ff442fac5e",
-      "title": "Measuring progress toward AGI: A cognitive framework",
-      "description": "We’re introducing a framework to measure progress toward AGI, and launching a Kaggle hackathon to build the relevant evaluations.",
-      "source": "Google DeepMind",
-      "url": "https://deepmind.google/blog/measuring-progress-toward-agi-a-cognitive-framework/",
-      "published_at": "2026-03-17T16:03:47",
-      "fetched_at": "2026-03-18T22:57:43.911515Z",
-      "authors": "Google DeepMind",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "7b812e6c-119e-5161-983e-06649e86c372",
-      "title": "Introducing GPT-5.4 mini and nano",
-      "description": "GPT-5.4 mini and nano are smaller, faster versions of GPT-5.4 optimized for coding, tool use, multimodal reasoning, and high-volume API and sub-agent workloads.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/introducing-gpt-5-4-mini-and-nano",
-      "published_at": "2026-03-17T10:00:00",
-      "fetched_at": "2026-03-18T22:57:43.911515Z",
-      "authors": "OpenAI",
-      "topics": [
-        "Model Release",
-        "API Update",
-        "Multimodal",
-        "Function Calling"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "3a892c81-87d9-563b-a138-b50f2a85c770",
-      "title": "Gemini 3.1 Flash-Lite: Built for intelligence at scale",
-      "description": "Gemini 3.1 Flash-Lite is our fastest and most cost-efficient Gemini 3 series model yet.",
-      "source": "Google DeepMind",
-      "url": "https://deepmind.google/blog/gemini-3-1-flash-lite-built-for-intelligence-at-scale/",
-      "published_at": "2026-03-03T16:35:55",
-      "fetched_at": "2026-03-18T22:57:43.911515Z",
-      "authors": "Google DeepMind",
-      "topics": [
-        "Model Release",
-        "Pricing"
       ],
       "ranking_score": 0,
       "status": "unread"

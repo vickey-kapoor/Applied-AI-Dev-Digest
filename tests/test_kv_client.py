@@ -5,7 +5,14 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from src.kv_client import kv_append, kv_get, kv_get_list, kv_delete, kv_trim_to_last
+from src.kv_client import (
+    kv_append,
+    kv_get,
+    kv_get_list,
+    kv_delete,
+    kv_set_if_absent,
+    kv_trim_to_last,
+)
 
 
 @pytest.fixture(autouse=True)
@@ -135,3 +142,49 @@ class TestKvTrimToLast:
         drop the newest entries, so neither is a safe reading of count=0."""
         with pytest.raises(ValueError):
             kv_trim_to_last("digest:weekly", 0)
+
+
+class TestKvSetIfAbsent:
+    """Redis replies "OK" to the one caller that set the key and null to the
+    rest, which is what makes this usable as a claim between two runners."""
+
+    @patch("src.kv_client.urlopen")
+    def test_true_when_this_caller_set_the_key(self, mock_urlopen):
+        mock_urlopen.return_value = _mock_urlopen("OK")
+        assert kv_set_if_absent("digest:claim:2026-10-20", {"at": "noon"}) is True
+
+    @patch("src.kv_client.urlopen")
+    def test_false_when_the_key_already_exists(self, mock_urlopen):
+        mock_urlopen.return_value = _mock_urlopen(None)
+        assert kv_set_if_absent("digest:claim:2026-10-20", {"at": "noon"}) is False
+
+    @patch("src.kv_client.urlopen")
+    def test_sends_set_nx(self, mock_urlopen):
+        mock_urlopen.return_value = _mock_urlopen("OK")
+        kv_set_if_absent("key", {"a": 1})
+
+        body = json.loads(mock_urlopen.call_args[0][0].data.decode())
+        assert body[0] == "SET"
+        assert body[1] == "key"
+        assert json.loads(body[2]) == {"a": 1}
+        assert "NX" in body
+
+    @patch("src.kv_client.urlopen")
+    def test_ttl_is_passed_as_ex_seconds(self, mock_urlopen):
+        mock_urlopen.return_value = _mock_urlopen("OK")
+        kv_set_if_absent("key", "v", ttl_seconds=120)
+
+        body = json.loads(mock_urlopen.call_args[0][0].data.decode())
+        assert body[-2:] == ["EX", "120"]
+
+    @patch("src.kv_client.urlopen")
+    def test_no_ttl_sends_no_expiry(self, mock_urlopen):
+        mock_urlopen.return_value = _mock_urlopen("OK")
+        kv_set_if_absent("key", "v")
+
+        body = json.loads(mock_urlopen.call_args[0][0].data.decode())
+        assert "EX" not in body
+
+    def test_a_nonsense_ttl_is_rejected(self):
+        with pytest.raises(ValueError):
+            kv_set_if_absent("key", "v", ttl_seconds=0)

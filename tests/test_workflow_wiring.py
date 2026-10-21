@@ -157,6 +157,62 @@ class TestGuardContract:
             )
 
 
+class TestTheClaimStopsTwoRunsSending:
+    """20-Oct-2026: an hourly tick held for noon and sent at 12:01:19, while a
+    dispatch created at 12:01:02 queued behind it, checked out the state file
+    from before that send, read the day as unsent and sent it again. The guard
+    cannot see a commit that did not exist when the run was created, so the
+    send is gated a second time on a claim nothing in the checkout can hold.
+    """
+
+    def test_a_step_claims_the_day(self, steps):
+        _step_running(steps, "src.digest_claim claim")
+
+    def test_the_claim_comes_after_the_due_check(self, workflow):
+        """Claiming a day the guard would skip would hold it against nobody."""
+        assert workflow.index("check daily") < workflow.index("digest_claim claim")
+
+    def test_the_claim_comes_before_the_send(self, workflow):
+        assert workflow.index("digest_claim claim") < workflow.index("python main.py")
+
+    def test_the_send_is_gated_on_the_claim(self, steps):
+        step = _step_running(steps, "python main.py")
+        assert "steps.claim.outputs.claimed == 'true'" in step
+
+    def test_the_claim_has_the_kv_credentials(self, steps):
+        step = _step_running(steps, "src.digest_claim claim")
+        for name in ("KV_REST_API_URL", "KV_REST_API_TOKEN"):
+            assert f"{name}: ${{{{ secrets.{name} }}}}" in step
+
+    def test_force_reaches_the_claim_too(self, steps):
+        """Otherwise a forced send would be vetoed by its own earlier run."""
+        step = _step_running(steps, "src.digest_claim claim")
+        assert "inputs.force" in step
+
+    def test_a_failed_send_releases_the_day(self, steps):
+        step = _step_running(steps, "src.digest_claim release")
+        assert "steps.send.outcome == 'failure'" in step, (
+            "the release must key off the send, not off the job: a run that "
+            "sent and then failed to push keeps its claim"
+        )
+
+    def test_the_claim_needs_no_dependencies(self, workflow):
+        """It runs before setup-python, on the runner's system interpreter, so
+        a tick that cannot send still costs seconds."""
+        assert workflow.index("digest_claim claim") < workflow.index("actions/setup-python")
+        assert "python3 -m src.digest_claim" in workflow
+
+
+class TestThePushSurvivesALostRace:
+    """The duplicate run's own push was rejected as non-fast-forward, which
+    lost its commit and turned the run red. Any run that starts before another
+    one pushes hits the same thing."""
+
+    def test_the_push_rebases_and_retries(self, steps):
+        step = _step_running(steps, "git add")
+        assert "git pull --rebase" in step
+
+
 class TestOneDigestADay:
     """The digest is daily only. The Sunday roundup was removed deliberately.
 

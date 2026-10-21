@@ -26,6 +26,13 @@ name: Daily Applied AI Dev Digest
 # twice, or fires after the hourly poll already sent, cannot double-send. The
 # `force` input is the one bypass, for sending by hand off-schedule.
 #
+# The guard alone cannot settle a tie, because its state is a committed file
+# and a run reads it from the commit it was created at: a dispatch created
+# while a holding tick is mid-send sees a state file from before that send.
+# That sent two digests on 20-Oct-2026. So the send is gated a second time on
+# a claim in KV, which exactly one concurrent run can win — see
+# src/digest_claim.py.
+#
 # The target is local noon evaluated in America/Chicago, not a fixed UTC hour,
 # so it stays at noon when CDT gives way to CST in November.
 #
@@ -109,14 +116,35 @@ jobs:
             exit 1
           fi
 
-      - name: Set up Python
+      # The guard says the digest is due; this says nobody else is already
+      # sending it. Prints true only for the run that wins the claim, so two
+      # overlapping runs cannot both get past here. Needs no dependencies: the
+      # KV client is urllib and stdlib only.
+      - name: Claim today's digest
+        id: claim
         if: steps.guard.outputs.daily == 'true'
+        env:
+          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
+          KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
+        run: |
+          if [ "${{ inputs.force }}" = "true" ]; then
+            echo "claimed=$(python3 -m src.digest_claim claim --force)" >> "$GITHUB_OUTPUT"
+          else
+            echo "claimed=$(python3 -m src.digest_claim claim)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Already sent
+        if: steps.guard.outputs.daily == 'true' && steps.claim.outputs.claimed != 'true'
+        run: echo "Another run is sending today's digest — exiting."
+
+      - name: Set up Python
+        if: steps.guard.outputs.daily == 'true' && steps.claim.outputs.claimed == 'true'
         uses: actions/setup-python@v5.6.0
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        if: steps.guard.outputs.daily == 'true'
+        if: steps.guard.outputs.daily == 'true' && steps.claim.outputs.claimed == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -126,7 +154,8 @@ jobs:
       # crons collapsed into a single polling cron and the string stopped
       # matching anything at all.
       - name: Send the daily digest
-        if: steps.guard.outputs.daily == 'true'
+        id: send
+        if: steps.guard.outputs.daily == 'true' && steps.claim.outputs.claimed == 'true'
         timeout-minutes: 10
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -151,11 +180,21 @@ jobs:
       # requires every earlier step to have passed, so a failed send leaves
       # the day unmarked and the next tick retries it.
       - name: Record the daily run
-        if: steps.guard.outputs.daily == 'true'
+        if: steps.guard.outputs.daily == 'true' && steps.claim.outputs.claimed == 'true'
         run: python -m src.schedule_guard mark daily
 
+      # Only when the send failed. A run that sent and then failed to commit
+      # keeps its claim: the digest did reach Telegram, and handing the day
+      # back would send it twice.
+      - name: Release the claim if the send failed
+        if: always() && steps.send.outcome == 'failure'
+        env:
+          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
+          KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
+        run: python3 -m src.digest_claim release
+
       - name: Commit and push reports and data
-        if: steps.guard.outputs.daily == 'true'
+        if: steps.guard.outputs.daily == 'true' && steps.claim.outputs.claimed == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -163,6 +202,17 @@ jobs:
           # Include the UTC time: scheduler drift can put two runs on one date,
           # and a date-only message makes them indistinguishable in the log.
           git diff --staged --quiet || git commit -m "Add daily research digest for $(date -u +'%d-%b-%Y %H:%M') UTC"
+          # A run checks out the commit it was created at, so anything pushed
+          # since — another run's digest, a merge — makes this push a
+          # non-fast-forward. Rebasing onto it and retrying turns that from a
+          # red run with a lost commit into a normal push.
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — rebasing onto $GITHUB_REF_NAME and retrying."
+            git pull --rebase origin "$GITHUB_REF_NAME"
+          done
           git push
 
       - name: Annotate on failure

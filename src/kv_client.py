@@ -135,3 +135,25 @@ def kv_trim_to_last(key, count):
     result = _kv_request("POST", "/", ["LTRIM", key, str(-count), "-1"])
     logger.info("KV LTRIM %s to last %d → %s", key, count, result.get("result"))
     return result.get("result")
+
+
+@retry_with_backoff(exceptions=(URLError, OSError))
+def kv_set_if_absent(key, value, ttl_seconds=None) -> bool:
+    """Set `key` only if it does not exist (Redis SET ... NX), optionally with
+    a TTL. Returns True when this caller is the one that set it.
+
+    This is the only KV call whose *return* carries the meaning rather than the
+    stored value: two runners racing for the same key both succeed at the HTTP
+    level and exactly one gets True. Redis replies "OK" to the winner and null
+    to everyone else.
+    """
+    command = ["SET", key, json.dumps(value), "NX"]
+    if ttl_seconds is not None:
+        if ttl_seconds < 1:
+            raise ValueError("ttl_seconds must be at least 1")
+        command += ["EX", str(int(ttl_seconds))]
+
+    result = _kv_request("POST", "/", command)
+    acquired = result.get("result") is not None
+    logger.info("KV SET %s NX → %s", key, "acquired" if acquired else "already set")
+    return acquired

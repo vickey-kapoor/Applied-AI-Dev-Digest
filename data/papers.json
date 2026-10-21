@@ -1,6 +1,245 @@
 {
   "papers": [
     {
+      "id": "558fdabd-47da-5802-acb4-830cedba658e",
+      "title": "Empowering frontline maternal care with AI-assisted ultrasound",
+      "summary": "Health & Bioscience",
+      "source": "Google Research",
+      "url": "https://research.google/blog/empowering-frontline-maternal-care-with-ai-assisted-ultrasound/",
+      "published_at": "2026-10-21T16:23:53+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8c66d71e-e5fb-52fd-b26e-0cf7f84263b5",
+      "title": "openai-python v3.36.0 released",
+      "summary": "## [3.36.0](https://github.com/openai/openai-python/compare/v3.35.1...v3.36.0) (2026-10-21)\n\n\n### Features\n\n* add Vertex AI support for the Responses API ([#4139](https://github.com/openai/openai-python/issues/4139)) ([3e63d33](https://github.com/openai/openai-python/commit/3e63d33f6258f47285007aaee30df251d5127820))\n* **api:** add 30-minute cache-write usage counts ([#4111](https://github.com/openai/openai-python/issues/4111)) ([5589146](https://github.com/openai/openai-python/commit/5589146d738",
+      "source": "GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.36.0",
+      "published_at": "2026-10-21T15:53:22Z",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "release",
+      "topic_id": "product_api",
+      "topics": [
+        "Product & API"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4445d4e5-9966-52e5-b413-9374f5af0468",
+      "title": "Granite Speech 5.0: Transcribe, Translate, and Attribute more Accurately and Faster",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/ibm-granite/granite-speech-5",
+      "published_at": "2026-10-21T14:58:18+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a8d3ca6f-1af7-53a1-b463-895823cc77f1",
+      "title": "ChatGPT Ads expands to 26 new countries as over 100,000 advertisers have used the platform",
+      "summary": "From local businesses to global brands, more advertisers can now reach people as they explore, compare and decide what to buy in ChatGPT.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/chatgpt-ads-expands-26-new-countries",
+      "published_at": "2026-10-21T13:00:00+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "03e5186d-4810-5674-b693-4ebf9235029d",
+      "title": "NVIDIA Kumo Forecast Combines Pretrained Time-Series Representations with Historical Pattern Retrieval and Interpretability",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/nvidia/kumo-forecast",
+      "published_at": "2026-10-21T12:51:24+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "announcement",
+      "topic_id": "safety_system_cards",
+      "topics": [
+        "Safety & System Cards"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "339381b9-f8f3-515c-9869-b3d623e22f90",
+      "title": "Mistral Advances AI for Engineering with NVIDIA",
+      "summary": "Mistral is collaborating with NVIDIA to develop a new generation of AI-native engineering workflows powered by NVIDIA accelerated computing.",
+      "source": "Mistral AI",
+      "url": "https://mistral.ai/news/mistral-nvidia-ai-for-industrial-engineering/",
+      "published_at": "2026-10-21T12:00:20+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7437c1d4-f785-509d-98d7-1afe318ab073",
+      "title": "OpenAI models are coming to Google Cloud",
+      "summary": "OpenAI and Google Cloud are bringing frontier models and Codex workflows to Gemini’s Model Garden, available through Google Cloud Marketplace.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/openai-models-google-cloud",
+      "published_at": "2026-10-21T12:00:00+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "358c191a-636c-5632-8722-d1ddead1f553",
+      "title": "Bringing the Spark to Europe: Local Intelligence Powers Next Wave of Agents",
+      "summary": "At GTC Berlin, NVIDIA is showcasing its full lineup of local AI hardware. RTX Spark, which launched last week, powers personal agents on Windows PCs; DGX Spark supports developers building and scaling applications on Linux; and DGX Station serves enterprise teams running frontier workloads on Linux, with a Windows version arriving in December. Announcements include: […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/local-ai-gtc-rtx-dgx-spark-station-sync/",
+      "published_at": "2026-10-21T10:50:37+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "33dd79c1-5911-5db9-b70a-4f4795149603",
+      "title": "Google Cloud and NVIDIA Announce General Availability of NVIDIA Vera Rubin Infrastructure",
+      "summary": "General availability of the instances is coming next month, with planned expansion of availability to Europe — bringing an integrated platform for training, inference and large-scale reinforcement learning to cloud customers. A5X instances bring together NVIDIA Vera Rubin NVL72, NVIDIA ConnectX-9 SuperNICs, Google Cloud Virgo Network and Google Cloud’s fourth-generation advanced liquid-cooling technology for demanding […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/google-cloud-vera-rubin-infrastructure/",
+      "published_at": "2026-10-21T10:45:17+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "announcement",
+      "topic_id": "lab_research",
+      "topics": [
+        "Lab Research",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0b65b8e1-132a-5450-8b6d-95d672ba04ae",
+      "title": "Southeast Asia’s digital economy to hit $368 billion",
+      "summary": "Cover image for the e-Conomy SEA 2026 report titled Building the intelligent economy by Google, Temasek, and Bain and Company. A 3D illustration features a glowing yellow star surrounded by miniature scenes representing digital sectors, including data cen",
+      "source": "Google AI",
+      "url": "https://blog.google/company-news/inside-google/around-the-globe/google-asia/e-conomy-sea-report-2026/",
+      "published_at": "2026-10-21T04:00:00+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b6129c54-fb77-5553-9da1-9cc7b4613006",
+      "title": "Using Claude to reduce the attack surface of code",
+      "summary": "112 points · 74 comments",
+      "source": "Hacker News",
+      "url": "https://www.anthropic.com/research/attack-surface-reduction",
+      "published_at": "2026-10-21T03:36:43+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "310ac833-5bd3-5a22-92dd-2059e512353b",
+      "title": "python-genai v2.32.0 released",
+      "summary": "## [2.32.0](https://github.com/googleapis/python-genai/compare/v2.31.0...v2.32.0) (2026-10-21)\n\n\n### Features\n\n* Add base_voice to PromptedVoice in GAOS SDK ([5488643](https://github.com/googleapis/python-genai/commit/548864370ee9c88de0bd839b619dc05bcb7085e7))\n* Add generation_output_config to GenerateContentConfig ([5c008e1](https://github.com/googleapis/python-genai/commit/5c008e14b9c9fdecbaf61eb53ad7c09f57fa5f8a))\n* Add Live API in-session context updates (`send_context_update`) and types acr",
+      "source": "GitHub",
+      "url": "https://github.com/googleapis/python-genai/releases/tag/v2.32.0",
+      "published_at": "2026-10-21T00:26:23Z",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "release",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "52df2668-defd-5279-b6fa-f203e020c076",
+      "title": "Matrix-Game 4.0: Harnessing Video Models for Real-Time Playable Game Worlds",
+      "summary": "Moving from controllable videos to genuinely playable worlds requires persistent world state, executable game rules, and low-latency interaction. We outline a roadmap for the next generation of Matrix-Game that separates game execution from visual generation through an executable game harness, and introduce Matrix-Game 4.0 as the first system built on this design. A lightweight game engine maintains world state and executes interaction rules, a multimodal coding agent translates player ideas int",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.27999",
+      "published_at": "2026-10-21T00:00:00+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "paper",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7c8dce3d-9491-5c63-b60a-0fb2ccb18300",
+      "title": "S-Agent 2.0: Spatial Reasoning with a General Coding Agent",
+      "summary": "Spatial reasoning asks a model to work out where objects are in 3D space, how they relate to one another, and how they move. Agentic VLMs have recently brought large improvements on such tasks by letting the model actively gather evidence with 3D perception tools instead of answering in a single pass. Even so, on many questions the tools return the right evidence and the model still does not arrive at the correct answer: the gap between model and tools, where raw readings become usable conclusio",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.28354",
+      "published_at": "2026-10-21T00:00:00+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "paper",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "e5999ace-1df9-525e-acfc-1db38fb8535e",
+      "title": "You can now choose 12-hour prompt caching in the API.",
+      "summary": "OpenAI added selectable 12-hour prompt caching to the API endpoint v1/responses. The longer cache duration can keep shared instructions, tools, and context cached when requests are hours apart. 12-hour cache writes cost 2.5× the input token price; the announcement says longer caching can benefit lower cached-input pricing.",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-20T00:00:00+00:00",
+      "fetched_at": "2026-10-21T17:01:13.901880Z",
+      "type": "changelog",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-20:you-can-now-choose-12-hour-prompt-caching-in-the-api",
+      "what_shipped": "OpenAI added selectable 12-hour prompt caching to the API endpoint v1/responses.",
+      "capabilities": "The longer cache duration can keep shared instructions, tools, and context cached when requests are hours apart. 12-hour cache writes cost 2.5× the input token price; the announcement says longer caching can benefit lower cached-input pricing.",
+      "availability": "Available in the API for v1/responses. The announcement does not state setup instructions, other endpoint support, or further pricing details.",
+      "why_it_matters": "For workloads with requests spaced hours apart, you can choose longer-lived caching for shared prompt content and potentially reduce cached-input costs. Weigh that against the 2.5× input-price charge for cache writes.",
+      "caveats": "The announcement does not specify how to enable the duration, cache eligibility or retention behavior beyond 12 hours, or the exact cached-input prices.",
+      "release_type": "api"
+    },
+    {
       "id": "adcfa48f-c202-5bb2-9e1b-725024f9ba31",
       "title": "FairStress: A deeper evaluation of fairness in LLM decision-making",
       "summary": "",
@@ -7766,230 +8005,6 @@
       "type": "announcement",
       "topics": [
         "SDK/Library"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "ff3d400a-6be1-5515-bc61-05fa1f719397",
-      "title": "Scaling seismic foundation models on AWS: Distributed training with Amazon SageMaker HyperPod and expanding context windows",
-      "summary": "This post describes how TGS achieved near-linear scaling for distributed training and expanded context windows for their Vision Transformer-based SFM using Amazon SageMaker HyperPod. This joint solution cut training time from 6 months to just 5 days while enabling analysis of seismic volumes larger than previously possible.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/scaling-seismic-foundation-models-on-aws-distributed-training-with-amazon-sagemaker-hyperpod-and-expanding-context-windows/",
-      "published_at": "2026-04-02T13:30:57",
-      "fetched_at": "2026-04-06T00:43:46.599753Z",
-      "type": "announcement",
-      "topics": [
-        "Model Release",
-        "Fine-tuning",
-        "Multimodal"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "4d11e026-34bb-5356-bebf-cb0e73f56289",
-      "title": "KernelEvolve: How Meta’s Ranking Engineer Agent Optimizes AI Infrastructure",
-      "description": "This is the second post in the Ranking Engineer Agent blog series exploring the autonomous AI capabilities accelerating Meta’s Ads Ranking innovation. The previous post introduced Ranking Engineer Agent’s ML exploration capability, which autonomously designs, executes, and analyzes ranking model experiments. This post covers how to optimize the low-level infrastructure that makes those models run [...] Read More... The post KernelEvolve: How Meta’s Ranking Engineer Agent Optimizes AI Infrastr...",
-      "source": "Meta AI",
-      "url": "https://engineering.fb.com/2026/04/02/developer-tools/kernelevolve-how-metas-ranking-engineer-agent-optimizes-ai-infrastructure/",
-      "published_at": "2026-04-02T19:59:46",
-      "fetched_at": "2026-04-05T23:41:42.057062Z",
-      "authors": "Meta AI",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "1fbe7422-07f9-5812-b246-db6e40ebe4a0",
-      "title": "Meta Adaptive Ranking Model: Bending the Inference Scaling Curve to Serve LLM-Scale Models for Ads",
-      "description": "Meta continues to lead the industry in utilizing groundbreaking AI Recommendation Systems (RecSys) to deliver better experiences for people, and better results for advertisers. To reach the next frontier of performance, we are scaling Meta’s Ads Recommender runtime models to LLM-scale & complexity to further a deeper understanding of people’s interests and intent. This increase [...] Read More... The post Meta Adaptive Ranking Model: Bending the Inference Scaling Curve to Serve LLM-Scale Mode...",
-      "source": "Meta AI",
-      "url": "https://engineering.fb.com/2026/03/31/ml-applications/meta-adaptive-ranking-model-bending-the-inference-scaling-curve-to-serve-llm-scale-models-for-ads/",
-      "published_at": "2026-03-31T16:00:17",
-      "fetched_at": "2026-04-05T23:41:42.057062Z",
-      "authors": "Meta AI",
-      "topics": [
-        "Model Release",
-        "API Update"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "007a4f70-6324-5eea-8408-9fcd93affd10",
-      "title": "AI for American-Produced Cement and Concrete",
-      "description": "Meta is continuing its long-term roadmap to help the construction industry leverage AI to produce high-quality and more sustainable concrete mixes, as well as those exclusively produced in the United States. Concurrent with the 2026 American Concrete Institute (ACI) Spring Convention, Meta is releasing a new AI model for designing concrete mixes – Bayesian Optimization [...] Read More... The post AI for American-Produced Cement and Concrete appeared first on Engineering at Meta.",
-      "source": "Meta AI",
-      "url": "https://engineering.fb.com/2026/03/30/data-center-engineering/ai-for-american-produced-cement-and-concrete/",
-      "published_at": "2026-03-30T16:00:34",
-      "fetched_at": "2026-04-05T23:41:42.057062Z",
-      "authors": "Meta AI",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "8a5538cd-c3d9-562a-8872-97ebcb247567",
-      "title": "Protecting people from harmful manipulation",
-      "description": "Google DeepMind researches AI's harmful manipulation risks across areas like finance and health, leading to new safety measures.",
-      "source": "Google DeepMind",
-      "url": "https://deepmind.google/blog/protecting-people-from-harmful-manipulation/",
-      "published_at": "2026-03-25T16:46:20",
-      "fetched_at": "2026-04-05T23:41:42.057062Z",
-      "authors": "Google DeepMind",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "86fe53ed-baed-53a9-b1bd-4cb41c02cf47",
-      "title": "Codex now offers more flexible pricing for teams",
-      "description": "Codex now includes pay-as-you-go pricing for ChatGPT Business and Enterprise, providing teams a more flexible option to start and scale adoption.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/codex-flexible-pricing-for-teams",
-      "published_at": "2026-04-02T10:00:00",
-      "fetched_at": "2026-04-03T16:51:05.045007Z",
-      "authors": "OpenAI",
-      "topics": [
-        "Model Release",
-        "Pricing"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "b45d5eee-a970-5e5c-9fd2-d5b067dca420",
-      "title": "Gemma 4: Byte for byte, the most capable open models",
-      "description": "Gemma 4: Our most intelligent open models to date, purpose-built for advanced reasoning and agentic workflows.",
-      "source": "Google DeepMind",
-      "url": "https://deepmind.google/blog/gemma-4-byte-for-byte-the-most-capable-open-models/",
-      "published_at": "2026-04-02T16:00:49",
-      "fetched_at": "2026-04-02T17:02:40.612267Z",
-      "authors": "Google DeepMind",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "832df1b1-8c64-5e65-b025-b5598f377fa3",
-      "title": "Gradient Labs gives every bank customer an AI account manager",
-      "description": "Gradient Labs uses GPT-4.1 and GPT-5.4 mini and nano to power AI agents that automate banking support workflows with low latency and high reliability.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/gradient-labs",
-      "published_at": "2026-04-01T02:00:00",
-      "fetched_at": "2026-04-01T17:03:46.280000Z",
-      "authors": "OpenAI",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "2e7d386c-f5ca-5f82-a40e-79106270a6c4",
-      "title": "Accelerating the next phase of AI",
-      "description": "OpenAI raises $122 billion in new funding to expand frontier AI globally, invest in next-generation compute, and meet growing demand for ChatGPT, Codex, and enterprise AI.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/accelerating-the-next-phase-ai",
-      "published_at": "2026-03-31T13:00:00",
-      "fetched_at": "2026-04-01T17:03:46.280000Z",
-      "authors": "OpenAI",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "6bf45690-852a-52ba-b89e-d7d59667475b",
-      "title": "Helping disaster response teams turn AI into action across Asia",
-      "description": "AI for Disaster Response in Asia: OpenAI Workshop with Gates Foundation",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/helping-disaster-response-teams-asia",
-      "published_at": "2026-03-29T22:15:00",
-      "fetched_at": "2026-04-01T17:03:46.280000Z",
-      "authors": "OpenAI",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "e57284bb-7634-569d-8ab8-b1b6b0e69a06",
-      "title": "Gemini 3.1 Flash Live: Making audio AI more natural and reliable",
-      "description": "Our latest voice model has improved precision and lower latency to make voice interactions more fluid, natural and precise.",
-      "source": "Google DeepMind",
-      "url": "https://deepmind.google/blog/gemini-3-1-flash-live-making-audio-ai-more-natural-and-reliable/",
-      "published_at": "2026-03-26T15:23:35",
-      "fetched_at": "2026-03-26T17:11:34.444376Z",
-      "authors": "Google DeepMind",
-      "topics": [
-        "Model Release",
-        "Multimodal"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "0cd57e38-78de-5ed0-8934-6e660a41ac3a",
-      "title": "Inside our approach to the Model Spec",
-      "description": "Learn how OpenAI’s Model Spec serves as a public framework for model behavior, balancing safety, user freedom, and accountability as AI systems advance.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/our-approach-to-the-model-spec",
-      "published_at": "2026-03-25T10:00:00",
-      "fetched_at": "2026-03-25T17:12:04.982656Z",
-      "authors": "OpenAI",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "fb6be8c8-5e47-51f3-92ce-45673d35e5a6",
-      "title": "Introducing the OpenAI Safety Bug Bounty program",
-      "description": "OpenAI launches a Safety Bug Bounty program to identify AI abuse and safety risks, including agentic vulnerabilities, prompt injection, and data exfiltration.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/safety-bug-bounty",
-      "published_at": "2026-03-25T00:00:00",
-      "fetched_at": "2026-03-25T17:12:04.982656Z",
-      "authors": "OpenAI",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "25fa011e-1f03-5709-96b5-6f0235527960",
-      "title": "Helping developers build safer AI experiences for teens",
-      "description": "OpenAI releases prompt-based teen safety policies for developers using gpt-oss-safeguard, helping moderate age-specific risks in AI systems.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/teen-safety-policies-gpt-oss-safeguard",
-      "published_at": "2026-03-24T11:00:00",
-      "fetched_at": "2026-03-25T17:12:04.982656Z",
-      "authors": "OpenAI",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "ec69f3c4-5569-5a4d-a370-f9adef35fe2f",
-      "title": "Powering product discovery in ChatGPT",
-      "description": "ChatGPT introduces richer, visually immersive shopping powered by the Agentic Commerce Protocol, enabling product discovery, side-by-side comparisons, and merchant integration.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/powering-product-discovery-in-chatgpt",
-      "published_at": "2026-03-24T09:00:00",
-      "fetched_at": "2026-03-24T17:07:35.274650Z",
-      "authors": "OpenAI",
-      "topics": [
-        "Model Release"
       ],
       "ranking_score": 0,
       "status": "unread"

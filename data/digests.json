@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-21",
+      "run_at": "2026-10-21T17:01:15.106715Z",
+      "top_paper_id": "e5999ace-1df9-525e-acfc-1db38fb8535e",
+      "papers_fetched": 16,
+      "pdf_path": "reports/21-Oct/You_can_now_choose_12-hour_prompt_caching_in_the_A.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "39621350138"
+    },
+    {
       "date": "2026-10-20",
       "run_at": "2026-10-20T17:01:19.442514Z",
       "top_paper_id": "a12bd062-c872-5906-8739-f4d75431b3ef",
@@ -764,14 +773,6 @@
       "pdf_path": "reports/22-Jul/OpenAI_and_Hugging_Face_address_security_incident.pdf",
       "telegram_sent": true,
       "workflow_run_id": "29942229313"
-    },
-    {
-      "date": "2026-07-21",
-      "top_paper_id": "",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "29852955917"
     }
   ]
 }

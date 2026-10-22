@@ -1,6 +1,195 @@
 {
   "papers": [
     {
+      "id": "94a5edb2-a40a-5480-a979-ee9da2ccc152",
+      "title": "OlmoEarth v1.3: State-of-the-art embeddings for the whole planet",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/olmoearth-v1-3",
+      "published_at": "2026-10-22T16:11:31+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "announcement",
+      "topic_id": "open_weights",
+      "topics": [
+        "Open Weights"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8f7ababe-e432-52a3-8808-3d80a0e09093",
+      "title": "NVIDIA Unveils Minerva to Bring End-to-End Observability for AI Factories",
+      "summary": "Launched today, NVIDIA Minerva is an AIOps platform built to help teams find problems earlier and keep AI factories productive. It brings together telemetry from infrastructure and AI workloads, then applies purpose-built AI models to turn that data into timely, actionable insight. AI factories are among the most complex operations in the world, with vast […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/minerva-platform-infrastructure/",
+      "published_at": "2026-10-22T15:00:02+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "508cd326-c321-5310-ab9a-b7e3f7b59a03",
+      "title": "Beyond tree cover: mapping the world’s forest types",
+      "summary": "A global map categorizing every 10-meter patch of land on Earth into distinct forest types.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/beyond-tree-cover-mapping-the-worlds-forest-types/",
+      "published_at": "2026-10-22T14:30:24+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0e6267b4-064e-538b-b3ab-50033aa0eebd",
+      "title": "Cloud Deployment Incoming: ‘Call of Duty: Modern Warfare 4’ Arrives on GeForce NOW",
+      "summary": "Lock in and load out this GFN Thursday. Call of Duty: Modern Warfare 4 arrives on GeForce NOW at launch, bringing a new campaign, multiplayer action and DMZ, high-stakes extraction mode to supported devices. The campaign also gets an enhanced look: GeForce RTX 5080-class performance arrives for Ultimate members, bringing support for ray-tracing features in […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-call-of-duty-modern-warfare-4/",
+      "published_at": "2026-10-22T13:00:20+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0a693419-5e62-5e75-a9ba-d88e9585f914",
+      "title": "Jailbreaking the Switch 2",
+      "summary": "487 points · 177 comments",
+      "source": "Hacker News",
+      "url": "https://pepsipu.com/blog/2026-10-switch2-jailbreak-ns2jb/",
+      "published_at": "2026-10-22T08:01:52+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "discussion",
+      "topic_id": "safety_system_cards",
+      "topics": [
+        "Safety & System Cards"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "5f202677-be0f-59a2-8a1f-4354389dd72a",
+      "title": "Ensemble forecasting with IBM Granite time-series models",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/ibm-research/granite-timeseries-ensemble-r1",
+      "published_at": "2026-10-22T07:51:31+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "eb1b17a1-ab09-5b3b-9813-fdfe3ec76e03",
+      "title": "What FDE means at OpenAI",
+      "summary": "What forward deployed engineering means at OpenAI",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/forward-deployed-engineering-means",
+      "published_at": "2026-10-22T06:00:00+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "978282e1-5cce-5d42-9978-c46dc8e1f00f",
+      "title": "Uber brings ChatGPT Work to all employees with OpenAI",
+      "summary": "Uber is rolling out ChatGPT Work to more than 30,000 employees, helping teams research, analyze data, create presentations, and complete complex workflows.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/uber-chatgpt-work-rollout",
+      "published_at": "2026-10-22T00:00:00+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8d5f7e22-80f3-5491-955a-8f751dba31bf",
+      "title": "StreamEval: Evaluating Interactive Streaming Video Generation Models",
+      "summary": "As streaming video generation advances, enabling real-time interaction with generated video is becoming increasingly important. We introduce StreamEval, a unified benchmark for interactive streaming video generation spanning five tasks: avatar dialogue, avatar performance, world generation, instruction editing, and reference editing. StreamEval comprises 300 scripted test cases lasting 15-300s, each specifying initial assets, incrementally arriving multimodal requests, and explicit requirements ",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.28402",
+      "published_at": "2026-10-22T00:00:00+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "paper",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c513c1f8-628d-5a2b-be01-e2d9dafd444d",
+      "title": "SpatialScout: Can VLM Agents Actively Explore and Map 3D Scenes?",
+      "summary": "Spatial intelligence requires agents to actively acquire visual evidence and integrate observations into a coherent representation of the three-dimensional world. Yet spatial question answering offers limited evidence of whether models can construct accurate metric maps through autonomous exploration. We introduce SpatialScout, a benchmark for evaluating vision-language model (VLM) agents on active object-level 3D mapping. SpatialScout comprises 80 diverse indoor scenes containing 3,140 target o",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.26659",
+      "published_at": "2026-10-22T00:00:00+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "paper",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "aca21c4d-1267-5fa2-9d19-42221fb85f1e",
+      "title": "Claude Duet",
+      "summary": "511 points · 474 comments",
+      "source": "Hacker News",
+      "url": "https://claude.com/product/claude-duet",
+      "published_at": "2026-10-21T19:14:01+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f792477b-5131-5abd-b5bc-f41b78078fd2",
+      "title": "You can now choose which service tiers projects can use in Platform settings.",
+      "summary": "OpenAI added controls in Platform settings to choose which service tiers projects can use. Projects can be restricted to selected service tiers. Organization settings can restrict service tiers across all projects; specific tier names and configuration details are not stated.",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-21T00:00:00+00:00",
+      "fetched_at": "2026-10-22T17:01:21.277970Z",
+      "type": "changelog",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-21:you-can-now-choose-which-service-tiers-projects-can-use-in-p",
+      "what_shipped": "OpenAI added controls in Platform settings to choose which service tiers projects can use.",
+      "capabilities": "Projects can be restricted to selected service tiers. Organization settings can restrict service tiers across all projects; specific tier names and configuration details are not stated.",
+      "availability": "The controls are available in Platform settings, according to the announcement. Pricing, eligible tiers, and any rollout or region limits are not stated.",
+      "why_it_matters": "You can constrain which service tiers projects in your stack are allowed to use, including applying a restriction organization-wide. This gives you a way to align project access with your tier policies; the announcement does not describe the effect on existing workloads.",
+      "caveats": "The announcement does not specify which tiers can be selected or what happens when a project attempts to use a disallowed tier. It points to separate documentation on service tier errors.",
+      "release_type": "product"
+    },
+    {
       "id": "558fdabd-47da-5802-acb4-830cedba658e",
       "title": "Empowering frontline maternal care with AI-assisted ultrasound",
       "summary": "Health & Bioscience",
@@ -7834,177 +8023,6 @@
       "type": "discussion",
       "topics": [
         "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "0f479a21-5041-59a8-ae30-f6975c5a1a44",
-      "title": "OpenAI's fall from grace as investors race to Anthropic",
-      "summary": "192 points · 132 comments",
-      "source": "Hacker News",
-      "url": "https://www.latimes.com/business/story/2026-04-01/openais-shocking-fall-from-grace-as-investors-race-to-anthropic",
-      "published_at": "2026-04-05T23:33:01+00:00",
-      "fetched_at": "2026-04-06T16:57:35.921791Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "3ab57047-6b26-55f9-8c57-1b448683d307",
-      "title": "Show HN: Real-time AI (audio/video in, voice out) on an M3 Pro with Gemma E2B",
-      "summary": "212 points · 21 comments",
-      "source": "Hacker News",
-      "url": "https://github.com/fikrikarim/parlor",
-      "published_at": "2026-04-05T17:53:19+00:00",
-      "fetched_at": "2026-04-06T16:57:35.921791Z",
-      "type": "discussion",
-      "topics": [
-        "Multimodal"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "a0745053-7aa8-5fc6-b383-e83fe1144c55",
-      "title": "OpenAI acquires TBPN",
-      "summary": "OpenAI acquires TBPN to accelerate global conversations around AI and support independent media, expanding dialogue with builders, businesses, and the broader tech community.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/openai-acquires-tbpn",
-      "published_at": "2026-04-02T10:30:00",
-      "fetched_at": "2026-04-06T16:57:35.921791Z",
-      "type": "announcement",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "d08194ce-cf5f-51f3-b997-2d8e8b9cf68b",
-      "title": "Welcome Gemma 4: Frontier multimodal intelligence on device",
-      "summary": "",
-      "source": "Hugging Face",
-      "url": "https://huggingface.co/blog/gemma4",
-      "published_at": "2026-04-02T00:00:00",
-      "fetched_at": "2026-04-06T00:52:24.236524Z",
-      "type": "announcement",
-      "topics": [
-        "Multimodal"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "b36617b3-f647-5c78-a16b-45798d26ee36",
-      "title": "llama.cpp b8671 released",
-      "summary": "<details open>\n\nllama : correct platform-independent loading of BOOL metadata (#21428)\n\n* model-loader : fix GGUF bool array conversion\n\n* model-loader : fix remaining GGUF bool pointer uses\n\n</details>\n\n**macOS/iOS:**\n- [macOS Apple Silicon (arm64)](https://github.com/ggml-org/llama.cpp/releases/download/b8671/llama-b8671-bin-macos-arm64.tar.gz)\n- [macOS Intel (x64)](https://github.com/ggml-org/llama.cpp/releases/download/b8671/llama-b8671-bin-macos-x64.tar.gz)\n- [iOS XCFramework](https://githu",
-      "source": "GitHub",
-      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b8671",
-      "published_at": "2026-04-06T00:33:01Z",
-      "fetched_at": "2026-04-06T00:43:46.599753Z",
-      "type": "release",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "a8e9a463-420a-5faa-98fa-a1bf051fe73e",
-      "title": "Running Gemma 4 locally with LM Studio's new headless CLI and Claude Code",
-      "summary": "173 points · 48 comments",
-      "source": "Hacker News",
-      "url": "https://ai.georgeliu.com/p/running-google-gemma-4-locally-with",
-      "published_at": "2026-04-05T17:13:51+00:00",
-      "fetched_at": "2026-04-06T00:43:46.599753Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release",
-        "Developer Tools"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "e150499b-07b2-5bc2-a241-150e71599386",
-      "title": "Japanese, French and Omani vessels cross Strait of Hormuz",
-      "summary": "143 points · 195 comments",
-      "source": "Hacker News",
-      "url": "https://japantoday.com/category/politics/japanese-french-and-omani-vessels-cross-the-strait-of-hormuz",
-      "published_at": "2026-04-05T14:27:55+00:00",
-      "fetched_at": "2026-04-06T00:43:46.599753Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "19a8bc41-e9cb-5131-a706-1946b1fef40c",
-      "title": "Nanocode: The best Claude Code that $200 can buy in pure JAX on TPUs",
-      "summary": "153 points · 24 comments",
-      "source": "Hacker News",
-      "url": "https://github.com/salmanmohammadi/nanocode/discussions/1",
-      "published_at": "2026-04-05T14:21:17+00:00",
-      "fetched_at": "2026-04-06T00:43:46.599753Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "c1203025-65be-5352-b9c9-71728a98d4db",
-      "title": "Someone at BrowserStack is leaking users' email addresses",
-      "summary": "361 points · 98 comments",
-      "source": "Hacker News",
-      "url": "https://shkspr.mobi/blog/2026/04/someone-at-browserstack-is-leaking-users-email-address/",
-      "published_at": "2026-04-05T13:14:38+00:00",
-      "fetched_at": "2026-04-06T00:43:46.599753Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "625c6811-60e6-5979-bd51-74c89dbe52a8",
-      "title": "Eight years of wanting, three months of building with AI",
-      "summary": "588 points · 183 comments",
-      "source": "Hacker News",
-      "url": "https://lalitm.com/post/building-syntaqlite-ai/",
-      "published_at": "2026-04-05T12:43:47+00:00",
-      "fetched_at": "2026-04-06T00:43:46.599753Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "9b1f62a9-f135-5a83-97ef-a07e56e39474",
-      "title": "ollama v0.20.2 released",
-      "summary": "## What's Changed\r\n* app: default app home view to new chat instead of launch by @jmorganca in https://github.com/ollama/ollama/pull/15312\r\n\r\n\r\n**Full Changelog**: https://github.com/ollama/ollama/compare/v0.20.1...v0.20.2",
-      "source": "GitHub",
-      "url": "https://github.com/ollama/ollama/releases/tag/v0.20.2",
-      "published_at": "2026-04-04T06:22:05Z",
-      "fetched_at": "2026-04-06T00:43:46.599753Z",
-      "type": "release",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "fa9cf68b-e571-577e-ab6c-b8f323a05562",
-      "title": "Simulate realistic users to evaluate multi-turn AI agents in Strands Evals",
-      "summary": "In this post, we explore how ActorSimulator in Strands Evaluations SDK addresses the challenge with structured user simulation that integrates into your evaluation pipeline.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/simulate-realistic-users-to-evaluate-multi-turn-ai-agents-in-strands-evals/",
-      "published_at": "2026-04-02T17:34:02",
-      "fetched_at": "2026-04-06T00:43:46.599753Z",
-      "type": "announcement",
-      "topics": [
-        "SDK/Library"
       ],
       "ranking_score": 0,
       "status": "unread"

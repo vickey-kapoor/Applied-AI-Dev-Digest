@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-23",
+      "run_at": "2026-10-23T17:01:10.186594Z",
+      "top_paper_id": "a2642691-a761-57f1-b840-b14f380d05ee",
+      "papers_fetched": 15,
+      "pdf_path": "reports/23-Oct/The_Decisions_API_is_now_generally_available_with.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "39972377195"
+    },
+    {
       "date": "2026-10-22",
       "run_at": "2026-10-22T17:01:21.977180Z",
       "top_paper_id": "f792477b-5131-5abd-b5bc-f41b78078fd2",
@@ -766,14 +775,6 @@
       "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "30114033983"
-    },
-    {
-      "date": "2026-07-23",
-      "top_paper_id": "9b3d5fb0-34ec-55db-bd0b-0ab7bf0d4288",
-      "papers_fetched": 1,
-      "pdf_path": "reports/23-Jul/Are_we_existentially_threatened_by_the_type_of_AI.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "30030071635"
     }
   ]
 }

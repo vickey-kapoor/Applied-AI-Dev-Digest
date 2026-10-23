@@ -1,6 +1,185 @@
 {
   "papers": [
     {
+      "id": "ed8d4f6e-d287-58e9-bc03-0a2d75dbaa8f",
+      "title": "Rapidly scaling online storage to serve over 1 billion ChatGPT users (Part II)",
+      "summary": "Learn how OpenAI scaled Habitat with reliable multi-tenancy, global caching, and Azure Cosmos DB to deliver 12× faster reads for ChatGPT.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/scaling-storage-one-billion-users-part-two",
+      "published_at": "2026-10-23T17:00:00+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4580abc3-03dd-5068-93f4-4f84dafcaca0",
+      "title": "LitPivot: Developing research ideas through dynamic contextualization within the literature landscape",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/litpivot",
+      "published_at": "2026-10-23T16:15:50+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c48a9732-1ef4-5905-80ee-05993288bfd6",
+      "title": "Swedish government offices to ban ChatGPT and Claude",
+      "summary": "300 points · 112 comments",
+      "source": "Hacker News",
+      "url": "https://www.sverigesradio.se/artikel/chat-gpt-och-claude-forbjuder-regeringskansliet",
+      "published_at": "2026-10-23T11:39:54+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "6e017bbf-807b-5a7f-b510-2004d057bfe0",
+      "title": "Kazakhstan Expands Compute for Its AI Future",
+      "summary": "Kazakhstan’s AI ecosystem is moving from infrastructure plans to deployment. The shift is visible across the full AI stack — from infrastructure to models to applications. The announcements below — coinciding with a visit to Astana by NVIDIA founder and CEO Jensen Huang — point to the nation’s increasing supply of accelerated computing, along with […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/kazakhstan-ai-compute-ecosystem/",
+      "published_at": "2026-10-23T02:00:13+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "86c1fc4d-e79c-5d88-9990-3cd07a36ac90",
+      "title": "OpenAI and Poland’s NASK partner to advance AI safety and security",
+      "summary": "OpenAI and Poland’s NASK are partnering on AI safety, security, and technical research to strengthen safeguards and support a more resilient digital ecosystem.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/openai-nask-ai-safety-security-partnership",
+      "published_at": "2026-10-23T00:00:00+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2cdec759-9141-54c2-a3c9-f4f6478e8971",
+      "title": "Does Your Model Run on AWS Trainium? Look It Up",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/torch-neuronx-model-support",
+      "published_at": "2026-10-23T00:00:00+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "announcement",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4fe51931-fe71-594f-b2a8-6887a4a34976",
+      "title": "Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation",
+      "summary": "Cinematic video generation requires both temporal inference from limited inputs (i.e., sparse rather than frame-by-frame guidance) and factor-aware control of character, scene, action, and camera. Multimodal large language models (MLLMs) offer useful priors for both capabilities, but their representations are not automatically actionable for video generation: a Video Diffusion Transformer (DiT) may bypass them through native conditioning pathways, and using them does not ensure either factor-awa",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.30926",
+      "published_at": "2026-10-23T00:00:00+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "paper",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "92d1408b-06f7-5164-84b2-846810ab9099",
+      "title": "Editing Images into Reusable Layers via Compositional Edit-Prior Distillation",
+      "summary": "High-quality image editing requires precise modification of target regions while preserving the content of unrelated regions. Existing editing models produce flattened outputs that limit precise local manipulation and layer reuse, while decomposition methods typically optimize layer recovery separately from instruction-driven editing. To this end, we introduce LayerEditor, a unified framework that couples instruction-guided image editing with controllable generation of reusable RGBA layers. At i",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.24738",
+      "published_at": "2026-10-23T00:00:00+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "paper",
+      "topic_id": "lab_research",
+      "topics": [
+        "Lab Research",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "27e99b07-0b54-571c-b312-4a37f6234de3",
+      "title": "python-genai v2.33.0 released",
+      "summary": "## [2.33.0](https://github.com/googleapis/python-genai/compare/v2.32.0...v2.33.0) (2026-10-22)\n\n\n### Features\n\n* Add `store` to `GenerateContentConfig` (Gemini Developer API only) and `labels` to `LiveConnectConfig`. ([16a29c9](https://github.com/googleapis/python-genai/commit/16a29c9ea351041f92656e398becbfaa23d0c4f6))\n* Add support for Python 3.15. ([e1c4fc7](https://github.com/googleapis/python-genai/commit/e1c4fc78ee29d45db7bb3e10f173bafa15aeb634))\n* Add support for Python 3.15. ([1a64450](ht",
+      "source": "GitHub",
+      "url": "https://github.com/googleapis/python-genai/releases/tag/v2.33.0",
+      "published_at": "2026-10-22T23:56:12Z",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c03097f9-9d5f-5e4b-bcc4-faf0925cf355",
+      "title": "OpenShell – A safe, private runtime for fleets of autonomous AI agents",
+      "summary": "474 points · 205 comments",
+      "source": "Hacker News",
+      "url": "https://github.com/NVIDIA/OpenShell",
+      "published_at": "2026-10-22T17:44:06+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "discussion",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "a2642691-a761-57f1-b840-b14f380d05ee",
+      "title": "The Decisions API is now generally available with gpt-6-luna.",
+      "summary": "OpenAI made the Decisions API generally available with gpt-6-luna. The API supports caching shared input across requests for prompt-cache discounts, images in individual question instructions, and structured data passed through input_json. Each request supports up to 400 questions, up from 200 in public beta.",
+      "source": "OpenAI Platform",
+      "url": "https://platform.openai.com/docs/changelog",
+      "published_at": "2026-10-22T00:00:00+00:00",
+      "fetched_at": "2026-10-23T17:01:09.256451Z",
+      "type": "changelog",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-22:the-decisions-api-is-now-generally-available-with-gpt-6-luna",
+      "what_shipped": "OpenAI made the Decisions API generally available with gpt-6-luna.",
+      "capabilities": "The API supports caching shared input across requests for prompt-cache discounts, images in individual question instructions, and structured data passed through input_json. Each request supports up to 400 questions, up from 200 in public beta.",
+      "availability": "The API is generally available at v1/decisions with gpt-6-luna. Pricing, regions, and access tiers are not stated.",
+      "why_it_matters": "You can send up to twice as many questions per request as in public beta and can use shared-input caching for prompt-cache discounts. Image instructions and input_json also let you provide those inputs directly in requests.",
+      "caveats": "The announcement does not specify discount amounts, image constraints, pricing, regions, or other changes since public beta.",
+      "release_type": "api"
+    },
+    {
       "id": "94a5edb2-a40a-5480-a979-ee9da2ccc152",
       "title": "OlmoEarth v1.3: State-of-the-art embeddings for the whole planet",
       "summary": "",
@@ -7874,156 +8053,6 @@
       "fetched_at": "2026-04-07T17:09:16.096833Z",
       "type": "announcement",
       "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "56333cfe-b83a-510f-be77-3eb8a26a9b25",
-      "title": "Claude Code is locking people out for hours",
-      "summary": "184 points · 224 comments",
-      "source": "Hacker News",
-      "url": "https://github.com/anthropics/claude-code/issues/44257",
-      "published_at": "2026-04-07T15:04:23+00:00",
-      "fetched_at": "2026-04-07T17:09:16.096833Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "c48aabec-c135-5383-8d74-5d87e3594c73",
-      "title": "langchain langchain-core==1.2.27 released",
-      "summary": "Changes since langchain-core==1.2.26\r\n\r\nrelease(core): 1.2.27 (#36586)\r\nfix(core): handle symlinks in deprecated prompt save path (#36585)\r\nchore: add comment explaining `pygments>=2.20.0` (#36570)\r\n\r\nCredit to Jeff Ponte (@JDP-Security) for reporting the symlink resolution issue in #36585.",
-      "source": "GitHub",
-      "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D1.2.27",
-      "published_at": "2026-04-07T14:56:49Z",
-      "fetched_at": "2026-04-07T17:09:16.096833Z",
-      "type": "release",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "408418fa-68dd-59f3-8517-386d0154b5c2",
-      "title": "AI may be making us think and write more alike",
-      "summary": "188 points · 185 comments",
-      "source": "Hacker News",
-      "url": "https://dornsife.usc.edu/news/stories/ai-may-be-making-us-think-and-write-more-alike/",
-      "published_at": "2026-04-07T11:29:02+00:00",
-      "fetched_at": "2026-04-07T17:09:16.096833Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "89e0ab88-71b9-5a3a-abdc-9e1cbf45d82f",
-      "title": "Blackholing My Email",
-      "summary": "130 points · 19 comments",
-      "source": "Hacker News",
-      "url": "https://www.johnsto.co.uk/blog/blackholing-my-email/",
-      "published_at": "2026-04-07T08:42:05+00:00",
-      "fetched_at": "2026-04-07T17:09:16.096833Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "6cd7e0be-edb2-5773-bd46-a867d04494b1",
-      "title": "ollama v0.20.3 released",
-      "summary": "## What's Changed\r\n* Gemma 4 Tool Calling improvements\r\n* Added latest models to Ollama App\r\n* OpenClaw fixes for launching TUI\r\n\r\n\r\n**Full Changelog**: https://github.com/ollama/ollama/compare/v0.20.2...v0.20.3",
-      "source": "GitHub",
-      "url": "https://github.com/ollama/ollama/releases/tag/v0.20.3",
-      "published_at": "2026-04-07T05:19:10Z",
-      "fetched_at": "2026-04-07T17:09:16.096833Z",
-      "type": "release",
-      "topics": [
-        "Model Release",
-        "Function Calling"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "bff975af-bfb9-5278-8753-2cfe59f6bc85",
-      "title": "Show HN: Hippo, biologically inspired memory for AI agents",
-      "summary": "116 points · 22 comments",
-      "source": "Hacker News",
-      "url": "https://github.com/kitfunso/hippo-memory",
-      "published_at": "2026-04-06T21:49:34+00:00",
-      "fetched_at": "2026-04-07T17:09:16.096833Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "973b15cc-5912-5be0-a6fb-8490174808b6",
-      "title": "Announcing the OpenAI Safety Fellowship",
-      "summary": "A pilot program to support independent safety and alignment research and develop the next generation of talent",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/introducing-openai-safety-fellowship",
-      "published_at": "2026-04-06T10:00:00",
-      "fetched_at": "2026-04-07T17:09:16.096833Z",
-      "type": "announcement",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "23b5270a-aa6c-5611-863c-1e2126c70abb",
-      "title": "Connecting MCP servers to Amazon Bedrock AgentCore Gateway using Authorization Code flow",
-      "summary": "Amazon Bedrock AgentCore Gateway provides a centralized layer for managing how AI agents connect to tools and MCP servers across your organization. In this post, we walk through how to configure AgentCore Gateway to connect to an OAuth-protected MCP server using the Authorization Code flow.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/connecting-mcp-servers-to-amazon-bedrock-agentcore-gateway-using-authorization-code-flow/",
-      "published_at": "2026-04-06T14:41:46",
-      "fetched_at": "2026-04-06T16:57:35.921791Z",
-      "type": "announcement",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "bccfcecb-bbdd-5c84-afe5-561f85d82e72",
-      "title": "France pulls last gold held in US for $15B gain",
-      "summary": "462 points · 253 comments",
-      "source": "Hacker News",
-      "url": "https://www.mining.com/france-pulls-last-gold-held-in-us-for-15b-gain/",
-      "published_at": "2026-04-06T08:03:43+00:00",
-      "fetched_at": "2026-04-06T16:57:35.921791Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "0207b38c-feb2-5a00-84d5-8f0d1fc09124",
-      "title": "Industrial policy for the Intelligence Age",
-      "summary": "Explore our ambitious, people-first industrial policy ideas for the AI era—focused on expanding opportunity, sharing prosperity, and building resilient institutions as advanced intelligence evolves.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/industrial-policy-for-the-intelligence-age",
-      "published_at": "2026-04-06T02:30:00",
-      "fetched_at": "2026-04-06T16:57:35.921791Z",
-      "type": "announcement",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "8660881a-25f7-51d6-bef6-d3d38a849b2c",
-      "title": "Show HN: I built a tiny LLM to demystify how language models work",
-      "summary": "754 points · 114 comments",
-      "source": "Hacker News",
-      "url": "https://github.com/arman-bd/guppylm",
-      "published_at": "2026-04-06T00:20:12+00:00",
-      "fetched_at": "2026-04-06T16:57:35.921791Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
       "ranking_score": 0,
       "status": "unread"
     }

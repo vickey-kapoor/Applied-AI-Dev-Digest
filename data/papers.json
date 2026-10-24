@@ -1,6 +1,87 @@
 {
   "papers": [
     {
+      "id": "6e7ee173-a4df-5771-a886-f0439ba4e800",
+      "title": "anthropic-sdk-python v2.3.0 released",
+      "summary": "### Features\n\n* **api:** add Claude Tag endpoints for Claude Enterprise organizations\n\n\n### Bug Fixes\n\n* **google-cloud:** send user profiles requests to the organization endpoint\n\n\n### Chores\n\n* **client:** stop sending query params hardcoded in endpoint paths\n* **docs:** improve the descriptions of the code execution tool and its encrypted results\n* **docs:** reword work queue, skill and external key descriptions\n* **docs:** update descriptions of the per-user usage and cost reports\n* **intern",
+      "source": "GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.3.0",
+      "published_at": "2026-10-23T23:18:22Z",
+      "fetched_at": "2026-10-24T17:01:08.406823Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Enterprise Deployment"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f76e0182-13b0-5293-b7f0-2166c49ce3d4",
+      "title": "Bringing foundational models to the front lines of TB screening",
+      "summary": "Generative AI",
+      "source": "Google Research",
+      "url": "https://research.google/blog/bringing-foundational-models-to-the-front-lines-of-tb-screening/",
+      "published_at": "2026-10-23T18:51:33+00:00",
+      "fetched_at": "2026-10-24T17:01:08.406823Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "613eef55-469f-5482-97b7-d81228c3d0e0",
+      "title": "Securing our frontier model training environment",
+      "summary": "OpenAI explains how we strengthened containment for frontier model training and evaluation, including offline environments and high-compute red-teaming.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/securing-our-frontier-model-training-environment",
+      "published_at": "2026-10-23T10:00:00+00:00",
+      "fetched_at": "2026-10-24T17:01:08.406823Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Safety & System Cards"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4e3908b6-34e5-5ba1-9e4c-e8c12cfc3f75",
+      "title": "An alignment assessment of the UK AISI cybertesting incident",
+      "summary": "",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/news/alignment-assessment-ukaisi",
+      "published_at": "2026-10-23",
+      "fetched_at": "2026-10-24T17:01:08.406823Z",
+      "type": "announcement",
+      "topic_id": "safety_system_cards",
+      "topics": [
+        "Safety & System Cards",
+        "Policy & Regulation"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4e35fd0f-c974-5542-bc60-d2bf85fab292",
+      "title": "Donating Agent Skills to the Agentic AI Foundation",
+      "summary": "We’re donating Agent Skills, the open standard that gives AI agents specialized knowledge and workflows, to the Agentic AI Foundation. More than 70 agent platforms, including ChatGPT, Cursor, GitHub Copilot, and VS Code, have integrated Agent Skills since we published the standard in December 2025.",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
+      "published_at": "2026-10-22",
+      "fetched_at": "2026-10-24T17:01:08.406823Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "ed8d4f6e-d287-58e9-bc03-0a2d75dbaa8f",
       "title": "Rapidly scaling online storage to serve over 1 billion ChatGPT users (Part II)",
       "summary": "Learn how OpenAI scaled Habitat with reliable multi-tenancy, global caching, and Azure Cosmos DB to deliver 12× faster reads for ChatGPT.",
@@ -7982,77 +8063,6 @@
         "Fine-tuning",
         "Multimodal"
       ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "3a58ac2a-7e16-5424-ae84-a207688ad9ec",
-      "title": "System Card: Claude Mythos Preview [pdf]",
-      "summary": "799 points · 595 comments",
-      "source": "Hacker News",
-      "url": "https://www-cdn.anthropic.com/53566bf5440a10affd749724787c8913a2ae0841.pdf",
-      "published_at": "2026-04-07T18:18:36+00:00",
-      "fetched_at": "2026-04-08T17:13:26.871535Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "187056e4-21cf-5c5b-a35c-7e84d2a69a8c",
-      "title": "Assessing Claude Mythos Preview's cybersecurity capabilities",
-      "summary": "300 points · 43 comments",
-      "source": "Hacker News",
-      "url": "https://red.anthropic.com/2026/mythos-preview/",
-      "published_at": "2026-04-07T18:11:31+00:00",
-      "fetched_at": "2026-04-08T17:13:26.871535Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "d88a33ed-8b2d-5465-b98c-13cf4909269c",
-      "title": "Project Glasswing: Securing critical software for the AI era",
-      "summary": "1455 points · 760 comments",
-      "source": "Hacker News",
-      "url": "https://www.anthropic.com/glasswing",
-      "published_at": "2026-04-07T18:09:34+00:00",
-      "fetched_at": "2026-04-08T17:13:26.871535Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "9e209e90-efa6-5189-94a3-3f159ec7f59b",
-      "title": "Building real-time conversational podcasts with Amazon Nova 2 Sonic",
-      "summary": "This post walks through building an automated podcast generator that creates engaging conversations between two AI hosts on any topic, demonstrating the streaming capabilities of Nova Sonic, stage-aware content filtering, and real-time audio generation.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/building-real-time-conversational-podcasts-with-amazon-nova-2-sonic/",
-      "published_at": "2026-04-07T16:29:11",
-      "fetched_at": "2026-04-07T17:09:16.096833Z",
-      "type": "announcement",
-      "topics": [
-        "Multimodal"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "7bb2e5b9-34e1-5e8b-bb05-53078f6b431a",
-      "title": "Text-to-SQL solution powered by Amazon Bedrock",
-      "summary": "In this post, we show you how to build a natural text-to-SQL solution using Amazon Bedrock that transforms business questions into database queries and returns actionable answers.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/text-to-sql-solution-powered-by-amazon-bedrock/",
-      "published_at": "2026-04-07T16:28:20",
-      "fetched_at": "2026-04-07T17:09:16.096833Z",
-      "type": "announcement",
-      "topics": [],
       "ranking_score": 0,
       "status": "unread"
     }

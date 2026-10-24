@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-24",
+      "run_at": "2026-10-24T17:01:09.499267Z",
+      "top_paper_id": "2cdec759-9141-54c2-a3c9-f4f6478e8971",
+      "papers_fetched": 14,
+      "pdf_path": "reports/24-Oct/Does_Your_Model_Run_on_AWS_Trainium_Look_It_Up.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "40102094795"
+    },
+    {
       "date": "2026-10-23",
       "run_at": "2026-10-23T17:01:10.186594Z",
       "top_paper_id": "a2642691-a761-57f1-b840-b14f380d05ee",
@@ -767,14 +776,6 @@
       "pdf_path": "reports/25-Jul/ARC-AGI_Leaderboard.pdf",
       "telegram_sent": true,
       "workflow_run_id": "30166924479"
-    },
-    {
-      "date": "2026-07-24",
-      "top_paper_id": "",
-      "papers_fetched": 1,
-      "pdf_path": "",
-      "telegram_sent": false,
-      "workflow_run_id": "30114033983"
     }
   ]
 }

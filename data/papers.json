@@ -1,6 +1,29 @@
 {
   "papers": [
     {
+      "id": "6ed3fd79-e5ef-52a9-a448-b55045d9a01f",
+      "title": "Five Qwen3.8-27B models match Fable 5 Using GVS5H Harness",
+      "summary": "The GVS5H authors released a paper and code for ledger-based, zero-shot multi-agent orchestration, evaluating five instances of Qwen3.8-27B on LiveCodeBench Hard. On the 100 latest hard LiveCodeBench problems, the reported Qwen3.8-27B result rises from 66.8% pass@1 alone to 92.4% with orchestration, versus 90.4% for Fable 5. The paper also reports Qwen3.8 Flash Next at 93.0% pass@1 and 9% of Fable 5’s cost; that cost claim is for Flash Next, not the 27B model.",
+      "source": "Hacker News",
+      "url": "https://github.com/slee-persis/GVS5H",
+      "published_at": "2026-10-25T03:56:01+00:00",
+      "fetched_at": "2026-10-25T17:01:47.378694Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "The GVS5H authors released a paper and code for ledger-based, zero-shot multi-agent orchestration, evaluating five instances of Qwen3.8-27B on LiveCodeBench Hard.",
+      "capabilities": "On the 100 latest hard LiveCodeBench problems, the reported Qwen3.8-27B result rises from 66.8% pass@1 alone to 92.4% with orchestration, versus 90.4% for Fable 5. The paper also reports Qwen3.8 Flash Next at 93.0% pass@1 and 9% of Fable 5’s cost; that cost claim is for Flash Next, not the 27B model.",
+      "availability": "The repository includes the benchmark runner and is MIT-licensed; running it requires uv and an API key for the chosen model, with provider options listed in the instructions. Model-weight download details, concrete prices, and deployment requirements are not stated.",
+      "why_it_matters": "For coding-agent evaluations, the harness is a way to test whether multiple fresh model instances coordinating through shared files improve pass@1 over a single call. The reported 27B result makes local serving worth evaluating if your workload can tolerate the orchestration and its additional inference, but its cost and latency are not stated.",
+      "caveats": "The results cover 100 benchmark problems, and the authors say gains are not universal. Opus 5 was tested on an earlier scaffold in a single OpenRouter pass rather than with five agents on a pinned backend, so that comparison is not like-for-like; the reported results are not independently verified here.",
+      "release_type": "research"
+    },
+    {
       "id": "6e7ee173-a4df-5771-a886-f0439ba4e800",
       "title": "anthropic-sdk-python v2.3.0 released",
       "summary": "### Features\n\n* **api:** add Claude Tag endpoints for Claude Enterprise organizations\n\n\n### Bug Fixes\n\n* **google-cloud:** send user profiles requests to the organization endpoint\n\n\n### Chores\n\n* **client:** stop sending query params hardcoded in endpoint paths\n* **docs:** improve the descriptions of the code execution tool and its encrypted results\n* **docs:** reword work queue, skill and external key descriptions\n* **docs:** update descriptions of the per-user usage and cost reports\n* **intern",
@@ -8046,22 +8069,6 @@
       "type": "announcement",
       "topics": [
         "Pricing"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "c87d85ea-01a4-5568-b89b-c0755d87fed3",
-      "title": "Show HN: Gemma 4 Multimodal Fine-Tuner for Apple Silicon",
-      "summary": "212 points · 27 comments",
-      "source": "Hacker News",
-      "url": "https://github.com/mattmireles/gemma-tuner-multimodal",
-      "published_at": "2026-04-07T19:37:05+00:00",
-      "fetched_at": "2026-04-08T17:13:26.871535Z",
-      "type": "discussion",
-      "topics": [
-        "Fine-tuning",
-        "Multimodal"
       ],
       "ranking_score": 0,
       "status": "unread"

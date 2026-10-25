@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-25",
+      "run_at": "2026-10-25T17:01:48.586807Z",
+      "top_paper_id": "6ed3fd79-e5ef-52a9-a448-b55045d9a01f",
+      "papers_fetched": 7,
+      "pdf_path": "reports/25-Oct/Five_Qwen38-27B_models_match_Fable_5_Using_GVS5H.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "40214419858"
+    },
+    {
       "date": "2026-10-24",
       "run_at": "2026-10-24T17:01:09.499267Z",
       "top_paper_id": "2cdec759-9141-54c2-a3c9-f4f6478e8971",
@@ -768,14 +777,6 @@
       "pdf_path": "reports/26-Jul/The_Long_Self-Correction.pdf",
       "telegram_sent": false,
       "workflow_run_id": "30213683846"
-    },
-    {
-      "date": "2026-07-25",
-      "top_paper_id": "79d54e14-da74-5164-9f09-53e3012ac455",
-      "papers_fetched": 2,
-      "pdf_path": "reports/25-Jul/ARC-AGI_Leaderboard.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "30166924479"
     }
   ]
 }

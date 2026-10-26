@@ -139,7 +139,7 @@ jobs:
 
       - name: Set up Python
         if: steps.guard.outputs.daily == 'true' && steps.claim.outputs.claimed == 'true'
-        uses: actions/setup-python@v5.6.0
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: '3.11'
 

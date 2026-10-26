@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-26",
+      "run_at": "2026-10-26T17:01:50.923149Z",
+      "top_paper_id": "f23651e6-57f3-55dc-9e05-9ce458ba7f11",
+      "papers_fetched": 7,
+      "pdf_path": "reports/26-Oct/UserArena_Benchmarking_Interactive_User_Simulatio.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "40364637729"
+    },
+    {
       "date": "2026-10-25",
       "run_at": "2026-10-25T17:01:48.586807Z",
       "top_paper_id": "6ed3fd79-e5ef-52a9-a448-b55045d9a01f",
@@ -769,14 +778,6 @@
       "pdf_path": "reports/27-Jul/The_Long_Self-Correction.pdf",
       "telegram_sent": true,
       "workflow_run_id": "30290769228"
-    },
-    {
-      "date": "2026-07-26",
-      "top_paper_id": null,
-      "papers_fetched": 1,
-      "pdf_path": "reports/26-Jul/The_Long_Self-Correction.pdf",
-      "telegram_sent": false,
-      "workflow_run_id": "30213683846"
     }
   ]
 }

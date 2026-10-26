@@ -1,6 +1,107 @@
 {
   "papers": [
     {
+      "id": "80a6fb51-64cd-5758-8344-2d346c01c363",
+      "title": "Meta Networking at the 2026 OCP Global Summit: Open Innovation for Scale-Up, Scale-Out, and Scale-Across AI Networks",
+      "summary": "At the 2026 Open Compute Project (OCP) Global Summit, Meta shared the networking innovations that are directly supporting our latest AI models, including Muse Wonder and Muse Spark, and our gigawatt-scale Prometheus cluster. Highlights IcePack & IceCube: Meta’s first liquid-cooled network rack with 102.4T switch blades (128×800G, Broadcom Tomahawk 6C and NVIDIA Spectrum-6 variants), running [...] Read More... The post Meta Networking at the 2026 OCP Global Summit: Open Innovation for Scale-Up...",
+      "source": "Meta AI",
+      "url": "https://engineering.fb.com/2026/10/26/open-source/ocp-summit-2026-meta-networking-talks/",
+      "published_at": "2026-10-26T16:00:07+00:00",
+      "fetched_at": "2026-10-26T17:01:49.339666Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "5800e9bf-e9ea-59af-9b44-855c9afbb52b",
+      "title": "Our newest AI Quest: Mapping the human brain",
+      "summary": "An illustration of a planet rotating to show various cartoon figures waving. At the top is the text \"AI Quests\"",
+      "source": "Google AI",
+      "url": "https://blog.google/products-and-platforms/products/education/ai-quests-polar-peaks/",
+      "published_at": "2026-10-26T16:00:00+00:00",
+      "fetched_at": "2026-10-26T17:01:49.339666Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "bfe27f18-f45b-5c01-a457-8ffd29bb1c2e",
+      "title": "Sebastian Raschka's from-scratch video course on building reasoning models",
+      "summary": "171 points · 7 comments",
+      "source": "Hacker News",
+      "url": "https://magazine.sebastianraschka.com/p/building-reasoning-models",
+      "published_at": "2026-10-26T15:11:59+00:00",
+      "fetched_at": "2026-10-26T17:01:49.339666Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "12f40478-a128-5051-ac96-28c1e5881f28",
+      "title": "How Fanatics and OpenAI streamline the fan experience",
+      "summary": "Fanatics uses OpenAI to help fans complete their game-day outfits with Shop the Look. Testing across roughly 30,000 MLB products showed 10% higher engagement.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/fanatics-streamline-fan-experience",
+      "published_at": "2026-10-26T07:00:00+00:00",
+      "fetched_at": "2026-10-26T17:01:49.339666Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f23651e6-57f3-55dc-9e05-9ce458ba7f11",
+      "title": "UserArena: Benchmarking Interactive User Simulation for Long-Horizon Shopping Agents",
+      "summary": "The RecGPT-Team paper introduces UserArena, an interactive benchmark for long-horizon shopping agents, and On-Policy Trajectory Distillation (OPTD) for training user simulators. UserArena contains 64,729 shopping-session trajectories from 11,010 users, covering 566,102 items and 13 action types. Its five-level evaluation covers output validity, local decisions, sequential behavior, personalization, and outcomes; the authors report that OPTD has the strongest overall fidelity among evaluated simulators and most closely reproduces a production policy effect in offline simulation.",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.30932",
+      "published_at": "2026-10-26T00:00:00+00:00",
+      "fetched_at": "2026-10-26T17:01:49.339666Z",
+      "type": "paper",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Model Releases",
+        "Lab Research",
+        "Benchmarks & Evals",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "The RecGPT-Team paper introduces UserArena, an interactive benchmark for long-horizon shopping agents, and On-Policy Trajectory Distillation (OPTD) for training user simulators.",
+      "capabilities": "UserArena contains 64,729 shopping-session trajectories from 11,010 users, covering 566,102 items and 13 action types. Its five-level evaluation covers output validity, local decisions, sequential behavior, personalization, and outcomes; the authors report that OPTD has the strongest overall fidelity among evaluated simulators and most closely reproduces a production policy effect in offline simulation.",
+      "availability": "The article links code and data at https://github.com/RecGPT-Team/UserArena and a project page at https://recgpt-team.github.io/UserArena-Page. API, deployment details, licensing, pricing, and access requirements are not stated.",
+      "why_it_matters": "Teams evaluating shopping agents can assess multi-step behavior and personalization against real-world trajectories, rather than relying only on next-action accuracy. The benchmark also provides offline validation against outcomes from a controlled production A/B test, and OPTD is a simulator-training approach to consider for producing more faithful rollouts.",
+      "caveats": "The article gives no numerical fidelity scores, metric definitions, or details of the A/B test, so the strength and transferability of the reported results cannot be assessed from this description. Access and usage terms for the linked code and data are not stated.",
+      "release_type": "research"
+    },
+    {
+      "id": "4b97ae78-a38b-519a-94cb-0ccca44d401f",
+      "title": "RynnUnify: Towards Unified Embodied Brain",
+      "summary": "We introduce RynnUnify, a 16B unified embodied model that combines strong embodied understanding with long-horizon visual planning through interleaved video--language reasoning. With capabilities spanning spatial reasoning, physical prediction, and grounding, RynnUnify connects an understanding of the physical world with visual anticipation of how it evolves across successive subtasks. Building on these capabilities, we further develop an agentic extension through reinforcement learning to selec",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.32965",
+      "published_at": "2026-10-26T00:00:00+00:00",
+      "fetched_at": "2026-10-26T17:01:49.339666Z",
+      "type": "paper",
+      "topic_id": "lab_research",
+      "topics": [
+        "Lab Research",
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "6ed3fd79-e5ef-52a9-a448-b55045d9a01f",
       "title": "Five Qwen3.8-27B models match Fable 5 Using GVS5H Harness",
       "summary": "The GVS5H authors released a paper and code for ledger-based, zero-shot multi-agent orchestration, evaluating five instances of Qwen3.8-27B on LiveCodeBench Hard. On the 100 latest hard LiveCodeBench problems, the reported Qwen3.8-27B result rises from 66.8% pass@1 alone to 92.4% with orchestration, versus 90.4% for Fable 5. The paper also reports Qwen3.8 Flash Next at 93.0% pass@1 and 9% of Fable 5’s cost; that cost claim is for Flash Next, not the 27B model.",
@@ -7984,92 +8085,6 @@
       "fetched_at": "2026-04-09T17:15:21.665800Z",
       "type": "discussion",
       "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "7d3c9ce6-5d97-5e16-8cb5-e9d9874d0671",
-      "title": "I've been waiting over a month for Anthropic to respond to my billing issue",
-      "summary": "399 points · 187 comments",
-      "source": "Hacker News",
-      "url": "https://nickvecchioni.github.io/thoughts/2026/04/08/anthropic-support-doesnt-exist/",
-      "published_at": "2026-04-08T17:44:25+00:00",
-      "fetched_at": "2026-04-09T17:15:21.665800Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "8c8c151f-4d36-578d-bb43-97f71511c521",
-      "title": "anthropic-sdk-python v0.92.0 released",
-      "summary": "## 0.92.0 (2026-04-08)\n\nFull Changelog: [v0.91.0...v0.92.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.91.0...v0.92.0)\n\n### Features\n\n* **api:** add support for Claude Managed Agents ([5b879a7](https://github.com/anthropics/anthropic-sdk-python/commit/5b879a7d929bd93332d777bed067be680819dfac))",
-      "source": "GitHub",
-      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.92.0",
-      "published_at": "2026-04-08T16:55:01Z",
-      "fetched_at": "2026-04-08T17:13:26.871535Z",
-      "type": "release",
-      "topics": [
-        "Model Release",
-        "API Update",
-        "SDK/Library"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "31ac6e21-6f87-56af-9692-6aa5f3d5cc59",
-      "title": "ALTK‑Evolve: On‑the‑Job Learning for AI Agents",
-      "summary": "",
-      "source": "Hugging Face",
-      "url": "https://huggingface.co/blog/ibm-research/altk-evolve",
-      "published_at": "2026-04-08T14:27:42",
-      "fetched_at": "2026-04-08T17:13:26.871535Z",
-      "type": "announcement",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "87b9cccb-41d2-5f7a-baef-f2c651b34c68",
-      "title": "MegaTrain: Full Precision Training of 100B+ Parameter LLMs on a Single GPU",
-      "summary": "162 points · 35 comments",
-      "source": "Hacker News",
-      "url": "https://arxiv.org/abs/2604.05091",
-      "published_at": "2026-04-08T12:19:00+00:00",
-      "fetched_at": "2026-04-08T17:13:26.871535Z",
-      "type": "discussion",
-      "topics": [
-        "Fine-tuning"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "87b3be71-2ced-5234-b251-3da4a0b2761d",
-      "title": "Introducing the Child Safety Blueprint",
-      "summary": "Discover OpenAI’s Child Safety Blueprint—a roadmap for building AI responsibly with safeguards, age-appropriate design, and collaboration to protect and empower young people online.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/introducing-child-safety-blueprint",
-      "published_at": "2026-04-08T05:00:00",
-      "fetched_at": "2026-04-08T17:13:26.871535Z",
-      "type": "announcement",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "2926be93-d042-576d-82d1-b461694bdb83",
-      "title": "Manage AI costs with Amazon Bedrock Projects",
-      "summary": "With Amazon Bedrock Projects, you can attribute inference costs to specific workloads and analyze them in AWS Cost Explorer and AWS Data Exports. In this post, you will learn how to set up Projects end-to-end, from designing a tagging strategy to analyzing costs.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/manage-ai-costs-with-amazon-bedrock-projects/",
-      "published_at": "2026-04-07T23:32:00",
-      "fetched_at": "2026-04-08T17:13:26.871535Z",
-      "type": "announcement",
-      "topics": [
-        "Pricing"
-      ],
       "ranking_score": 0,
       "status": "unread"
     }

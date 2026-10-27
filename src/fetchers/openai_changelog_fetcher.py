@@ -20,7 +20,17 @@ service tier that cuts the time between output tokens, and an image-encoding
 bug worth re-running evaluations over. That is the OpenAI news an applied
 engineer acts on.
 
-There is no feed and no per-entry permalink, so this parses the page. Hashed
+There is no feed and no anchor to link an entry by, so this parses the page.
+Most entries do carry their own deep link in the body — "Read more here", "See
+service tier errors" — and that link is what the digest points at, because the
+changelog page itself holds 186 entries and a reader handed it has to go find
+the one the brief describes. The page's root-relative hrefs are resolved
+against the URL the fetch actually landed on: platform.openai.com/docs/changelog
+redirects to developers.openai.com/api/docs/changelog, and the same href under
+the configured host returns 403. An entry with no link in its body still points
+at the changelog page.
+
+Hashed
 CSS class names are matched on their stable prefix — `_ChangelogMarkdown_`,
 never `_ChangelogMarkdown_pvkq8_19` — and a shape change yields zero entries
 and a warning rather than an exception: a redesign must cost OpenAI coverage
@@ -29,6 +39,7 @@ for a day, not the digest.
 
 from datetime import datetime, timezone
 from html.parser import HTMLParser
+from urllib.parse import urljoin, urlparse
 import re
 
 import requests
@@ -76,6 +87,21 @@ TITLE_CHARS = 120
 SUMMARY_CHARS = 500
 
 
+def _usable_href(href: str) -> str:
+    """The href if it can serve as a source link, else "".
+
+    Drops in-page anchors and anything that is not http(s) — a mailto or a
+    javascript: href is not a source the reader can open.
+    """
+    href = (href or "").strip()
+    if not href or href.startswith("#"):
+        return ""
+    scheme = urlparse(href).scheme
+    if scheme and scheme not in ("http", "https"):
+        return ""
+    return href
+
+
 def _slug(text: str) -> str:
     """Reduce text to a short stable key fragment."""
     return "-".join(re.sub(r"[^a-z0-9]+", " ", (text or "").lower()).split())[:60]
@@ -114,6 +140,7 @@ class _ChangelogParser(HTMLParser):
         self._day = ""
         self._category = ""
         self._tags: list[str] = []
+        self._link = ""
 
         # Capture state: which element we are inside, and how deep.
         self._mode: str | None = None
@@ -138,6 +165,8 @@ class _ChangelogParser(HTMLParser):
                 self._depth += 1
             if self._mode == "badge" and tag == "span" and "capitalize" in classes:
                 self._badge_is_category = True
+            if self._mode == "body" and tag == "a" and not self._link:
+                self._link = _usable_href(attributes.get("href", ""))
             if self._mode == "body" and tag in _BODY_BLOCK_TAGS:
                 self._buf.append("\n")
             return
@@ -188,7 +217,7 @@ class _ChangelogParser(HTMLParser):
             if self._badge_variant == "outline" and _DAY_BADGE.match(text):
                 # A new day badge opens a new entry: drop any badges left over
                 # from a body we failed to read rather than mislabelling this one.
-                self._day, self._category, self._tags = text, "", []
+                self._day, self._category, self._tags, self._link = text, "", [], ""
             elif self._badge_is_category:
                 self._category = text
             else:
@@ -202,7 +231,7 @@ class _ChangelogParser(HTMLParser):
         published = self._published()
         title = _first_sentence(body)
         if not body or not title or published is None:
-            self._day, self._category, self._tags = "", "", []
+            self._day, self._category, self._tags, self._link = "", "", [], ""
             return
 
         self.entries.append({
@@ -211,8 +240,9 @@ class _ChangelogParser(HTMLParser):
             "category": self._category,
             "tags": list(self._tags),
             "published": published,
+            "link": self._link,
         })
-        self._day, self._category, self._tags = "", "", []
+        self._day, self._category, self._tags, self._link = "", "", [], ""
 
     def _published(self) -> datetime | None:
         match = _DAY_BADGE.match(self._day)
@@ -228,22 +258,30 @@ class _ChangelogParser(HTMLParser):
 
 
 @retry_with_backoff(exceptions=(requests.RequestException,))
-def _get_changelog() -> str:
-    """Fetch the changelog page. Raises so the retry decorator can see it."""
+def _get_changelog() -> tuple[str, str]:
+    """Fetch the changelog page. Raises so the retry decorator can see it.
+
+    Returns the markup and the URL it was served from, which is not the one
+    requested: the configured URL redirects to another host, and that host is
+    what the page's root-relative links belong to.
+    """
     response = requests.get(
         OPENAI_CHANGELOG_URL,
         timeout=REQUEST_TIMEOUT,
         headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml"},
     )
     response.raise_for_status()
-    return response.text
+    return response.text, (response.url or OPENAI_CHANGELOG_URL)
 
 
-def parse_changelog(markup: str) -> list[dict]:
+def parse_changelog(markup: str, base_url: str = OPENAI_CHANGELOG_URL) -> list[dict]:
     """Turn the changelog page into digest items, newest first.
 
     Returns [] on anything unexpected. The caller treats a silent source as a
     quiet day, which is the right outcome for a page that was redesigned.
+
+    base_url is the URL the markup was served from, which is what the page's
+    root-relative links resolve against.
     """
     parser = _ChangelogParser()
     try:
@@ -273,7 +311,9 @@ def parse_changelog(markup: str) -> list[dict]:
             # Already the full entry: there is no page to open, and opening
             # the changelog URL would return all 170-odd entries at once.
             "article_text": article_text,
-            "url": OPENAI_CHANGELOG_URL,
+            # The entry's own deep link when it has one; the changelog page
+            # when it does not.
+            "url": urljoin(base_url, entry["link"]) if entry.get("link") else OPENAI_CHANGELOG_URL,
             "source": OPENAI_CHANGELOG_SOURCE,
             "published": date.isoformat(),
             "type": "changelog",
@@ -290,12 +330,12 @@ def parse_changelog(markup: str) -> list[dict]:
 def fetch_openai_changelog(max_results: int = OPENAI_CHANGELOG_MAX_ITEMS) -> list[dict]:
     """Return recent OpenAI platform changelog entries, newest first."""
     try:
-        markup = _get_changelog()
+        markup, base_url = _get_changelog()
     except Exception:
         logger.warning("Could not fetch the OpenAI changelog")
         return []
 
-    items = parse_changelog(markup)
+    items = parse_changelog(markup, base_url)
     if not items:
         # Worth a warning rather than a shrug: the page is scraped, so zero
         # entries means a redesign far more often than it means a quiet month.

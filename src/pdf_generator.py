@@ -37,6 +37,46 @@ def _sanitize_text_for_pdf(text: str) -> str:
     return text
 
 
+# How much of the announcement's own text the reference section carries. The
+# fetcher's cap is 12,000 characters, which is a page and a half of small
+# italics under a brief that already said what matters.
+ANNOUNCEMENT_CHARS = 3000
+
+# A brief section heading as the summarizer writes it: "**What shipped**" on a
+# line of its own. The PDF renders these as bold headings rather than printing
+# the asterisks, which is what it did before.
+_BOLD_LINE = re.compile(r"^\*\*(.+?)\*\*$")
+
+
+def _truncate(text: str, max_len: int) -> str:
+    """Trim to max_len on a word boundary, with an ellipsis when trimmed."""
+    text = (text or "").strip()
+    if len(text) <= max_len:
+        return text
+    return text[:max_len].rsplit(" ", 1)[0] + "..."
+
+
+def _write_brief(pdf: FPDF, summary: str) -> None:
+    """Render the structured brief, its "**Label**" lines as bold headings.
+
+    The summarizer builds `detailed_summary` as Markdown because preview.py
+    prints it to a terminal. The PDF used to pass that string straight to
+    multi_cell, so every report showed literal asterisks around every heading.
+    """
+    for block in summary.split("\n"):
+        line = block.strip()
+        if not line:
+            pdf.ln(3)
+            continue
+        heading = _BOLD_LINE.match(line)
+        if heading:
+            pdf.set_font("Helvetica", "B", 11)
+            pdf.multi_cell(0, 6, heading.group(1), new_x="LMARGIN", new_y="NEXT")
+        else:
+            pdf.set_font("Helvetica", "", 11)
+            pdf.multi_cell(0, 6, line, new_x="LMARGIN", new_y="NEXT")
+
+
 class DigestPDF(FPDF):
     """Custom PDF class for lab-development briefs."""
 
@@ -80,13 +120,22 @@ def generate_digest_pdf(item: dict, output_dir: str = "reports") -> str:
 
     # Sanitize all text inputs
     title = _sanitize_text_for_pdf(item.get("title", "Today's AI Lab Development"))
-    lab = _sanitize_text_for_pdf(item.get("source", "Unknown"))
     source = _sanitize_text_for_pdf(item.get("source", "Unknown"))
     # Use detailed_summary for PDF if available, fallback to short summary
     summary = _sanitize_text_for_pdf(
         item.get("detailed_summary", "") or item.get("summary", "")
     )
-    description = _sanitize_text_for_pdf(item.get("summary", ""))
+    # The announcement's own words. This used to read item["summary"], which
+    # after summarization is the model's what_shipped + capabilities text — so
+    # the section headed "Full Announcement Details" reprinted, verbatim, the
+    # first two sections of the brief above it. The fetched page text is what
+    # the heading has always claimed to show.
+    # When there is no brief, the feed blurb is all there is and printing it
+    # here is not a repeat.
+    announcement = (item.get("article_text") or "").strip()
+    if not announcement and not item.get("detailed_summary"):
+        announcement = item.get("summary", "")
+    description = _sanitize_text_for_pdf(_truncate(announcement, ANNOUNCEMENT_CHARS))
     url = item.get("url", "")
 
     # Create PDF
@@ -99,13 +148,8 @@ def generate_digest_pdf(item: dict, output_dir: str = "reports") -> str:
     pdf.multi_cell(0, 12, title, align="C")
     pdf.ln(5)
 
-    # Publishing lab
-    pdf.set_font("Helvetica", "I", 12)
-    pdf.set_text_color(80, 80, 80)
-    pdf.cell(0, 8, f"From: {lab}", align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(3)
-
-    # Source badge
+    # Publishing lab. One line, not two: this and the badge below it both read
+    # item["source"], so every report printed the same name twice.
     pdf.set_font("Helvetica", "", 10)
     pdf.set_text_color(100, 100, 100)
     pdf.cell(0, 6, f"Source: {source}", align="C", new_x="LMARGIN", new_y="NEXT")
@@ -124,9 +168,8 @@ def generate_digest_pdf(item: dict, output_dir: str = "reports") -> str:
 
     # Structured brief body - use readable font size
     if summary:
-        pdf.set_font("Helvetica", "", 11)
         pdf.set_text_color(40, 40, 40)
-        pdf.multi_cell(0, 6, summary)
+        _write_brief(pdf, summary)
         pdf.ln(10)
 
     # Divider line

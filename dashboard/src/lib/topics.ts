@@ -160,23 +160,30 @@ export const TOPICS: Topic[] = [
 
 /** Badge colors for category labels (used in history + stats pages) */
 export const CATEGORY_BADGE_COLORS: Record<Topic["category"], string> = {
-  core: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300",
-  applied: "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300",
-  emerging: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300",
+  core: "border-indigo-500/25 bg-indigo-500/10 text-indigo-700",
+  applied: "border-teal-500/25 bg-teal-500/10 text-teal-700",
+  emerging: "border-amber-500/25 bg-amber-500/10 text-amber-700",
 };
 
 /** Progress bar fill colors (used in stats page) */
 export const CATEGORY_BAR_COLORS: Record<Topic["category"], string> = {
-  core: "bg-primary",
-  applied: "bg-purple-500",
+  core: "bg-indigo-500",
+  applied: "bg-teal-500",
   emerging: "bg-amber-500",
 };
 
 /** Inline text colors for category tags (used in stats page) */
 export const CATEGORY_TAG_COLORS: Record<Topic["category"], string> = {
-  core: "text-blue-600 dark:text-blue-400",
-  applied: "text-purple-600 dark:text-purple-400",
-  emerging: "text-amber-600 dark:text-amber-400",
+  core: "text-indigo-600",
+  applied: "text-teal-600",
+  emerging: "text-amber-600",
+};
+
+/** Small square swatch used to key a category in legends and lists. */
+export const CATEGORY_DOT_COLORS: Record<Topic["category"], string> = {
+  core: "bg-indigo-500",
+  applied: "bg-teal-500",
+  emerging: "bg-amber-500",
 };
 
 const CATEGORY_LABELS: Record<Topic["category"], string> = {

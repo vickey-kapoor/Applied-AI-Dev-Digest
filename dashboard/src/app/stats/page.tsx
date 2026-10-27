@@ -2,8 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
+import { EmptyState } from "@/components/ui/empty-state";
 import { BarChart3, Trophy } from "lucide-react";
-import { CATEGORY_BAR_COLORS, CATEGORY_TAG_COLORS } from "@/lib/topics";
+import {
+  CATEGORY_BAR_COLORS,
+  CATEGORY_DOT_COLORS,
+  CATEGORY_TAG_COLORS,
+  getCategoryLabel,
+  type Topic,
+} from "@/lib/topics";
+import { cn } from "@/lib/utils";
 
 interface TopicStat {
   id: string;
@@ -12,6 +21,8 @@ interface TopicStat {
   wins: number;
   pct: number;
 }
+
+const CATEGORIES: Topic["category"][] = ["core", "applied", "emerging"];
 
 export default function StatsPage() {
   const [stats, setStats] = useState<TopicStat[]>([]);
@@ -30,74 +41,154 @@ export default function StatsPage() {
   }, []);
 
   const maxWins = Math.max(...stats.map((s) => s.wins), 1);
+  const leader = stats.length > 0 ? stats[0] : null;
+  const topicsSeen = stats.filter((s) => s.wins > 0).length;
 
   if (loading) {
     return (
-      <div className="py-8">
-        <div className="h-8 w-48 bg-muted rounded animate-pulse mb-8" />
-        {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-12 bg-muted rounded animate-pulse mb-3" />
-        ))}
+      <div className="pb-16">
+        <div className="flex items-center gap-4 border-b border-border pb-7 pt-10">
+          <div className="h-11 w-11 animate-pulse rounded-xl bg-muted" />
+          <div className="space-y-2">
+            <div className="h-7 w-52 animate-pulse rounded bg-muted" />
+            <div className="h-4 w-72 animate-pulse rounded bg-muted" />
+          </div>
+        </div>
+        <div className="mt-10 space-y-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="h-14 animate-pulse rounded-xl bg-muted" />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="py-8">
-      <div className="mb-8">
-        <div className="flex items-baseline gap-3 mb-1">
-          <BarChart3 className="h-7 w-7 text-primary shrink-0 self-center" />
-          <h1 className="text-2xl font-display font-bold text-foreground">
-            Topic Performance
-          </h1>
-        </div>
-        <p className="text-muted-foreground mt-1">
-          Which topics win the daily ranking most often.{" "}
-          <span className="font-mono text-sm text-muted-foreground/70">{total} total digests</span>
-        </p>
-      </div>
+    <div className="pb-20">
+      <PageHeader
+        eyebrow="Analytics"
+        title="Topic Performance"
+        description="Which topics win the daily ranking most often, across every digest sent so far."
+        icon={BarChart3}
+        metric={{ value: total, label: "Digests" }}
+      />
 
       {total === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <Trophy className="h-12 w-12 text-muted-foreground/40 mb-4" />
-            <p className="text-muted-foreground font-medium">No stats yet</p>
-            <p className="text-sm text-muted-foreground/70 mt-1">
-              Stats will accumulate as daily digests run.
-            </p>
-          </CardContent>
-        </Card>
+        <div className="mt-8">
+          <EmptyState
+            icon={Trophy}
+            title="No stats yet"
+            description="Stats accumulate as daily digests run — check back after the next few sends."
+          />
+        </div>
       ) : (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Win Distribution</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {stats.map((stat) => (
-              <div key={stat.id} className="space-y-1.5">
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-foreground">
-                      {stat.name}
-                    </span>
-                    <span className={`text-xs font-mono ${CATEGORY_TAG_COLORS[stat.category]}`}>
-                      {stat.category}
-                    </span>
+        <>
+          {/* Summary tiles */}
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <Card className="p-5">
+              <p className="eyebrow">Most frequent winner</p>
+              <p className="mt-2 font-display text-xl font-semibold leading-tight text-foreground">
+                {leader?.name ?? "—"}
+              </p>
+              <p className="mt-1 font-mono text-xs text-muted-foreground">
+                {leader ? `${leader.wins} wins · ${leader.pct}%` : "—"}
+              </p>
+            </Card>
+            <Card className="p-5">
+              <p className="eyebrow">Topics that have won</p>
+              <p className="mt-2 font-display text-xl font-semibold leading-tight text-foreground">
+                {topicsSeen}
+                <span className="text-subtle-foreground">/{stats.length}</span>
+              </p>
+              <p className="mt-1 font-mono text-xs text-muted-foreground">
+                at least one digest
+              </p>
+            </Card>
+            <Card className="p-5">
+              <p className="eyebrow">Digests ranked</p>
+              <p className="mt-2 font-display text-xl font-semibold leading-tight text-foreground">
+                {total}
+              </p>
+              <p className="mt-1 font-mono text-xs text-muted-foreground">
+                since tracking began
+              </p>
+            </Card>
+          </div>
+
+          <Card className="mt-6">
+            <CardHeader className="flex-row items-center justify-between space-y-0 border-b border-border pb-4">
+              <CardTitle>Win distribution</CardTitle>
+              {/* Category legend */}
+              <div className="flex items-center gap-4">
+                {CATEGORIES.map((category) => (
+                  <span
+                    key={category}
+                    className="flex items-center gap-1.5 text-xs text-muted-foreground"
+                  >
+                    <span
+                      className={cn(
+                        "h-2 w-2 rounded-full",
+                        CATEGORY_DOT_COLORS[category],
+                      )}
+                      aria-hidden="true"
+                    />
+                    {getCategoryLabel(category)}
+                  </span>
+                ))}
+              </div>
+            </CardHeader>
+            <CardContent className="divide-y divide-border p-0">
+              {stats.map((stat, i) => (
+                <div
+                  key={stat.id}
+                  className="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-surface"
+                >
+                  <span className="w-5 shrink-0 font-mono text-xs tabular-nums text-subtle-foreground">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="truncate text-sm font-medium text-foreground">
+                        {stat.name}
+                      </span>
+                      <span className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
+                        {stat.wins}
+                        <span className="text-subtle-foreground">
+                          {" "}
+                          · {stat.pct}%
+                        </span>
+                      </span>
+                    </div>
+                    <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+                      <div
+                        className={cn(
+                          "h-full rounded-full transition-[width] duration-500",
+                          CATEGORY_BAR_COLORS[stat.category],
+                        )}
+                        style={{
+                          width: `${Math.max(
+                            (stat.wins / maxWins) * 100,
+                            stat.wins > 0 ? 3 : 0,
+                          )}%`,
+                        }}
+                      />
+                    </div>
                   </div>
-                  <span className="font-mono text-sm text-muted-foreground">
-                    {stat.wins} <span className="text-muted-foreground/70">({stat.pct}%)</span>
+
+                  <span
+                    className={cn(
+                      "hidden w-20 shrink-0 text-right font-mono text-[0.6875rem] uppercase tracking-[0.08em] sm:block",
+                      CATEGORY_TAG_COLORS[stat.category],
+                    )}
+                  >
+                    {stat.category}
                   </span>
                 </div>
-                <div className="h-3 w-full bg-secondary rounded-full overflow-hidden">
-                  <div
-                    className={`h-full rounded-full transition-all ${CATEGORY_BAR_COLORS[stat.category]}`}
-                    style={{ width: `${Math.max((stat.wins / maxWins) * 100, stat.wins > 0 ? 4 : 0)}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+              ))}
+            </CardContent>
+          </Card>
+        </>
       )}
     </div>
   );

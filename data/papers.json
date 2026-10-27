@@ -1,6 +1,202 @@
 {
   "papers": [
     {
+      "id": "1468d908-78dc-52b6-bda0-a28586fe4f19",
+      "title": "Can we trust LLMs to judge whether a research idea is novel?",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/allenai/novelty-bench",
+      "published_at": "2026-10-27T16:12:42+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "e2fedfd8-4bf7-5c64-9f68-1b2181e98324",
+      "title": "Genie 4: A new generation of world simulation",
+      "summary": "Genie 4: our new world model unlocking unprecedented realism in real-time simulation.",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+      "published_at": "2026-10-27T16:01:38+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8524b58e-ca61-5dc5-a2e0-477e78a49536",
+      "title": "PrivacyLib: Privacy Controls at the Data Access Boundary",
+      "summary": "This latest deep dive into Meta’s Privacy Aware Infrastructure (PAI) takes a look at PrivacyLib. A privacy requirement must hold as data moves through Meta’s diverse data and processing systems. Historically, supporting a new requirement meant implementing the same enforcement logic separately in each system. PrivacyLib replaces this with a common library that runs inside [...] Read More... The post PrivacyLib: Privacy Controls at the Data Access Boundary appeared first on Engineering at Meta.",
+      "source": "Meta AI",
+      "url": "https://engineering.fb.com/2026/10/27/security/privacylib/",
+      "published_at": "2026-10-27T16:00:12+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "0ac898f8-80b3-5bbd-9770-9779ddb3a50a",
+      "title": "How AI Is Changing the Pace of Discovery for Millions Living With Dementia",
+      "summary": "There are 57 million people worldwide living with dementia today. For the researchers working to help them, the obstacle isn’t a lack of effort — it’s too much data, too few experts to synthesize it and a pace of discovery that can’t keep up with the disease. The Consortium for Biomedical Research and AI in […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/open-source-ai-tools-cbrain-dementia/",
+      "published_at": "2026-10-27T15:00:20+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "4169c437-7a3a-5534-bb83-f546ae0efa36",
+      "title": "OpenAI expands partnership with Oracle to bring its apps to ChatGPT",
+      "summary": "OpenAI and Oracle are expanding their partnership to bring business applications and AI agents into ChatGPT and power new Oracle offerings.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/oracle-apps-in-chatgpt",
+      "published_at": "2026-10-27T07:00:00+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "761bc96c-8d27-5c42-8c86-d60d7f2fdc1e",
+      "title": "DynaFlow: Learning Free-Form Multi-Agent Orchestration",
+      "summary": "Multi-agent systems often rely on predefined collaboration structures, limiting their ability to adapt to diverse task requirements. We introduce DynaFlow, a framework that integrates free-form executable workflow synthesis into the action space of the main agent. The agent decides when collaboration is needed and generates task-specific programs that coordinate sub-agents through sequential or parallel execution, structured information exchange, and verification. Execution results and traces in",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.34467",
+      "published_at": "2026-10-27T00:00:00+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "paper",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "190f9337-0fe2-51ed-a8c1-51df6b858d69",
+      "title": "Trial by Trace: Benchmarking AI Agent Harnesses for Reliability and Failure Attribution",
+      "summary": "LLM agents are increasingly used to solve real-world problems, and their effectiveness depends on both the underlying models and the harnesses that support their operation. However, most existing benchmarks focus on model capabilities and overall agent performance, with limited attention to the evaluation of agent harnesses. To address this gap, we introduce TraceTrial-Bench, which organizes harness reliability into seven components covering context, execution, governance, lifecycle, observabili",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.32285",
+      "published_at": "2026-10-27T00:00:00+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "paper",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "229997c3-c1e3-54bf-b90b-50d5abd8f6f2",
+      "title": "Cross-request KV cache exposure in the GLM-5.3 Workers AI model (155 responses)",
+      "summary": "173 points · 71 comments",
+      "source": "Hacker News",
+      "url": "https://blog.cloudflare.com/kv-cache-exposure-remediation/",
+      "published_at": "2026-10-26T22:41:48+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "discussion",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c555b215-16c2-51ac-b11f-6269859fe60f",
+      "title": "Greptile takes bug detection beyond code review with GPT-6 Astra",
+      "summary": "How Greptile uses GPT-6 Astra to test user workflows, Daybreak to strengthen security, and Codex to reduce rework.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/greptile-code-review-codex-astra",
+      "published_at": "2026-10-26T22:00:00+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "6babda5f-dd3b-5651-accc-a6f271497610",
+      "title": "transformers v5.21 released",
+      "summary": "# Release v5.21.0\r\n\r\n\r\n## New Model additions\r\n\r\n### MiniCPM-OCR\r\n\r\nMiniCPM-OCR is a document-understanding model from OpenBMB's MiniCPM-V family. It keeps the MiniCPM-V 4.6 architecture, which pairs a SigLIP vision encoder and a window-attention merger with a Qwen3.5 language model. It is specialized for reading text-dense images such as scanned pages, screenshots, receipts and tables.\r\n\r\n**Links:** [Documentation](https://huggingface.co/docs/transformers/main/en/model_doc/minicpm_ocr) | [Paper",
+      "source": "GitHub",
+      "url": "https://github.com/huggingface/transformers/releases/tag/v5.21",
+      "published_at": "2026-10-26T18:17:42Z",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "448d7baf-2600-5450-b15b-5d4f0a5cfc74",
+      "title": "GPT-6.1 Terra",
+      "summary": "615 points · 396 comments",
+      "source": "Hacker News",
+      "url": "https://openai.com/index/introducing-gpt-6-1-terra/",
+      "published_at": "2026-10-26T18:01:17+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "7fd411cb-a1fd-57d8-b183-5f9b97d77d95",
+      "title": "Released GPT-6.1 Terra, a fast, efficient model for visual reasoning, precise computer use, and clear, natural writing.",
+      "summary": "OpenAI released GPT-6.1 Terra, a model described as designed for visual reasoning, computer use, and natural writing. OpenAI claims it is fast and efficient and supports visual reasoning, precise computer use, and clear, natural writing. The announcement provides no modality details, context length, benchmark results, or speed and quality figures.",
+      "source": "OpenAI Platform",
+      "url": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+      "published_at": "2026-10-26T00:00:00+00:00",
+      "fetched_at": "2026-10-27T17:01:17.774018Z",
+      "type": "changelog",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Agents & Tooling",
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-26:released-gpt-6-1-terra-a-fast-efficient-model-for-visual-rea",
+      "what_shipped": "OpenAI released GPT-6.1 Terra, a model described as designed for visual reasoning, computer use, and natural writing.",
+      "capabilities": "OpenAI claims it is fast and efficient and supports visual reasoning, precise computer use, and clear, natural writing. The announcement provides no modality details, context length, benchmark results, or speed and quality figures.",
+      "availability": "The change lists gpt-6.1-terra and the v1/responses and v1/chat/completions APIs. Pricing, access requirements, availability status, and regional availability are not stated.",
+      "why_it_matters": "Builders can evaluate GPT-6.1 Terra for visual reasoning and computer-use workflows, as well as writing tasks. The announcement gives no performance or cost data to determine whether it improves on an existing model choice.",
+      "caveats": "The capability and efficiency claims are not accompanied by benchmarks or implementation details. OpenAI points to the GPT-6 guide for prompting and migration guidance, but the provided text does not include that guidance.",
+      "release_type": "model"
+    },
+    {
       "id": "80a6fb51-64cd-5758-8344-2d346c01c363",
       "title": "Meta Networking at the 2026 OCP Global Summit: Open Innovation for Scale-Up, Scale-Out, and Scale-Across AI Networks",
       "summary": "At the 2026 Open Compute Project (OCP) Global Summit, Meta shared the networking innovations that are directly supporting our latest AI models, including Muse Wonder and Muse Spark, and our gigawatt-scale Prometheus cluster. Highlights IcePack & IceCube: Meta’s first liquid-cooled network rack with 102.4T switch blades (128×800G, Broadcom Tomahawk 6C and NVIDIA Spectrum-6 variants), running [...] Read More... The post Meta Networking at the 2026 OCP Global Summit: Open Innovation for Scale-Up...",
@@ -7906,185 +8102,6 @@
         "API Update",
         "SDK/Library"
       ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "cf2a638a-1c52-5443-9c0b-efc11866b76e",
-      "title": "ollama v0.20.5 released",
-      "summary": "## OpenClaw channel setup with Ollama Launch\r\n<img width=\"2292\" height=\"1694\" alt=\"CleanShot 2026-04-09 at 15 45 10@2x\" src=\"https://github.com/user-attachments/assets/3a6882c4-5c6e-4724-8f6e-56ff2df39f6f\" />\r\n\r\n## What's Changed\r\n  - OpenClaw channel setup: connect WhatsApp, Telegram, Discord, and other messaging channels through `ollama launch openclaw`\r\n  - Enable flash attention for Gemma 4 on compatible GPUs\r\n  - ollama launch openclaw now detects curl-based OpenCode installs at ~/.opencode",
-      "source": "GitHub",
-      "url": "https://github.com/ollama/ollama/releases/tag/v0.20.5",
-      "published_at": "2026-04-09T18:11:20Z",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "release",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "33482abf-bce3-5cf0-86f2-508bdf7917d3",
-      "title": "Understanding Amazon Bedrock model lifecycle",
-      "summary": "This post shows you how to manage FM transitions in Amazon Bedrock, so you can make sure your AI applications remain operational as models evolve. We discuss the three lifecycle states, how to plan migrations with the new extended access feature, and practical strategies to transition your applications to newer models without disruption.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/understanding-amazon-bedrock-model-lifecycle/",
-      "published_at": "2026-04-09T17:33:28",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "announcement",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "e8289313-5b49-50a3-8e4f-fe817178b35c",
-      "title": "The future of managing agents at scale: AWS Agent Registry now in preview",
-      "summary": "Today, we're announcing AWS Agent Registry (preview) in AgentCore, a single place to discover, share, and reuse AI agents, tools, and agent skills across your enterprise.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/the-future-of-managing-agents-at-scale-aws-agent-registry-now-in-preview/",
-      "published_at": "2026-04-09T17:28:20",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "announcement",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "fd3abbe4-d7c5-57fd-8f79-941782217197",
-      "title": "Unfolder for Mac – A 3D model unfolding tool for creating papercraft",
-      "summary": "293 points · 56 comments",
-      "source": "Hacker News",
-      "url": "https://www.unfolder.app/",
-      "published_at": "2026-04-09T16:58:46+00:00",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "cbe97831-f773-5c75-8a5d-6b1f46931529",
-      "title": "Embed a live AI browser agent in your React app with Amazon Bedrock AgentCore",
-      "summary": "This post walks you through three steps: starting a session and generating the Live View URL, rendering the stream in your React application, and wiring up an AI agent that drives the browser while your users watch. At the end, you will have a working sample application you can clone and run.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/embed-a-live-ai-browser-agent-in-your-react-app-with-amazon-bedrock-agentcore/",
-      "published_at": "2026-04-09T17:06:07",
-      "fetched_at": "2026-04-09T17:15:21.665800Z",
-      "type": "announcement",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "8f28db33-a82e-5a64-9b01-152e6f2a64e9",
-      "title": "Vercel Claude Code plugin wants to read your prompt",
-      "summary": "157 points · 36 comments",
-      "source": "Hacker News",
-      "url": "https://akshaychugh.xyz/writings/png/vercel-plugin-telemetry",
-      "published_at": "2026-04-09T15:17:27+00:00",
-      "fetched_at": "2026-04-09T17:15:21.665800Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "09048be8-1c76-5ad8-a82a-4f27231d79bc",
-      "title": "Introducing stateful MCP client capabilities on Amazon Bedrock AgentCore Runtime",
-      "summary": "In this post, you will learn how to build stateful MCP servers that request user input during execution, invoke LLM sampling for dynamic content generation, and stream progress updates for long-running tasks. You will see code examples for each capability and deploy a working stateful MCP server to Amazon Bedrock AgentCore Runtime.",
-      "source": "AWS AI",
-      "url": "https://aws.amazon.com/blogs/machine-learning/introducing-stateful-mcp-client-capabilities-on-amazon-bedrock-agentcore-runtime/",
-      "published_at": "2026-04-09T14:47:57",
-      "fetched_at": "2026-04-09T17:15:21.665800Z",
-      "type": "announcement",
-      "topics": [
-        "SDK/Library",
-        "Developer Tools"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "ef1b32d7-68ed-5ca9-a24b-737ae772a5dc",
-      "title": "Claude mixes up who said what",
-      "summary": "323 points · 283 comments",
-      "source": "Hacker News",
-      "url": "https://dwyer.co.za/static/claude-mixes-up-who-said-what-and-thats-not-ok.html",
-      "published_at": "2026-04-09T09:25:28+00:00",
-      "fetched_at": "2026-04-09T17:15:21.665800Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "41a3a54f-be40-5a08-8144-9606def567c3",
-      "title": "Reallocating $100/Month Claude Code Spend to Zed and OpenRouter",
-      "summary": "133 points · 129 comments",
-      "source": "Hacker News",
-      "url": "https://braw.dev/blog/2026-04-06-reallocating-100-month-claude-spend/",
-      "published_at": "2026-04-09T08:55:18+00:00",
-      "fetched_at": "2026-04-09T17:15:21.665800Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "a6ad2548-9312-50c9-876e-5790a622f04d",
-      "title": "Multimodal Embedding & Reranker Models with Sentence Transformers",
-      "summary": "",
-      "source": "Hugging Face",
-      "url": "https://huggingface.co/blog/multimodal-sentence-transformers",
-      "published_at": "2026-04-09T00:00:00",
-      "fetched_at": "2026-04-09T17:15:21.665800Z",
-      "type": "announcement",
-      "topics": [
-        "Model Release",
-        "Embeddings",
-        "Multimodal"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "f949aa49-58af-5adf-a3f5-a4fdd9119162",
-      "title": "openai-python v2.31.0 released",
-      "summary": "## 2.31.0 (2026-04-08)\n\nFull Changelog: [v2.30.0...v2.31.0](https://github.com/openai/openai-python/compare/v2.30.0...v2.31.0)\n\n### Features\n\n* **api:** add phase field to conversations message ([3e5834e](https://github.com/openai/openai-python/commit/3e5834efb39b24e019a29dc54d890c67d18cbb54))\n* **api:** add web_search_call.results to ResponseIncludable type ([ffd8741](https://github.com/openai/openai-python/commit/ffd8741dd38609a5af0159ceb800d8ddba7925f8))\n* **client:** add support for short-li",
-      "source": "GitHub",
-      "url": "https://github.com/openai/openai-python/releases/tag/v2.31.0",
-      "published_at": "2026-04-08T21:01:00Z",
-      "fetched_at": "2026-04-09T17:15:21.665800Z",
-      "type": "release",
-      "topics": [
-        "API Update",
-        "SDK/Library",
-        "Developer Tools"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "577153f5-c0c6-5c23-9c40-0ebc27c46d62",
-      "title": "John Deere to pay $99M in right-to-repair settlement",
-      "summary": "356 points · 117 comments",
-      "source": "Hacker News",
-      "url": "https://www.thedrive.com/news/john-deere-to-pay-99-million-in-monumental-right-to-repair-settlement",
-      "published_at": "2026-04-08T20:46:27+00:00",
-      "fetched_at": "2026-04-09T17:15:21.665800Z",
-      "type": "discussion",
-      "topics": [],
       "ranking_score": 0,
       "status": "unread"
     }

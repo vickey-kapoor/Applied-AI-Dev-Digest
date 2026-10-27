@@ -2,6 +2,11 @@
 
 import { useState, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
+import { EmptyState } from "@/components/ui/empty-state";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Eye, RefreshCw, Send, Loader2, Check, AlertCircle } from "lucide-react";
 
 interface PreviewPaper {
@@ -22,6 +27,15 @@ interface PreviewPaper {
 
 type FetchStatus = "idle" | "loading" | "done" | "error";
 type SendStatus = "idle" | "sending" | "sent" | "error";
+
+/** The digest's message sections, in the order Telegram receives them. */
+const SECTIONS: { key: keyof PreviewPaper; label: string }[] = [
+  { key: "what_shipped", label: "What shipped" },
+  { key: "capabilities", label: "Capabilities" },
+  { key: "availability", label: "Availability" },
+  { key: "why_it_matters", label: "Why it matters" },
+  { key: "caveats", label: "Caveats" },
+];
 
 export default function PreviewPage() {
   const [paper, setPaper] = useState<PreviewPaper | null>(null);
@@ -86,161 +100,210 @@ export default function PreviewPage() {
           : "#Announcement";
 
   return (
-    <div className="py-8">
-      <div className="mb-8">
-        <div className="flex items-baseline gap-3 mb-1">
-          <Eye className="h-7 w-7 text-primary shrink-0 self-center" />
-          <h1 className="text-2xl font-display font-bold text-foreground">
-            Digest Preview
-          </h1>
-        </div>
-        <p className="text-muted-foreground mt-1">
-          View the last digest the pipeline sent to Telegram.
-        </p>
-      </div>
-
-      {/* Load button */}
-      {fetchStatus !== "loading" && (
-        <button
-          onClick={fetchPreview}
-          className="mb-6 inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          <RefreshCw className="h-4 w-4" />
-          {paper ? "Refresh" : "Load last digest"}
-        </button>
-      )}
+    <div className="pb-20">
+      <PageHeader
+        eyebrow="Delivery"
+        title="Digest Preview"
+        description="The last digest the pipeline sent to Telegram, rendered exactly as it arrives."
+        icon={Eye}
+        actions={
+          fetchStatus !== "loading" ? (
+            <button
+              onClick={fetchPreview}
+              className={cn(
+                buttonVariants({
+                  variant: paper ? "secondary" : "primary",
+                  size: "lg",
+                }),
+              )}
+            >
+              <RefreshCw className="h-4 w-4" />
+              {paper ? "Refresh" : "Load last digest"}
+            </button>
+          ) : (
+            <span
+              className={cn(
+                buttonVariants({ variant: "secondary", size: "lg" }),
+                "pointer-events-none",
+              )}
+            >
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Loading
+            </span>
+          )
+        }
+      />
 
       {/* Loading state */}
       {fetchStatus === "loading" && (
-        <Card className="mb-6">
-          <CardContent className="flex flex-col items-center justify-center py-16">
-            <Loader2 className="h-8 w-8 text-primary animate-spin mb-4" />
-            <p className="text-foreground font-medium">Loading last digest...</p>
+        <Card elevation="flat" className="mt-10 bg-surface">
+          <CardContent className="flex flex-col items-center justify-center py-20">
+            <Loader2 className="mb-4 h-6 w-6 animate-spin text-primary" />
+            <p className="text-sm text-muted-foreground">
+              Loading the last digest…
+            </p>
           </CardContent>
         </Card>
       )}
 
       {/* Error state */}
       {fetchStatus === "error" && (
-        <Card className="mb-6 border-red-200 dark:border-red-800" role="alert">
-          <CardContent className="flex items-center gap-3 py-4">
-            <AlertCircle className="h-5 w-5 text-red-500 shrink-0" />
+        <Card
+          className="mt-10 border-destructive/30 bg-destructive/5"
+          role="alert"
+        >
+          <CardContent className="flex items-start gap-3 p-5">
+            <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
             <div>
-              <p className="text-sm font-medium text-red-700 dark:text-red-400">{fetchError}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">Trigger a manual workflow run to generate a digest first.</p>
+              <p className="text-sm font-medium text-destructive">
+                {fetchError}
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Trigger a manual workflow run to generate a digest first.
+              </p>
             </div>
           </CardContent>
         </Card>
       )}
 
-      {/* Preview card — Telegram message mockup */}
+      {/* Preview — Telegram message mockup */}
       {paper && fetchStatus === "done" && (
-        <>
-          <div className="rounded-2xl border border-border bg-card p-1 mb-6 shadow-xl">
-            {/* Phone-frame header */}
-            <div className="flex items-center gap-2 px-4 py-2 border-b border-border">
-              <div className="h-2.5 w-2.5 rounded-full bg-primary" />
-              <span className="text-xs text-muted-foreground font-mono">Telegram Preview</span>
+        <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-start">
+          <Card elevation="raised" className="overflow-hidden">
+            {/* Chat header */}
+            <div className="flex items-center gap-2.5 border-b border-border bg-surface px-4 py-3">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <Send className="h-3 w-3" aria-hidden="true" />
+              </span>
+              <span className="text-xs font-medium text-foreground">
+                Telegram
+              </span>
               {paper.date && (
-                <span className="text-xs text-muted-foreground/50 font-mono ml-auto">{paper.date}</span>
+                <span className="ml-auto font-mono text-[0.6875rem] text-subtle-foreground">
+                  {paper.date}
+                </span>
               )}
             </div>
+
             {/* Message bubble */}
-            <div className="p-4">
-              <div className="bg-background rounded-xl p-4 max-w-md font-mono text-sm leading-relaxed text-foreground space-y-3">
-                <p className="text-muted-foreground/70">
-                  {typeTag} · {paper.source}
-                  {paper.release_type && <span> · {paper.release_type}</span>}
+            <div className="bg-surface p-4 sm:p-6">
+              <div className="surface-highlight max-w-xl rounded-xl rounded-tl-sm border border-border bg-card p-5 shadow-e2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="accent" className="font-mono text-[0.6875rem]">
+                    {typeTag}
+                  </Badge>
+                  <span className="text-xs font-medium text-foreground">
+                    {paper.source}
+                  </span>
+                  {paper.release_type && (
+                    <Badge
+                      variant="outline"
+                      className="font-mono text-[0.6875rem]"
+                    >
+                      {paper.release_type}
+                    </Badge>
+                  )}
+                </div>
+
+                <p className="mt-3 font-display text-base font-bold leading-snug text-foreground">
+                  {paper.title}
                 </p>
-                <p className="font-bold text-foreground">{paper.title}</p>
-                {paper.what_shipped && (
-                  <>
-                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">What shipped</p>
-                    <p className="text-muted-foreground">{paper.what_shipped}</p>
-                  </>
-                )}
-                {paper.capabilities && (
-                  <>
-                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Capabilities</p>
-                    <p className="text-muted-foreground">{paper.capabilities}</p>
-                  </>
-                )}
-                {paper.availability && (
-                  <>
-                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Availability</p>
-                    <p className="text-muted-foreground">{paper.availability}</p>
-                  </>
-                )}
-                {paper.why_it_matters && (
-                  <>
-                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Why it matters</p>
-                    <p className="text-muted-foreground">{paper.why_it_matters}</p>
-                  </>
-                )}
-                {paper.caveats && (
-                  <>
-                    <p className="font-bold text-foreground text-xs uppercase tracking-wide">Caveats</p>
-                    <p className="text-muted-foreground">{paper.caveats}</p>
-                  </>
-                )}
-                {!paper.what_shipped && paper.summary && (
-                  <p className="text-muted-foreground">{paper.summary}</p>
-                )}
+
+                <dl className="mt-4 space-y-3.5">
+                  {SECTIONS.map(({ key, label }) => {
+                    const value = paper[key];
+                    if (!value) return null;
+                    return (
+                      <div key={key}>
+                        <dt className="eyebrow">{label}</dt>
+                        <dd className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                          {String(value)}
+                        </dd>
+                      </div>
+                    );
+                  })}
+                  {!paper.what_shipped && paper.summary && (
+                    <div>
+                      <dd className="text-sm leading-relaxed text-muted-foreground">
+                        {paper.summary}
+                      </dd>
+                    </div>
+                  )}
+                </dl>
+
                 {paper.url && (
-                  <p className="text-primary break-all">{paper.url}</p>
+                  <a
+                    href={paper.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 block break-all border-t border-border pt-3 font-mono text-xs text-primary hover:underline"
+                  >
+                    {paper.url}
+                  </a>
                 )}
               </div>
             </div>
-          </div>
+          </Card>
 
-          {/* Action buttons */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={sendToTelegram}
-              disabled={sendStatus === "sending" || sendStatus === "sent"}
-              className={`inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                sendStatus === "sent"
-                  ? "bg-green-600 dark:bg-green-700 text-white"
-                  : "bg-primary text-white hover:bg-primary/80 disabled:opacity-50"
-              }`}
-            >
-              {sendStatus === "sending" ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : sendStatus === "sent" ? (
-                <Check className="h-4 w-4" />
-              ) : (
-                <Send className="h-4 w-4" />
-              )}
-              {sendStatus === "sent" ? "Sent to Telegram" : "Send to Telegram"}
-            </button>
-            <button
-              onClick={fetchPreview}
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <RefreshCw className="h-4 w-4" />
-              Refresh
-            </button>
+          {/* Actions rail */}
+          <Card className="p-5 lg:sticky lg:top-24">
+            <p className="eyebrow">Actions</p>
+            <div className="mt-4 space-y-2.5">
+              <button
+                onClick={sendToTelegram}
+                disabled={sendStatus === "sending" || sendStatus === "sent"}
+                className={cn(
+                  buttonVariants({
+                    variant: sendStatus === "sent" ? "success" : "primary",
+                    size: "lg",
+                  }),
+                  "w-full",
+                )}
+              >
+                {sendStatus === "sending" ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : sendStatus === "sent" ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <Send className="h-4 w-4" />
+                )}
+                {sendStatus === "sent" ? "Sent to Telegram" : "Send to Telegram"}
+              </button>
+            </div>
             {sendStatus === "error" && (
-              <span role="alert" className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
-                <AlertCircle className="h-4 w-4" />
+              <p
+                role="alert"
+                className="mt-3 flex items-start gap-1.5 text-xs text-destructive"
+              >
+                <AlertCircle className="mt-px h-3.5 w-3.5 shrink-0" />
                 {sendError}
-              </span>
+              </p>
             )}
-          </div>
-        </>
+            <p className="mt-4 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">
+              Sending delivers this exact message to the configured Telegram
+              chat.
+            </p>
+          </Card>
+        </div>
       )}
 
       {/* Idle state */}
       {fetchStatus === "idle" && !paper && (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <Eye className="h-12 w-12 text-muted-foreground/40 mb-4" />
-            <p className="text-muted-foreground font-medium">No preview loaded yet</p>
-            <p className="text-sm text-muted-foreground/70 mt-1">
-              Click the button above to load the last digest sent by the pipeline.
-            </p>
-          </CardContent>
-        </Card>
+        <div className="mt-10">
+          <EmptyState
+            icon={Eye}
+            title="No preview loaded"
+            description="Load the last digest the pipeline sent to see it rendered as a Telegram message."
+          >
+            <button
+              onClick={fetchPreview}
+              className={cn(buttonVariants({ variant: "primary", size: "lg" }))}
+            >
+              <RefreshCw className="h-4 w-4" />
+              Load last digest
+            </button>
+          </EmptyState>
+        </div>
       )}
     </div>
   );

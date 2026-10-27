@@ -40,14 +40,10 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="p-1.5 rounded-lg hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground shadow-e1 transition-colors hover:border-border-strong hover:text-foreground"
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {dark ? (
-        <Sun className="h-4 w-4 text-muted-foreground" />
-      ) : (
-        <Moon className="h-4 w-4 text-muted-foreground" />
-      )}
+      {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>
   );
 }

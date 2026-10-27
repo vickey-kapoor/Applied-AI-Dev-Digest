@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
+import { EmptyState } from "@/components/ui/empty-state";
 import { TOPICS, CATEGORY_BADGE_COLORS } from "@/lib/topics";
+import { cn } from "@/lib/utils";
 import { Clock, ExternalLink, Inbox, ThumbsUp, ThumbsDown } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
@@ -26,7 +29,10 @@ function getTopicBadge(topicId?: string) {
   const topic = TOPICS.find((t) => t.id === topicId);
   if (!topic) return null;
   return (
-    <Badge className={`text-xs font-mono ${CATEGORY_BADGE_COLORS[topic.category] || ""}`}>
+    <Badge
+      variant="outline"
+      className={cn("text-[0.6875rem]", CATEGORY_BADGE_COLORS[topic.category])}
+    >
       {topic.name}
     </Badge>
   );
@@ -93,117 +99,132 @@ export default function HistoryPage() {
 
   if (loading) {
     return (
-      <div className="py-8">
-        <div className="h-8 w-48 bg-muted rounded animate-pulse mb-8" />
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="h-32 bg-muted rounded-lg animate-pulse mb-4" />
-        ))}
+      <div className="pb-16">
+        <div className="flex items-center gap-4 border-b border-border pb-7 pt-10">
+          <div className="h-11 w-11 animate-pulse rounded-xl bg-muted" />
+          <div className="space-y-2">
+            <div className="h-7 w-40 animate-pulse rounded bg-muted" />
+            <div className="h-4 w-72 animate-pulse rounded bg-muted" />
+          </div>
+        </div>
+        <div className="mt-10 space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-40 animate-pulse rounded-xl bg-muted" />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="py-8">
-      <div className="mb-8">
-        <div className="flex items-baseline gap-3 mb-1">
-          <Clock className="h-7 w-7 text-primary shrink-0 self-center" />
-          <h1 className="text-2xl font-display font-bold text-foreground">
-            Weekly History
-          </h1>
-        </div>
-        <p className="text-muted-foreground mt-1">
-          Papers sent this week.{" "}
-          <span className="font-mono text-sm text-muted-foreground/70">{entries.length} entries</span>
-        </p>
-      </div>
+    <div className="pb-20">
+      <PageHeader
+        eyebrow="Sent"
+        title="Weekly History"
+        description="Every item the digest delivered this week, with the source link it was summarised from."
+        icon={Clock}
+        metric={{ value: entries.length, label: "Entries" }}
+      />
 
       {entries.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <Inbox className="h-12 w-12 text-muted-foreground/40 mb-4" />
-            <p className="text-muted-foreground font-medium">No papers sent this week yet</p>
-            <p className="text-sm text-muted-foreground/70 mt-1">
-              Papers will appear here after each daily digest run.
-            </p>
-          </CardContent>
-        </Card>
+        <div className="mt-10">
+          <EmptyState
+            icon={Inbox}
+            title="Nothing sent this week yet"
+            description="Items appear here after each daily digest run."
+          />
+        </div>
       ) : (
-        <div className="space-y-4">
+        <div className="mt-10 space-y-4">
           {entries.map((entry, i) => {
             const voted = votes[entry.url];
             return (
-              <Card key={`${entry.date}-${i}`}>
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="space-y-1.5">
-                      <p className="text-xs font-mono text-muted-foreground/70">
-                        {formatDate(entry.date)}
-                      </p>
-                      {getTopicBadge(entry.topic_id)}
-                    </div>
+              <Card
+                key={`${entry.date}-${i}`}
+                interactive
+                className="overflow-hidden"
+              >
+                <CardContent className="p-5 sm:p-6">
+                  {/* Meta row */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle-foreground">
+                      {formatDate(entry.date)}
+                    </span>
+                    <span
+                      className="h-1 w-1 rounded-full bg-border-strong"
+                      aria-hidden="true"
+                    />
+                    <span className="text-xs font-medium text-foreground">
+                      {entry.source || entry.authors}
+                    </span>
+                    {getTopicBadge(entry.topic_id)}
+                    {entry.release_type && (
+                      <Badge variant="outline" className="font-mono text-[0.6875rem]">
+                        {entry.release_type}
+                      </Badge>
+                    )}
+
                     {/* Feedback buttons */}
-                    <div className="flex items-center gap-1 shrink-0">
+                    <div className="ml-auto flex shrink-0 items-center gap-1">
                       <button
                         onClick={() => submitFeedback(entry, 1)}
                         disabled={!!voted}
                         aria-label="Thumbs up"
-                        className={`p-1.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                        className={cn(
+                          "flex h-7 w-7 items-center justify-center rounded-lg border transition-colors",
                           voted === 1
-                            ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
+                            ? "border-success/30 bg-success/10 text-success"
                             : voted
-                            ? "text-muted-foreground/30 cursor-not-allowed"
-                            : "text-muted-foreground hover:text-green-600 hover:bg-green-50 dark:hover:text-green-400 dark:hover:bg-green-900/20"
-                        }`}
+                            ? "cursor-not-allowed border-transparent text-subtle-foreground/40"
+                            : "border-transparent text-subtle-foreground hover:border-success/30 hover:bg-success/10 hover:text-success",
+                        )}
                       >
-                        <ThumbsUp className="h-4 w-4" />
+                        <ThumbsUp className="h-3.5 w-3.5" />
                       </button>
                       <button
                         onClick={() => submitFeedback(entry, -1)}
                         disabled={!!voted}
                         aria-label="Thumbs down"
-                        className={`p-1.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                        className={cn(
+                          "flex h-7 w-7 items-center justify-center rounded-lg border transition-colors",
                           voted === -1
-                            ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"
+                            ? "border-destructive/30 bg-destructive/10 text-destructive"
                             : voted
-                            ? "text-muted-foreground/30 cursor-not-allowed"
-                            : "text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-900/20"
-                        }`}
+                            ? "cursor-not-allowed border-transparent text-subtle-foreground/40"
+                            : "border-transparent text-subtle-foreground hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive",
+                        )}
                       >
-                        <ThumbsDown className="h-4 w-4" />
+                        <ThumbsDown className="h-3.5 w-3.5" />
                       </button>
                     </div>
                   </div>
-                  <CardTitle className="text-base mt-2">{entry.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground">
-                    {entry.source || entry.authors}
-                    {entry.type && ` — ${entry.type}`}
-                  </p>
-                </CardHeader>
-                <CardContent>
+
+                  {/* Headline */}
+                  <h2 className="mt-3 font-display text-lg font-semibold leading-snug text-foreground">
+                    {entry.title}
+                  </h2>
+
                   {entry.what_shipped && (
-                    <p className="text-sm text-foreground mb-2">
+                    <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
                       {entry.what_shipped}
                     </p>
                   )}
+
                   {entry.why_it_matters && (
-                    <p className="text-sm text-muted-foreground italic mb-3">
+                    <p className="mt-4 border-l-2 border-primary/30 pl-3.5 text-sm leading-relaxed text-foreground/80">
                       {entry.why_it_matters}
                     </p>
                   )}
-                  {entry.release_type && (
-                    <p className="text-xs font-mono text-muted-foreground/70 mb-3">
-                      {entry.release_type}
-                    </p>
-                  )}
+
                   {entry.url && (
                     <a
                       href={entry.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-primary hover:underline font-mono"
+                      className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-primary transition-colors hover:text-primary/80"
                     >
-                      <ExternalLink className="h-3.5 w-3.5" />
                       View source
+                      <ExternalLink className="h-3.5 w-3.5" />
                     </a>
                   )}
                 </CardContent>

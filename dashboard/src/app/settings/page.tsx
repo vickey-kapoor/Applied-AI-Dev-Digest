@@ -1,5 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import * as React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   Settings as SettingsIcon,
   Database,
@@ -8,6 +18,8 @@ import {
   ExternalLink,
   Newspaper,
   BookOpen,
+  Info,
+  type LucideIcon,
 } from "lucide-react";
 import { GithubIcon } from "@/components/icons/github";
 
@@ -35,218 +47,225 @@ const GITHUB_REPOS = [
   "modelcontextprotocol/servers",
 ];
 
+/** Icon tile shared by every settings card header. */
+function CardIcon({
+  icon: Icon,
+}: {
+  icon: LucideIcon | ((props: { className?: string }) => React.ReactElement);
+}) {
+  return (
+    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-muted-foreground">
+      <Icon className="h-4 w-4" />
+    </span>
+  );
+}
+
+/** A label/value line, used for the numeric thresholds. */
+function Row({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-b border-border py-2.5 last:border-0 last:pb-0">
+      <span className="text-sm text-muted-foreground">{label}</span>
+      <span className="font-mono text-sm font-medium text-foreground">
+        {value}
+      </span>
+    </div>
+  );
+}
+
 export default function SettingsPage() {
   return (
-    <div className="py-8">
-      <div className="mb-8">
-        <div className="flex items-baseline gap-3 mb-1">
-          <SettingsIcon className="h-7 w-7 text-primary shrink-0 self-center" />
-          <h1 className="text-2xl font-display font-bold text-foreground">Settings</h1>
-        </div>
-        <p className="text-muted-foreground mt-1">Pipeline configuration and integrations</p>
-      </div>
+    <div className="pb-20">
+      <PageHeader
+        eyebrow="Pipeline"
+        title="Settings"
+        description="What the digest reads, how it ranks, and where it delivers. Source configuration lives in the repository."
+        icon={SettingsIcon}
+        actions={
+          <a
+            href="https://github.com/vickey-kapoor/ai-research-digest/actions/workflows/daily-news.yml"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ variant: "solid", size: "lg" }))}
+          >
+            <GithubIcon className="h-4 w-4" />
+            Run workflow
+          </a>
+        }
+      />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Blog Sources */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Database className="h-5 w-5 text-green-600 dark:text-green-400" />
-              Blog Sources
-            </CardTitle>
-            <CardDescription>AI lab and platform blogs being monitored</CardDescription>
+        <Card interactive>
+          <CardHeader className="flex-row items-center gap-3 space-y-0">
+            <CardIcon icon={Database} />
+            <div className="min-w-0">
+              <CardTitle>Blog sources</CardTitle>
+              <CardDescription>
+                AI lab and platform blogs being monitored
+              </CardDescription>
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {BLOG_SOURCES.map((lab) => (
-                <Badge key={lab} variant="secondary" className="text-sm">
+                <Badge key={lab} variant="secondary">
                   {lab}
                 </Badge>
               ))}
             </div>
-            <p className="text-xs text-muted-foreground/70 mt-4">
-              Configured in <code className="bg-secondary px-1 rounded font-mono">src/constants.py</code>
+            <p className="mt-4 text-xs text-subtle-foreground">
+              Configured in{" "}
+              <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-foreground">
+                src/constants.py
+              </code>
             </p>
           </CardContent>
         </Card>
 
         {/* GitHub Repos */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <GithubIcon className="h-5 w-5 text-foreground" />
-              GitHub Releases
-            </CardTitle>
-            <CardDescription>Repos tracked for new releases</CardDescription>
+        <Card interactive>
+          <CardHeader className="flex-row items-center gap-3 space-y-0">
+            <CardIcon icon={GithubIcon} />
+            <div className="min-w-0">
+              <CardTitle>GitHub releases</CardTitle>
+              <CardDescription>Repos tracked for new releases</CardDescription>
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {GITHUB_REPOS.map((repo) => (
                 <a
                   key={repo}
                   href={`https://github.com/${repo}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1"
+                  className="rounded-md"
                 >
-                  <Badge variant="outline" className="text-sm hover:bg-secondary transition-colors cursor-pointer">
+                  <Badge variant="outline" className="font-mono">
                     {repo.split("/")[1]}
                   </Badge>
                 </a>
               ))}
             </div>
-            <p className="text-xs text-muted-foreground/70 mt-4">
-              Releases fetched via GitHub API (skips pre-releases, 48h window)
+            <p className="mt-4 text-xs text-subtle-foreground">
+              Fetched via the GitHub API — pre-releases skipped, 48h window.
             </p>
           </CardContent>
         </Card>
 
         {/* HF Daily Papers */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-              HF Daily Papers
-            </CardTitle>
-            <CardDescription>Trending papers from Hugging Face</CardDescription>
+        <Card interactive>
+          <CardHeader className="flex-row items-center gap-3 space-y-0">
+            <CardIcon icon={BookOpen} />
+            <div className="min-w-0">
+              <CardTitle>HF daily papers</CardTitle>
+              <CardDescription>
+                Trending papers from Hugging Face
+              </CardDescription>
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Min upvotes</span>
-                <span className="font-mono font-medium">20+</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Max papers</span>
-                <span className="font-mono font-medium">5</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Recency</span>
-                <span className="font-mono font-medium">Last 24h</span>
-              </div>
-            </div>
+            <Row label="Min upvotes" value="20+" />
+            <Row label="Max papers" value="5" />
+            <Row label="Recency" value="Last 24h" />
           </CardContent>
         </Card>
 
         {/* Hacker News */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Newspaper className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-              Hacker News
-            </CardTitle>
-            <CardDescription>Frontier lab discussions from HN</CardDescription>
+        <Card interactive>
+          <CardHeader className="flex-row items-center gap-3 space-y-0">
+            <CardIcon icon={Newspaper} />
+            <div className="min-w-0">
+              <CardTitle>Hacker News</CardTitle>
+              <CardDescription>Frontier lab discussions from HN</CardDescription>
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Min score</span>
-                <span className="font-mono font-medium">100+</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Max stories</span>
-                <span className="font-mono font-medium">5</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Recency</span>
-                <span className="font-mono font-medium">Last 24h</span>
-              </div>
-            </div>
+            <Row label="Min score" value="100+" />
+            <Row label="Max stories" value="5" />
+            <Row label="Recency" value="Last 24h" />
           </CardContent>
         </Card>
 
         {/* Schedule */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-              Schedule
-            </CardTitle>
-            <CardDescription>When the digest runs</CardDescription>
+        <Card interactive>
+          <CardHeader className="flex-row items-center gap-3 space-y-0">
+            <CardIcon icon={Clock} />
+            <div className="min-w-0">
+              <CardTitle>Schedule</CardTitle>
+              <CardDescription>When the digest runs</CardDescription>
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              <div>
-                <p className="text-sm text-muted-foreground">Cron Expression</p>
-                <p className="font-mono text-lg">0 16 * * *</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Human Readable</p>
-                <p className="font-medium">Daily at 10:00 AM CST (16:00 UTC)</p>
-              </div>
-              <a
-                href="https://crontab.guru/#0_16_*_*_*"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-primary hover:underline inline-flex items-center gap-1"
-              >
-                View on crontab.guru
-                <ExternalLink className="h-3 w-3" />
-              </a>
+            <div className="rounded-lg border border-border bg-surface px-4 py-3">
+              <p className="font-mono text-lg font-medium text-foreground">
+                0 16 * * *
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Daily at 10:00 AM CST (16:00 UTC)
+              </p>
             </div>
+            <a
+              href="https://crontab.guru/#0_16_*_*_*"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+            >
+              View on crontab.guru
+              <ExternalLink className="h-3 w-3" />
+            </a>
           </CardContent>
         </Card>
 
         {/* Telegram */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Send className="h-5 w-5 text-primary" />
-              Telegram
-            </CardTitle>
-            <CardDescription>Message delivery</CardDescription>
+        <Card interactive>
+          <CardHeader className="flex-row items-center gap-3 space-y-0">
+            <CardIcon icon={Send} />
+            <div className="min-w-0">
+              <CardTitle>Telegram</CardTitle>
+              <CardDescription>Message delivery</CardDescription>
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="font-medium">Status</span>
-                <Badge variant="success">Enabled</Badge>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Format</p>
-                <p className="font-medium">Structured Dev Summary (Why / What / How / Take)</p>
-              </div>
+            <div className="flex items-center justify-between gap-4 border-b border-border py-2.5">
+              <span className="text-sm text-muted-foreground">Status</span>
+              <Badge variant="success">Enabled</Badge>
+            </div>
+            <div className="pt-2.5">
+              <p className="text-sm text-muted-foreground">Format</p>
+              <p className="mt-1 text-sm font-medium text-foreground">
+                Structured dev summary — Why / What / How / Take
+              </p>
             </div>
           </CardContent>
         </Card>
 
         {/* GitHub Actions */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <GithubIcon className="h-5 w-5 text-foreground" />
-              GitHub Actions
-            </CardTitle>
-            <CardDescription>Workflow automation</CardDescription>
+        <Card interactive className="md:col-span-2">
+          <CardHeader className="flex-row items-center gap-3 space-y-0">
+            <CardIcon icon={GithubIcon} />
+            <div className="min-w-0">
+              <CardTitle>GitHub Actions</CardTitle>
+              <CardDescription>Workflow automation</CardDescription>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">Workflow</p>
-                <code className="text-sm font-mono bg-secondary px-2 py-1 rounded">
-                  .github/workflows/daily-news.yml
-                </code>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">Repository</p>
-                <a
-                  href="https://github.com/vickey-kapoor/ai-research-digest"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline inline-flex items-center gap-1 text-sm"
-                >
-                  vickey-kapoor/ai-research-digest
-                  <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              </div>
+          <CardContent className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="eyebrow">Workflow</p>
+              <code className="mt-2 block font-mono text-sm text-foreground">
+                .github/workflows/daily-news.yml
+              </code>
+            </div>
+            <div>
+              <p className="eyebrow">Repository</p>
               <a
-                href="https://github.com/vickey-kapoor/ai-research-digest/actions/workflows/daily-news.yml"
+                href="https://github.com/vickey-kapoor/ai-research-digest"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background rounded-lg hover:opacity-80 transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="mt-2 inline-flex items-center gap-1.5 font-mono text-sm text-primary hover:underline"
               >
-                <GithubIcon className="h-4 w-4" />
-                Run Workflow on GitHub
+                vickey-kapoor/ai-research-digest
+                <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </div>
           </CardContent>
@@ -254,20 +273,29 @@ export default function SettingsPage() {
       </div>
 
       {/* KV info banner */}
-      <div className="mt-8 p-4 bg-primary/10 rounded-lg border border-primary/20">
-        <div className="flex items-start gap-3">
-          <SettingsIcon className="h-5 w-5 text-primary mt-0.5" />
+      <Card elevation="flat" className="mt-6 border-primary/20 bg-primary/5">
+        <CardContent className="flex items-start gap-3.5 p-5">
+          <Info
+            className="mt-0.5 h-5 w-5 shrink-0 text-primary"
+            aria-hidden="true"
+          />
           <div>
-            <p className="font-medium text-foreground">KV Storage</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              Topics, pause state, and stats are stored in Vercel KV (Upstash Redis).
-              Set <code className="bg-primary/15 px-1 rounded font-mono">KV_REST_API_URL</code> and{" "}
-              <code className="bg-primary/15 px-1 rounded font-mono">KV_REST_API_TOKEN</code> in
-              both Vercel and GitHub Secrets.
+            <p className="text-sm font-semibold text-foreground">KV storage</p>
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+              Topics, pause state and stats are stored in Vercel KV (Upstash
+              Redis). Set{" "}
+              <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-xs text-foreground">
+                KV_REST_API_URL
+              </code>{" "}
+              and{" "}
+              <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-xs text-foreground">
+                KV_REST_API_TOKEN
+              </code>{" "}
+              in both Vercel and GitHub Secrets.
             </p>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

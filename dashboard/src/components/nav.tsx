@@ -9,7 +9,7 @@ import {
   Clock,
   BarChart3,
   Settings,
-  Brain,
+  Sparkles,
   Eye,
   Menu,
   X,
@@ -19,6 +19,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { buttonVariants } from "@/components/ui/button";
 
 const navigation = [
   { name: "Topics", href: "/topics", icon: Layers },
@@ -29,6 +30,24 @@ const navigation = [
 ];
 
 type SendStatus = "idle" | "sending" | "sent" | "error";
+
+function Wordmark() {
+  return (
+    <span className="flex items-center gap-2.5">
+      <span className="surface-highlight flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-e1">
+        <Sparkles className="h-4 w-4" aria-hidden="true" />
+      </span>
+      <span className="flex flex-col leading-none">
+        <span className="font-display text-sm font-bold tracking-tight text-foreground">
+          AI Dev Digest
+        </span>
+        <span className="mt-0.5 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-subtle-foreground">
+          Daily
+        </span>
+      </span>
+    </span>
+  );
+}
 
 export function Nav() {
   const pathname = usePathname();
@@ -87,11 +106,11 @@ export function Nav() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 border-b border-border bg-background/95 backdrop-blur">
-        <div className="flex items-center h-14 gap-4 max-w-[1100px] mx-auto px-6">
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-border/80 bg-background/80 backdrop-blur-xl">
+        <div className="mx-auto flex h-16 w-full max-w-[1180px] items-center gap-3 px-5 sm:px-8">
           {/* Mobile menu */}
           <button
-            className="md:hidden p-1.5 rounded-lg hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="-ml-1.5 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden"
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
           >
@@ -99,29 +118,35 @@ export function Nav() {
           </button>
 
           {/* Brand */}
-          <Link href="/topics" className="flex items-center gap-2 shrink-0">
-            <Brain className="h-6 w-6 text-primary" />
-            <span className="font-display font-bold text-sm text-foreground hidden sm:block">
-              AI Dev Digest
-            </span>
+          <Link href="/topics" className="shrink-0 rounded-lg">
+            <Wordmark />
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1 ml-4" aria-label="Main navigation">
+          {/* Desktop nav — a segmented group rather than five loose links */}
+          <nav
+            className="ml-5 hidden items-center gap-0.5 rounded-xl border border-border bg-surface p-1 md:flex"
+            aria-label="Main navigation"
+          >
             {navigation.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.name}
                   href={item.href}
+                  aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
+                    "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      ? "surface-highlight bg-card text-foreground shadow-e1"
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  <item.icon className="h-4 w-4" />
+                  <item.icon
+                    className={cn(
+                      "h-4 w-4",
+                      isActive ? "text-primary" : "text-subtle-foreground",
+                    )}
+                  />
                   {item.name}
                 </Link>
               );
@@ -135,12 +160,11 @@ export function Nav() {
               onClick={sendTest}
               disabled={sendStatus === "sending"}
               className={cn(
-                "hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                sendStatus === "sent"
-                  ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                  : sendStatus === "error"
-                  ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
-                  : "bg-muted text-muted-foreground hover:bg-accent hover:text-foreground"
+                buttonVariants({ variant: "secondary", size: "sm" }),
+                "hidden sm:inline-flex",
+                sendStatus === "sent" && "border-success/30 text-success",
+                sendStatus === "error" &&
+                  "border-destructive/30 text-destructive",
               )}
             >
               {sendStatus === "sending" ? (
@@ -165,14 +189,27 @@ export function Nav() {
             <button
               onClick={togglePause}
               disabled={pauseLoading}
+              aria-label={
+                paused ? "Resume the daily digest" : "Pause the daily digest"
+              }
               className={cn(
-                "flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "inline-flex h-8 items-center gap-2 rounded-lg border px-2.5 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.08em] transition-colors disabled:opacity-60",
                 paused
-                  ? "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400"
-                  : "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                  ? "border-warning/30 bg-warning/10 text-warning hover:bg-warning/15"
+                  : "border-success/30 bg-success/10 text-success hover:bg-success/15",
               )}
             >
-              <span className={cn("h-2 w-2 rounded-full", paused ? "bg-amber-500" : "bg-green-500")} />
+              <span className="relative flex h-1.5 w-1.5">
+                {!paused && (
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
+                )}
+                <span
+                  className={cn(
+                    "relative inline-flex h-1.5 w-1.5 rounded-full",
+                    paused ? "bg-warning" : "bg-success",
+                  )}
+                />
+              </span>
               {paused ? "Paused" : "Active"}
             </button>
             <ThemeToggle />
@@ -183,14 +220,19 @@ export function Nav() {
       {/* Mobile overlay */}
       {mobileOpen && (
         <>
-          <div className="fixed inset-0 z-50 bg-black/50 md:hidden" onClick={closeMobile} aria-hidden="true" />
-          <div className="fixed inset-y-0 left-0 z-50 w-64 bg-background shadow-xl md:hidden p-4">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2">
-                <Brain className="h-6 w-6 text-primary" />
-                <span className="font-display font-bold text-sm text-foreground">AI Dev Digest</span>
-              </div>
-              <button onClick={closeMobile} aria-label="Close menu" className="p-1 rounded-lg hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <div
+            className="fixed inset-0 z-50 bg-background/70 backdrop-blur-sm md:hidden"
+            onClick={closeMobile}
+            aria-hidden="true"
+          />
+          <div className="fixed inset-y-0 left-0 z-50 w-72 border-r border-border bg-card p-4 shadow-e3 md:hidden">
+            <div className="mb-7 flex items-center justify-between">
+              <Wordmark />
+              <button
+                onClick={closeMobile}
+                aria-label="Close menu"
+                className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -201,27 +243,31 @@ export function Nav() {
                   <Link
                     key={item.name}
                     href={item.href}
+                    aria-current={isActive ? "page" : undefined}
                     className={cn(
                       "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                       isActive
                         ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground",
                     )}
                   >
-                    <item.icon className="h-5 w-5" />
+                    <item.icon className="h-[18px] w-[18px]" />
                     {item.name}
                   </Link>
                 );
               })}
             </nav>
             {/* Mobile send test */}
-            <div className="mt-4 pt-4 border-t border-border">
+            <div className="mt-4 border-t border-border pt-4">
               <button
                 onClick={() => { sendTest(); closeMobile(); }}
                 disabled={sendStatus === "sending"}
-                className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "md" }),
+                  "w-full justify-start px-3",
+                )}
               >
-                <Send className="h-5 w-5" />
+                <Send className="h-[18px] w-[18px]" />
                 Send test message
               </button>
             </div>

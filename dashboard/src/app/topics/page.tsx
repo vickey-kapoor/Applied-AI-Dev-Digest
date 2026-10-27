@@ -1,10 +1,29 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { TOPICS, getCategoryLabel, getDefaultTopicConfig, type TopicConfig, type Topic } from "@/lib/topics";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  TOPICS,
+  CATEGORY_DOT_COLORS,
+  getCategoryLabel,
+  getDefaultTopicConfig,
+  type TopicConfig,
+  type Topic,
+} from "@/lib/topics";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Layers, Save, Loader2, Check, AlertCircle, Plus, X, ChevronDown } from "lucide-react";
+import { PageHeader } from "@/components/ui/page-header";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import {
+  Layers,
+  Save,
+  Loader2,
+  Check,
+  AlertCircle,
+  Plus,
+  X,
+  ChevronDown,
+} from "lucide-react";
 
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 type CustomKeywordsMap = Record<string, string[]>;
@@ -16,6 +35,9 @@ const CATEGORY_DESCRIPTIONS: Record<Topic["category"], string> = {
   applied: "Domain-specific topics you can toggle by interest",
   emerging: "Cutting-edge areas worth keeping an eye on",
 };
+
+/** Keywords shown before the list collapses behind a "+N" chip. */
+const KEYWORD_PREVIEW_COUNT = 6;
 
 export default function TopicsPage() {
   const [config, setConfig] = useState<TopicConfig | null>(null);
@@ -110,14 +132,17 @@ export default function TopicsPage() {
 
   if (loading) {
     return (
-      <div className="py-8">
-        <div className="mb-8">
-          <div className="h-8 w-48 bg-muted rounded animate-pulse" />
-          <div className="h-4 w-96 bg-muted rounded animate-pulse mt-2" />
+      <div className="pb-16">
+        <div className="flex items-center gap-4 border-b border-border pb-7 pt-10">
+          <div className="h-11 w-11 animate-pulse rounded-xl bg-muted" />
+          <div className="space-y-2">
+            <div className="h-7 w-40 animate-pulse rounded bg-muted" />
+            <div className="h-4 w-80 animate-pulse rounded bg-muted" />
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-48 bg-muted rounded-lg animate-pulse" />
+            <div key={i} className="h-56 animate-pulse rounded-xl bg-muted" />
           ))}
         </div>
       </div>
@@ -125,90 +150,143 @@ export default function TopicsPage() {
   }
 
   return (
-    <div className="py-8 pb-28">
-      {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-baseline gap-3 mb-1">
-          <Layers className="h-7 w-7 text-primary shrink-0 self-center" />
-          <h1 className="text-2xl font-display font-bold text-foreground">
-            Topics
-          </h1>
-        </div>
-        <p className="text-muted-foreground mt-1">
-          Choose which AI research topics appear in your daily digest.{" "}
-          <span className="font-mono text-sm text-muted-foreground/70">
-            {enabledCount} of {TOPICS.length} active
-          </span>
-        </p>
-      </div>
+    <div className="pb-32">
+      <PageHeader
+        eyebrow="Configuration"
+        title="Topics"
+        description="Choose which AI research topics appear in your daily digest. Keywords are what the fetcher filters on."
+        icon={Layers}
+        metric={{
+          value: (
+            <>
+              {enabledCount}
+              <span className="text-subtle-foreground">/{TOPICS.length}</span>
+            </>
+          ),
+          label: "Active",
+        }}
+      />
 
       {/* Topic sections */}
       {CATEGORY_ORDER.map((category) => {
         const topics = TOPICS.filter((t) => t.category === category);
+        const activeInCategory = topics.filter(
+          (t) => config?.[t.id] ?? t.defaultEnabled,
+        ).length;
+
         return (
-          <section key={category} className="mb-10">
-            <div className="mb-4">
-              <h2 className="text-lg font-display font-semibold text-foreground">
+          <section key={category} className="mt-12 first:mt-10">
+            <div className="mb-5 flex items-baseline gap-3">
+              <span
+                className={cn(
+                  "h-2 w-2 translate-y-px rounded-full",
+                  CATEGORY_DOT_COLORS[category],
+                )}
+                aria-hidden="true"
+              />
+              <h2 className="font-display text-lg font-semibold text-foreground">
                 {getCategoryLabel(category)}
               </h2>
-              <p className="text-sm text-muted-foreground/70">{CATEGORY_DESCRIPTIONS[category]}</p>
+              <span className="font-mono text-xs text-subtle-foreground">
+                {activeInCategory}/{topics.length} on
+              </span>
+              <p className="ml-auto hidden text-sm text-muted-foreground sm:block">
+                {CATEGORY_DESCRIPTIONS[category]}
+              </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+            <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 lg:grid-cols-3">
               {topics.map((topic) => {
                 const enabled = config?.[topic.id] ?? topic.defaultEnabled;
                 const isExpanded = expandedTopics.has(topic.id);
                 const topicCustom = customKeywords[topic.id] || [];
+                const visibleKeywords = isExpanded
+                  ? topic.keywords
+                  : topic.keywords.slice(0, KEYWORD_PREVIEW_COUNT);
+                const hiddenCount = topic.keywords.length - visibleKeywords.length;
 
                 return (
                   <Card
                     key={topic.id}
-                    className={`transition-all ${
+                    elevation={enabled ? "low" : "flat"}
+                    className={cn(
+                      "flex flex-col transition-[border-color,background-color,opacity,box-shadow] duration-200",
                       enabled
-                        ? "ring-2 ring-primary/30"
-                        : "opacity-60 hover:opacity-80"
-                    }`}
+                        ? "border-primary/25"
+                        : "bg-surface opacity-80 hover:opacity-100",
+                    )}
                   >
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start justify-between">
-                        <CardTitle
-                          className="text-base cursor-pointer"
+                    {/* Accent rail marks the enabled cards without a ring halo */}
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "absolute inset-x-5 top-0 h-px rounded-full transition-opacity",
+                        enabled
+                          ? "bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-100"
+                          : "opacity-0",
+                      )}
+                    />
+                    <CardHeader className="gap-0 space-y-0 pb-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <h3
+                          className="cursor-pointer text-[0.9375rem] font-semibold leading-snug tracking-tight text-foreground"
                           onClick={() => toggle(topic.id)}
                         >
                           {topic.name}
-                        </CardTitle>
+                        </h3>
                         <button
                           role="switch"
                           aria-checked={enabled}
                           aria-label={`Toggle ${topic.name}`}
                           onClick={() => toggle(topic.id)}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ${
-                            enabled ? "bg-primary" : "bg-muted-foreground/30"
-                          }`}
+                          className={cn(
+                            "relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border transition-colors",
+                            enabled
+                              ? "border-primary bg-primary"
+                              : "border-border-strong bg-secondary",
+                          )}
                         >
                           <span
-                            className={`inline-block h-4 w-4 rounded-full bg-white dark:bg-foreground transition-transform ${
-                              enabled ? "translate-x-6" : "translate-x-1"
-                            }`}
+                            className={cn(
+                              "inline-block h-3.5 w-3.5 rounded-full shadow-e1 transition-transform",
+                              enabled
+                                ? "translate-x-[1.1rem] bg-white"
+                                : "translate-x-[0.1875rem] bg-subtle-foreground",
+                            )}
                           />
                         </button>
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">
                         {topic.description}
                       </p>
                     </CardHeader>
-                    <CardContent>
-                      {/* Default keywords */}
+
+                    <CardContent className="mt-auto pt-0">
+                      {/* Keywords */}
                       <div className="flex flex-wrap gap-1.5">
-                        {topic.keywords.map((kw) => (
-                          <Badge key={kw} variant="secondary" className="text-xs font-mono">
+                        {visibleKeywords.map((kw) => (
+                          <Badge
+                            key={kw}
+                            variant="secondary"
+                            className="font-mono text-[0.6875rem]"
+                          >
                             {kw}
                           </Badge>
                         ))}
+                        {hiddenCount > 0 && (
+                          <button
+                            onClick={() => toggleExpand(topic.id)}
+                            className="rounded-md border border-dashed border-border-strong px-2 py-0.5 font-mono text-[0.6875rem] leading-5 text-subtle-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+                          >
+                            +{hiddenCount}
+                          </button>
+                        )}
                         {/* Custom keywords */}
                         {topicCustom.map((kw) => (
                           <Badge
                             key={`custom-${kw}`}
-                            className="text-xs font-mono bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 gap-1 cursor-pointer hover:bg-emerald-200 dark:hover:bg-emerald-900/60"
+                            variant="accent"
+                            className="cursor-pointer font-mono text-[0.6875rem]"
                             onClick={() => removeCustomKeyword(topic.id, kw)}
                           >
                             {kw}
@@ -220,15 +298,20 @@ export default function TopicsPage() {
                       {/* Expand toggle */}
                       <button
                         onClick={() => toggleExpand(topic.id)}
-                        className="mt-3 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                        className="mt-4 flex items-center gap-1.5 text-xs font-medium text-subtle-foreground transition-colors hover:text-foreground"
                       >
-                        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
-                        {isExpanded ? "Hide" : "Add keywords"}
+                        <ChevronDown
+                          className={cn(
+                            "h-3.5 w-3.5 transition-transform",
+                            isExpanded && "rotate-180",
+                          )}
+                        />
+                        {isExpanded ? "Hide keywords" : "Add keywords"}
                       </button>
 
                       {/* Custom keyword input */}
                       {isExpanded && (
-                        <div className="mt-2 flex gap-2">
+                        <div className="mt-3 flex gap-2">
                           <input
                             type="text"
                             placeholder="Add keyword..."
@@ -242,11 +325,14 @@ export default function TopicsPage() {
                             onKeyDown={(e) => {
                               if (e.key === "Enter") addCustomKeyword(topic.id);
                             }}
-                            className="flex-1 px-2.5 py-1.5 text-sm font-mono rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
+                            className="h-8 flex-1 rounded-lg border border-input bg-background px-2.5 font-mono text-xs text-foreground transition-colors placeholder:text-subtle-foreground hover:border-border-strong"
                           />
                           <button
                             onClick={() => addCustomKeyword(topic.id)}
-                            className="p-1.5 rounded-md bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                            aria-label={`Add keyword to ${topic.name}`}
+                            className={cn(
+                              buttonVariants({ variant: "primary", size: "icon" }),
+                            )}
                           >
                             <Plus className="h-4 w-4" />
                           </button>
@@ -262,29 +348,46 @@ export default function TopicsPage() {
       })}
 
       {/* Sticky save bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 pb-[env(safe-area-inset-bottom)]">
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-8">
         <div
-          className={`border-t border-border bg-background/95 backdrop-blur px-8 py-4 flex items-center justify-between transition-opacity ${
-            isDirty || saveStatus !== "idle" ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
+          className={cn(
+            "surface-highlight mx-auto flex w-full max-w-[1180px] items-center justify-between gap-4 rounded-xl border border-border bg-card/95 px-4 py-3 shadow-e3 backdrop-blur-xl transition-all duration-200",
+            isDirty || saveStatus !== "idle"
+              ? "pointer-events-auto translate-y-0 opacity-100"
+              : "translate-y-3 opacity-0",
+          )}
         >
-          <div className="text-sm text-muted-foreground">
-            {isDirty && "You have unsaved changes"}
+          <div className="min-w-0 text-sm">
+            {isDirty && saveStatus === "idle" && (
+              <span className="flex items-center gap-2 text-muted-foreground">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-warning" />
+                You have unsaved changes
+              </span>
+            )}
+            {saveStatus === "saving" && (
+              <span className="text-muted-foreground">Saving…</span>
+            )}
             {saveStatus === "saved" && (
-              <span className="flex items-center gap-1 text-green-600 dark:text-green-400">
-                <Check className="h-4 w-4" /> Changes saved
+              <span className="flex items-center gap-2 text-success">
+                <Check className="h-4 w-4 shrink-0" /> Changes saved
               </span>
             )}
             {saveStatus === "error" && (
-              <span role="alert" className="flex items-center gap-1 text-red-600 dark:text-red-400">
-                <AlertCircle className="h-4 w-4" /> Failed to save — is Vercel KV configured?
+              <span
+                role="alert"
+                className="flex items-center gap-2 text-destructive"
+              >
+                <AlertCircle className="h-4 w-4 shrink-0" />
+                <span className="truncate">
+                  Failed to save — is Vercel KV configured?
+                </span>
               </span>
             )}
           </div>
           <button
             onClick={save}
             disabled={!isDirty || saveStatus === "saving"}
-            className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className={cn(buttonVariants({ variant: "primary", size: "md" }))}
           >
             {saveStatus === "saving" ? (
               <Loader2 className="h-4 w-4 animate-spin" />

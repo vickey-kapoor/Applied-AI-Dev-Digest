@@ -126,7 +126,6 @@ class TestParsing:
     def test_items_carry_the_schema_the_pipeline_expects(self):
         item = parse_changelog(PAGE)[0]
         assert item["source"] == OPENAI_CHANGELOG_SOURCE
-        assert item["url"] == OPENAI_CHANGELOG_URL
         assert item["type"] == "changelog"
         assert item["summary"]
 
@@ -135,11 +134,62 @@ class TestParsing:
         assert parse_changelog(PAGE)[0]["source"] != "OpenAI"
 
 
-class TestIdentity:
-    """One page, no permalinks: identity cannot come from the URL."""
+class TestEntryLinks:
+    """The changelog page holds 186 entries, so the entry's own link is better."""
 
-    def test_every_entry_shares_the_url(self):
-        assert len({item["url"] for item in parse_changelog(PAGE)}) == 1
+    def test_an_entry_links_to_its_own_deep_link(self):
+        assert parse_changelog(PAGE)[0]["url"] == (
+            "https://platform.openai.com/api/docs/models/gpt-6.1-sol"
+        )
+
+    def test_a_relative_link_resolves_against_the_url_the_page_came_from(self):
+        """platform.openai.com/docs/changelog redirects, and the links belong
+        to the host it lands on — the same path under the configured host 403s."""
+        item = parse_changelog(PAGE, "https://developers.openai.com/api/docs/changelog")[0]
+        assert item["url"] == "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
+
+    def test_an_entry_with_no_link_falls_back_to_the_changelog_page(self):
+        assert parse_changelog(PAGE)[1]["url"] == OPENAI_CHANGELOG_URL
+
+    def test_an_absolute_link_is_left_alone(self):
+        page = """
+        <h3 class="_ChangelogSectionTitle_1">October, 2026</h3>
+        <div class="_Badge_1" data-variant="outline">Oct 2</div>
+        <div class="_ChangelogMarkdown_1"><p>See
+        <a href="https://cookbook.openai.com/thing">the cookbook</a>.</p></div>
+        """
+        assert parse_changelog(page)[0]["url"] == "https://cookbook.openai.com/thing"
+
+    def test_an_in_page_anchor_is_not_a_source_link(self):
+        page = """
+        <h3 class="_ChangelogSectionTitle_1">October, 2026</h3>
+        <div class="_Badge_1" data-variant="outline">Oct 2</div>
+        <div class="_ChangelogMarkdown_1"><p>Jump <a href="#top">up</a>.</p></div>
+        """
+        assert parse_changelog(page)[0]["url"] == OPENAI_CHANGELOG_URL
+
+    def test_a_non_http_scheme_is_not_a_source_link(self):
+        page = """
+        <h3 class="_ChangelogSectionTitle_1">October, 2026</h3>
+        <div class="_Badge_1" data-variant="outline">Oct 2</div>
+        <div class="_ChangelogMarkdown_1"><p>Write to
+        <a href="mailto:support@openai.com">us</a>.</p></div>
+        """
+        assert parse_changelog(page)[0]["url"] == OPENAI_CHANGELOG_URL
+
+    def test_a_links_badge_does_not_become_an_entry_link(self):
+        """Only the body is read for a link; a badge is not a source."""
+        page = """
+        <h3 class="_ChangelogSectionTitle_1">October, 2026</h3>
+        <div class="_Badge_1" data-variant="outline">Oct 2</div>
+        <div class="_Badge_1" data-variant="soft"><a href="/api/docs/badge">v1/x</a></div>
+        <div class="_ChangelogMarkdown_1"><p>Something shipped.</p></div>
+        """
+        assert parse_changelog(page)[0]["url"] == OPENAI_CHANGELOG_URL
+
+
+class TestIdentity:
+    """One page, no anchors: identity cannot come from the URL."""
 
     def test_but_every_entry_has_its_own_identity(self):
         items = parse_changelog(PAGE)
@@ -192,6 +242,7 @@ class TestFetching:
         r = MagicMock()
         r.status_code = status
         r.text = text
+        r.url = "https://developers.openai.com/api/docs/changelog"
         r.raise_for_status = MagicMock()
         return r
 
@@ -199,6 +250,13 @@ class TestFetching:
     def test_returns_parsed_entries(self, mock_get):
         mock_get.return_value = self._response(PAGE)
         assert len(fetch_openai_changelog()) == 3
+
+    @patch("src.fetchers.openai_changelog_fetcher.requests.get")
+    def test_entry_links_resolve_against_the_landed_url(self, mock_get):
+        mock_get.return_value = self._response(PAGE)
+        assert fetch_openai_changelog()[0]["url"] == (
+            "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
+        )
 
     @patch("src.fetchers.openai_changelog_fetcher.requests.get")
     def test_respects_max_results(self, mock_get):

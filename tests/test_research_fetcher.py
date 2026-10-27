@@ -98,12 +98,13 @@ class TestFetchAll:
     """
 
     @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes", return_value=[])
     @patch("src.fetcher.fetch_openai_changelog", return_value=[])
     @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_aggregates_blog_sources(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_anthropic):
+    def test_aggregates_blog_sources(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_release_notes, mock_anthropic):
         mock_blogs.return_value = [
             {"title": "OpenAI Update", "url": "https://a.com", "published": _hours_ago(1)},
             {"title": "Anthropic Update", "url": "https://b.com", "published": _hours_ago(2)},
@@ -112,12 +113,13 @@ class TestFetchAll:
         assert len(result) == 2
 
     @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes", return_value=[])
     @patch("src.fetcher.fetch_openai_changelog", return_value=[])
     @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases")
     @patch("src.fetcher.fetch_blog_posts")
-    def test_aggregates_all_sources(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_anthropic):
+    def test_aggregates_all_sources(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_release_notes, mock_anthropic):
         mock_blogs.return_value = [
             {"title": "Blog Post", "url": "https://a.com", "published": _hours_ago(1)},
         ]
@@ -128,23 +130,25 @@ class TestFetchAll:
         assert len(result) == 2
 
     @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes", return_value=[])
     @patch("src.fetcher.fetch_openai_changelog", return_value=[])
     @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_handles_source_failure(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_anthropic):
+    def test_handles_source_failure(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_release_notes, mock_anthropic):
         mock_blogs.side_effect = Exception("API Error")
         result = fetch_all(max_results=10)
         assert len(result) == 0
 
     @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes", return_value=[])
     @patch("src.fetcher.fetch_openai_changelog", return_value=[])
     @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_deduplicates_by_url(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_anthropic):
+    def test_deduplicates_by_url(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_release_notes, mock_anthropic):
         mock_blogs.return_value = [
             {"title": "Same URL A", "url": "https://same.com", "published": _hours_ago(1)},
             {"title": "Same URL B", "url": "https://same.com", "published": _hours_ago(2)},
@@ -153,12 +157,13 @@ class TestFetchAll:
         assert len(result) == 1
 
     @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes", return_value=[])
     @patch("src.fetcher.fetch_openai_changelog", return_value=[])
     @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_respects_max_results(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_anthropic):
+    def test_respects_max_results(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_release_notes, mock_anthropic):
         mock_blogs.return_value = [
             # Distinct sources: this test covers max_results, not the
             # per-source cap, which would otherwise trim a single-source batch.
@@ -174,12 +179,13 @@ class TestFetchAll:
         assert len(result) == 3
 
     @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes", return_value=[])
     @patch("src.fetcher.fetch_openai_changelog", return_value=[])
     @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_sorts_by_date(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_anthropic):
+    def test_sorts_by_date(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_release_notes, mock_anthropic):
         mock_blogs.return_value = [
             {"title": "Old", "url": "https://a.com", "published": _hours_ago(48)},
             {"title": "New", "url": "https://b.com", "published": _hours_ago(1)},
@@ -188,6 +194,7 @@ class TestFetchAll:
         assert result[0]["title"] == "New"
         assert result[1]["title"] == "Old"
 
+    @patch("src.fetcher.fetch_anthropic_release_notes", return_value=[])
     @patch("src.fetcher.fetch_openai_changelog", return_value=[])
     @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
@@ -195,7 +202,8 @@ class TestFetchAll:
     @patch("src.fetcher.fetch_blog_posts", return_value=[])
     @patch("src.fetcher.fetch_anthropic_posts")
     def test_anthropics_own_posts_skip_the_keyword_gate(
-        self, mock_anthropic, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog
+        self, mock_anthropic, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog,
+        mock_release_notes
     ):
         """Both Anthropic listings are curated, so a post needs no keyword.
 
@@ -221,6 +229,73 @@ class TestFetchAll:
         ]
         result = fetch_all(max_results=10, filter_keywords=["gpt", "gemini"])
         assert len(result) == 2
+
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
+    @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
+    @patch("src.fetcher.fetch_github_releases", return_value=[])
+    @patch("src.fetcher.fetch_blog_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes")
+    def test_anthropics_release_notes_skip_the_keyword_gate(
+        self, mock_release_notes, mock_anthropic, mock_blogs, mock_gh, mock_hn,
+        mock_hf, mock_changelog
+    ):
+        """A release note names no topic keyword and is still the day's news.
+
+        "We've released API version 2026-10-21" carries no model name, no
+        provider and no benchmark, so the gate would drop the item this source
+        exists to deliver.
+        """
+        mock_release_notes.return_value = [
+            {
+                "title": "We've released API version 2026-10-21.",
+                "url": "https://platform.claude.com/docs/en/api/migration-2026-10-21",
+                "source": "Anthropic Platform",
+                "summary": "Migrating to API version 2026-10-21 shows how to upgrade.",
+                "published": _hours_ago(2),
+            },
+        ]
+        result = fetch_all(max_results=10, filter_keywords=["gpt", "gemini"])
+        assert len(result) == 1
+
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
+    @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
+    @patch("src.fetcher.fetch_github_releases", return_value=[])
+    @patch("src.fetcher.fetch_blog_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_posts")
+    @patch("src.fetcher.fetch_anthropic_release_notes")
+    def test_the_release_notes_do_not_share_anthropics_per_source_cap(
+        self, mock_release_notes, mock_anthropic, mock_blogs, mock_gh, mock_hn,
+        mock_hf, mock_changelog
+    ):
+        """Under one source name a busy news week would crowd them out."""
+        mock_anthropic.return_value = [
+            {
+                "title": f"A policy post {i}",
+                "url": f"https://www.anthropic.com/news/policy-{i}",
+                "source": "Anthropic",
+                "summary": "On policy.",
+                "published": _hours_ago(2 + i),
+            }
+            for i in range(3)
+        ]
+        mock_release_notes.return_value = [
+            {
+                "title": f"A platform change {i}",
+                "url": f"https://platform.claude.com/docs/en/api/change-{i}",
+                "source": "Anthropic Platform",
+                "summary": "On the API.",
+                "published": _hours_ago(1),
+                "identity": f"anthropic-release-notes:2026-10-21:change-{i}",
+            }
+            for i in range(3)
+        ]
+        sources = [item["source"] for item in fetch_all(max_results=10)]
+        # Two of each survive the per-source cap, rather than two in total.
+        assert sources.count("Anthropic") == 2
+        assert sources.count("Anthropic Platform") == 2
 
 
 class TestParsePublished:
@@ -289,12 +364,13 @@ class TestFilterByRecency:
         assert len(_filter_by_recency(items, 0)) == 1
 
     @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes", return_value=[])
     @patch("src.fetcher.fetch_openai_changelog", return_value=[])
     @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
     @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
     @patch("src.fetcher.fetch_github_releases", return_value=[])
     @patch("src.fetcher.fetch_blog_posts")
-    def test_fetch_all_applies_the_cutoff(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_anthropic):
+    def test_fetch_all_applies_the_cutoff(self, mock_blogs, mock_gh, mock_hn, mock_hf, mock_changelog, mock_release_notes, mock_anthropic):
         """A week-old blog post must not reach the daily pick."""
         mock_blogs.return_value = [
             {"title": "Today", "url": "https://a.com", "published": _hours_ago(3)},

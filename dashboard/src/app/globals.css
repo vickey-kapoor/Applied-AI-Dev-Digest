@@ -1,6 +1,43 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* v4 has no `darkMode` config key: the class strategy is a custom variant,
+   and this is the form that also matches descendants of `.dark`, which is
+   what `darkMode: ["class"]` did in v3. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* v3's `theme.extend` lived in tailwind.config.ts. In v4 the theme is CSS
+   custom properties in `@theme`, and the utility names follow from the
+   property names: `--color-primary-foreground` is what makes
+   `bg-primary-foreground` exist. The values still read the HSL triples
+   defined in `:root` below, so light and dark keep working as before. */
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
+  --font-display: var(--font-syne), ui-sans-serif, sans-serif;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
 
 @layer base {
   :root {

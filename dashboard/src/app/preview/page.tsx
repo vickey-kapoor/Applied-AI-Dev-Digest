@@ -136,7 +136,7 @@ export default function PreviewPage() {
 
       {/* Loading state */}
       {fetchStatus === "loading" && (
-        <Card elevation="flat" className="mt-10 bg-surface">
+        <Card elevation="flat" className="mt-8 bg-surface">
           <CardContent className="flex flex-col items-center justify-center py-20">
             <Loader2 className="mb-4 h-6 w-6 animate-spin text-primary" />
             <p className="text-sm text-muted-foreground">
@@ -149,7 +149,7 @@ export default function PreviewPage() {
       {/* Error state */}
       {fetchStatus === "error" && (
         <Card
-          className="mt-10 border-destructive/30 bg-destructive/5"
+          className="mt-8 border-destructive/30 bg-destructive/5"
           role="alert"
         >
           <CardContent className="flex items-start gap-3 p-5">
@@ -168,7 +168,7 @@ export default function PreviewPage() {
 
       {/* Preview — Telegram message mockup */}
       {paper && fetchStatus === "done" && (
-        <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-start">
+        <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
           <Card elevation="raised" className="overflow-hidden">
             {/* Chat header */}
             <div className="flex items-center gap-2.5 border-b border-border bg-surface px-4 py-3">
@@ -289,7 +289,7 @@ export default function PreviewPage() {
 
       {/* Idle state */}
       {fetchStatus === "idle" && !paper && (
-        <div className="mt-10">
+        <div className="mt-8">
           <EmptyState
             icon={Eye}
             title="No preview loaded"

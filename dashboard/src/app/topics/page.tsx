@@ -36,6 +36,11 @@ const CATEGORY_DESCRIPTIONS: Record<Topic["category"], string> = {
   emerging: "Cutting-edge areas worth keeping an eye on",
 };
 
+/** Every topic, grouped by category, flattened into one render order. */
+const ORDERED_TOPICS = CATEGORY_ORDER.flatMap((category) =>
+  TOPICS.filter((t) => t.category === category),
+);
+
 /** Keywords shown before the list collapses behind a "+N" chip. */
 const KEYWORD_PREVIEW_COUNT = 6;
 
@@ -140,9 +145,9 @@ export default function TopicsPage() {
             <div className="h-4 w-80 animate-pulse rounded bg-muted" />
           </div>
         </div>
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-56 animate-pulse rounded-xl bg-muted" />
+        <div className="mt-6 grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="h-52 animate-pulse rounded-xl bg-muted" />
           ))}
         </div>
       </div>
@@ -150,7 +155,7 @@ export default function TopicsPage() {
   }
 
   return (
-    <div className="pb-32">
+    <div className="pb-28">
       <PageHeader
         eyebrow="Configuration"
         title="Topics"
@@ -167,191 +172,196 @@ export default function TopicsPage() {
         }}
       />
 
-      {/* Topic sections */}
-      {CATEGORY_ORDER.map((category) => {
-        const topics = TOPICS.filter((t) => t.category === category);
-        const activeInCategory = topics.filter(
-          (t) => config?.[t.id] ?? t.defaultEnabled,
-        ).length;
-
-        return (
-          <section key={category} className="mt-12 first:mt-10">
-            <div className="mb-5 flex items-baseline gap-3">
+      {/* Category legend — the grouping the three sections used to carry */}
+      <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-3 rounded-xl border border-border bg-surface px-5 py-4 sm:grid-cols-3">
+        {CATEGORY_ORDER.map((category) => {
+          const inCategory = TOPICS.filter((t) => t.category === category);
+          const activeInCategory = inCategory.filter(
+            (t) => config?.[t.id] ?? t.defaultEnabled,
+          ).length;
+          return (
+            <div key={category} className="flex items-baseline gap-2.5">
               <span
                 className={cn(
-                  "h-2 w-2 translate-y-px rounded-full",
+                  "h-2 w-2 shrink-0 translate-y-px rounded-full",
                   CATEGORY_DOT_COLORS[category],
                 )}
                 aria-hidden="true"
               />
-              <h2 className="font-display text-lg font-semibold text-foreground">
-                {getCategoryLabel(category)}
-              </h2>
-              <span className="font-mono text-xs text-subtle-foreground">
-                {activeInCategory}/{topics.length} on
-              </span>
-              <p className="ml-auto hidden text-sm text-muted-foreground sm:block">
-                {CATEGORY_DESCRIPTIONS[category]}
-              </p>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-foreground">
+                  {getCategoryLabel(category)}
+                  <span className="ml-2 font-mono text-xs font-normal text-subtle-foreground">
+                    {activeInCategory}/{inCategory.length} on
+                  </span>
+                </p>
+                <p className="mt-0.5 text-[0.8125rem] leading-snug text-muted-foreground">
+                  {CATEGORY_DESCRIPTIONS[category]}
+                </p>
+              </div>
             </div>
+          );
+        })}
+      </div>
 
-            <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {topics.map((topic) => {
-                const enabled = config?.[topic.id] ?? topic.defaultEnabled;
-                const isExpanded = expandedTopics.has(topic.id);
-                const topicCustom = customKeywords[topic.id] || [];
-                const visibleKeywords = isExpanded
-                  ? topic.keywords
-                  : topic.keywords.slice(0, KEYWORD_PREVIEW_COUNT);
-                const hiddenCount = topic.keywords.length - visibleKeywords.length;
+      {/* One grid for every topic — grouped by category, but without the
+          ragged half-empty rows three separate grids produced. */}
+      <div className="mt-5 grid grid-cols-1 items-start gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {ORDERED_TOPICS.map((topic) => {
+          const enabled = config?.[topic.id] ?? topic.defaultEnabled;
+          const isExpanded = expandedTopics.has(topic.id);
+          const topicCustom = customKeywords[topic.id] || [];
+          const visibleKeywords = isExpanded
+            ? topic.keywords
+            : topic.keywords.slice(0, KEYWORD_PREVIEW_COUNT);
+          const hiddenCount = topic.keywords.length - visibleKeywords.length;
 
-                return (
-                  <Card
-                    key={topic.id}
-                    elevation={enabled ? "low" : "flat"}
+          return (
+            <Card
+              key={topic.id}
+              elevation={enabled ? "low" : "flat"}
+              className={cn(
+                "flex flex-col transition-[border-color,background-color,opacity,box-shadow] duration-200",
+                enabled
+                  ? "border-primary/25"
+                  : "bg-surface opacity-75 hover:opacity-100",
+              )}
+            >
+              <CardHeader className="gap-0 space-y-0 p-4 pb-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="flex min-w-0 items-center gap-2">
+                    <span
+                      className={cn(
+                        "h-1.5 w-1.5 shrink-0 rounded-full",
+                        CATEGORY_DOT_COLORS[topic.category],
+                      )}
+                      aria-hidden="true"
+                    />
+                    <span className="font-mono text-[0.625rem] uppercase tracking-[0.1em] text-subtle-foreground">
+                      {getCategoryLabel(topic.category)}
+                    </span>
+                  </span>
+                  <button
+                    role="switch"
+                    aria-checked={enabled}
+                    aria-label={`Toggle ${topic.name}`}
+                    onClick={() => toggle(topic.id)}
                     className={cn(
-                      "flex flex-col transition-[border-color,background-color,opacity,box-shadow] duration-200",
+                      "relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border transition-colors",
                       enabled
-                        ? "border-primary/25"
-                        : "bg-surface opacity-80 hover:opacity-100",
+                        ? "border-primary bg-primary"
+                        : "border-border-strong bg-secondary",
                     )}
                   >
-                    {/* Accent rail marks the enabled cards without a ring halo */}
                     <span
-                      aria-hidden="true"
                       className={cn(
-                        "absolute inset-x-5 top-0 h-px rounded-full transition-opacity",
+                        "inline-block h-3.5 w-3.5 rounded-full shadow-e1 transition-transform",
                         enabled
-                          ? "bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-100"
-                          : "opacity-0",
+                          ? "translate-x-[1.1rem] bg-white"
+                          : "translate-x-[0.1875rem] bg-subtle-foreground",
                       )}
                     />
-                    <CardHeader className="gap-0 space-y-0 pb-4">
-                      <div className="flex items-start justify-between gap-3">
-                        <h3
-                          className="cursor-pointer text-[0.9375rem] font-semibold leading-snug tracking-tight text-foreground"
-                          onClick={() => toggle(topic.id)}
-                        >
-                          {topic.name}
-                        </h3>
-                        <button
-                          role="switch"
-                          aria-checked={enabled}
-                          aria-label={`Toggle ${topic.name}`}
-                          onClick={() => toggle(topic.id)}
-                          className={cn(
-                            "relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border transition-colors",
-                            enabled
-                              ? "border-primary bg-primary"
-                              : "border-border-strong bg-secondary",
-                          )}
-                        >
-                          <span
-                            className={cn(
-                              "inline-block h-3.5 w-3.5 rounded-full shadow-e1 transition-transform",
-                              enabled
-                                ? "translate-x-[1.1rem] bg-white"
-                                : "translate-x-[0.1875rem] bg-subtle-foreground",
-                            )}
-                          />
-                        </button>
-                      </div>
-                      <p className="mt-2 text-[0.8125rem] leading-relaxed text-muted-foreground">
-                        {topic.description}
-                      </p>
-                    </CardHeader>
+                  </button>
+                </div>
+                <h3
+                  className="mt-2.5 cursor-pointer text-[0.9375rem] font-semibold leading-snug tracking-tight text-foreground"
+                  onClick={() => toggle(topic.id)}
+                >
+                  {topic.name}
+                </h3>
+                <p className="mt-1.5 text-[0.8125rem] leading-snug text-muted-foreground">
+                  {topic.description}
+                </p>
+              </CardHeader>
 
-                    <CardContent className="mt-auto pt-0">
-                      {/* Keywords */}
-                      <div className="flex flex-wrap gap-1.5">
-                        {visibleKeywords.map((kw) => (
-                          <Badge
-                            key={kw}
-                            variant="secondary"
-                            className="font-mono text-[0.6875rem]"
-                          >
-                            {kw}
-                          </Badge>
-                        ))}
-                        {hiddenCount > 0 && (
-                          <button
-                            onClick={() => toggleExpand(topic.id)}
-                            className="rounded-md border border-dashed border-border-strong px-2 py-0.5 font-mono text-[0.6875rem] leading-5 text-subtle-foreground transition-colors hover:border-primary/40 hover:text-foreground"
-                          >
-                            +{hiddenCount}
-                          </button>
-                        )}
-                        {/* Custom keywords */}
-                        {topicCustom.map((kw) => (
-                          <Badge
-                            key={`custom-${kw}`}
-                            variant="accent"
-                            className="cursor-pointer font-mono text-[0.6875rem]"
-                            onClick={() => removeCustomKeyword(topic.id, kw)}
-                          >
-                            {kw}
-                            <X className="h-3 w-3" />
-                          </Badge>
-                        ))}
-                      </div>
+              <CardContent className="mt-auto p-4 pt-0">
+                {/* Keywords */}
+                <div className="flex flex-wrap gap-1">
+                  {visibleKeywords.map((kw) => (
+                    <Badge
+                      key={kw}
+                      variant="secondary"
+                      className="font-mono text-[0.6875rem]"
+                    >
+                      {kw}
+                    </Badge>
+                  ))}
+                  {hiddenCount > 0 && (
+                    <button
+                      onClick={() => toggleExpand(topic.id)}
+                      className="rounded-md border border-dashed border-border-strong px-2 py-0.5 font-mono text-[0.6875rem] leading-5 text-subtle-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+                    >
+                      +{hiddenCount}
+                    </button>
+                  )}
+                  {/* Custom keywords */}
+                  {topicCustom.map((kw) => (
+                    <Badge
+                      key={`custom-${kw}`}
+                      variant="accent"
+                      className="cursor-pointer font-mono text-[0.6875rem]"
+                      onClick={() => removeCustomKeyword(topic.id, kw)}
+                    >
+                      {kw}
+                      <X className="h-3 w-3" />
+                    </Badge>
+                  ))}
+                </div>
 
-                      {/* Expand toggle */}
-                      <button
-                        onClick={() => toggleExpand(topic.id)}
-                        className="mt-4 flex items-center gap-1.5 text-xs font-medium text-subtle-foreground transition-colors hover:text-foreground"
-                      >
-                        <ChevronDown
-                          className={cn(
-                            "h-3.5 w-3.5 transition-transform",
-                            isExpanded && "rotate-180",
-                          )}
-                        />
-                        {isExpanded ? "Hide keywords" : "Add keywords"}
-                      </button>
+                {/* Expand toggle */}
+                <button
+                  onClick={() => toggleExpand(topic.id)}
+                  className="mt-3 flex items-center gap-1.5 text-xs font-medium text-subtle-foreground transition-colors hover:text-foreground"
+                >
+                  <ChevronDown
+                    className={cn(
+                      "h-3.5 w-3.5 transition-transform",
+                      isExpanded && "rotate-180",
+                    )}
+                  />
+                  {isExpanded ? "Hide keywords" : "Add keywords"}
+                </button>
 
-                      {/* Custom keyword input */}
-                      {isExpanded && (
-                        <div className="mt-3 flex gap-2">
-                          <input
-                            type="text"
-                            placeholder="Add keyword..."
-                            value={newKeywordInputs[topic.id] || ""}
-                            onChange={(e) =>
-                              setNewKeywordInputs((prev) => ({
-                                ...prev,
-                                [topic.id]: e.target.value,
-                              }))
-                            }
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") addCustomKeyword(topic.id);
-                            }}
-                            className="h-8 flex-1 rounded-lg border border-input bg-background px-2.5 font-mono text-xs text-foreground transition-colors placeholder:text-subtle-foreground hover:border-border-strong"
-                          />
-                          <button
-                            onClick={() => addCustomKeyword(topic.id)}
-                            aria-label={`Add keyword to ${topic.name}`}
-                            className={cn(
-                              buttonVariants({ variant: "primary", size: "icon" }),
-                            )}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </button>
-                        </div>
+                {/* Custom keyword input */}
+                {isExpanded && (
+                  <div className="mt-3 flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Add keyword..."
+                      value={newKeywordInputs[topic.id] || ""}
+                      onChange={(e) =>
+                        setNewKeywordInputs((prev) => ({
+                          ...prev,
+                          [topic.id]: e.target.value,
+                        }))
+                      }
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") addCustomKeyword(topic.id);
+                      }}
+                      className="h-8 min-w-0 flex-1 rounded-lg border border-input bg-background px-2.5 font-mono text-xs text-foreground transition-colors placeholder:text-subtle-foreground hover:border-border-strong"
+                    />
+                    <button
+                      onClick={() => addCustomKeyword(topic.id)}
+                      aria-label={`Add keyword to ${topic.name}`}
+                      className={cn(
+                        buttonVariants({ variant: "primary", size: "icon" }),
                       )}
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </section>
-        );
-      })}
+                    >
+                      <Plus className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
 
       {/* Sticky save bar */}
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-8">
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 px-5 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-8 lg:left-60 lg:px-10 xl:px-14">
         <div
           className={cn(
-            "surface-highlight mx-auto flex w-full max-w-[1180px] items-center justify-between gap-4 rounded-xl border border-border bg-card/95 px-4 py-3 shadow-e3 backdrop-blur-xl transition-all duration-200",
+            "surface-highlight flex w-full items-center justify-between gap-4 rounded-xl border border-border bg-card/95 px-4 py-3 shadow-e3 backdrop-blur-xl transition-all duration-200",
             isDirty || saveStatus !== "idle"
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "translate-y-3 opacity-0",

@@ -74,7 +74,7 @@ export default function StatsPage() {
       />
 
       {total === 0 ? (
-        <div className="mt-10">
+        <div className="mt-8">
           <EmptyState
             icon={Trophy}
             title="No stats yet"
@@ -84,7 +84,7 @@ export default function StatsPage() {
       ) : (
         <>
           {/* Summary tiles */}
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Card className="p-5">
               <p className="eyebrow">Most frequent winner</p>
               <p className="mt-2 font-display text-xl font-semibold leading-tight text-foreground">

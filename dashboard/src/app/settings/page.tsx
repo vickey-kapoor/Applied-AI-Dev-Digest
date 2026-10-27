@@ -93,7 +93,7 @@ export default function SettingsPage() {
         }
       />
 
-      <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="mt-8 grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
         {/* Blog Sources */}
         <Card interactive>
           <CardHeader className="flex-row items-center gap-3 space-y-0">
@@ -241,7 +241,7 @@ export default function SettingsPage() {
         </Card>
 
         {/* GitHub Actions */}
-        <Card interactive className="md:col-span-2">
+        <Card interactive className="md:col-span-2 xl:col-span-3">
           <CardHeader className="flex-row items-center gap-3 space-y-0">
             <CardIcon icon={GithubIcon} />
             <div className="min-w-0">

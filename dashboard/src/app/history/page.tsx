@@ -107,8 +107,8 @@ export default function HistoryPage() {
             <div className="h-4 w-72 animate-pulse rounded bg-muted" />
           </div>
         </div>
-        <div className="mt-10 space-y-4">
-          {Array.from({ length: 3 }).map((_, i) => (
+        <div className="mt-8 grid grid-cols-1 gap-4 xl:grid-cols-2">
+          {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="h-40 animate-pulse rounded-xl bg-muted" />
           ))}
         </div>
@@ -127,7 +127,7 @@ export default function HistoryPage() {
       />
 
       {entries.length === 0 ? (
-        <div className="mt-10">
+        <div className="mt-8">
           <EmptyState
             icon={Inbox}
             title="Nothing sent this week yet"
@@ -135,7 +135,7 @@ export default function HistoryPage() {
           />
         </div>
       ) : (
-        <div className="mt-10 space-y-4">
+        <div className="mt-8 grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
           {entries.map((entry, i) => {
             const voted = votes[entry.url];
             return (

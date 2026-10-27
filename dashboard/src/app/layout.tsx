@@ -35,7 +35,7 @@ export default function RootLayout({
         <Nav />
         <main
           id="main-content"
-          className="min-h-screen pt-16 mx-auto w-full max-w-[1180px] px-5 sm:px-8"
+          className="min-h-screen w-full px-5 pt-16 sm:px-8 lg:ml-60 lg:w-[calc(100%-15rem)] lg:px-10 lg:pt-0 xl:px-14"
         >
           {children}
         </main>

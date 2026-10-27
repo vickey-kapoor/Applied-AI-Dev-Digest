@@ -258,6 +258,31 @@ ANTHROPIC_LISTINGS = {
 # central per-source cap trims further.
 ANTHROPIC_MAX_ITEMS = int(os.getenv("ANTHROPIC_MAX_ITEMS", "15"))
 
+# Anthropic's platform release notes, scraped like OpenAI's changelog and for
+# the same reason: no feed, and one server-rendered page holds the history.
+#
+# This is where the Anthropic news an applied engineer acts on is published.
+# Anthropic was top pick 0 times in 21 digests while this source did not
+# exist: /news and /engineering carry policy, safety and partnership posts,
+# which the ranking prompt deprioritises on purpose, and an API version with
+# breaking SDK changes was never in the candidate pool at all.
+#
+# The canonical URL, not the docs.claude.com/en/release-notes/api that
+# redirects to it: a configured URL that redirects makes every root-relative
+# link on the page resolve against the wrong host.
+ANTHROPIC_RELEASE_NOTES_URL = "https://platform.claude.com/docs/en/release-notes/overview"
+
+# A source name of its own, for the reason the two listings above are two
+# sources: under one name the per-source cap of 2 would make the release notes
+# and the news listing compete for the same slots.
+ANTHROPIC_RELEASE_NOTES_SOURCE = "Anthropic Platform"
+
+# The page carries 29 months of history. Only the newest entries can be inside
+# the recency window, and the central cap trims further.
+ANTHROPIC_RELEASE_NOTES_MAX_ITEMS = int(
+    os.getenv("ANTHROPIC_RELEASE_NOTES_MAX_ITEMS", "15")
+)
+
 # Minimum candidate posts pulled per blog feed before keyword filtering.
 # Without a floor, adding feeds shrinks each feed's share to a single post,
 # so a lab that posted a few consumer items ahead of its release loses it.

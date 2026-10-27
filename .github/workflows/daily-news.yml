@@ -66,7 +66,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v7.0.1
 
       # Both of these run on the runner's system Python with no dependencies
       # installed — the guard is stdlib-only, so a tick with nothing due costs
@@ -139,7 +139,7 @@ jobs:
 
       - name: Set up Python
         if: steps.guard.outputs.daily == 'true' && steps.claim.outputs.claimed == 'true'
-        uses: actions/setup-python@v5.6.0
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: '3.11'
 

@@ -7,9 +7,12 @@ a 400 there is a missing digest, and the ranker's own fallback would turn it
 into a date-ordered digest nobody can tell from a ranked one.
 """
 
+import logging
+from types import SimpleNamespace
+
 import httpx2 as httpx  # openai 3.x ships httpx2 in place of httpx
 import pytest
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 from openai import AuthenticationError, BadRequestError
 
@@ -17,6 +20,7 @@ from src.openai_call import (
     _MAX_ATTEMPTS,
     call_json,
     json_schema_format,
+    log_usage,
     reply_text,
 )
 
@@ -278,3 +282,70 @@ class TestTheWorstCase:
 
     def test_the_bound_allows_that_many_attempts(self):
         assert _MAX_ATTEMPTS >= 6
+
+
+class TestTokenUsageLogging:
+    """Two model calls a day used to record nothing about what they cost."""
+
+    def _usage(self, **kwargs):
+        usage = SimpleNamespace(
+            prompt_tokens=kwargs.get("prompt", 3500),
+            completion_tokens=kwargs.get("completion", 420),
+            total_tokens=kwargs.get("total", 3920),
+            completion_tokens_details=SimpleNamespace(
+                reasoning_tokens=kwargs.get("reasoning", 256)
+            ),
+            prompt_tokens_details=SimpleNamespace(cached_tokens=kwargs.get("cached", 0)),
+        )
+        return SimpleNamespace(usage=usage)
+
+    def test_every_number_is_reported(self):
+        reported = log_usage("gpt-6.1-sol", self._usage())
+        assert reported == {
+            "prompt": 3500, "completion": 420, "total": 3920,
+            "reasoning": 256, "cached": 0,
+        }
+
+    def test_reasoning_tokens_are_reported(self):
+        """Billed as output and invisible in the reply, so a model switch can
+        multiply the bill with nothing in the log to show it."""
+        assert log_usage("gpt-6-luna", self._usage(reasoning=12000))["reasoning"] == 12000
+
+    def test_a_response_with_no_usage_block_reports_nothing(self):
+        assert log_usage("gpt-6-luna", SimpleNamespace(usage=None)) == {}
+
+    def test_a_response_with_no_usage_attribute_reports_nothing(self):
+        assert log_usage("gpt-6-luna", SimpleNamespace()) == {}
+
+    def test_a_non_numeric_count_is_left_out_rather_than_logged(self):
+        """Attribute access on a stub returns a mock, not a number."""
+        response = SimpleNamespace(usage=SimpleNamespace(prompt_tokens=MagicMock()))
+        assert log_usage("gpt-6-luna", response) == {}
+
+    def test_the_numbers_reach_the_log(self, caplog):
+        with caplog.at_level(logging.INFO):
+            log_usage("gpt-6.1-sol", self._usage())
+        assert "gpt-6.1-sol token usage" in caplog.text
+        assert "prompt=3500" in caplog.text
+        assert "reasoning=256" in caplog.text
+
+    def test_a_successful_call_logs_its_usage(self, caplog):
+        client = MagicMock()
+        client.chat.completions.create.return_value = self._usage()
+        with caplog.at_level(logging.INFO):
+            call_json(client, model="gpt-6-luna", prompt="hi", max_output_tokens=16000)
+        assert "token usage" in caplog.text
+
+    def test_a_surprise_in_the_usage_block_does_not_lose_the_reply(self):
+        """Bookkeeping must not cost a reply that has already been paid for."""
+        class Hostile:
+            @property
+            def usage(self):
+                raise RuntimeError("no usage for you")
+
+        client = MagicMock()
+        expected = Hostile()
+        client.chat.completions.create.return_value = expected
+        assert call_json(
+            client, model="gpt-6-luna", prompt="hi", max_output_tokens=16000
+        ) is expected

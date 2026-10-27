@@ -7,6 +7,7 @@ from difflib import SequenceMatcher
 
 from src.constants import (
     ANTHROPIC_ENGINEERING_SOURCE,
+    ANTHROPIC_RELEASE_NOTES_SOURCE,
     ANTHROPIC_SOURCE,
     BLOG_FEEDS,
     DEDUP_SIMILARITY_THRESHOLD,
@@ -16,6 +17,7 @@ from src.constants import (
     THREAD_POOL_WORKERS,
 )
 from src.fetchers.anthropic_fetcher import fetch_anthropic_posts
+from src.fetchers.anthropic_release_notes_fetcher import fetch_anthropic_release_notes
 from src.fetchers.blog_fetcher import fetch_blog_posts
 from src.fetchers.github_fetcher import fetch_github_releases
 from src.fetchers.hackernews_fetcher import fetch_hackernews_stories
@@ -147,12 +149,14 @@ AGGREGATOR_SOURCES = {"Hacker News", "Hugging Face", "AI Alignment Forum"}
 # The changelog joins them: it is a lab's own release notes, which is as
 # curated as a source gets, and keyword-gating it would drop a pricing change
 # for naming no topic keyword.
-# Anthropic joins them for the same reason: its two listings are a lab's own
-# writing, scraped only because the lab publishes no feed.
+# Anthropic joins them for the same reason: its two listings and its platform
+# release notes are a lab's own writing, scraped only because the lab
+# publishes no feed.
 CURATED_SOURCES = frozenset(BLOG_FEEDS) | {
     OPENAI_CHANGELOG_SOURCE,
     ANTHROPIC_SOURCE,
     ANTHROPIC_ENGINEERING_SOURCE,
+    ANTHROPIC_RELEASE_NOTES_SOURCE,
 }
 
 # Version-like tokens: v1.2.0, 5.3, 3.5-turbo, GPT-4o. Two titles carrying
@@ -267,6 +271,7 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
         ("HF Papers", lambda: fetch_huggingface_papers(filter_keywords=filter_keywords)),
         ("OpenAI Changelog", fetch_openai_changelog),
         ("Anthropic", fetch_anthropic_posts),
+        ("Anthropic Release Notes", fetch_anthropic_release_notes),
     ]
 
     all_items: list[dict] = []

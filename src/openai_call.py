@@ -58,6 +58,54 @@ def _refused_argument(error: BadRequestError, sent: dict) -> str | None:
     return None
 
 
+def _int_or_none(value) -> int | None:
+    """The value when it is a real integer, else None.
+
+    The usage block is optional in the API and absent from the stubs used in
+    tests, where attribute access returns a mock rather than a number. A
+    number is logged; anything else is simply not mentioned.
+    """
+    return value if isinstance(value, int) and not isinstance(value, bool) else None
+
+
+def log_usage(model: str, response) -> dict:
+    """Log what the call cost in tokens, and return the numbers.
+
+    The digest makes two model calls a day and recorded nothing about either,
+    so the only answer to "what does this cost" was an estimate from the
+    prompt's length. Reasoning tokens are the reason it matters more than it
+    used to: they are billed as output and are invisible in the reply, so a
+    model switch can multiply the bill with nothing in the log to show it.
+    """
+    usage = getattr(response, "usage", None)
+    if usage is None:
+        return {}
+
+    numbers = {
+        "prompt": _int_or_none(getattr(usage, "prompt_tokens", None)),
+        "completion": _int_or_none(getattr(usage, "completion_tokens", None)),
+        "total": _int_or_none(getattr(usage, "total_tokens", None)),
+    }
+
+    completion_details = getattr(usage, "completion_tokens_details", None)
+    numbers["reasoning"] = _int_or_none(
+        getattr(completion_details, "reasoning_tokens", None)
+    )
+    prompt_details = getattr(usage, "prompt_tokens_details", None)
+    numbers["cached"] = _int_or_none(getattr(prompt_details, "cached_tokens", None))
+
+    reported = {k: v for k, v in numbers.items() if v is not None}
+    if not reported:
+        return {}
+
+    logger.info(
+        "%s token usage: %s",
+        model,
+        ", ".join(f"{name}={count}" for name, count in reported.items()),
+    )
+    return reported
+
+
 def json_schema_format(name: str, schema: dict) -> dict:
     """A strict Structured Outputs response_format.
 
@@ -96,11 +144,19 @@ def call_json(client, *, model: str, prompt: str, max_output_tokens: int, **kwar
     # Bounded, so a model that refuses everything terminates instead of looping.
     for _ in range(_MAX_ATTEMPTS):
         try:
-            return client.chat.completions.create(
+            response = client.chat.completions.create(
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 **sent,
             )
+            # Never at the cost of the digest: this is bookkeeping, and a
+            # surprise in the usage block must not lose a reply already paid
+            # for.
+            try:
+                log_usage(model, response)
+            except Exception as e:
+                logger.warning("Could not read token usage: %s", e)
+            return response
         except BadRequestError as e:
             refused = _refused_argument(e, sent)
             if refused is None:

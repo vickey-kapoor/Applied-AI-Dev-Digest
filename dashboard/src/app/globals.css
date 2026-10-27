@@ -1,15 +1,11 @@
 @import "tailwindcss";
 
-/* v4 has no `darkMode` config key: the class strategy is a custom variant,
-   and this is the form that also matches descendants of `.dark`, which is
-   what `darkMode: ["class"]` did in v3. */
-@custom-variant dark (&:where(.dark, .dark *));
-
 /* v3's `theme.extend` lived in tailwind.config.ts. In v4 the theme is CSS
    custom properties in `@theme`, and the utility names follow from the
    property names: `--color-primary-foreground` is what makes
    `bg-primary-foreground` exist. The values still read the HSL triples
-   defined in `:root` below, so light and dark keep working as before. */
+   defined in `:root` below. The dashboard is light-only — there is no dark
+   theme and no theme toggle, so `:root` is the single source of colour. */
 @theme {
   --color-border: hsl(var(--border));
   --color-border-strong: hsl(var(--border-strong));
@@ -60,7 +56,7 @@
 @layer base {
   :root {
     /* Neutrals carry a cool tint rather than sitting on pure grey: it keeps
-       large light surfaces from glaring and gives the dark theme depth. */
+       large light surfaces from glaring. */
     --background: 220 25% 98%;
     --foreground: 224 32% 12%;
     --surface: 220 24% 96%;
@@ -87,36 +83,6 @@
     --ring: 243 70% 56%;
     --shadow-color: 224 40% 20%;
     --radius: 0.875rem;
-  }
-
-  .dark {
-    --background: 225 26% 7%;
-    --foreground: 220 24% 96%;
-    --surface: 225 22% 10%;
-    /* Cards sit a step above the canvas instead of matching it, which is what
-       made bordered cards vanish in the old dark theme. */
-    --card: 225 20% 11%;
-    --card-foreground: 220 24% 96%;
-    --popover: 225 20% 12%;
-    --popover-foreground: 220 24% 96%;
-    --primary: 243 85% 72%;
-    --primary-foreground: 225 40% 10%;
-    --secondary: 225 16% 17%;
-    --secondary-foreground: 220 20% 90%;
-    --muted: 225 16% 16%;
-    --muted-foreground: 220 12% 66%;
-    --subtle-foreground: 220 10% 54%;
-    --accent: 243 85% 72%;
-    --accent-foreground: 225 40% 10%;
-    --destructive: 0 75% 66%;
-    --destructive-foreground: 225 40% 10%;
-    --success: 158 62% 54%;
-    --warning: 38 92% 62%;
-    --border: 225 15% 19%;
-    --border-strong: 225 14% 26%;
-    --input: 225 15% 22%;
-    --ring: 243 85% 72%;
-    --shadow-color: 225 60% 2%;
   }
 }
 
@@ -167,14 +133,10 @@
 }
 
 @layer components {
-  /* Hairline inner highlight along a card's top edge. On light surfaces it
-     reads as a crisp edge, in dark mode as the lit side of a raised panel. */
+  /* Hairline inner highlight along a card's top edge, read as a crisp lit
+     line where the surface meets the page. */
   .surface-highlight {
     box-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.6);
-  }
-
-  .dark .surface-highlight {
-    box-shadow: inset 0 1px 0 0 hsl(0 0% 100% / 0.045);
   }
 
   /* Small uppercase label above a heading. */

@@ -18,7 +18,6 @@ import {
   Check,
   AlertCircle,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 
 const navigation = [
@@ -212,7 +211,6 @@ export function Nav() {
               </span>
               {paused ? "Paused" : "Active"}
             </button>
-            <ThemeToggle />
           </div>
         </div>
       </header>

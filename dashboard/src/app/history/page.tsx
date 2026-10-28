@@ -135,16 +135,16 @@ export default function HistoryPage() {
           />
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 gap-4 xl:grid-cols-2">
           {entries.map((entry, i) => {
             const voted = votes[entry.url];
             return (
               <Card
                 key={`${entry.date}-${i}`}
                 interactive
-                className="overflow-hidden"
+                className="flex flex-col overflow-hidden"
               >
-                <CardContent className="p-5 sm:p-6">
+                <CardContent className="flex flex-1 flex-col p-5 sm:p-6">
                   {/* Meta row */}
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle-foreground">
@@ -221,7 +221,7 @@ export default function HistoryPage() {
                       href={entry.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-primary transition-colors hover:text-primary/80"
+                      className="mt-auto inline-flex self-start items-center gap-1.5 pt-5 text-xs font-medium text-primary transition-colors hover:text-primary/80"
                     >
                       View source
                       <ExternalLink className="h-3.5 w-3.5" />

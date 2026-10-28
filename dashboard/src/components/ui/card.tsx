@@ -12,7 +12,11 @@ const cardVariants = cva(
         raised: "shadow-e2",
       },
       interactive: {
-        true: "transition-[box-shadow,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-e3",
+        // No transform here on purpose: a hover lift moves the card out from
+        // under the pointer, which un-hovers it, drops it back and re-hovers —
+        // a flicker loop on any card the pointer rests near the edge of.
+        true:
+          "transition-[box-shadow,border-color] duration-200 hover:border-border-strong hover:shadow-e3",
         false: "",
       },
     },

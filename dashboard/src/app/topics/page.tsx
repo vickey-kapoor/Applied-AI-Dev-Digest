@@ -206,7 +206,7 @@ export default function TopicsPage() {
 
       {/* One grid for every topic — grouped by category, but without the
           ragged half-empty rows three separate grids produced. */}
-      <div className="mt-5 grid grid-cols-1 items-start gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mt-5 grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {ORDERED_TOPICS.map((topic) => {
           const enabled = config?.[topic.id] ?? topic.defaultEnabled;
           const isExpanded = expandedTopics.has(topic.id);
@@ -269,12 +269,12 @@ export default function TopicsPage() {
                 >
                   {topic.name}
                 </h3>
-                <p className="mt-1.5 text-[0.8125rem] leading-snug text-muted-foreground">
+                <p className="mt-1.5 min-h-[3.1rem] text-[0.8125rem] leading-snug text-muted-foreground">
                   {topic.description}
                 </p>
               </CardHeader>
 
-              <CardContent className="mt-auto p-4 pt-0">
+              <CardContent className="flex flex-1 flex-col p-4 pt-0">
                 {/* Keywords */}
                 <div className="flex flex-wrap gap-1">
                   {visibleKeywords.map((kw) => (
@@ -311,7 +311,7 @@ export default function TopicsPage() {
                 {/* Expand toggle */}
                 <button
                   onClick={() => toggleExpand(topic.id)}
-                  className="mt-3 flex items-center gap-1.5 text-xs font-medium text-subtle-foreground transition-colors hover:text-foreground"
+                  className="mt-auto flex items-center gap-1.5 pt-3 text-xs font-medium text-subtle-foreground transition-colors hover:text-foreground"
                 >
                   <ChevronDown
                     className={cn(

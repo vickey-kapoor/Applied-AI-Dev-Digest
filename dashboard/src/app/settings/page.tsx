@@ -82,7 +82,7 @@ export default function SettingsPage() {
         icon={SettingsIcon}
         actions={
           <a
-            href="https://github.com/vickey-kapoor/ai-research-digest/actions/workflows/daily-news.yml"
+            href="https://github.com/vickey-kapoor/Applied-AI-Dev-Digest/actions/workflows/daily-news.yml"
             target="_blank"
             rel="noopener noreferrer"
             className={cn(buttonVariants({ variant: "solid", size: "lg" }))}
@@ -93,10 +93,11 @@ export default function SettingsPage() {
         }
       />
 
-      <div className="mt-8 grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {/* No items-start: the cards stretch so each row shares one height. */}
+      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {/* Blog Sources */}
-        <Card interactive>
-          <CardHeader className="flex-row items-center gap-3 space-y-0">
+        <Card interactive className="flex flex-col">
+          <CardHeader className="min-h-[5.5rem] flex-row items-center gap-3 space-y-0">
             <CardIcon icon={Database} />
             <div className="min-w-0">
               <CardTitle>Blog sources</CardTitle>
@@ -105,7 +106,7 @@ export default function SettingsPage() {
               </CardDescription>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-1 flex-col">
             <div className="flex flex-wrap gap-1.5">
               {BLOG_SOURCES.map((lab) => (
                 <Badge key={lab} variant="secondary">
@@ -113,7 +114,7 @@ export default function SettingsPage() {
                 </Badge>
               ))}
             </div>
-            <p className="mt-4 text-xs text-subtle-foreground">
+            <p className="mt-auto pt-4 text-xs text-subtle-foreground">
               Configured in{" "}
               <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-foreground">
                 src/constants.py
@@ -123,15 +124,15 @@ export default function SettingsPage() {
         </Card>
 
         {/* GitHub Repos */}
-        <Card interactive>
-          <CardHeader className="flex-row items-center gap-3 space-y-0">
+        <Card interactive className="flex flex-col">
+          <CardHeader className="min-h-[5.5rem] flex-row items-center gap-3 space-y-0">
             <CardIcon icon={GithubIcon} />
             <div className="min-w-0">
               <CardTitle>GitHub releases</CardTitle>
               <CardDescription>Repos tracked for new releases</CardDescription>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-1 flex-col">
             <div className="flex flex-wrap gap-1.5">
               {GITHUB_REPOS.map((repo) => (
                 <a
@@ -147,15 +148,15 @@ export default function SettingsPage() {
                 </a>
               ))}
             </div>
-            <p className="mt-4 text-xs text-subtle-foreground">
+            <p className="mt-auto pt-4 text-xs text-subtle-foreground">
               Fetched via the GitHub API — pre-releases skipped, 48h window.
             </p>
           </CardContent>
         </Card>
 
         {/* HF Daily Papers */}
-        <Card interactive>
-          <CardHeader className="flex-row items-center gap-3 space-y-0">
+        <Card interactive className="flex flex-col">
+          <CardHeader className="min-h-[5.5rem] flex-row items-center gap-3 space-y-0">
             <CardIcon icon={BookOpen} />
             <div className="min-w-0">
               <CardTitle>HF daily papers</CardTitle>
@@ -164,7 +165,7 @@ export default function SettingsPage() {
               </CardDescription>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-1 flex-col">
             <Row label="Min upvotes" value="20+" />
             <Row label="Max papers" value="5" />
             <Row label="Recency" value="Last 24h" />
@@ -172,15 +173,15 @@ export default function SettingsPage() {
         </Card>
 
         {/* Hacker News */}
-        <Card interactive>
-          <CardHeader className="flex-row items-center gap-3 space-y-0">
+        <Card interactive className="flex flex-col">
+          <CardHeader className="min-h-[5.5rem] flex-row items-center gap-3 space-y-0">
             <CardIcon icon={Newspaper} />
             <div className="min-w-0">
               <CardTitle>Hacker News</CardTitle>
               <CardDescription>Frontier lab discussions from HN</CardDescription>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-1 flex-col">
             <Row label="Min score" value="100+" />
             <Row label="Max stories" value="5" />
             <Row label="Recency" value="Last 24h" />
@@ -188,45 +189,49 @@ export default function SettingsPage() {
         </Card>
 
         {/* Schedule */}
-        <Card interactive>
-          <CardHeader className="flex-row items-center gap-3 space-y-0">
+        <Card interactive className="flex flex-col">
+          <CardHeader className="min-h-[5.5rem] flex-row items-center gap-3 space-y-0">
             <CardIcon icon={Clock} />
             <div className="min-w-0">
               <CardTitle>Schedule</CardTitle>
               <CardDescription>When the digest runs</CardDescription>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-1 flex-col">
             <div className="rounded-lg border border-border bg-surface px-4 py-3">
               <p className="font-mono text-lg font-medium text-foreground">
-                0 16 * * *
+                0 * * * *
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Daily at 10:00 AM CST (16:00 UTC)
+                Polls hourly; sends once a day at 12:00 PM America/Chicago
               </p>
             </div>
             <a
-              href="https://crontab.guru/#0_16_*_*_*"
+              href="https://crontab.guru/#0_*_*_*_*"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+              className="mt-3 inline-flex self-start items-center gap-1.5 text-xs font-medium text-primary hover:underline"
             >
               View on crontab.guru
               <ExternalLink className="h-3 w-3" />
             </a>
+            <p className="mt-auto pt-4 text-xs text-subtle-foreground">
+              The hour is not fixed in UTC: a tick before noon local waits for
+              it, so the digest stays at noon across the CDT/CST switch.
+            </p>
           </CardContent>
         </Card>
 
         {/* Telegram */}
-        <Card interactive>
-          <CardHeader className="flex-row items-center gap-3 space-y-0">
+        <Card interactive className="flex flex-col">
+          <CardHeader className="min-h-[5.5rem] flex-row items-center gap-3 space-y-0">
             <CardIcon icon={Send} />
             <div className="min-w-0">
               <CardTitle>Telegram</CardTitle>
               <CardDescription>Message delivery</CardDescription>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-1 flex-col">
             <div className="flex items-center justify-between gap-4 border-b border-border py-2.5">
               <span className="text-sm text-muted-foreground">Status</span>
               <Badge variant="success">Enabled</Badge>
@@ -241,15 +246,15 @@ export default function SettingsPage() {
         </Card>
 
         {/* GitHub Actions */}
-        <Card interactive className="md:col-span-2 xl:col-span-3">
-          <CardHeader className="flex-row items-center gap-3 space-y-0">
+        <Card interactive className="flex flex-col md:col-span-2 xl:col-span-3">
+          <CardHeader className="min-h-[5.5rem] flex-row items-center gap-3 space-y-0">
             <CardIcon icon={GithubIcon} />
             <div className="min-w-0">
               <CardTitle>GitHub Actions</CardTitle>
               <CardDescription>Workflow automation</CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="grid gap-4 sm:grid-cols-2">
+          <CardContent className="grid flex-1 gap-4 sm:grid-cols-2">
             <div>
               <p className="eyebrow">Workflow</p>
               <code className="mt-2 block font-mono text-sm text-foreground">
@@ -259,12 +264,12 @@ export default function SettingsPage() {
             <div>
               <p className="eyebrow">Repository</p>
               <a
-                href="https://github.com/vickey-kapoor/ai-research-digest"
+                href="https://github.com/vickey-kapoor/Applied-AI-Dev-Digest"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 inline-flex items-center gap-1.5 font-mono text-sm text-primary hover:underline"
               >
-                vickey-kapoor/ai-research-digest
+                vickey-kapoor/Applied-AI-Dev-Digest
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </div>

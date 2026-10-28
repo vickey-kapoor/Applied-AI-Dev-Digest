@@ -1,6 +1,202 @@
 {
   "papers": [
     {
+      "id": "aeeceabe-f2f9-51e1-8263-1a0a17190fb3",
+      "title": "Gemini 4 Carbon: Our next frontier model",
+      "summary": "",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/",
+      "published_at": "2026-10-28T17:00:58+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "aad53ccb-40d8-5f33-a0e9-0eb81c5e4bd6",
+      "title": "Meta Andromeda: Powering the Next Generation of Ads Retrieval Through Model-System Co-Design",
+      "summary": "This post describes the next generation of Meta Andromeda, Meta’s personalized ads retrieval engine, and how co-designing the model, system, and GPU hardware unlocks a new efficiency frontier for ads retrieval. In production, the system scores every eligible ad with near ranking-level model performance at retrieval scale and surfaces the top candidates at over one [...] Read More... The post Meta Andromeda: Powering the Next Generation of Ads Retrieval Through Model-System Co-Design appeared ...",
+      "source": "Meta AI",
+      "url": "https://engineering.fb.com/2026/10/28/ml-applications/meta-andromeda-next-gen-ads-retrieval-gpu-co-design/",
+      "published_at": "2026-10-28T16:00:01+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "6bc78c57-aac8-57cf-91bf-d49b440eecde",
+      "title": "Thin, Light and Built for Everything: NVIDIA RTX Spark Windows Laptops Gain New Models, Agent Tools and Games",
+      "summary": "NVIDIA RTX Spark powers thin and light laptops built for everything that developers, creators and gamers do. RTX Spark laptops are now available from ASUS, Dell, HP, Lenovo, Microsoft and MSI. These powerful systems combine an NVIDIA Blackwell RTX GPU and an NVIDIA Grace CPU in a single superchip with up to 128GB of unified […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-laptops-updates-models-agents-games/",
+      "published_at": "2026-10-28T15:00:46+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "announcement",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases",
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "3877e80f-6cc1-5036-ac89-2c6a960a0e2d",
+      "title": "NVIDIA Nemotron 3.5 Transcribe and Granary v2: Intelligent Multilingual Transcription You Can Prompt and Adapt",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary",
+      "published_at": "2026-10-28T14:58:17+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b1d0a5f6-98cc-5367-8732-ada02202c0b9",
+      "title": "llama.cpp v0.8.0 released",
+      "summary": "## Overview\r\n\r\nThis release adds the LiquidAI LFM3 family (text, vision, audio and omni) together with a new experimental streaming-audio API in `mtmd`, and wires realtime audio in and out of the server through the new `/v1/realtime` and `/tts` endpoints. A batch of new architectures landed: DeepSeek V4.1 Flash, SenseNova U1, Beam, Kolibri-1, Flint, Muse Spark, Granite Switch Decision, plus decision/embedding models from LiquidAI, Baidu and NVIDIA. The core got sparse-attention (QSA/DSA) reworke",
+      "source": "GitHub",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/v0.8.0",
+      "published_at": "2026-10-28T12:47:51Z",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "release",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "15d57bd6-00ed-522a-b354-a6b65f4b3dec",
+      "title": "Legora is building the agentic operating system for legal work",
+      "summary": "See how Legora uses OpenAI models, ChatGPT, and Codex to accelerate legal workflows, expand contract analysis, and free lawyers to focus on higher-value work.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/legora-agentic-operating-system-for-legal-work",
+      "published_at": "2026-10-28T09:30:00+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "announcement",
+      "topic_id": "agents_tooling",
+      "topics": [
+        "Agents & Tooling"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "93a1611e-3d85-5658-9033-45930135fa81",
+      "title": "ChronoReplay: One Answer Interface Is Not Enough for Streaming Spatial Intelligence",
+      "summary": "Training a spatial VLM to answer which side an object lies on does not require it to preserve the metric displacement that determines that answer, while supervision for a distance estimate may leave categorical relations largely unconstrained. When post-training emphasizes one readout, improvements can therefore concentrate on that interface while transfer to others remains weak or even degrades; we call this observed specialization interface lock-in. ChronoReplay addresses it by replaying heter",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.34283",
+      "published_at": "2026-10-28T00:00:00+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "paper",
+      "topic_id": "lab_research",
+      "topics": [
+        "Lab Research"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "8e43dcba-0542-5b37-91dd-0a4512ded647",
+      "title": "VibeVideoBench: Evaluating Multimodal Agents on Code-Driven Video Generation",
+      "summary": "Diffusion video models produce striking clips, but they cannot reliably render an exact formula, a correct chart, a rule-consistent game or narration synchronized to on-screen events. A different route is emerging: multimodal agents that write code to render every frame and synthesize every sound. We introduce VibeVideoBench, a benchmark for evaluating agents on code-driven video generation. Its 239 self-contained tasks in English and Chinese span 12 categories, from data stories and music-drive",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.35864",
+      "published_at": "2026-10-28T00:00:00+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "paper",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "151da128-68f7-5357-87d2-ef292a3972cc",
+      "title": "Early progress on accelerating drug development with Claude",
+      "summary": "294 points · 283 comments",
+      "source": "Hacker News",
+      "url": "https://www.anthropic.com/research/early-progress-drug-development",
+      "published_at": "2026-10-27T20:50:42+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "b1a9329f-c95b-51ff-af25-ea0deb46a3ee",
+      "title": "The sleep framework: A new way for LLMs to retain knowledge in continual learning",
+      "summary": "Education Innovation",
+      "source": "Google Research",
+      "url": "https://research.google/blog/the-sleep-framework-a-new-way-for-llms-to-retain-knowledge-in-continual-learning/",
+      "published_at": "2026-10-27T17:35:00+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "216f4990-60d5-56fb-8616-cb72e0120029",
+      "title": "Build specialized multimodal models with LFM3",
+      "summary": "Liquid AI announced the LFM3 family of specialized multimodal models, built from the LFM3-1.7B-Base backbone. The family covers text, vision, audio, omni, and decision use cases; the text model has a 256K-token context window, and LFM3-VL-2B accepts video. Liquid AI reports LFM3-1.7B scores 38.42 versus 3.02 for LFM2.5-2.6B on WebArena-Verified, while LFM3-VL-2B averages 71.4 across 62 vision benchmarks versus 57.6 for LFM2.5-VL-3B; the audio encoder’s time to first token is reported as low as 50 ms.",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/LiquidAI/lfm3",
+      "published_at": "2026-10-27T17:16:52+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [
+        "Product & API",
+        "Benchmarks & Evals",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Liquid AI announced the LFM3 family of specialized multimodal models, built from the LFM3-1.7B-Base backbone.",
+      "capabilities": "The family covers text, vision, audio, omni, and decision use cases; the text model has a 256K-token context window, and LFM3-VL-2B accepts video. Liquid AI reports LFM3-1.7B scores 38.42 versus 3.02 for LFM2.5-2.6B on WebArena-Verified, while LFM3-VL-2B averages 71.4 across 62 vision benchmarks versus 57.6 for LFM2.5-VL-3B; the audio encoder’s time to first token is reported as low as 50 ms.",
+      "availability": "The article provides Hugging Face model IDs and Transformers loading instructions; the vision model requires transformers>=5.21.0. API access, pricing, regions, and model licenses are not stated.",
+      "why_it_matters": "Builders can evaluate separate modality-specific models rather than serving one general-purpose model, with the text model intended for local agents and the vision model supporting video input. The article says each model can be fine-tuned on a single GPU and describes edge deployment, but gives no comparative deployment cost figures.",
+      "caveats": "The performance figures are claims in the announcement; benchmark setup and independent validation are not provided in the supplied text. The article excerpt ends during the audio model section, and does not provide full details for all six models.",
+      "release_type": "model"
+    },
+    {
+      "id": "eed0f87c-41b0-5ac2-9a25-0488f3ff9b9e",
+      "title": "Auto repair for Together GPU Clusters: from GPU fault to healthy node",
+      "summary": "Together GPU Clusters auto repair detects GPU, host and fabric faults, picks the lightest fix, and lets you decide per fault and per Xid code which repairs run automatically. Here is how it works.",
+      "source": "Together AI",
+      "url": "https://www.together.ai/blog/auto-repair-for-together-gpu-clusters",
+      "published_at": "2026-10-27T00:00:00+00:00",
+      "fetched_at": "2026-10-28T17:02:21.676139Z",
+      "type": "announcement",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
       "id": "1468d908-78dc-52b6-bda0-a28586fe4f19",
       "title": "Can we trust LLMs to judge whether a research idea is novel?",
       "summary": "",
@@ -7935,173 +8131,6 @@
       "fetched_at": "2026-04-11T16:46:12.788126Z",
       "type": "discussion",
       "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "1ff24761-469b-58b5-8dba-c0e5e239ed5d",
-      "title": "Sam Altman's response to Molotov cocktail incident",
-      "summary": "326 points · 762 comments",
-      "source": "Hacker News",
-      "url": "https://blog.samaltman.com/2279512",
-      "published_at": "2026-04-10T23:05:48+00:00",
-      "fetched_at": "2026-04-11T16:46:12.788126Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "d98530e4-9741-535d-912a-9f0fab232f16",
-      "title": "anthropic-sdk-python v0.94.0 released",
-      "summary": "## 0.94.0 (2026-04-10)\n\nFull Changelog: [v0.93.0...v0.94.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.93.0...v0.94.0)\n\n### Features\n\n* vertex eu region ([#1658](https://github.com/anthropics/anthropic-sdk-python/issues/1658)) ([b7e157d](https://github.com/anthropics/anthropic-sdk-python/commit/b7e157d85f50b2900ddf896e8e80882dd7311bfd))\n\n\n### Bug Fixes\n\n* ensure file data are only sent as 1 parameter ([837b25b](https://github.com/anthropics/anthropic-sdk-python/commit/837b25bb",
-      "source": "GitHub",
-      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.94.0",
-      "published_at": "2026-04-10T22:27:28Z",
-      "fetched_at": "2026-04-11T16:46:12.788126Z",
-      "type": "release",
-      "topics": [
-        "SDK/Library"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "7feea0e1-5c42-5ee8-b6f0-4d8f99fbfec6",
-      "title": "Molotov cocktail is hurled at home of Sam Altman",
-      "summary": "239 points · 571 comments",
-      "source": "Hacker News",
-      "url": "https://www.nytimes.com/2026/04/10/us/open-ai-sam-altman-molotov-cocktail.html",
-      "published_at": "2026-04-10T18:48:24+00:00",
-      "fetched_at": "2026-04-11T16:46:12.788126Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "b7f91f02-7128-5107-b226-085063cc6869",
-      "title": "AI assistance when contributing to the Linux kernel",
-      "summary": "429 points · 312 comments",
-      "source": "Hacker News",
-      "url": "https://github.com/torvalds/linux/blob/master/Documentation/process/coding-assistants.rst",
-      "published_at": "2026-04-10T18:35:21+00:00",
-      "fetched_at": "2026-04-11T16:46:12.788126Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "3c1a2e11-7ffb-5fa9-a35e-c9d87dd4cda2",
-      "title": "Using custom GPTs",
-      "summary": "Learn how to build and use custom GPTs to automate workflows, maintain consistent outputs, and create purpose-built AI assistants.",
-      "source": "OpenAI",
-      "url": "https://openai.com/academy/custom-gpts",
-      "published_at": "2026-04-10T00:00:00",
-      "fetched_at": "2026-04-11T16:46:12.788126Z",
-      "type": "announcement",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "61426360-4d31-58e2-bf50-6b7f6177d1dd",
-      "title": "ChatGPT for customer success teams",
-      "summary": "Learn how customer success teams use ChatGPT to manage accounts, improve communication, reduce churn, and drive adoption and renewals.",
-      "source": "OpenAI",
-      "url": "https://openai.com/academy/customer-success",
-      "published_at": "2026-04-10T00:00:00",
-      "fetched_at": "2026-04-11T16:46:12.788126Z",
-      "type": "announcement",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "78919eba-5267-51fe-aa87-e77a6008b1de",
-      "title": "langchain langchain-core==1.3.0a1 released",
-      "summary": "Initial release\n\nrelease(core): 1.3.0a1 (#36656)\nchore(core): reduce streaming metadata / perf (#36588)\nrelease(core): release 1.2.28 (#36614)\nfix(core): add more sanitization to templates (#36612)\nrelease(core): 1.2.27 (#36586)\nfix(core): handle symlinks in deprecated prompt save path (#36585)\nchore: add comment explaining `pygments>=2.20.0` (#36570)\nrelease(core): 1.2.26 (#36511)\nfix(core): add init validator and serialization mappings for Bedrock models (#34510)\nfeat(core): add `ChatBaseten` ",
-      "source": "GitHub",
-      "url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D1.3.0a1",
-      "published_at": "2026-04-10T16:01:46Z",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "release",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "91304ad9-417c-51e9-afdf-fccd5fbf6cfa",
-      "title": "OpenAI backs Illinois bill that would limit when AI labs can be held liable",
-      "summary": "380 points · 273 comments",
-      "source": "Hacker News",
-      "url": "https://www.wired.com/story/openai-backs-bill-exempt-ai-firms-model-harm-lawsuits/",
-      "published_at": "2026-04-10T13:08:43+00:00",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "cd796dd0-d52f-5dc8-bfda-c89ca35dd2d4",
-      "title": "We've raised $17M to build what comes after Git",
-      "summary": "260 points · 564 comments",
-      "source": "Hacker News",
-      "url": "https://blog.gitbutler.com/series-a",
-      "published_at": "2026-04-10T01:52:58+00:00",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "7b779217-0528-53c7-9916-ff0667253d7c",
-      "title": "Microsoft is employing dark patterns to goad users into paying for storage?",
-      "summary": "372 points · 225 comments",
-      "source": "Hacker News",
-      "url": "https://lzon.ca/posts/other/microsoft-user-abuse/",
-      "published_at": "2026-04-09T21:09:12+00:00",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "52cd96b5-33dc-53f0-a2c1-5b113e296d83",
-      "title": "Netflix Prices Went Up Again – I Bought a DVD Player Instead",
-      "summary": "238 points · 262 comments",
-      "source": "Hacker News",
-      "url": "https://aywren.com/2026/04/09/netflix-prices-went-up-again-i-bought-a-dvd-player-instead/",
-      "published_at": "2026-04-09T20:17:50+00:00",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "06418b13-6c7a-5f9f-aa51-688520849a41",
-      "title": "anthropic-sdk-python v0.93.0 released",
-      "summary": "## 0.93.0 (2026-04-09)\n\nFull Changelog: [v0.92.0...v0.93.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.92.0...v0.93.0)\n\n### Features\n\n* **api:** Add beta advisor tool ([4297dca](https://github.com/anthropics/anthropic-sdk-python/commit/4297dca285441b185ea9e3d18b7f912102b54be2))",
-      "source": "GitHub",
-      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.93.0",
-      "published_at": "2026-04-09T18:13:18Z",
-      "fetched_at": "2026-04-10T16:57:16.225568Z",
-      "type": "release",
-      "topics": [
-        "API Update",
-        "SDK/Library"
-      ],
       "ranking_score": 0,
       "status": "unread"
     }

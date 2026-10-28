@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-28",
+      "run_at": "2026-10-28T17:02:23.381178Z",
+      "top_paper_id": "216f4990-60d5-56fb-8616-cb72e0120029",
+      "papers_fetched": 18,
+      "pdf_path": "reports/28-Oct/Build_specialized_multimodal_models_with_LFM3.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "40731610932"
+    },
+    {
       "date": "2026-10-27",
       "run_at": "2026-10-27T17:01:21.325645Z",
       "top_paper_id": "7fd411cb-a1fd-57d8-b183-5f9b97d77d95",
@@ -771,14 +780,6 @@
       "pdf_path": "reports/29-Jul/Value_Generalisation_3_Pre-aligned_AIs.pdf",
       "telegram_sent": true,
       "workflow_run_id": "30474831198"
-    },
-    {
-      "date": "2026-07-28",
-      "top_paper_id": "6dbc7c5c-9e00-552d-a3b7-1dcffd5eaea1",
-      "papers_fetched": 1,
-      "pdf_path": "reports/28-Jul/Benchmarking_Opus_5_on_SlopCodeBench.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "30383857476"
     }
   ]
 }

@@ -86,6 +86,9 @@ TOPIC_LABELS = {
     "open_weights": "#OpenWeights",
     "infrastructure": "#Infrastructure",
     "multimodal": "#Multimodal",
+    # The two retired topics keep their tags: a digest sent before the
+    # 28-Oct-2026 audit can still be re-rendered from history, and a stored
+    # topic_id should not come back as a blank hashtag.
     "enterprise_deployment": "#Enterprise",
     "policy_regulation": "#Policy",
 }

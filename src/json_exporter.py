@@ -11,7 +11,7 @@ from typing import Any
 from src.constants import PAPERS_CAP, DIGEST_CAP_DAYS
 from src.logger import get_logger
 from src.news_summarizer import SUMMARY_FIELDS
-from src.topic_config import DEFAULT_TOPICS
+from src.topic_config import DEFAULT_TOPICS, score_topics
 
 logger = get_logger(__name__)
 
@@ -213,22 +213,30 @@ def extract_topics(item: dict) -> list[str]:
     """Tag an item with display names of the topics its text matches.
 
     Reads DEFAULT_TOPICS so the tags can never drift from the configured
-    taxonomy. An item already tagged with a topic_id by the fetcher gets
-    that topic listed first.
+    taxonomy, and orders by how well each topic fits rather than by position
+    in that list — so a post carrying one model name and three agent terms
+    reads as agents first. An item already tagged with a topic_id by the
+    fetcher keeps that topic in front.
     """
-    text = f"{item.get('title', '')} {item.get('summary', '')}".lower()
+    text = f"{item.get('title', '')} {item.get('summary', '')}"
     assigned_id = item.get("topic_id") or ""
 
     topics: list[str] = []
-    for topic in DEFAULT_TOPICS:
+    for topic in score_topics(text):
         name = topic["name"]
-        if topic["id"] == assigned_id:
-            if name not in topics:
-                topics.insert(0, name)
+        if name in topics:
             continue
-        if any(kw.lower() in text for kw in topic["keywords"]):
-            if name not in topics:
-                topics.append(name)
+        if topic["id"] == assigned_id:
+            topics.insert(0, name)
+        else:
+            topics.append(name)
+
+    # A topic_id assigned by an earlier run whose keywords have since changed
+    # still names the item's topic, so keep it rather than dropping it.
+    if assigned_id and not any(t["id"] == assigned_id for t in score_topics(text)):
+        for topic in DEFAULT_TOPICS:
+            if topic["id"] == assigned_id and topic["name"] not in topics:
+                topics.insert(0, topic["name"])
 
     return topics[:5]
 

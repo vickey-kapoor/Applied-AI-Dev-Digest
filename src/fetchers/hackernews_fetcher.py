@@ -7,7 +7,6 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 
 from src.constants import (
-    HN_KEYWORDS,
     HN_MAX_STORIES,
     HN_MIN_SCORE,
     REQUEST_TIMEOUT,
@@ -45,9 +44,14 @@ def _fetch_story(story_id: int) -> dict | None:
 
 
 def _matches_keywords(title: str, keywords: list[str] | None = None) -> bool:
-    """Check if title matches any keyword (case-insensitive)."""
-    kw_list = keywords if keywords is not None else HN_KEYWORDS
-    for kw in kw_list:
+    """Check if title matches any keyword (case-insensitive).
+
+    No keywords means nothing matches. There used to be a built-in default
+    list here, which fetch_all never used and which had quietly diverged from
+    the topic config it shadowed. An empty list now reads as what it is: every
+    topic is switched off, so no Hacker News story is on topic.
+    """
+    for kw in keywords or ():
         if re.search(re.escape(kw), title, re.IGNORECASE):
             return True
     return False
@@ -56,9 +60,14 @@ def _matches_keywords(title: str, keywords: list[str] | None = None) -> bool:
 def fetch_hackernews_stories(filter_keywords: list[str] | None = None) -> list[dict]:
     """Fetch top HN stories matching AI lab development keywords.
 
-    Filters: score > HN_MIN_SCORE, published within last 24 hours.
+    Filters: score > HN_MIN_SCORE, published within last 24 hours, and a
+    keyword match on the title — fetch_all supplies the live topic keywords.
     Returns top HN_MAX_STORIES matching stories.
     """
+    if not filter_keywords:
+        logger.info("No active topic keywords — skipping Hacker News")
+        return []
+
     try:
         story_ids = _fetch_json(f"{HN_API_BASE}/topstories.json")
     except Exception:

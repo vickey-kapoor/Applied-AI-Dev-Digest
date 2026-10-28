@@ -17,14 +17,17 @@ report and appends to `data/papers.json` and `data/digests.json`.
 | Blog feeds (RSS) | OpenAI, Google DeepMind, Google AI, Google Research, Meta AI, Mistral, Qwen, Hugging Face, NVIDIA, Together AI |
 | Scraped pages | Anthropic news + engineering, OpenAI platform changelog (neither has a usable feed) |
 | GitHub releases | openai-python, anthropic-sdk-python, python-genai, transformers, vllm, llama.cpp, mcp/servers |
-| Hacker News | Top stories, frontier-lab keywords, score > 100, last 24h |
+| Hacker News | Top stories, frontier-lab keywords, score > 100, last 24h, 1 slot |
 | Hugging Face | Daily Papers, 20+ upvotes, last 24h |
 
 Lab feeds are not keyword-filtered (publication venue is the signal); the open
-sources — HN and HF papers — are. 11 topics across Core / Applied / Emerging are
-defined in `src/topic_config.py` and mirrored in `dashboard/src/lib/topics.ts`;
-keep the two in sync when editing. The six Core topics and both Applied ones are
-on by default.
+sources — HN and HF papers — are, and the corporate-news blocklist applies to
+them too. 9 topics across Core / Applied are defined in `src/topic_config.py`
+and mirrored in `dashboard/src/lib/topics.ts`; keep the two in sync when
+editing. All of them are on by default, because a topic that is off also drops
+its keywords from the filter. An item is tagged with the topic it fits best,
+scored over matched keywords, rather than the first one listed; bare model-family
+names ("Claude", "GPT-") are `weak_keywords`, which filter but barely tag.
 
 ## Dashboard
 

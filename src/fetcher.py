@@ -6,12 +6,14 @@ from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
 
 from src.constants import (
+    AGGREGATOR_MAX_ITEMS,
     ANTHROPIC_ENGINEERING_SOURCE,
     ANTHROPIC_RELEASE_NOTES_SOURCE,
     ANTHROPIC_SOURCE,
     BLOG_FEEDS,
     DEDUP_SIMILARITY_THRESHOLD,
     DIGEST_MAX_AGE_HOURS,
+    EXCLUDE_KEYWORDS,
     MAX_ITEMS_PER_SOURCE,
     OPENAI_CHANGELOG_SOURCE,
     THREAD_POOL_WORKERS,
@@ -24,7 +26,7 @@ from src.fetchers.hackernews_fetcher import fetch_hackernews_stories
 from src.fetchers.huggingface_fetcher import fetch_huggingface_papers
 from src.fetchers.openai_changelog_fetcher import fetch_openai_changelog
 from src.logger import get_logger
-from src.topic_config import get_active_topics
+from src.topic_config import best_topic_id, get_active_topics
 
 logger = get_logger(__name__)
 
@@ -91,6 +93,12 @@ def _cap_per_source(items: list[dict], max_per_source: int) -> list[dict]:
     Items must already be sorted newest-first: each source keeps its most
     recent entries. Without this a high-volume vendor blog crowds out the
     frontier labs — one held 4 of 10 slots on 28-Aug and won the daily pick.
+
+    An aggregator gets a tighter cap of its own. Hacker News won 23 of the 56
+    top picks between 29-Aug and 27-Oct-2026, more than any lab source, on a
+    digest whose subject is what the labs ship. Two HN slots a day is how it
+    got there. One keeps the fastest route to a Qwen or DeepSeek release open
+    while leaving the rest of the field to the labs themselves.
     """
     if max_per_source <= 0:
         return items
@@ -100,8 +108,11 @@ def _cap_per_source(items: list[dict], max_per_source: int) -> list[dict]:
 
     for item in items:
         source = item.get("source", "")
+        limit = max_per_source
+        if source in AGGREGATOR_SOURCES and 0 < AGGREGATOR_MAX_ITEMS < limit:
+            limit = AGGREGATOR_MAX_ITEMS
         seen = counts.get(source, 0)
-        if seen >= max_per_source:
+        if seen >= limit:
             dropped += 1
             continue
         counts[source] = seen + 1
@@ -321,23 +332,34 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
         kw_lower = [k.lower() for k in filter_keywords]
         filtered = []
         dropped = 0
+        excluded = 0
         for item in unique:
             text = (item.get("title", "") + " " + item.get("summary", "")).lower()
             if item.get("source", "") not in CURATED_SOURCES:
                 if not any(kw in text for kw in kw_lower):
                     dropped += 1
                     continue
-            # Tag with the first topic whose keywords match
+                # The corporate-news blocklist, which blog_fetcher has always
+                # applied to the lab feeds, applied here too. The open sources
+                # are the ones that actually carry this material: a lab's own
+                # blog does not run the lawsuit, and Hacker News voted
+                # "Anthropic trained Claude on illegally obtained Stanford
+                # professors' books" onto the front page, where the keyword
+                # "Claude" was enough to admit it.
+                if any(kw in text for kw in EXCLUDE_KEYWORDS):
+                    excluded += 1
+                    continue
+            # Tag with the topic the text fits best, not the first one listed
             if not item.get("topic_id"):
-                for topic in topics:
-                    if any(kw.lower() in text for kw in topic["keywords"]):
-                        item = {**item, "topic_id": topic["id"]}
-                        break
+                topic_id = best_topic_id(text, topics)
+                if topic_id:
+                    item = {**item, "topic_id": topic_id}
             filtered.append(item)
         unique = filtered
         logger.info(
-            "After keyword filter: %d items (%d off-topic items dropped from open sources)",
-            len(unique), dropped,
+            "After keyword filter: %d items (%d off-topic, %d excluded as "
+            "corporate news, both from open sources)",
+            len(unique), dropped, excluded,
         )
 
     # Sort by published date (most recent first)

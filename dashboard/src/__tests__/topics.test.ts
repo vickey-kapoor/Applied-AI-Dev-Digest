@@ -4,6 +4,7 @@ import {
   CATEGORY_BADGE_COLORS,
   CATEGORY_BAR_COLORS,
   CATEGORY_TAG_COLORS,
+  RETIRED_TOPIC_IDS,
   TOPICS,
   getActiveKeywords,
   getCategoryLabel,
@@ -18,8 +19,17 @@ import {
  * tests pin the invariants that make the mirror checkable.
  */
 describe("TOPICS", () => {
-  it("defines eleven topics", () => {
-    expect(TOPICS).toHaveLength(11);
+  it("defines nine topics", () => {
+    // Eleven until the 28-Oct-2026 audit retired enterprise_deployment and
+    // policy_regulation, neither of which had ever produced a digest.
+    expect(TOPICS).toHaveLength(9);
+  });
+
+  it("lists the retired topic ids without defining them", () => {
+    const ids = TOPICS.map((t) => t.id);
+    for (const retired of RETIRED_TOPIC_IDS) {
+      expect(ids).not.toContain(retired);
+    }
   });
 
   it("has unique ids", () => {
@@ -27,30 +37,14 @@ describe("TOPICS", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("enables the six core topics plus both applied ones by default", () => {
-    // open_weights and infrastructure are "applied" and used to default off,
-    // which left the digest blind to what the reader can actually run and to
-    // the serving and inference economics they build against. Mirrors
-    // DEFAULT_TOPICS in src/topic_config.py.
+  it("enables every topic by default", () => {
+    // A disabled topic is inert, not merely untagged: it contributes no
+    // keywords to the filter, so while multimodal was off a video or speech
+    // model launch was dropped outright from the open sources. The audit
+    // turned it on and retired the two that earned nothing, which leaves
+    // nothing off. Mirrors DEFAULT_TOPICS in src/topic_config.py.
     const enabled = TOPICS.filter((t) => t.defaultEnabled).map((t) => t.id);
-    expect(enabled.sort()).toEqual(
-      [
-        "agents_tooling",
-        "benchmarks",
-        "infrastructure",
-        "lab_research",
-        "model_releases",
-        "open_weights",
-        "product_api",
-        "safety_system_cards",
-      ].sort(),
-    );
-  });
-
-  it("enables only core and applied topics by default, never emerging", () => {
-    for (const topic of TOPICS.filter((t) => t.defaultEnabled)) {
-      expect(["core", "applied"]).toContain(topic.category);
-    }
+    expect(enabled.sort()).toEqual(TOPICS.map((t) => t.id).sort());
   });
 
   it("gives every topic a name, description and at least one keyword", () => {
@@ -63,8 +57,25 @@ describe("TOPICS", () => {
 
   it("has no duplicate keywords within a topic", () => {
     for (const topic of TOPICS) {
-      const lowered = topic.keywords.map((k) => k.toLowerCase());
+      const lowered = [...topic.keywords, ...(topic.weakKeywords ?? [])].map(
+        (k) => k.toLowerCase(),
+      );
       expect(new Set(lowered).size).toBe(lowered.length);
+    }
+  });
+
+  it("never lists the same keyword under two topics", () => {
+    // "Gemma" was in both model_releases and open_weights, and first-match
+    // tagging meant open_weights never once received it.
+    const seen = new Map<string, string>();
+    for (const topic of TOPICS) {
+      for (const kw of [...topic.keywords, ...(topic.weakKeywords ?? [])]) {
+        const key = kw.toLowerCase();
+        expect(seen.get(key), `${kw} is also under ${seen.get(key)}`).toBe(
+          undefined,
+        );
+        seen.set(key, topic.id);
+      }
     }
   });
 
@@ -100,12 +111,25 @@ describe("getActiveKeywords", () => {
 
   it("returns only the enabled topic's keywords", () => {
     const config = Object.fromEntries(
-      TOPICS.map((t) => [t.id, t.id === "model_releases"]),
+      TOPICS.map((t) => [t.id, t.id === "lab_research"]),
     );
     const keywords = getActiveKeywords(config);
-    const expected = TOPICS.find((t) => t.id === "model_releases")!.keywords;
+    const expected = TOPICS.find((t) => t.id === "lab_research")!.keywords;
 
     expect(keywords.sort()).toEqual([...expected].sort());
+  });
+
+  it("includes weak keywords, which filter even though they barely tag", () => {
+    const config = Object.fromEntries(
+      TOPICS.map((t) => [t.id, t.id === "model_releases"]),
+    );
+    const topic = TOPICS.find((t) => t.id === "model_releases")!;
+    const keywords = getActiveKeywords(config);
+
+    expect(topic.weakKeywords).toContain("Claude");
+    expect(keywords.sort()).toEqual(
+      [...topic.keywords, ...topic.weakKeywords!].sort(),
+    );
   });
 
   it("deduplicates keywords shared between enabled topics", () => {

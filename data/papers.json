@@ -1,6 +1,185 @@
 {
   "papers": [
     {
+      "id": "018db131-c0c7-5f97-ad9e-94413cf04734",
+      "title": "Catching Bugs Before They Land: JiTTesting’s Human-on-the-Loop Approach at Full Scale",
+      "summary": "Over the last year we’ve been sharing our work leveraging large language models to catch bugs on the fly — a novel approach we call Catching Just-in-Time Tests (JiTTests). Now, we’re sharing the results and positive impact we’ve seen with Catching JiTTests deployed into production. Our paper, “Just-in-Time Catching Test Generation at Meta,” fully details [...] Read More... The post Catching Bugs Before They Land: JiTTesting’s Human-on-the-Loop Approach at Full Scale appeared first on Engineer...",
+      "source": "Meta AI",
+      "url": "https://engineering.fb.com/2026/10/29/security/catching-bugs-before-they-land-jittestings-human-on-the-loop-approach-at-full-scale/",
+      "published_at": "2026-10-29T16:00:12+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "c07087bd-6652-517e-b38e-ea75fd9fb55a",
+      "title": "transformers v5.22.0 released",
+      "summary": "## New Models\r\n\r\n### Mistral Large 4 (Le Chonk)\r\n\r\n<img width=\"1329\" height=\"780\" alt=\"image\" src=\"https://github.com/user-attachments/assets/1cff9ca7-19e3-4622-8db6-fb1cfa842579\" />\r\n\r\nMistral Large 4 is Mistral's largest and most capable model to date: a 1 trillion-parameter natively multimodal Mixture-of-Experts model with 49 billion active parameters per token (52 billion including embeddings and output layers), trained from scratch on 3,800 NVIDIA Grace Blackwell GPUs in Mistral's own datac",
+      "source": "GitHub",
+      "url": "https://github.com/huggingface/transformers/releases/tag/v5.22.0",
+      "published_at": "2026-10-29T14:15:39Z",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "release",
+      "topic_id": "infrastructure",
+      "topics": [
+        "Compute & Infrastructure",
+        "Model Releases",
+        "Lab Research",
+        "Multimodal & Generative Media"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f6a34081-1f1f-516a-b0d9-ef4126854777",
+      "title": "Granite Switch 4.1.1 — Update models like you update software",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/ibm-granite/granite-switch-4-1-1",
+      "published_at": "2026-10-29T13:37:07+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "567b0d5b-60e5-51de-bc10-56ef3a68f5ad",
+      "title": "Slice Into GFN Thursday: ‘Phantom Blade Zero’ Launches on GeForce NOW",
+      "summary": "This Halloween week, GFN Thursday is delivering a fresh batch of gaming treats. Something wicked this blade comes. S-GAME’s Phantom Blade Zero launches on GeForce NOW today, bringing a scarily good blend of martial arts and punk fantasy to the cloud. There’s also something on the horizon for adventurers: World of Warcraft: Forever arrives Wednesday, […]",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-phantom-blade-zero/",
+      "published_at": "2026-10-29T13:00:16+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "22518bf7-76b3-52dd-9413-a78e60bac107",
+      "title": "Gemini 4 Carbon is the new #1 on the Artificial Analysis Intelligence Index v5",
+      "summary": "294 points · 223 comments",
+      "source": "Hacker News",
+      "url": "https://artificialanalysis.ai/articles/gemini-4-carbon-new-number-1",
+      "published_at": "2026-10-29T12:41:56+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "f8e47482-c349-5f16-aab0-af2231850146",
+      "title": "Le Chonk: Built for Coders, Trusted by Defenders.",
+      "summary": "The weights of Mistral Large 4 (Le Chonk) are now open. A 1T parameter multimodal model, and best open-weight model for coding, trained in Europe.",
+      "source": "Mistral AI",
+      "url": "https://mistral.ai/news/mistral-large-4-oss/",
+      "published_at": "2026-10-29T12:00:07+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "announcement",
+      "topic_id": "open_weights",
+      "topics": [
+        "Open Weights",
+        "Multimodal & Generative Media",
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "411dee98-7d2d-524c-8055-321f41c200da",
+      "title": "How we detect frontier model misalignment",
+      "summary": "OpenAI uses layered monitoring to detect frontier model misalignment and unauthorized agent behavior so responders can intervene before incidents escalate.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
+      "published_at": "2026-10-29T09:00:00+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "announcement",
+      "topic_id": "safety_system_cards",
+      "topics": [
+        "Safety & System Cards",
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "d5587211-d47b-53c5-94ad-329013a7e46e",
+      "title": "Announcing Project ProtoStar: Making Publicly Funded Science AI-Ready",
+      "summary": "",
+      "source": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/announcing-project-protostar",
+      "published_at": "2026-10-29T00:00:00+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "507cd12d-8cdd-592e-8197-cc4e26a8baa7",
+      "title": "Efficient Streaming Audio-Visual Target Speaker Extraction for Real-World Acoustic Scenes",
+      "summary": "Streaming audio-visual target speaker extraction (AVTSE) is essential for latency-sensitive applications. However, current causal systems face two coupled gaps. First, standard benchmarks fix the number of speakers at two and ignore the near-/far-field interference, reverberation, and sudden noise of real scenes. Second, high-performance causal architectures are too heavy for edge deployment. Lightweight alternatives try to reclaim capacity by repeatedly invoking a small separator, which offsets",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.32749",
+      "published_at": "2026-10-29T00:00:00+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "paper",
+      "topic_id": "benchmarks",
+      "topics": [
+        "Benchmarks & Evals"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "bd2904bb-9466-5e6b-b28e-1effa04b3460",
+      "title": "OpenAI and ServiceNow expand partnership across enterprise workflows",
+      "summary": "OpenAI and ServiceNow expand their partnership to bring OpenAI models and agents into ServiceNow and ServiceNow workflows into ChatGPT and Codex.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/openai-servicenow-partnership-expansion",
+      "published_at": "2026-10-28T13:15:00+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "765b0363-7310-529d-bd7a-286a03f61a6d",
+      "title": "Eligible ChatGPT Pro and Business subscribers can now claim up to $500 per month in free API credits as a subscription…",
+      "summary": "OpenAI added a benefit that lets eligible ChatGPT Pro and Business subscribers claim free API credits. The benefit provides credits for using the OpenAI API; it does not describe any new model or API capability. The stated maximum is $500 per month, but per-plan credit amounts are not stated.",
+      "source": "OpenAI Platform",
+      "url": "https://developers.openai.com/api/docs/guides/chatgpt-api-credits",
+      "published_at": "2026-10-28T00:00:00+00:00",
+      "fetched_at": "2026-10-29T17:01:14.904311Z",
+      "type": "changelog",
+      "topic_id": "",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "openai-changelog:2026-10-28:eligible-chatgpt-pro-and-business-subscribers-can-now-claim-",
+      "what_shipped": "OpenAI added a benefit that lets eligible ChatGPT Pro and Business subscribers claim free API credits.",
+      "capabilities": "The benefit provides credits for using the OpenAI API; it does not describe any new model or API capability. The stated maximum is $500 per month, but per-plan credit amounts are not stated.",
+      "availability": "Eligible ChatGPT Pro and Business subscribers can activate it in ChatGPT or the API Platform by linking an API organization they own. Detailed eligibility and credit amounts are not stated in the announcement.",
+      "why_it_matters": "For qualifying subscribers, the credits can offset API costs by up to $500 per month. Check the detailed terms before using this to estimate production spend, since the announcement does not say what amount a particular subscriber receives.",
+      "caveats": "The announcement does not specify which subscribers qualify, how credits are applied, or any expiration or usage terms. The $500 figure is a maximum, not a stated guaranteed monthly amount.",
+      "release_type": "product"
+    },
+    {
       "id": "aeeceabe-f2f9-51e1-8263-1a0a17190fb3",
       "title": "Gemini 4 Carbon: Our next frontier model",
       "summary": "",
@@ -7980,157 +8159,6 @@
         "Model Release",
         "Developer Tools"
       ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "2f7ad871-96d1-5255-9f01-a87ae9c78d75",
-      "title": "European AI. A playbook to own it",
-      "summary": "193 points · 127 comments",
-      "source": "Hacker News",
-      "url": "https://europe.mistral.ai/",
-      "published_at": "2026-04-12T19:51:06+00:00",
-      "fetched_at": "2026-04-13T17:12:27.681770Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "7a734d8c-685e-5b2d-8097-32a1faba6af6",
-      "title": "We have a 99% email reputation. Gmail disagrees",
-      "summary": "123 points · 115 comments",
-      "source": "Hacker News",
-      "url": "https://blogfontawesome.wpcomstaging.com/we-have-a-99-email-reputation-gmail-disagrees/",
-      "published_at": "2026-04-12T12:42:25+00:00",
-      "fetched_at": "2026-04-12T16:49:47.281278Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "431fc196-2cf5-5947-9095-704d37440644",
-      "title": "Tell HN: OpenAI silently removed Study Mode from ChatGPT",
-      "summary": "126 points · 35 comments",
-      "source": "Hacker News",
-      "url": "https://news.ycombinator.com/item?id=47739305",
-      "published_at": "2026-04-12T13:20:58+00:00",
-      "fetched_at": "2026-04-12T16:40:31.620000Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "59dbeeb6-26c3-548d-bed4-8d163173e1a2",
-      "title": "Tell HN: docker pull fails in spain due to football cloudflare block",
-      "summary": "244 points · 104 comments",
-      "source": "Hacker News",
-      "url": "https://news.ycombinator.com/item?id=47738883",
-      "published_at": "2026-04-12T12:28:57+00:00",
-      "fetched_at": "2026-04-12T16:40:31.620000Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "06771e76-61e1-562d-9971-fc4b61df3c98",
-      "title": "AI Will Be Met with Violence, and Nothing Good Will Come of It",
-      "summary": "266 points · 447 comments",
-      "source": "Hacker News",
-      "url": "https://www.thealgorithmicbridge.com/p/ai-will-be-met-with-violence-and",
-      "published_at": "2026-04-12T09:16:35+00:00",
-      "fetched_at": "2026-04-12T16:40:31.620000Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "689189d3-56f4-5a74-974c-61cf23081914",
-      "title": "How We Broke Top AI Agent Benchmarks: And What Comes Next",
-      "summary": "453 points · 111 comments",
-      "source": "Hacker News",
-      "url": "https://rdi.berkeley.edu/blog/trustworthy-benchmarks-cont/",
-      "published_at": "2026-04-11T19:15:56+00:00",
-      "fetched_at": "2026-04-12T16:40:31.620000Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "3b693a04-24c3-55bd-9b76-90dc53d8059d",
-      "title": "Small models also found the vulnerabilities that Mythos found",
-      "summary": "1184 points · 318 comments",
-      "source": "Hacker News",
-      "url": "https://aisle.com/blog/ai-cybersecurity-after-mythos-the-jagged-frontier",
-      "published_at": "2026-04-11T16:47:28+00:00",
-      "fetched_at": "2026-04-12T16:40:31.620000Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "324ccc60-ade4-5a46-aff7-64e818acb3c7",
-      "title": "Using projects in ChatGPT",
-      "summary": "Learn how to use orojects in ChatGPT to organize chats, files, and instructions, manage ongoing work, and collaborate more effectively.",
-      "source": "OpenAI",
-      "url": "https://openai.com/academy/projects",
-      "published_at": "2026-04-10T00:00:00",
-      "fetched_at": "2026-04-12T16:40:31.620000Z",
-      "type": "announcement",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "bb6df5ba-c224-5836-82ed-36c952c2cf3b",
-      "title": "ChatGPT for marketing teams",
-      "summary": "Learn how marketing teams use ChatGPT to plan campaigns, generate content, analyze performance, and move from ideas to execution faster.",
-      "source": "OpenAI",
-      "url": "https://openai.com/academy/marketing",
-      "published_at": "2026-04-10T00:00:00",
-      "fetched_at": "2026-04-12T16:40:31.620000Z",
-      "type": "announcement",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "ae038cce-bc3c-5ef3-8e10-b0c2dddccd25",
-      "title": "Cirrus Labs to join OpenAI",
-      "summary": "134 points · 58 comments",
-      "source": "Hacker News",
-      "url": "https://cirruslabs.org/",
-      "published_at": "2026-04-11T13:01:34+00:00",
-      "fetched_at": "2026-04-11T16:46:12.788126Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "99d5041d-a91a-5420-af2a-590616a64822",
-      "title": "Italo Calvino: A traveller in a world of uncertainty",
-      "summary": "107 points · 20 comments",
-      "source": "Hacker News",
-      "url": "https://www.historytoday.com/archive/portrait-author-historian/italo-calvino-traveller-world-uncertainty",
-      "published_at": "2026-04-10T23:48:07+00:00",
-      "fetched_at": "2026-04-11T16:46:12.788126Z",
-      "type": "discussion",
-      "topics": [],
       "ranking_score": 0,
       "status": "unread"
     }

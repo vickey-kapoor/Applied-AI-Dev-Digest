@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-29",
+      "run_at": "2026-10-29T17:01:15.994268Z",
+      "top_paper_id": "765b0363-7310-529d-bd7a-286a03f61a6d",
+      "papers_fetched": 16,
+      "pdf_path": "reports/29-Oct/Eligible_ChatGPT_Pro_and_Business_subscribers_can.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "40914682139"
+    },
+    {
       "date": "2026-10-28",
       "run_at": "2026-10-28T17:02:23.381178Z",
       "top_paper_id": "216f4990-60d5-56fb-8616-cb72e0120029",
@@ -772,14 +781,6 @@
       "pdf_path": "reports/30-Jul/Thousand-dimensional_structure.pdf",
       "telegram_sent": true,
       "workflow_run_id": "30567020441"
-    },
-    {
-      "date": "2026-07-29",
-      "top_paper_id": "47f4beeb-1170-5b18-ab61-8e756637076b",
-      "papers_fetched": 1,
-      "pdf_path": "reports/29-Jul/Value_Generalisation_3_Pre-aligned_AIs.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "30474831198"
     }
   ]
 }

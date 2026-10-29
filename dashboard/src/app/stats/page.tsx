@@ -17,12 +17,12 @@ import { cn } from "@/lib/utils";
 interface TopicStat {
   id: string;
   name: string;
-  category: "core" | "applied" | "emerging";
+  category: "core" | "applied";
   wins: number;
   pct: number;
 }
 
-const CATEGORIES: Topic["category"][] = ["core", "applied", "emerging"];
+const CATEGORIES: Topic["category"][] = ["core", "applied"];
 
 export default function StatsPage() {
   const [stats, setStats] = useState<TopicStat[]>([]);

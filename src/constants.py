@@ -132,9 +132,17 @@ THREAD_POOL_WORKERS = 2
 # FILTER_KEYWORDS removed. Its only consumer was the blog fetcher's topic gate,
 # which is gone: a post on a frontier lab's own feed is an AI development
 # because of where it was published, and requiring a keyword there dropped real
-# launches. The open sources carry their own lists — HN_KEYWORDS for Hacker
-# News — and fetch_all passes the live topic keywords from KV, so nothing read
-# this constant any more.
+# launches. fetch_all passes the live topic keywords from KV to the open
+# sources, so nothing read this constant any more.
+#
+# HN_KEYWORDS is gone for the same reason. It was the Hacker News fetcher's
+# default, and fetch_all has always passed the live keywords, so the default
+# was never taken in production — a second, silently diverging keyword list
+# that read like the one in force. It listed lab names the taxonomy does not
+# ("OpenAI", "Anthropic", "DeepMind", "xAI"); adding those to the real gate
+# was measured on 56 live HN stories above the score threshold on 28-Oct-2026
+# and admitted exactly one extra item, "Nvidia and Micron Make Up 34% of
+# America's Earnings Boom". The model-family names already carry the lab news.
 
 # Keywords to exclude non-technical corporate news (lowercase)
 EXCLUDE_KEYWORDS = [
@@ -178,6 +186,12 @@ EXCLUDE_TITLE_PATTERNS = [
 # one such feed held 4 of 10 slots and won the daily pick with a how-to post.
 MAX_ITEMS_PER_SOURCE = int(os.getenv("MAX_ITEMS_PER_SOURCE", "2"))
 
+# The cap for a source that reports on other people's launches rather than
+# making them (fetcher.AGGREGATOR_SOURCES). Hacker News took 23 of 56 top
+# picks between 29-Aug and 27-Oct-2026 — more than any lab source, on a digest
+# about what the labs ship. Set this to MAX_ITEMS_PER_SOURCE to undo.
+AGGREGATOR_MAX_ITEMS = int(os.getenv("AGGREGATOR_MAX_ITEMS", "1"))
+
 # Blog RSS feeds — frontier AI labs and the platforms they ship on.
 # Every URL here was verified to return a parseable feed. Anthropic has no feed
 # at all, so it is not here: ANTHROPIC_LISTINGS below reads its pages instead.
@@ -202,8 +216,8 @@ BLOG_FEEDS = {
     # client-rendered and serves the SPA shell for /rss.xml, /index.xml and
     # /blog alike, so there is no feed to point at. The feed was contributing
     # "0 within 72h" on every run while reading as a live source. Qwen
-    # releases still reach the digest through Hacker News (HN_KEYWORDS lists
-    # "Qwen") and the Hugging Face blog.
+    # releases still reach the digest through Hacker News (the model_releases
+    # topic lists "Qwen") and the Hugging Face blog.
 }
 
 # OpenAI's developer changelog, scraped rather than fetched as a feed.
@@ -305,21 +319,9 @@ GITHUB_REPOS: list[str] = [
     "modelcontextprotocol/servers",
 ]
 
-# Hacker News filter keywords — frontier lab launches and announcements.
-# This is the primary channel for Anthropic news, which has no RSS feed.
-HN_KEYWORDS = [
-    # Labs by name
-    "OpenAI", "Anthropic", "Claude", "GPT-", "DeepMind", "Gemini",
-    "Mistral", "Qwen", "DeepSeek", "Llama", "Grok", "xAI", "Gemma",
-    # Release language
-    "model release", "new model", "frontier model", "reasoning model",
-    "open weights", "open-weight", "system card", "technical report",
-    # Capability surfaces
-    "agentic", "computer use", "function calling", "model context protocol",
-    "long context", "multimodal", "benchmark", "SWE-bench", "ARC-AGI",
-    # Infra
-    "inference", "TPU", "Blackwell", "training run",
-]
+# Hacker News thresholds. The keyword gate comes from the live topic config,
+# passed in by fetch_all — see the note on FILTER_KEYWORDS above for why there
+# is no list of HN keywords here any more.
 HN_MIN_SCORE = 100
 HN_MAX_STORIES = 5
 

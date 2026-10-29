@@ -28,12 +28,11 @@ import {
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 type CustomKeywordsMap = Record<string, string[]>;
 
-const CATEGORY_ORDER: Topic["category"][] = ["core", "applied", "emerging"];
+const CATEGORY_ORDER: Topic["category"][] = ["core", "applied"];
 
 const CATEGORY_DESCRIPTIONS: Record<Topic["category"], string> = {
   core: "Always-on topics that form the backbone of your digest",
   applied: "Domain-specific topics you can toggle by interest",
-  emerging: "Cutting-edge areas worth keeping an eye on",
 };
 
 /** Every topic, grouped by category, flattened into one render order. */

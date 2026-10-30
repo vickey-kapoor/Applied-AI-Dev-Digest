@@ -1,6 +1,107 @@
 {
   "papers": [
     {
+      "id": "824f5f00-887c-5205-bd62-4097582c0f80",
+      "title": "Community safety report and new protections for teens",
+      "summary": "OpenAI is strengthening violence prevention in ChatGPT with expanded safeguards, earlier interventions, and a new commitment to public safety reporting.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/community-safety-report-and-new-protections-for-teens",
+      "published_at": "2026-10-30T09:00:00+00:00",
+      "fetched_at": "2026-10-30T17:01:15.573140Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "bf5fb312-6b6d-5f5d-b6fa-7a7136fc8188",
+      "title": "Backdoor in Claude Code for VS Code extension on the Cursor Marketplace",
+      "summary": "Phorion reported a backdoored release of the Claude Code for VS Code extension, version 2.1.313, on the Cursor Marketplace. The injected code runs when the extension module loads and attempts to add an attacker-controlled SSH public key, configure SSH access, and create a reverse SSH tunnel to 134.209.82[.]225. The write-up describes persistence logic for macOS, Linux, and Windows; it says the macOS SSH-enablement check can fail for standard users and the Windows service-setup path appears buggy.",
+      "source": "Hacker News",
+      "url": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
+      "published_at": "2026-10-30T07:09:12+00:00",
+      "fetched_at": "2026-10-30T17:01:15.573140Z",
+      "type": "discussion",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "what_shipped": "Phorion reported a backdoored release of the Claude Code for VS Code extension, version 2.1.313, on the Cursor Marketplace.",
+      "capabilities": "The injected code runs when the extension module loads and attempts to add an attacker-controlled SSH public key, configure SSH access, and create a reverse SSH tunnel to 134.209.82[.]225. The write-up describes persistence logic for macOS, Linux, and Windows; it says the macOS SSH-enablement check can fail for standard users and the Windows service-setup path appears buggy.",
+      "availability": "Cursor removed the affected release from its marketplace, and the 2.1.313 NPM and VS Code versions were also pulled from their registries. Current availability of other versions is not stated.",
+      "why_it_matters": "Check developer environments for use of version 2.1.313 and engage incident response if found. Because the payload runs on module load with the IDE user's permissions, review extension artifacts and relevant SSH configuration, including authorized_keys; the write-up advises checking the public-key fingerprint rather than relying only on the svc-telemetry comment.",
+      "caveats": "The article text is truncated during its description of the reverse tunnel, so it does not provide the full persistence, beaconing, or detection details. The reported macOS flaw can prevent SSH enablement on machines where Remote Login is off, but does not prevent key installation or ensure the backdoor is harmless if SSH is already enabled.",
+      "release_type": "safety"
+    },
+    {
+      "id": "689b637e-8dd2-566e-baf9-2669da7085d2",
+      "title": "Intrinsic Distribution Matching",
+      "summary": "One-step and few-step text-to-image generation must accurately render the details specified in the prompt despite limited opportunities for refinement. Distribution matching distillation (DMD) uses score differences to bring the generated distribution closer to a reference distribution. Following prior work, we estimate this difference with internal velocity branches, avoiding a separate fake-score network. We ask whether an explicit moment constraint improves this learned score supervision. A d",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/papers/2610.39633",
+      "published_at": "2026-10-30T00:00:00+00:00",
+      "fetched_at": "2026-10-30T17:01:15.573140Z",
+      "type": "paper",
+      "topic_id": "multimodal",
+      "topics": [
+        "Multimodal & Generative Media",
+        "Lab Research"
+      ],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "fad4dfc2-8ef5-5abe-bbe5-09a2b9851b6b",
+      "title": "An updated Model Spec for more capable and beneficial AI",
+      "summary": "OpenAI’s updated Model Spec outlines five core values to guide more capable AI toward sound judgment, human agency, and faithfulness to human intent.",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/updated-model-spec",
+      "published_at": "2026-10-29T17:00:00+00:00",
+      "fetched_at": "2026-10-30T17:01:15.573140Z",
+      "type": "announcement",
+      "topic_id": "",
+      "topics": [],
+      "ranking_score": 0,
+      "status": "unread"
+    },
+    {
+      "id": "2ba3b97c-99ed-515d-a82c-1143b08a7a38",
+      "title": "We’ve launched the Usage and Cost Analytics API in beta with the analytics-usage-cost-2026-08-24 beta header.",
+      "summary": "We’ve launched the Usage and Cost Analytics API in beta with the analytics-usage-cost-2026-08-24 beta header. Its /v1/organizations/analytics/usage and /v1/organizations/analytics/cost endpoints report token usage and cost for Claude Console and Claude Enterprise organizations. You can filter and group results by dimensions such as model, workspace, API key, and the user or service account behind each request.",
+      "source": "Anthropic Platform",
+      "url": "https://platform.claude.com/docs/en/manage-claude/usage-cost-analytics-api",
+      "published_at": "2026-10-29T00:00:00+00:00",
+      "fetched_at": "2026-10-30T17:01:15.573140Z",
+      "type": "changelog",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "anthropic-release-notes:2026-10-29:we-ve-launched-the-usage-and-cost-analytics-api-in-beta-with"
+    },
+    {
+      "id": "64b43808-e0b4-505a-93c0-4601a4a7f1be",
+      "title": "The Usage and Cost API is now a legacy API, and so are the usage_report, cost_report, user_usage_report, and…",
+      "summary": "The Usage and Cost API is now a legacy API, and so are the usage_report, cost_report, user_usage_report, and user_cost_report endpoints of the Claude Enterprise Analytics API. All of them remain supported. To move an existing integration, see Migrate from the Usage and Cost API or Migrate from the Claude Enterprise usage and cost reports.",
+      "source": "Anthropic Platform",
+      "url": "https://platform.claude.com/docs/en/manage-claude/usage-cost-api",
+      "published_at": "2026-10-29T00:00:00+00:00",
+      "fetched_at": "2026-10-30T17:01:15.573140Z",
+      "type": "changelog",
+      "topic_id": "model_releases",
+      "topics": [
+        "Model Releases"
+      ],
+      "ranking_score": 0,
+      "status": "unread",
+      "identity": "anthropic-release-notes:2026-10-29:the-usage-and-cost-api-is-now-a-legacy-api-and-so-are-the-us"
+    },
+    {
       "id": "018db131-c0c7-5f97-ad9e-94413cf04734",
       "title": "Catching Bugs Before They Land: JiTTesting’s Human-on-the-Loop Approach at Full Scale",
       "summary": "Over the last year we’ve been sharing our work leveraging large language models to catch bugs on the fly — a novel approach we call Catching Just-in-Time Tests (JiTTests). Now, we’re sharing the results and positive impact we’ve seen with Catching JiTTests deployed into production. Our paper, “Just-in-Time Catching Test Generation at Meta,” fully details [...] Read More... The post Catching Bugs Before They Land: JiTTesting’s Human-on-the-Loop Approach at Full Scale appeared first on Engineer...",
@@ -8072,93 +8173,6 @@
       "fetched_at": "2026-04-13T17:12:27.681770Z",
       "type": "release",
       "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "a920bb2b-4ab5-5669-a871-fc38bacd3935",
-      "title": "AI could be the end of the digital wave, not the next big thing",
-      "summary": "162 points · 228 comments",
-      "source": "Hacker News",
-      "url": "https://thenextwavefutures.wordpress.com/2026/04/07/ai-end-digital-wave-technology-innovation-perez/",
-      "published_at": "2026-04-13T12:29:39+00:00",
-      "fetched_at": "2026-04-13T17:12:27.681770Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "e8453ea6-64aa-550c-9895-d8e04108de9c",
-      "title": "Servo is now available on crates.io",
-      "summary": "268 points · 88 comments",
-      "source": "Hacker News",
-      "url": "https://servo.org/blog/2026/04/13/servo-0.1.0-release/",
-      "published_at": "2026-04-13T12:12:22+00:00",
-      "fetched_at": "2026-04-13T17:12:27.681770Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "b94e2817-14cb-5b66-aac7-d990eb25db32",
-      "title": "Enterprises power agentic workflows in Cloudflare Agent Cloud with OpenAI",
-      "summary": "Cloudflare brings OpenAI’s GPT-5.4 and Codex to Agent Cloud, enabling enterprises to build, deploy, and scale AI agents for real-world tasks with speed and security.",
-      "source": "OpenAI",
-      "url": "https://openai.com/index/cloudflare-openai-agent-cloud",
-      "published_at": "2026-04-13T06:00:00",
-      "fetched_at": "2026-04-13T17:12:27.681770Z",
-      "type": "announcement",
-      "topics": [
-        "Model Release"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "b5db5a87-dae6-5a8e-97e1-ba8fb49f04a5",
-      "title": "Apple's accidental moat: How the \"AI Loser\" may end up winning",
-      "summary": "361 points · 312 comments",
-      "source": "Hacker News",
-      "url": "https://adlrocha.substack.com/p/adlrocha-how-the-ai-loser-may-end",
-      "published_at": "2026-04-13T02:53:10+00:00",
-      "fetched_at": "2026-04-13T17:12:27.681770Z",
-      "type": "discussion",
-      "topics": [],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "7a673763-d481-5181-910c-7e3ed6fced92",
-      "title": "ollama v0.20.6 released",
-      "summary": "## What's Changed\r\n* Gemma 4 tool calling ability is improved and updated to use Google's latest post-launch fixes\r\n* Parallel tool calling improved for streaming responses \r\n* [Hermes agent](https://docs.ollama.com/integrations/hermes) Ollama integration guide is now available\r\n* Ollama app is updated to fix image attachment errors \r\n\r\n## New Contributors\r\n\r\n@matteocelani made their first contribution in [#15272](https://github.com/ollama/ollama/pull/15272)\r\n\r\n**Full Changelog**: https://github",
-      "source": "GitHub",
-      "url": "https://github.com/ollama/ollama/releases/tag/v0.20.6",
-      "published_at": "2026-04-12T22:59:47Z",
-      "fetched_at": "2026-04-13T17:12:27.681770Z",
-      "type": "release",
-      "topics": [
-        "Model Release",
-        "Multimodal",
-        "Function Calling"
-      ],
-      "ranking_score": 0,
-      "status": "unread"
-    },
-    {
-      "id": "a34745be-00f6-5893-bc92-a0115aa0364e",
-      "title": "I ran Gemma 4 as a local model in Codex CLI",
-      "summary": "193 points · 83 comments",
-      "source": "Hacker News",
-      "url": "https://blog.danielvaughan.com/i-ran-gemma-4-as-a-local-model-in-codex-cli-7fda754dc0d4",
-      "published_at": "2026-04-12T20:43:08+00:00",
-      "fetched_at": "2026-04-13T17:12:27.681770Z",
-      "type": "discussion",
-      "topics": [
-        "Model Release",
-        "Developer Tools"
-      ],
       "ranking_score": 0,
       "status": "unread"
     }

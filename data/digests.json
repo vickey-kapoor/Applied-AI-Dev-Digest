@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-30",
+      "run_at": "2026-10-30T17:01:16.321288Z",
+      "top_paper_id": "bf5fb312-6b6d-5f5d-b6fa-7a7136fc8188",
+      "papers_fetched": 16,
+      "pdf_path": "reports/30-Oct/Backdoor_in_Claude_Code_for_VS_Code_extension_on_t.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "41083200696"
+    },
+    {
       "date": "2026-10-29",
       "run_at": "2026-10-29T17:01:15.994268Z",
       "top_paper_id": "765b0363-7310-529d-bd7a-286a03f61a6d",
@@ -773,14 +782,6 @@
       "pdf_path": "reports/31-Jul/AGI_Safety_and_Alignment_at_Google_DeepMind_A_Sum.pdf",
       "telegram_sent": true,
       "workflow_run_id": "30652362124"
-    },
-    {
-      "date": "2026-07-30",
-      "top_paper_id": "eaeef508-200f-5848-85c6-ecee50c5cddb",
-      "papers_fetched": 2,
-      "pdf_path": "reports/30-Jul/Thousand-dimensional_structure.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "30567020441"
     }
   ]
 }

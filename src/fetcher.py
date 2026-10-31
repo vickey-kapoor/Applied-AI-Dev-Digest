@@ -351,7 +351,7 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
                     continue
             # Tag with the topic the text fits best, not the first one listed
             if not item.get("topic_id"):
-                topic_id = best_topic_id(text, topics)
+                topic_id = best_topic_id(text, topics, item.get("title", ""))
                 if topic_id:
                     item = {**item, "topic_id": topic_id}
             filtered.append(item)

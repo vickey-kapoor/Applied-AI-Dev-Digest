@@ -1,5 +1,7 @@
 """Dynamic topic configuration backed by Vercel KV."""
 
+import re
+
 from src import kv_client
 from src.logger import get_logger
 
@@ -44,12 +46,16 @@ DEFAULT_TOPICS = [
             "new model", "frontier model", "reasoning model", "model family",
             "introducing gpt",
         ],
-        # Brand names: the gate's workhorses, and deliberately weak at tagging.
-        # "Command R" is gone — no match in 500 items.
+        # Brand names: the gate's workhorses, and deliberately weak at tagging,
+        # except when the title names a *version* of the model — see
+        # MODEL_NAME_PATTERNS. "Command R" is gone — no match in 500 items.
         "weak_keywords": [
             "GPT-", "Claude", "Gemini", "Llama", "Mistral", "Qwen",
             "DeepSeek", "Grok", "Gemma",
         ],
+        # A brand name in a title that also names a version is naming a
+        # release, so it scores as strong there and only there.
+        "promote_weak_on_model_version": True,
         "default_enabled": True,
     },
     {
@@ -63,8 +69,14 @@ DEFAULT_TOPICS = [
         # iOS is now in public beta", and "SDK" admitted every client-library
         # version bump. This gate now guards only Hacker News and HF Papers,
         # where precision matters far more than breadth.
+        # The four API-lifecycle terms were added by the 31-Oct-2026 re-audit:
+        # the OpenAI and Anthropic platform changelogs are this topic's main
+        # suppliers and two of their entries had already been daily picks
+        # while carrying no topic at all ("12-hour prompt caching in the API",
+        # "which service tiers projects can use").
         "keywords": [
             "responses api", "context window", "context length", "deprecat",
+            "prompt caching", "usage tier", "service tier", "legacy api",
         ],
         "default_enabled": True,
     },
@@ -75,6 +87,7 @@ DEFAULT_TOPICS = [
             "technical report", "scaling law", "pretraining", "post-training",
             "reinforcement learning", "RLHF", "distillation",
             "mixture-of-experts", "long-context", "synthetic data",
+            "fine-tun", "continual learning", "federated", "foundation model",
         ],
         "default_enabled": True,
     },
@@ -85,8 +98,13 @@ DEFAULT_TOPICS = [
             "agentic", "AI agent", "tool use", "tool calling",
             "tool definition", "computer use", "model context protocol",
             "agent skills", "coding agent", "browser agent", "multi-agent",
-            "agent framework",
+            "agent framework", "agent harness",
         ],
+        # The two coding agents by name. Weak, because a customer story that
+        # merely mentions Codex is not an agents post; strong enough to beat a
+        # bare brand name, which is what filed "Backdoor in Claude Code for VS
+        # Code extension" under Model Releases in the 30-Oct-2026 digest.
+        "weak_keywords": ["Claude Code", "Codex"],
         "default_enabled": True,
     },
     {
@@ -110,7 +128,8 @@ DEFAULT_TOPICS = [
             "system card", "safety case", "misalignment", "reward hacking",
             "eval awareness", "preparedness framework", "red-teaming",
             "red teaming", "prompt injection", "alignment",
-            "interpretability",
+            "interpretability", "model spec", "independent evaluator",
+            "watermark", "safeguard",
         ],
         "default_enabled": True,
     },
@@ -123,15 +142,19 @@ DEFAULT_TOPICS = [
         # "open-weight" or "open model", which outscores a brand name.
         "keywords": [
             "open-weight", "open model", "open source model",
-            "Hugging Face release", "OLMo",
+            "Hugging Face release", "OLMo", "open-sourc",
         ],
         "default_enabled": True,
     },
     {
         "id": "infrastructure",
         "name": "Compute & Infrastructure",
+        # "TPU" was removed by the 31-Oct-2026 re-audit: all 12 of its hits
+        # in 500 items are the letters inside the word *output*, the same
+        # substring trap that cost us "serving"/*preserving*. Google's silicon
+        # reaches this topic through "inference" and the lab's own blog.
         "keywords": [
-            "inference", "quantiz", "gpu cluster", "TPU", "Blackwell",
+            "inference", "quantiz", "gpu cluster", "Blackwell",
             "Trainium", "supercomputer", "kv cache",
         ],
         "default_enabled": True,
@@ -148,7 +171,8 @@ DEFAULT_TOPICS = [
             "multimodal", "vision-language", "image generation",
             "video generation", "video model", "text-to-speech",
             "speech-to-text", "diffusion model", "world model",
-            "world simulation",
+            "world simulation", "transcri", "ASR", "text-to-image",
+            "diffusers", "prompt-to-voice",
         ],
         # The exception to the measured-keywords rule, and the reason the rule
         # is worth stating: these are generative-media model families with no
@@ -180,35 +204,115 @@ _SUPPLEMENTAL_KEYWORDS = [
 # about what it says it is about, not about whose model it mentions.
 TOPIC_STRONG_WEIGHT = 10
 TOPIC_WEAK_WEIGHT = 1
+# A title that names a model version is the most reliable signal in the whole
+# taxonomy — 69 firings over 500 pooled items, every one of them a specific
+# model — so it outranks a single ordinary keyword rather than tying with it.
+# Without that, "Released GPT-6.1 Terra, a fast, efficient model for visual
+# reasoning" lost Model Releases to Product & API on the phrase "context
+# length" further down its changelog entry.
+TOPIC_MODEL_NAME_WEIGHT = 15
+
+# Model families whose names, in a *title*, name a released model rather than
+# merely mention a vendor. Scoring a brand name weak stopped it outvoting a
+# topic that matched on substance (the 28-Oct-2026 audit), but it did nothing
+# for the much larger group where no other topic matched at all: 68 of
+# model_releases' 88 tags in the following 60 days were still decided by a
+# brand name alone, among them "Swedish government offices to ban ChatGPT and
+# Claude", "anthropic-sdk-python v2.3.0 released" and "Backdoor in Claude Code
+# for VS Code extension", which went out on 30-Oct-2026 tagged #ModelRelease.
+#
+# What separates a release from a mention is a version: "Claude Haiku 5.5",
+# "GPT-6.1 Terra", "Mistral Large 4". These two patterns look for a family
+# name followed by up to two product words and then a number, or a family name
+# hyphenated to a capitalised codename ("GPT-Rosalind"). Over all 500 pooled
+# items they fire on 69 titles, every one of which names a specific model.
+# They are deliberately conservative about prose: "DeepSeek launching v4.1
+# flash" is a release and is missed, because requiring the intervening words
+# to be capitalised is what keeps "Mistral raises €3B" out.
+#
+# The client-library exclusion matters: "llama.cpp v0.8.0 released" and
+# "anthropic-sdk-python v2.3.0" are version numbers attached to a package, not
+# a model, and the release notes under them name every model the library
+# gained support for. Matching the title alone, and refusing these suffixes,
+# keeps a dozen library bumps out of Model Releases.
+_MODEL_FAMILIES = (
+    r"gpt|claude|gemini|llama|mistral|qwen|deepseek|grok|gemma|olmo"
+    r"|nemotron|granite|falcon|apertus|flux"
+)
+_NOT_A_LIBRARY = r"(?![a-z0-9]*(?:\.cpp|[-.](?:python|js|go|cpp|rs)|-sdk))"
+MODEL_NAME_PATTERNS = (
+    re.compile(
+        r"(?<![A-Za-z0-9])(?i:" + _MODEL_FAMILIES + r")" + _NOT_A_LIBRARY
+        # Up to two product words — "Large", "Haiku", "Flash Next" — which must
+        # be capitalised. That is what separates "Mistral Large 4" from
+        # "Mistral raises €3B": a lowercase verb is prose, not a model name.
+        + r"(?:[-\s][A-Z][A-Za-z.]{0,12}){0,2}[-\s]?v?\d",
+    ),
+    # "GPT-Rosalind", "Claude-Mythos": a codename, not a number. Capitalisation
+    # is the signal here, so only the family name is matched case-insensitively.
+    re.compile(r"(?<![A-Za-z0-9])(?i:gpt|claude|gemini)-" + _NOT_A_LIBRARY + r"[A-Z][a-z]{2,}"),
+)
 
 
-def _topic_match(topic: dict, text: str) -> tuple[int, int] | None:
+def names_a_model_version(title: str) -> bool:
+    """True when `title` names a specific model version, not just a vendor."""
+    return any(p.search(title or "") for p in MODEL_NAME_PATTERNS)
+
+
+def _topic_match(
+    topic: dict, text: str, promote_weak: bool = False
+) -> tuple[int, int] | None:
     """Score how well `text` fits `topic`, or None when it does not fit.
 
-    Returns (score, longest strong keyword matched). The second element breaks
-    ties towards the more specific match, so "coding agent" beats "benchmark"
-    on a title carrying both.
+    Returns (score, longest keyword matched). The second element breaks ties
+    towards the more specific match, so "coding agent" beats "benchmark" on a
+    title carrying both, and "Claude Code" beats a bare "Claude".
+
+    `promote_weak` scores this topic's weak keywords as strong. It is set for
+    the topics carrying `promote_weak_on_model_version` when the title names a
+    model version — see MODEL_NAME_PATTERNS.
     """
     strong = [k for k in topic.get("keywords", ()) if k.lower() in text]
     weak = [k for k in topic.get("weak_keywords", ()) if k.lower() in text]
     if not strong and not weak:
         return None
-    score = len(strong) * TOPIC_STRONG_WEIGHT + len(weak) * TOPIC_WEAK_WEIGHT
-    return score, max((len(k) for k in strong), default=0)
+    # A topic whose weak keywords are vendor names does not get to claim an
+    # item on a vendor name alone. Without this, "Mistral raises EUR 3B" and
+    # "Claude partial outage" are Model Releases, because nothing else in the
+    # taxonomy matches them and a score of 1 still beats no score at all.
+    # Every other topic's weak keywords may still tag: "Claude Code" and
+    # "Codex" name agent tooling whatever else the sentence is about.
+    if not strong and not promote_weak and topic.get(
+        "promote_weak_on_model_version", False
+    ):
+        return None
+    weak_weight = TOPIC_MODEL_NAME_WEIGHT if promote_weak else TOPIC_WEAK_WEIGHT
+    score = len(strong) * TOPIC_STRONG_WEIGHT + len(weak) * weak_weight
+    longest = max((len(k) for k in strong + weak), default=0)
+    return score, longest
 
 
-def score_topics(text: str, topics: list[dict] | None = None) -> list[dict]:
+def score_topics(
+    text: str, topics: list[dict] | None = None, title: str | None = None
+) -> list[dict]:
     """Rank the topics `text` matches, best first.
 
     Ties keep the order of the topic list, which is the order the dashboard
     shows. Replaces the first-match rule that let whichever topic happened to
     be listed first claim every overlapping item.
+
+    `title` is the item's title on its own. Callers that have it should pass
+    it: it is what decides whether a brand name is naming a released model or
+    only mentioning its vendor. Without it no weak keyword is ever promoted,
+    so omitting it is safe but loses accuracy on Model Releases.
     """
     candidates = DEFAULT_TOPICS if topics is None else topics
     lowered = (text or "").lower()
+    versioned = names_a_model_version(title) if title else False
     scored = []
     for position, topic in enumerate(candidates):
-        match = _topic_match(topic, lowered)
+        promote = versioned and topic.get("promote_weak_on_model_version", False)
+        match = _topic_match(topic, lowered, promote)
         if match is None:
             continue
         score, longest = match
@@ -217,9 +321,11 @@ def score_topics(text: str, topics: list[dict] | None = None) -> list[dict]:
     return [entry[3] for entry in scored]
 
 
-def best_topic_id(text: str, topics: list[dict] | None = None) -> str:
+def best_topic_id(
+    text: str, topics: list[dict] | None = None, title: str | None = None
+) -> str:
     """The id of the topic `text` fits best, or "" when it fits none."""
-    ranked = score_topics(text, topics)
+    ranked = score_topics(text, topics, title)
     return ranked[0]["id"] if ranked else ""
 
 

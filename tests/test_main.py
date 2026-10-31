@@ -76,7 +76,7 @@ class TestMain:
         mock_rank_news_ranked.return_value = [paper]
         mock_export_papers.return_value = "paper-1"
         mock_summarize_release.return_value = enriched_paper
-        mock_generate_digest_pdf.return_value = "reports/13-Mar/test.pdf"
+        mock_generate_digest_pdf.return_value = "reports/2026/2026-03-13/test.pdf"
         mock_format_digest_message.return_value = "formatted"
         monkeypatch.setenv("GITHUB_RUN_ID", "run-123")
 
@@ -131,7 +131,7 @@ class TestMain:
         mock_rank_news_ranked.return_value = [paper]
         mock_export_papers.return_value = "paper-1"
         mock_summarize_release.return_value = paper
-        mock_generate_digest_pdf.return_value = "reports/13-Mar/test.pdf"
+        mock_generate_digest_pdf.return_value = "reports/2026/2026-03-13/test.pdf"
         mock_format_digest_message.return_value = "formatted"
         mock_send_telegram_message.side_effect = RuntimeError("send failed")
 
@@ -237,7 +237,7 @@ class TestHistoryList:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message", return_value="formatted")
-    @patch("main.generate_digest_pdf", return_value="reports/13-Mar/test.pdf")
+    @patch("main.generate_digest_pdf", return_value="reports/2026/2026-03-13/test.pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers", return_value="paper-1")
     @patch("main.rank_news_ranked")
@@ -286,7 +286,7 @@ class TestHistoryList:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message", return_value="formatted")
-    @patch("main.generate_digest_pdf", return_value="reports/13-Mar/test.pdf")
+    @patch("main.generate_digest_pdf", return_value="reports/2026/2026-03-13/test.pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers", return_value="paper-1")
     @patch("main.rank_news_ranked")

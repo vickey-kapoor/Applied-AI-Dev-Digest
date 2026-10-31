@@ -3,6 +3,7 @@
 import os
 import shutil
 import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -81,13 +82,16 @@ class TestGenerateDigestPdf:
         assert os.path.exists(pdf_path)
         assert pdf_path.endswith(".pdf")
 
-    def test_generate_pdf_uses_date_folder(self, sample_paper_with_detailed_summary, pdf_output_dir):
-        """Test that PDF is saved in date-formatted folder."""
+    def test_generate_pdf_uses_iso_date_folder_under_the_year(
+        self, sample_paper_with_detailed_summary, pdf_output_dir
+    ):
+        """The PDF lands in <output_dir>/YYYY/YYYY-MM-DD/, today's date in UTC."""
         pdf_path = generate_digest_pdf(sample_paper_with_detailed_summary, output_dir=pdf_output_dir)
 
-        # Path should contain date folder (e.g., "15-Jan")
-        path_parts = Path(pdf_path).parts
-        assert any("-" in part and len(part) == 6 for part in path_parts)
+        today = datetime.now(timezone.utc)
+        day_dir = Path(pdf_path).parent
+        assert day_dir.name == today.strftime("%Y-%m-%d")
+        assert day_dir.parent.name == today.strftime("%Y")
 
     def test_generate_pdf_safe_filename(self, sample_paper, pdf_output_dir):
         """Test that filename is sanitized."""

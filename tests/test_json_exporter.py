@@ -135,7 +135,7 @@ class TestExportDigest:
             json_exporter.export_digest(
                 top_paper_id="paper-1",
                 papers_fetched=5,
-                pdf_path="reports/13-Mar/test.pdf",
+                pdf_path="reports/2026/2026-03-13/test.pdf",
                 telegram_sent=True,
                 workflow_run_id="run-1",
             )

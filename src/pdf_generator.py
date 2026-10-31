@@ -113,9 +113,12 @@ def generate_digest_pdf(item: dict, output_dir: str = "reports") -> str:
     Returns:
         Path to the generated PDF file
     """
-    # Create date-formatted folder (e.g., "06-Mar")
-    date_folder = datetime.now(timezone.utc).strftime("%d-%b")
-    full_output_dir = Path(output_dir) / date_folder
+    # Date-partitioned folder, ISO 8601 so it sorts chronologically and names
+    # the year: "reports/2026/2026-03-06". The old layout was "%d-%b"
+    # ("06-Mar"), which sorted by day-of-month and merged the same calendar day
+    # from different years into one folder.
+    now = datetime.now(timezone.utc)
+    full_output_dir = Path(output_dir) / now.strftime("%Y") / now.strftime("%Y-%m-%d")
     full_output_dir.mkdir(parents=True, exist_ok=True)
 
     # Sanitize all text inputs

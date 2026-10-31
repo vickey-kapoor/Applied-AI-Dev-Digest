@@ -124,7 +124,7 @@ src/fetchers/   one module per source
 src/            ranking, summarizing, article extraction, Telegram, PDF, KV, schedule guard
 dashboard/      Next.js dashboard (Vercel)
 data/           papers.json, digests.json, schedule_state.json
-reports/        generated PDFs
+reports/        generated PDFs, by date (reports/YYYY/YYYY-MM-DD/)
 tests/          pytest suite
 main.py         pipeline entry point
 preview.py      local preview

@@ -151,7 +151,7 @@ class TestFullPipelineFlow:
         mock_rank.return_value = [paper]
         mock_export_papers.return_value = "paper-1"
         mock_summarize.return_value = enriched
-        mock_pdf.return_value = "reports/17-Mar/test.pdf"
+        mock_pdf.return_value = "reports/2026/2026-03-17/test.pdf"
         mock_format.return_value = "formatted message"
 
         main.main()

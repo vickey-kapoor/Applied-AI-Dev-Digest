@@ -50,7 +50,7 @@ The dashboard reads from:
 - `data/papers.json` - All fetched research papers
 - `data/digests.json` - Daily digest history
 - `data/config.json` - Configuration settings
-- `reports/` - PDF report files
+- `reports/` - PDF report files, by date (`reports/YYYY/YYYY-MM-DD/`)
 
 In production (Vercel), data is fetched from GitHub's raw content API with 5-minute revalidation.
 

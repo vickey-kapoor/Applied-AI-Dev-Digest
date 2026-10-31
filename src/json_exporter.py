@@ -219,10 +219,11 @@ def extract_topics(item: dict) -> list[str]:
     fetcher keeps that topic in front.
     """
     text = f"{item.get('title', '')} {item.get('summary', '')}"
+    title = item.get("title", "")
     assigned_id = item.get("topic_id") or ""
 
     topics: list[str] = []
-    for topic in score_topics(text):
+    for topic in score_topics(text, None, title):
         name = topic["name"]
         if name in topics:
             continue
@@ -233,7 +234,9 @@ def extract_topics(item: dict) -> list[str]:
 
     # A topic_id assigned by an earlier run whose keywords have since changed
     # still names the item's topic, so keep it rather than dropping it.
-    if assigned_id and not any(t["id"] == assigned_id for t in score_topics(text)):
+    if assigned_id and not any(
+        t["id"] == assigned_id for t in score_topics(text, None, title)
+    ):
         for topic in DEFAULT_TOPICS:
             if topic["id"] == assigned_id and topic["name"] not in topics:
                 topics.insert(0, topic["name"])

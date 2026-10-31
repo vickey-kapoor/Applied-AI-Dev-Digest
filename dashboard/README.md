@@ -1,64 +1,29 @@
-# AI Research Command Center Dashboard
+# Applied AI Dev Digest — Dashboard
 
-A Next.js dashboard for the AI Research Telegram Digest project.
+A Next.js app for tuning the [Applied AI Dev Digest](../README.md) without touching code. Deployed on Vercel; state lives in Vercel KV (Upstash Redis).
 
-## Features
+## Pages
 
-- **Dashboard Home**: Today's digest overview with quick stats
-- **Papers Browser**: Browse and filter all fetched research papers
-- **Reports Viewer**: View and download PDF reports
-- **Analytics**: Charts and trends showing research insights
-- **Settings**: View configuration and workflow controls
+| Route | What it does |
+|---|---|
+| `/topics` | Toggle topics and edit their keywords |
+| `/preview` | See the next digest as a Telegram mockup and re-send it |
+| `/history` | Past digests, with thumbs up/down that reweight ranking |
+| `/stats` | Per-topic counts and trends |
+| `/settings` | Pause or resume delivery, view configuration |
 
-## Tech Stack
+## Stack
 
-- Next.js 14 (App Router)
-- TypeScript
-- Tailwind CSS
-- Recharts (for analytics charts)
-- Lucide React (icons)
+Next.js (App Router) · TypeScript · Tailwind CSS · Vitest
 
 ## Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
+npm run dev      # dev server
+npm run build    # production build
+npm run lint     # ESLint
+npm test         # Vitest
 ```
 
-## Deployment
-
-### Vercel
-
-1. Connect your GitHub repository to Vercel
-2. Set the root directory to `dashboard/`
-3. Deploy - Vercel auto-detects Next.js
-
-The dashboard fetches data from GitHub raw content URLs in production, so it will always show the latest data after each workflow run.
-
-## Data Sources
-
-The dashboard reads from:
-- `data/papers.json` - All fetched research papers
-- `data/digests.json` - Daily digest history
-- `data/config.json` - Configuration settings
-- `reports/` - PDF report files, by date (`reports/YYYY/YYYY-MM-DD/`)
-
-In production (Vercel), data is fetched from GitHub's raw content API with 5-minute revalidation.
-
-## Pages
-
-- `/` - Dashboard home with stats and top paper
-- `/papers` - Browse all papers with filtering
-- `/reports` - View PDF reports
-- `/analytics` - Charts and trends
-- `/settings` - Configuration view
-
+Env vars and deployment steps are in [docs/OPERATIONS.md](../docs/OPERATIONS.md).

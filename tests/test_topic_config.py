@@ -9,6 +9,7 @@ from src.topic_config import (
     DEFAULT_TOPICS,
     RETIRED_TOPIC_IDS,
     best_topic_id,
+    names_a_model_version,
     score_topics,
     get_active_topics,
     get_active_keywords,
@@ -277,20 +278,69 @@ class TestTopicScoring:
     """
 
     def test_substance_outranks_a_brand_name(self):
-        text = "Gemma 4 is an open-weight model you can run locally"
+        text = "Gemma is an open-weight model you can run locally"
         assert best_topic_id(text) == "open_weights"
 
-    def test_a_brand_name_still_tags_when_nothing_else_matches(self):
-        assert best_topic_id("Claude Duet") == "model_releases"
+    def test_a_brand_name_alone_does_not_tag(self):
+        """The 31-Oct-2026 re-audit's central change.
+
+        Scoring a brand name weak stopped it outvoting a topic that matched on
+        substance, but did nothing where no other topic matched at all: 68 of
+        Model Releases' 88 tags over the following 60 days were still decided
+        by a brand name alone — "Mistral raises EUR 3B", "Claude partial
+        outage", "anthropic-sdk-python v2.3.0 released". A vendor's name is
+        now a filter term only.
+        """
+        assert best_topic_id("Claude Duet") == ""
+        assert best_topic_id("Mistral raises EUR 3B") == ""
+        assert best_topic_id("Swedish government offices to ban Claude") == ""
+
+    def test_a_versioned_model_name_in_the_title_tags(self):
+        """...unless the title names a version, which is what a release is."""
+        assert best_topic_id("claude haiku 5.5", None, "Claude Haiku 5.5") == (
+            "model_releases"
+        )
+        assert best_topic_id("mistral large 4", None, "Mistral Large 4") == (
+            "model_releases"
+        )
+        # A codename rather than a number works too.
+        assert best_topic_id(
+            "bringing gpt-rosalind to academic labs",
+            None,
+            "Bringing GPT-Rosalind to academic research labs",
+        ) == "model_releases"
+
+    def test_a_client_library_version_is_not_a_model_version(self):
+        """The release notes under an SDK bump name every model it supports."""
+        for title in (
+            "llama.cpp v0.8.0 released",
+            "anthropic-sdk-python v2.3.0 released",
+            "python-genai v2.33.0 released",
+        ):
+            assert not names_a_model_version(title), title
+
+    def test_the_title_decides_not_the_summary(self):
+        """A versioned model named only in the body is a mention, not news."""
+        body = "claude haiku 5.5 is mentioned here"
+        assert best_topic_id(body, None, "Our quarterly infrastructure update") == ""
+
+    def test_promotion_is_scoped_to_model_releases(self):
+        """Other topics' weak keywords may still tag on their own.
+
+        "Claude Code" and "Codex" name agent tooling whatever else the
+        sentence is about, so they are not subject to the brand-name rule.
+        """
+        title = "Backdoor in Claude Code for VS Code extension"
+        assert best_topic_id(title.lower(), None, title) == "agents_tooling"
 
     def test_more_matches_win_over_fewer(self):
         text = "Our coding agent now supports tool use and agent skills on GPT-6"
         assert best_topic_id(text) == "agents_tooling"
 
     def test_longer_keyword_breaks_a_tie(self):
-        # One strong keyword each: "benchmark" (9) against "AI agent" (8).
-        text = "Benchmarking AI agent harnesses"
-        assert best_topic_id(text) == "benchmarks"
+        # One strong keyword each: "benchmark" (9) against "computer use" (12).
+        text = "A computer use benchmark"
+        assert best_topic_id(text) == "agents_tooling"
 
     def test_list_order_breaks_a_remaining_tie(self):
         """Equal score and equal specificity keeps the dashboard's order."""

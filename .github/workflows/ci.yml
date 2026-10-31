@@ -1,12 +1,12 @@
 name: CI
 
-# Runs the test suite and static checks on every pull request and on master.
+# Runs the test suite and static checks on every pull request and on main.
 # The daily digest workflow lives in daily-news.yml and is unaffected by this.
 
 on:
   pull_request:
   push:
-    branches: [master]
+    branches: [main]
 
 # Read-only: unlike daily-news.yml, nothing here commits back to the repo.
 permissions:

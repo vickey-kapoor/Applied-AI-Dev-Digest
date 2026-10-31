@@ -1,6 +1,15 @@
 {
   "digests": [
     {
+      "date": "2026-10-31",
+      "run_at": "2026-10-31T17:01:58.962256Z",
+      "top_paper_id": "f8e47482-c349-5f16-aab0-af2231850146",
+      "papers_fetched": 12,
+      "pdf_path": "reports/31-Oct/Le_Chonk_Built_for_Coders_Trusted_by_Defenders.pdf",
+      "telegram_sent": true,
+      "workflow_run_id": "41222435700"
+    },
+    {
       "date": "2026-10-30",
       "run_at": "2026-10-30T17:01:16.321288Z",
       "top_paper_id": "bf5fb312-6b6d-5f5d-b6fa-7a7136fc8188",
@@ -774,14 +783,6 @@
       "pdf_path": "reports/01-Aug/Ten_advances_in_mathematics_and_theoretical_comput.pdf",
       "telegram_sent": true,
       "workflow_run_id": "30709595329"
-    },
-    {
-      "date": "2026-07-31",
-      "top_paper_id": "4b18302d-379f-539d-b266-bf5c5221ae29",
-      "papers_fetched": 3,
-      "pdf_path": "reports/31-Jul/AGI_Safety_and_Alignment_at_Google_DeepMind_A_Sum.pdf",
-      "telegram_sent": true,
-      "workflow_run_id": "30652362124"
     }
   ]
 }

@@ -11,7 +11,10 @@ export interface Topic {
    * 27-Oct-2026, 98 of Model Releases' 116 matches came from a brand name
    * alone with no release language anywhere, so an agent-harness post or an
    * SDK bump read as a model release. Mirrors `weak_keywords` in
-   * src/topic_config.py, which scores them at a tenth of a normal keyword.
+   * src/topic_config.py, which scores them at a tenth of a normal keyword —
+   * or, since the 31-Oct-2026 re-audit, at one and a half times a normal
+   * keyword when the title names a model version, and not at all when it does
+   * not. Either way every keyword here still goes into the filter.
    */
   weakKeywords?: string[];
   defaultEnabled: boolean;
@@ -22,13 +25,21 @@ export interface Topic {
 //             benchmarks, system cards, generative media)
 // "applied" = how the models get deployed and run
 //
-// The 28-Oct-2026 topics audit (source-audit/2026-10-28-topics-audit.md in the
+// The 28-Oct-2026 topics audit (audits/2026-10-28-topics-audit.md in the
 // project files) measured every topic and keyword against the 500-item pool in
 // data/papers.json and the 60 digests to 27-Oct-2026. It removed 36 keywords
 // that had never matched anything in 15 months, retired two topics that had
 // never produced a digest, turned Multimodal on, and dropped the "emerging"
 // category with them. Every keyword below has matched at least one real item;
 // the single documented exception is "Sora", a weak keyword.
+//
+// The 31-Oct-2026 re-audit (audits/2026-10-31-topics-reaudit.md) added
+// the keywords marked below, dropped "TPU" from Compute & Infrastructure (all
+// 12 of its matches were the letters inside the word *output*), and moved the
+// decision about brand names into src/topic_config.py, which now tags Model
+// Releases from a brand name only when the title also names a version. That
+// scoring rule has no mirror here: this file supplies the keyword lists that
+// build the filter, and the filter still wants every brand name in it.
 
 export type TopicConfig = Record<string, boolean>;
 
@@ -62,8 +73,12 @@ export const TOPICS: Topic[] = [
     // OpenStreetMap app; "SDK" admitted every client-library bump). Five of
     // the seven that remained had never matched anything either; "deprecat"
     // replaces "model deprecation" so it catches deprecated/deprecating too.
+    // The four API-lifecycle terms are from the 31-Oct-2026 re-audit: the
+    // platform changelogs are this topic's main suppliers and two of their
+    // entries had already been daily picks with no topic at all.
     keywords: [
       "responses api", "context window", "context length", "deprecat",
+      "prompt caching", "usage tier", "service tier", "legacy api",
     ],
     defaultEnabled: true,
   },
@@ -76,6 +91,7 @@ export const TOPICS: Topic[] = [
       "technical report", "scaling law", "pretraining", "post-training",
       "reinforcement learning", "RLHF", "distillation",
       "mixture-of-experts", "long-context", "synthetic data",
+      "fine-tun", "continual learning", "federated", "foundation model",
     ],
     defaultEnabled: true,
   },
@@ -88,8 +104,13 @@ export const TOPICS: Topic[] = [
       "agentic", "AI agent", "tool use", "tool calling",
       "tool definition", "computer use", "model context protocol",
       "agent skills", "coding agent", "browser agent", "multi-agent",
-      "agent framework",
+      "agent framework", "agent harness",
     ],
+    // The two coding agents by name. Weak, because a customer story that
+    // merely mentions Codex is not an agents post; strong enough to beat a
+    // bare brand name, which is what filed "Backdoor in Claude Code for VS
+    // Code extension" under Model Releases in the 30-Oct-2026 digest.
+    weakKeywords: ["Claude Code", "Codex"],
     defaultEnabled: true,
   },
   {
@@ -116,7 +137,8 @@ export const TOPICS: Topic[] = [
       "system card", "safety case", "misalignment", "reward hacking",
       "eval awareness", "preparedness framework", "red-teaming",
       "red teaming", "prompt injection", "alignment",
-      "interpretability",
+      "interpretability", "model spec", "independent evaluator",
+      "watermark", "safeguard",
     ],
     defaultEnabled: true,
   },
@@ -133,7 +155,8 @@ export const TOPICS: Topic[] = [
       "multimodal", "vision-language", "image generation",
       "video generation", "video model", "text-to-speech",
       "speech-to-text", "diffusion model", "world model",
-      "world simulation",
+      "world simulation", "transcri", "ASR", "text-to-image",
+      "diffusers", "prompt-to-voice",
     ],
     // Generative-media model families with no other route past the filter.
     // "Sora" has no match in the pool yet and is the one deliberate exception
@@ -155,7 +178,7 @@ export const TOPICS: Topic[] = [
     // release", "Apache 2.0" and "model license" never matched anything.
     keywords: [
       "open-weight", "open model", "open source model",
-      "Hugging Face release", "OLMo",
+      "Hugging Face release", "OLMo", "open-sourc",
     ],
     defaultEnabled: true,
   },
@@ -166,8 +189,11 @@ export const TOPICS: Topic[] = [
     category: "applied",
     // "serving" is gone: 3 of its 4 matches were the word *preserving*.
     // "quantiz" replaces "quantization", which never matched on its own.
+    // "TPU" went the same way on 31-Oct-2026: all 12 of its matches in 500
+    // items are the letters inside *output*. Google's silicon reaches this
+    // topic through "inference" and through DeepMind's own blog.
     keywords: [
-      "inference", "quantiz", "gpu cluster", "TPU", "Blackwell",
+      "inference", "quantiz", "gpu cluster", "Blackwell",
       "Trainium", "supercomputer", "kv cache",
     ],
     defaultEnabled: true,

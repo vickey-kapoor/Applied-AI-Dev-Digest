@@ -101,13 +101,23 @@ class TestGateAndTagging:
 
     def test_tagging_prefers_the_best_fit_over_list_order(self):
         results = self._run(
-            [_item("Gemma 4, an open-weight model", "Google DeepMind")],
+            [_item("Gemma, an open-weight model", "Google DeepMind")],
             ["Gemma"],
         )
         assert results[0]["topic_id"] == "open_weights"
 
-    def test_a_brand_name_alone_still_tags(self):
+    def test_a_brand_name_alone_admits_but_does_not_tag(self):
+        """The gate still wants every brand name; tagging no longer does.
+
+        The item reaches the digest — that is what the brand names are for —
+        and goes out under its type's hashtag instead of #ModelRelease.
+        """
         results = self._run([_item("Claude Duet", "Hacker News")], ["Claude"])
+        assert len(results) == 1
+        assert results[0].get("topic_id", "") == ""
+
+    def test_a_versioned_model_name_tags_from_the_title(self):
+        results = self._run([_item("Claude Haiku 5.5", "Hacker News")], ["Claude"])
         assert results[0]["topic_id"] == "model_releases"
 
     def test_an_item_matching_no_topic_is_kept_untagged(self):

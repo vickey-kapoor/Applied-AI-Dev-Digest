@@ -28,7 +28,7 @@ logger = get_logger(__name__)
 # of spelling: "open weights" -> "open-weight", "long context" ->
 # "long-context", "mixture of experts" -> "mixture-of-experts", and
 # "model deprecation" -> "deprecat", which catches deprecated/deprecation
-# alike. The audit report is source-audit/2026-10-28-topics-audit.md in the
+# alike. The audit report is audits/2026-10-28-topics-audit.md in the
 # project files.
 #
 # `weak_keywords` are keywords that gate but barely tag — see TOPIC_* weights

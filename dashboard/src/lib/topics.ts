@@ -25,7 +25,7 @@ export interface Topic {
 //             benchmarks, system cards, generative media)
 // "applied" = how the models get deployed and run
 //
-// The 28-Oct-2026 topics audit (source-audit/2026-10-28-topics-audit.md in the
+// The 28-Oct-2026 topics audit (audits/2026-10-28-topics-audit.md in the
 // project files) measured every topic and keyword against the 500-item pool in
 // data/papers.json and the 60 digests to 27-Oct-2026. It removed 36 keywords
 // that had never matched anything in 15 months, retired two topics that had
@@ -33,7 +33,7 @@ export interface Topic {
 // category with them. Every keyword below has matched at least one real item;
 // the single documented exception is "Sora", a weak keyword.
 //
-// The 31-Oct-2026 re-audit (source-audit/2026-10-31-topics-reaudit.md) added
+// The 31-Oct-2026 re-audit (audits/2026-10-31-topics-reaudit.md) added
 // the keywords marked below, dropped "TPU" from Compute & Infrastructure (all
 // 12 of its matches were the letters inside the word *output*), and moved the
 // decision about brand names into src/topic_config.py, which now tags Model

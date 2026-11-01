@@ -120,7 +120,7 @@ def _call_openai(client: OpenAI, prompt: str) -> str:
     return content
 
 
-# Fields rendered into the long-form PDF body, with their display labels.
+# Fields rendered into the long-form brief, with their display labels.
 DETAIL_SECTIONS = (
     ("what_shipped", "What shipped"),
     ("capabilities", "Capabilities"),
@@ -189,7 +189,7 @@ Return JSON (no markdown fences):
         if parts:
             enriched["summary"] = " ".join(parts)
 
-        # Build detailed summary for PDF
+        # Build the long-form brief
         detail_parts = []
         for key, label in DETAIL_SECTIONS:
             if parsed.get(key):

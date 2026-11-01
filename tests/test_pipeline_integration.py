@@ -79,7 +79,6 @@ class TestDigestCapEnforcement:
                 "date": f"2026-{(i // 28) + 1:02d}-{i % 28 + 1:02d}",
                 "top_paper_id": f"paper-{i}",
                 "papers_fetched": 5,
-                "pdf_path": "",
                 "telegram_sent": True,
                 "workflow_run_id": "",
             })
@@ -117,7 +116,6 @@ class TestFullPipelineFlow:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.generate_digest_pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers")
     @patch("main.rank_news_ranked")
@@ -128,7 +126,6 @@ class TestFullPipelineFlow:
         mock_rank,
         mock_export_papers,
         mock_summarize,
-        mock_pdf,
         mock_format,
         mock_send,
         mock_export_digest,
@@ -151,7 +148,6 @@ class TestFullPipelineFlow:
         mock_rank.return_value = [paper]
         mock_export_papers.return_value = "paper-1"
         mock_summarize.return_value = enriched
-        mock_pdf.return_value = "reports/2026/2026-03-17/test.pdf"
         mock_format.return_value = "formatted message"
 
         main.main()
@@ -161,7 +157,6 @@ class TestFullPipelineFlow:
         mock_rank.assert_called_once()
         mock_export_papers.assert_called_once()
         mock_summarize.assert_called_once()
-        mock_pdf.assert_called_once()
         mock_format.assert_called_once()
         mock_send.assert_called_once()
         mock_export_digest.assert_called_once()

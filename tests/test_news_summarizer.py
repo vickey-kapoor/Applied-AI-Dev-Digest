@@ -220,7 +220,7 @@ class TestTheBriefIsAskedForAsASchema:
         assert fmt["json_schema"]["schema"] == SUMMARY_SCHEMA
 
     def test_the_schema_covers_every_field_the_brief_renders(self):
-        """A field missing from the schema is a field missing from the PDF."""
+        """A field missing from the schema is a field missing from the brief."""
         assert set(SUMMARY_SCHEMA["required"]) == set(SUMMARY_FIELDS)
         assert set(SUMMARY_SCHEMA["properties"]) == set(SUMMARY_FIELDS)
         assert SUMMARY_SCHEMA["additionalProperties"] is False

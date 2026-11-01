@@ -327,7 +327,6 @@ class TestIntegrationWithTheFunnel:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.generate_digest_pdf")
     @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="the whole changelog page" * 500)
@@ -338,7 +337,7 @@ class TestIntegrationWithTheFunnel:
     @patch("main.is_paused", return_value=False)
     def test_main_does_not_refetch_an_item_that_brought_its_own_text(
         self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_fetch_article,
-        mock_summarize, _papers, _pdf, _format, _send, _digest, env_vars,
+        mock_summarize, _papers, _format, _send, _digest, env_vars,
     ):
         """Opening the changelog URL would replace one entry with all 174 of them."""
         import main as main_module
@@ -356,7 +355,6 @@ class TestIntegrationWithTheFunnel:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.generate_digest_pdf")
     @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="a real article body")
@@ -367,7 +365,7 @@ class TestIntegrationWithTheFunnel:
     @patch("main.is_paused", return_value=False)
     def test_main_still_opens_the_link_for_an_ordinary_feed_item(
         self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_fetch_article,
-        mock_summarize, _papers, _pdf, _format, _send, _digest, env_vars,
+        mock_summarize, _papers, _format, _send, _digest, env_vars,
     ):
         """The guard must not switch article fetching off for everything else."""
         import main as main_module

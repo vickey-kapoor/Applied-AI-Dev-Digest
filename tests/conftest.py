@@ -80,7 +80,7 @@ def sample_paper_with_summary(sample_paper):
 
 @pytest.fixture
 def sample_paper_with_detailed_summary(sample_paper_with_summary):
-    """Sample item with detailed summary for PDF."""
+    """Sample item carrying the long-form brief."""
     paper = sample_paper_with_summary.copy()
     paper["detailed_summary"] = """**What shipped**
 OpenAI released GPT-4o mini, a smaller GPT-4-class model, in the API.

@@ -2,6 +2,7 @@
 
 import os
 import re
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -102,17 +103,40 @@ class DigestPDF(FPDF):
         self.cell(0, 10, f"Page {self.page_no()}", align="C")
 
 
-def generate_digest_pdf(item: dict, output_dir: str = "reports") -> str:
+def default_output_dir() -> str:
+    """Where a run writes its PDF when the caller names no directory.
+
+    Briefs are no longer kept: nothing reads them back. The Telegram message is
+    built from the item itself and the dashboard reads data/*.json, so a PDF
+    committed to the repository was 205 files of write-only history. They now
+    land in a scratch directory outside the working tree, which keeps the brief
+    available for the run that made it without adding it to git or leaving it
+    in the checkout.
+
+    DIGEST_REPORTS_DIR overrides it, for running locally and wanting the file
+    somewhere findable.
+    """
+    override = os.getenv("DIGEST_REPORTS_DIR", "").strip()
+    if override:
+        return override
+    return str(Path(tempfile.gettempdir()) / "ai-dev-digest-reports")
+
+
+def generate_digest_pdf(item: dict, output_dir: str = None) -> str:
     """
     Generate a PDF brief for an AI lab development.
 
     Args:
         item: Item dictionary with title, source, description, summary, url
-        output_dir: Base directory for saving reports
+        output_dir: Base directory for saving reports. Defaults to a scratch
+            directory outside the repository (see default_output_dir) — the
+            brief is not a stored artifact.
 
     Returns:
         Path to the generated PDF file
     """
+    if output_dir is None:
+        output_dir = default_output_dir()
     # Date-partitioned folder, ISO 8601 so it sorts chronologically and names
     # the year: "reports/2026/2026-03-06". The old layout was "%d-%b"
     # ("06-Mar"), which sorted by day-of-month and merged the same calendar day

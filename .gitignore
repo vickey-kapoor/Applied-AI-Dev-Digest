@@ -28,4 +28,13 @@ Thumbs.db
 # Logs
 *.log
 
+# Generated PDF briefs. Nothing reads them back - the Telegram message is built
+# from the item and the dashboard reads data/*.json - so they are not kept in
+# the repository or the checkout. A run writes them to a scratch directory
+# (src/pdf_generator.default_output_dir); these patterns cover a local run that
+# points DIGEST_REPORTS_DIR back here.
+*.pdf
+reports/
+.test-pdfs/
+
 CLAUDE.md

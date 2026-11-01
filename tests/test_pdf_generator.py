@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import tempfile
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -12,6 +13,7 @@ from src.pdf_generator import (
     ANNOUNCEMENT_CHARS,
     _sanitize_text_for_pdf,
     _truncate,
+    default_output_dir,
     generate_digest_pdf,
 )
 
@@ -72,8 +74,46 @@ class TestSanitizeTextForPdf:
         assert "\u00a0" not in result
 
 
+class TestDefaultOutputDir:
+    """Where a brief goes when the caller names no directory."""
+
+    def test_defaults_outside_the_repository(self, monkeypatch):
+        """Not the checkout: briefs are not kept in the repo or the working tree."""
+        monkeypatch.delenv("DIGEST_REPORTS_DIR", raising=False)
+
+        default = Path(default_output_dir()).resolve()
+
+        assert default == Path(tempfile.gettempdir()).resolve() / "ai-dev-digest-reports"
+        assert Path.cwd().resolve() not in default.parents
+
+    def test_env_var_overrides(self, monkeypatch, tmp_path):
+        """A local run can point the brief somewhere findable."""
+        monkeypatch.setenv("DIGEST_REPORTS_DIR", str(tmp_path / "briefs"))
+
+        assert default_output_dir() == str(tmp_path / "briefs")
+
+    def test_blank_env_var_falls_back(self, monkeypatch):
+        """An empty value is not a directory name."""
+        monkeypatch.setenv("DIGEST_REPORTS_DIR", "   ")
+
+        assert default_output_dir() == str(
+            Path(tempfile.gettempdir()) / "ai-dev-digest-reports"
+        )
+
+
 class TestGenerateDigestPdf:
     """Tests for single digest PDF generation."""
+
+    def test_generate_pdf_writes_outside_the_repo_by_default(
+        self, sample_paper_with_detailed_summary, monkeypatch, tmp_path
+    ):
+        """With no output_dir, the brief lands in the scratch directory."""
+        monkeypatch.setenv("DIGEST_REPORTS_DIR", str(tmp_path / "scratch"))
+
+        pdf_path = Path(generate_digest_pdf(sample_paper_with_detailed_summary))
+
+        assert pdf_path.exists()
+        assert (tmp_path / "scratch").resolve() in pdf_path.resolve().parents
 
     def test_generate_pdf_creates_file(self, sample_paper_with_detailed_summary, pdf_output_dir):
         """Test that PDF file is created."""

@@ -198,8 +198,8 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          # data/ only. The pipeline produces no files to keep beyond the JSON
-          # the dashboard reads.
+          # data/ only: the day's record in digests.json and the guard's
+          # last-sent date. The pipeline keeps nothing else.
           git add data/
           # Include the UTC time: scheduler drift can put two runs on one date,
           # and a date-only message makes them indistinguishable in the log.

@@ -13,7 +13,6 @@ from src.constants import (
 )
 from src.logger import get_logger
 from src.openai_call import call_json, json_schema_format, reply_text
-from src.topic_config import get_feedback_weights
 from src.utils.retry import retry_with_backoff
 
 logger = get_logger(__name__)
@@ -204,17 +203,6 @@ def _parse_verdict(
     return kept, notes, rejected
 
 
-def rank_news(items: list[dict], api_key: str) -> dict | None:
-    """Return the single most useful item for an applied AI engineer.
-
-    None when the model judged nothing in the list worth sending. A thin
-    wrapper over rank_news_ranked, so the daily message's headlines cost no
-    extra model call — one verdict serves both.
-    """
-    ranked = rank_news_ranked(items, api_key)
-    return ranked[0] if ranked else None
-
-
 # What the ranker is shown per item. The feed summary was the only input here
 # and the feeds are not comparable: the Hugging Face blog's carries no
 # description at all, Google Research's carries the category label, OpenAI's
@@ -278,21 +266,8 @@ def rank_news_ranked(items: list[dict], api_key: str) -> list[dict]:
 
     if len(items) == 1:
         # A list, not the bare item: this function's contract is a list, and
-        # returning the dict here made rank_news index it with [0].
+        # callers index the first element.
         return list(items)
-
-    # Load feedback weights and reorder by preference before sending to LLM
-    try:
-        weights = get_feedback_weights()
-        if weights:
-            # Sort papers so preferred topics come first (higher weight = earlier)
-            items = sorted(
-                items,
-                key=lambda r: weights.get(r.get("topic_id", ""), 1.0),
-                reverse=True,
-            )
-    except Exception:
-        pass  # Non-critical — proceed with original order
 
     client = OpenAI(api_key=api_key)
 

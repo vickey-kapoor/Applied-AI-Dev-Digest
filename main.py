@@ -5,11 +5,9 @@ import sys
 
 from dotenv import load_dotenv
 
-from datetime import datetime, timezone
-
-from src.constants import DIGEST_MAX_RESULTS, HISTORY_MAX_ENTRIES
+from src.constants import DIGEST_MAX_RESULTS
 from src.logger import get_logger
-from src.topic_config import get_active_keywords, is_paused, increment_topic_stat
+from src.topic_config import get_active_keywords
 from src.fetcher import fetch_all
 from src.news_ranker import rank_news_ranked
 from src.article_fetcher import attach_article_text, fetch_article_text
@@ -19,8 +17,7 @@ from src.telegram_sender import (
     format_quiet_day_message,
     send_telegram_message,
 )
-from src.json_exporter import export_papers, export_digest, get_sent_top_paper_ids, _paper_id_for_item
-from src.kv_client import kv_append, kv_set, kv_trim_to_last
+from src.json_exporter import export_digest, get_sent_top_paper_ids, _paper_id_for_item
 
 logger = get_logger(__name__)
 
@@ -45,11 +42,6 @@ def main():
     """Fetch AI lab developments, select the most significant, and send to Telegram."""
     # Load environment variables
     load_dotenv()
-
-    # Check if digest is paused
-    if is_paused():
-        logger.info("Digest is paused — exiting")
-        sys.exit(0)
 
     # Get required environment variables
     openai_key = os.getenv("OPENAI_API_KEY")
@@ -153,21 +145,12 @@ def main():
     if top_item:
         # Everything from here needs a top pick. The ranker can legitimately
         # return none — it rejects a thin pool rather than padding the digest —
-        # and this block used to run anyway, dying on `None.get` at the
-        # papers.json swap below. That took a quiet day and made it a red run
-        # that every later tick repeated.
+        # and this block used to run anyway, dying on `None.get` further down.
+        # That took a quiet day and made it a red run that every later tick
+        # repeated.
 
-        # Track topic stats in KV
-        try:
-            topic_id = top_item.get("topic_id")
-            if topic_id:
-                increment_topic_stat(topic_id)
-        except Exception as e:
-            logger.warning("Could not update topic stats: %s", e)
-
-        # Generate summaries in one model call. This must run before both the
-        # papers.json export and the history-KV append so each saved entry
-        # includes the structured fields rather than the raw RSS description.
+        # Generate summaries in one model call. This runs before the digest
+        # is recorded so the day's entry describes the item that was sent.
         logger.info("Generating summaries...")
         try:
             # Open the link first. The feed blurb averaged 273 characters and
@@ -187,49 +170,9 @@ def main():
         except Exception:
             logger.warning("Could not generate summaries")
 
-        # summarize_release returns a copy, so swap it back into the
-        # fetched list — otherwise papers.json stores the unsummarized original.
-        items = [
-            top_item if _paper_id_for_item(item) == _paper_id_for_item(top_item) else item
-            for item in items
-        ]
-
-        try:
-            top_paper_id = export_papers(items, top_item)
-            logger.info("Items exported to data/papers.json")
-        except Exception as e:
-            logger.warning("Could not export items to JSON: %s", e)
-
-        # Append the top item to the KV list the dashboard's History page
-        # reads. The key name is historical: it fed the Sunday roundup, which
-        # also cleared it. Renaming it would orphan the entries already stored.
-        try:
-            kv_append("digest:weekly", {
-                "title": top_item.get("title", ""),
-                "source": top_item.get("source", ""),
-                "topic_id": top_item.get("topic_id"),
-                "url": top_item.get("url", ""),
-                "type": top_item.get("type", ""),
-                "what_shipped": top_item.get("what_shipped", ""),
-                "why_it_matters": top_item.get("why_it_matters", ""),
-                "release_type": top_item.get("release_type", ""),
-                "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-            })
-            logger.info("Appended top item to the KV history list")
-            # Trimmed on every append rather than on a schedule, so there is
-            # no second job to lose.
-            kv_trim_to_last("digest:weekly", HISTORY_MAX_ENTRIES)
-        except Exception as e:
-            logger.warning("Could not append to the KV history list: %s", e)
-    else:
-        # No top pick, from an empty pool or a ranker that rejected it. The
-        # dashboard still gets the candidates, so the day shows what was
-        # considered rather than looking like nothing ran.
-        try:
-            export_papers(items)
-            logger.info("Items exported to data/papers.json")
-        except Exception as e:
-            logger.warning("Could not export items to JSON: %s", e)
+        # The id recorded for today, and what tomorrow's run compares against
+        # when it filters out everything already sent.
+        top_paper_id = _paper_id_for_item(top_item)
 
     # Send Telegram message (only if we have a new item to send)
     telegram_sent = False
@@ -242,29 +185,8 @@ def main():
         except Exception as e:
             logger.error("Error sending Telegram message: %s", e)
 
-    # Store last sent item payload in KV for test-send
-    if telegram_sent:
-        try:
-            kv_set("digest:last", {
-                "title": top_item.get("title", ""),
-                "source": top_item.get("source", ""),
-                "url": top_item.get("url", ""),
-                "type": top_item.get("type", ""),
-                "topic_id": top_item.get("topic_id", ""),
-                "summary": top_item.get("summary", ""),
-                "what_shipped": top_item.get("what_shipped", ""),
-                "capabilities": top_item.get("capabilities", ""),
-                "availability": top_item.get("availability", ""),
-                "why_it_matters": top_item.get("why_it_matters", ""),
-                "caveats": top_item.get("caveats", ""),
-                "release_type": top_item.get("release_type", ""),
-                "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-            })
-            logger.info("Stored last digest payload in KV")
-        except Exception as e:
-            logger.warning("Could not store digest:last in KV: %s", e)
-
-    # Export digest entry to JSON for dashboard
+    # Record the day in data/digests.json: the pipeline's own memory of
+    # what it has already sent.
     logger.info("Exporting digest to JSON...")
     try:
         workflow_run_id = os.getenv("GITHUB_RUN_ID", "")

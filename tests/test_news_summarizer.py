@@ -228,7 +228,7 @@ class TestTheBriefIsAskedForAsASchema:
             assert label
 
     def test_release_type_is_an_enum_rather_than_free_text(self):
-        """It is a tag the dashboard filters on, so a synonym is a lost item."""
+        """It labels the item in the digest, so a synonym reads as a new kind."""
         assert SUMMARY_SCHEMA["properties"]["release_type"]["enum"] == list(RELEASE_TYPES)
 
     def test_the_reply_is_capped_by_max_completion_tokens(self):

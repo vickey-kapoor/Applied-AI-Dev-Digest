@@ -328,17 +328,14 @@ class TestIntegrationWithTheFunnel:
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
     @patch("main.generate_digest_pdf")
-    @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="the whole changelog page" * 500)
     @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api"])
-    @patch("main.is_paused", return_value=False)
     def test_main_does_not_refetch_an_item_that_brought_its_own_text(
-        self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_fetch_article,
-        mock_summarize, _papers, _pdf, _format, _send, _digest, env_vars,
+        self, _keywords, mock_fetch_all, mock_rank, mock_fetch_article,
+        mock_summarize, _pdf, _format, _send, _digest, env_vars,
     ):
         """Opening the changelog URL would replace one entry with all 174 of them."""
         import main as main_module
@@ -357,17 +354,14 @@ class TestIntegrationWithTheFunnel:
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
     @patch("main.generate_digest_pdf")
-    @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="a real article body")
     @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api"])
-    @patch("main.is_paused", return_value=False)
     def test_main_still_opens_the_link_for_an_ordinary_feed_item(
-        self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_fetch_article,
-        mock_summarize, _papers, _pdf, _format, _send, _digest, env_vars,
+        self, _keywords, mock_fetch_all, mock_rank, mock_fetch_article,
+        mock_summarize, _pdf, _format, _send, _digest, env_vars,
     ):
         """The guard must not switch article fetching off for everything else."""
         import main as main_module
@@ -381,60 +375,3 @@ class TestIntegrationWithTheFunnel:
 
         mock_fetch_article.assert_called_once_with("https://deepmind.google/x")
         assert mock_summarize.call_args[0][0]["article_text"] == "a real article body"
-
-
-class TestExportRoundTrip:
-    """papers.json rows must hash back to the identity they were saved under.
-
-    They did not: the saved row carried no identity field, so every changelog
-    row read back as "url:.../docs/changelog". The identity index collapsed to a
-    single entry and only the title index stopped a re-fetch inside the 72-hour
-    recency window from appending the same entry a second time.
-    """
-
-    def _export(self, tmp_path, items, ranked=None):
-        from src import json_exporter
-        with patch.object(json_exporter, "DATA_DIR", str(tmp_path)):
-            return json_exporter.export_papers(items, ranked)
-
-    def _rows(self, tmp_path):
-        import json
-        return json.loads((tmp_path / "papers.json").read_text())["papers"]
-
-    def test_a_saved_row_keeps_its_identity(self, tmp_path):
-        from src.json_exporter import _paper_identity
-        item = parse_changelog(PAGE)[0]
-        self._export(tmp_path, [item])
-        saved = self._rows(tmp_path)[0]
-        assert _paper_identity(saved) == _paper_identity(item)
-
-    def test_re_exporting_the_same_entry_adds_no_second_row(self, tmp_path):
-        """Entries stay in the recency window for days, so this happens daily."""
-        items = parse_changelog(PAGE)
-        self._export(tmp_path, items)
-        self._export(tmp_path, items)
-        assert len(self._rows(tmp_path)) == 3
-
-    def test_every_entry_gets_its_own_row(self, tmp_path):
-        self._export(tmp_path, parse_changelog(PAGE))
-        rows = self._rows(tmp_path)
-        assert len(rows) == 3
-        assert len({row["id"] for row in rows}) == 3
-
-    def test_the_identity_index_alone_catches_a_re_export(self, tmp_path):
-        """With the titles changed, only the identity index can match — which
-        is the index that was broken."""
-        first = parse_changelog(PAGE)
-        self._export(tmp_path, first)
-        renamed = [{**item, "title": f"Reworded {n}"} for n, item in enumerate(first)]
-        self._export(tmp_path, renamed)
-        assert len(self._rows(tmp_path)) == 3
-
-    def test_items_without_an_identity_do_not_gain_the_field(self, tmp_path):
-        """An ordinary feed item is still keyed on its URL."""
-        self._export(tmp_path, [{
-            "title": "Introducing SynthID Bio",
-            "url": "https://deepmind.google/discover/blog/synthid-bio",
-            "source": "Google DeepMind",
-        }])
-        assert "identity" not in self._rows(tmp_path)[0]

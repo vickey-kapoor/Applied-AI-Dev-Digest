@@ -1,16 +1,9 @@
-"""Dynamic topic configuration backed by Vercel KV."""
+"""Topic configuration: the taxonomy the digest filters and tags against."""
 
 import re
 
-from src import kv_client
-from src.logger import get_logger
-
-logger = get_logger(__name__)
-
-# Mirror of dashboard/src/lib/topics.ts — canonical topic definitions.
-# This is the single source of truth for topic ids, display names, and
-# keywords on the Python side; json_exporter.extract_topics reads from it
-# rather than keeping its own copy.
+# Canonical topic definitions, and the only copy: the Vercel dashboard used to
+# keep a TypeScript mirror of this table that had to be edited in step.
 # Persona: engineer/researcher tracking what the frontier AI labs ship.
 # Prioritize model launches, product/API releases, lab research reports, and
 # capability results over third-party commentary.
@@ -23,7 +16,8 @@ logger = get_logger(__name__)
 # News; both are gone.
 #
 # Every keyword here has matched at least one real item in the 500-item pool
-# in data/papers.json. The 28-Oct-2026 topics audit removed 36 that had never
+# measured against a 500-item pool of fetched items. The 28-Oct-2026 topics
+# audit removed 36 that had never
 # matched anything in 15 months, and repaired four that were dead only because
 # of spelling: "open weights" -> "open-weight", "long context" ->
 # "long-context", "mixture of experts" -> "mixture-of-experts", and
@@ -297,8 +291,7 @@ def score_topics(
 ) -> list[dict]:
     """Rank the topics `text` matches, best first.
 
-    Ties keep the order of the topic list, which is the order the dashboard
-    shows. Replaces the first-match rule that let whichever topic happened to
+    Ties keep the order of the topic list. Replaces the first-match rule that let whichever topic happened to
     be listed first claim every overlapping item.
 
     `title` is the item's title on its own. Callers that have it should pass
@@ -329,130 +322,27 @@ def best_topic_id(
     return ranked[0]["id"] if ranked else ""
 
 
-def _kv_get(key: str):
-    """Fetch a value from KV, returning None on any failure.
-
-    Topic configuration must never be able to stop a digest: every caller here
-    falls back to the built-in defaults when this returns None, so a KV outage
-    degrades the digest rather than failing it. kv_client raises by design, so
-    this is the boundary where that is converted into a None.
-    """
-    if not kv_client.kv_configured():
-        return None
-    try:
-        return kv_client.kv_get(key)
-    except Exception as e:
-        logger.warning("Could not read KV key '%s': %s", key, e)
-        return None
-
-
-def _fetch_kv_config() -> dict | None:
-    """Fetch topic config from Vercel KV REST API."""
-    return _kv_get("topics:config")
-
-
-def _get_enabled_topics(kv_config: dict | None) -> list[dict]:
-    """Return topics that are enabled based on KV config or defaults."""
-    enabled = []
-    for topic in DEFAULT_TOPICS:
-        if kv_config is not None:
-            is_on = kv_config.get(topic["id"], topic["default_enabled"])
-        else:
-            is_on = topic["default_enabled"]
-        if is_on:
-            enabled.append(topic)
-    return enabled
-
-
 def get_active_topics() -> list[dict]:
-    """Get the list of currently enabled topics."""
-    kv_config = _fetch_kv_config()
-    return _get_enabled_topics(kv_config)
+    """The topics the digest filters and tags against.
+
+    Every topic in DEFAULT_TOPICS that is enabled there. This used to be
+    overridable per topic from a KV key the Vercel dashboard wrote; the
+    dashboard is gone and the taxonomy is settled at nine topics, all on, so
+    the table in this file is the whole answer. Turning one off is a commit.
+    """
+    return [topic for topic in DEFAULT_TOPICS if topic["default_enabled"]]
 
 
 def get_active_keywords() -> list[str]:
-    """Get deduplicated keywords from all active topics, custom keywords, and supplementals.
+    """Get deduplicated keywords from all active topics and supplementals.
 
     Includes each topic's weak keywords: they are weak at *tagging*, not at
     filtering, and the brand names among them are what admit most of the
     Hacker News items that reach the digest at all.
     """
-    topics = get_active_topics()
     keywords = set()
-    for topic in topics:
+    for topic in get_active_topics():
         keywords.update(topic["keywords"])
         keywords.update(topic.get("weak_keywords", ()))
     keywords.update(_SUPPLEMENTAL_KEYWORDS)
-
-    # Merge custom keywords from KV
-    custom = _kv_get("topics:custom_keywords")
-    if isinstance(custom, dict):
-        active_ids = {t["id"] for t in topics}
-        for topic_id, kw_list in custom.items():
-            if topic_id in active_ids and isinstance(kw_list, list):
-                keywords.update(kw for kw in kw_list if isinstance(kw, str))
-
     return sorted(keywords)
-
-
-def is_paused() -> bool:
-    """Check if the digest is paused via KV."""
-    result = _kv_get("digest:paused")
-    return result is True or result == "true"
-
-
-def get_feedback_weights() -> dict[str, float]:
-    """Get per-topic score multipliers based on user feedback.
-
-    Reads feedback:log from KV, filters to last 30 days, and computes:
-      multiplier = 1.0 + (thumbs_up - thumbs_down) * 0.05
-      clamped to [0.75, 1.25]
-    Returns a dict of {topic_id: multiplier}.
-    """
-    if not kv_client.kv_configured():
-        return {}
-
-    try:
-        # kv_get_list already parses each entry and drops unparseable ones.
-        entries = kv_client.kv_get_list("feedback:log")
-
-        # Filter to last 30 days
-        from datetime import datetime, timedelta, timezone
-        cutoff = (datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
-        recent = [e for e in entries if e.get("date", "") >= cutoff]
-
-        # Tally per topic
-        tally: dict[str, int] = {}
-        for entry in recent:
-            tid = entry.get("topic_id", "")
-            if not tid:
-                continue
-            rating = entry.get("rating", 0)
-            tally[tid] = tally.get(tid, 0) + rating
-
-        # Compute clamped multipliers
-        weights: dict[str, float] = {}
-        for tid, net in tally.items():
-            multiplier = 1.0 + net * 0.05
-            weights[tid] = max(0.75, min(1.25, multiplier))
-
-        return weights
-    except Exception as e:
-        logger.warning("Could not read feedback log from KV: %s", e)
-        return {}
-
-
-def increment_topic_stat(topic_id: str) -> None:
-    """Increment the win counter for a topic in KV stats."""
-    if not kv_client.kv_configured():
-        return
-
-    try:
-        stats = _kv_get("stats:topics") or {}
-        if not isinstance(stats, dict):
-            stats = {}
-        stats[topic_id] = stats.get(topic_id, 0) + 1
-        kv_client.kv_set("stats:topics", stats)
-        logger.info("Incremented topic stat for '%s'", topic_id)
-    except Exception as e:
-        logger.warning("Could not update topic stats: %s", e)

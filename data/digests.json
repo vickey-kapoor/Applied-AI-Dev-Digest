@@ -5,7 +5,6 @@
       "run_at": "2026-10-31T17:01:58.962256Z",
       "top_paper_id": "f8e47482-c349-5f16-aab0-af2231850146",
       "papers_fetched": 12,
-      "pdf_path": "reports/2026/2026-10-31/Le_Chonk_Built_for_Coders_Trusted_by_Defenders.pdf",
       "telegram_sent": true,
       "workflow_run_id": "41222435700"
     },
@@ -14,7 +13,6 @@
       "run_at": "2026-10-30T17:01:16.321288Z",
       "top_paper_id": "bf5fb312-6b6d-5f5d-b6fa-7a7136fc8188",
       "papers_fetched": 16,
-      "pdf_path": "reports/2026/2026-10-30/Backdoor_in_Claude_Code_for_VS_Code_extension_on_t.pdf",
       "telegram_sent": true,
       "workflow_run_id": "41083200696"
     },
@@ -23,7 +21,6 @@
       "run_at": "2026-10-29T17:01:15.994268Z",
       "top_paper_id": "765b0363-7310-529d-bd7a-286a03f61a6d",
       "papers_fetched": 16,
-      "pdf_path": "reports/2026/2026-10-29/Eligible_ChatGPT_Pro_and_Business_subscribers_can.pdf",
       "telegram_sent": true,
       "workflow_run_id": "40914682139"
     },
@@ -32,7 +29,6 @@
       "run_at": "2026-10-28T17:02:23.381178Z",
       "top_paper_id": "216f4990-60d5-56fb-8616-cb72e0120029",
       "papers_fetched": 18,
-      "pdf_path": "reports/2026/2026-10-28/Build_specialized_multimodal_models_with_LFM3.pdf",
       "telegram_sent": true,
       "workflow_run_id": "40731610932"
     },
@@ -41,7 +37,6 @@
       "run_at": "2026-10-27T17:01:21.325645Z",
       "top_paper_id": "7fd411cb-a1fd-57d8-b183-5f9b97d77d95",
       "papers_fetched": 14,
-      "pdf_path": "reports/2026/2026-10-27/Released_GPT-61_Terra_a_fast_efficient_model_fo.pdf",
       "telegram_sent": true,
       "workflow_run_id": "40518689718"
     },
@@ -50,7 +45,6 @@
       "run_at": "2026-10-26T17:01:50.923149Z",
       "top_paper_id": "f23651e6-57f3-55dc-9e05-9ce458ba7f11",
       "papers_fetched": 7,
-      "pdf_path": "reports/2026/2026-10-26/UserArena_Benchmarking_Interactive_User_Simulatio.pdf",
       "telegram_sent": true,
       "workflow_run_id": "40364637729"
     },
@@ -59,7 +53,6 @@
       "run_at": "2026-10-25T17:01:48.586807Z",
       "top_paper_id": "6ed3fd79-e5ef-52a9-a448-b55045d9a01f",
       "papers_fetched": 7,
-      "pdf_path": "reports/2026/2026-10-25/Five_Qwen38-27B_models_match_Fable_5_Using_GVS5H.pdf",
       "telegram_sent": true,
       "workflow_run_id": "40214419858"
     },
@@ -68,7 +61,6 @@
       "run_at": "2026-10-24T17:01:09.499267Z",
       "top_paper_id": "2cdec759-9141-54c2-a3c9-f4f6478e8971",
       "papers_fetched": 14,
-      "pdf_path": "reports/2026/2026-10-24/Does_Your_Model_Run_on_AWS_Trainium_Look_It_Up.pdf",
       "telegram_sent": true,
       "workflow_run_id": "40102094795"
     },
@@ -77,7 +69,6 @@
       "run_at": "2026-10-23T17:01:10.186594Z",
       "top_paper_id": "a2642691-a761-57f1-b840-b14f380d05ee",
       "papers_fetched": 15,
-      "pdf_path": "reports/2026/2026-10-23/The_Decisions_API_is_now_generally_available_with.pdf",
       "telegram_sent": true,
       "workflow_run_id": "39972377195"
     },
@@ -86,7 +77,6 @@
       "run_at": "2026-10-22T17:01:21.977180Z",
       "top_paper_id": "f792477b-5131-5abd-b5bc-f41b78078fd2",
       "papers_fetched": 15,
-      "pdf_path": "reports/2026/2026-10-22/You_can_now_choose_which_service_tiers_projects_ca.pdf",
       "telegram_sent": true,
       "workflow_run_id": "39800220674"
     },
@@ -95,7 +85,6 @@
       "run_at": "2026-10-21T17:01:15.106715Z",
       "top_paper_id": "e5999ace-1df9-525e-acfc-1db38fb8535e",
       "papers_fetched": 16,
-      "pdf_path": "reports/2026/2026-10-21/You_can_now_choose_12-hour_prompt_caching_in_the_A.pdf",
       "telegram_sent": true,
       "workflow_run_id": "39621350138"
     },
@@ -104,7 +93,6 @@
       "run_at": "2026-10-20T17:01:19.442514Z",
       "top_paper_id": "a12bd062-c872-5906-8739-f4d75431b3ef",
       "papers_fetched": 13,
-      "pdf_path": "reports/2026/2026-10-20/Together_Post-Training_frontier-grade_model_shapi.pdf",
       "telegram_sent": true,
       "workflow_run_id": "39442783131"
     },
@@ -113,7 +101,6 @@
       "run_at": "2026-10-19T17:01:53.856959Z",
       "top_paper_id": "a5114807-e200-57fe-893f-c844f9948c91",
       "papers_fetched": 11,
-      "pdf_path": "reports/2026/2026-10-19/Timestral_Mistral_release_time-series_foundation.pdf",
       "telegram_sent": true,
       "workflow_run_id": "39290488760"
     },
@@ -122,7 +109,6 @@
       "run_at": "2026-10-18T17:00:54.069971Z",
       "top_paper_id": "e5050e6b-1e7f-5d13-8a26-65131f364ee6",
       "papers_fetched": 11,
-      "pdf_path": "reports/2026/2026-10-18/DeepSeek_search_and_fetch_-_075_per_1000_success.pdf",
       "telegram_sent": true,
       "workflow_run_id": "39135657921"
     },
@@ -131,7 +117,6 @@
       "run_at": "2026-10-17T17:01:37.532983Z",
       "top_paper_id": "a7778d2b-9eeb-5fe4-a9a6-456883601681",
       "papers_fetched": 15,
-      "pdf_path": "reports/2026/2026-10-17/Meta_Muse_Spark_Open_is_live_on_Together_AI.pdf",
       "telegram_sent": true,
       "workflow_run_id": "39051905843"
     },
@@ -140,7 +125,6 @@
       "run_at": "2026-10-16T17:01:41.520355Z",
       "top_paper_id": "ece3ea5e-795b-52d5-bcd0-618e91acd1d2",
       "papers_fetched": 15,
-      "pdf_path": "reports/2026/2026-10-16/Scaling_Indic_Pretraining_28_Trillion_Tokens_and.pdf",
       "telegram_sent": true,
       "workflow_run_id": "38936421676"
     },
@@ -149,7 +133,6 @@
       "run_at": "2026-10-15T17:00:57.074600Z",
       "top_paper_id": "ba9c4861-1178-56a8-b30f-3dced0d937fb",
       "papers_fetched": 12,
-      "pdf_path": "reports/2026/2026-10-15/Accelerating_the_search_for_antimicrobial_peptides.pdf",
       "telegram_sent": true,
       "workflow_run_id": "38770342334"
     },
@@ -158,7 +141,6 @@
       "run_at": "2026-10-14T17:01:46.379820Z",
       "top_paper_id": "b6319f99-39a3-5320-b6f7-310596632cf3",
       "papers_fetched": 13,
-      "pdf_path": "reports/2026/2026-10-14/Putting_Earth_AI_to_work_Geospatial_agents_for_ou.pdf",
       "telegram_sent": true,
       "workflow_run_id": "38603021825"
     },
@@ -167,7 +149,6 @@
       "run_at": "2026-10-13T17:00:56.387463Z",
       "top_paper_id": "be2f9a4e-792d-59d2-b686-26b509d6a662",
       "papers_fetched": 8,
-      "pdf_path": "reports/2026/2026-10-13/Gemini_4_Argon.pdf",
       "telegram_sent": true,
       "workflow_run_id": "38424432936"
     },
@@ -176,7 +157,6 @@
       "run_at": "2026-10-12T17:01:28.411172Z",
       "top_paper_id": "",
       "papers_fetched": 2,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "38281395920"
     },
@@ -185,7 +165,6 @@
       "run_at": "2026-10-11T17:00:45.959962Z",
       "top_paper_id": "",
       "papers_fetched": 5,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "38151299743"
     },
@@ -194,7 +173,6 @@
       "run_at": "2026-10-10T17:01:32.914683Z",
       "top_paper_id": "b53bf1be-4f23-58e3-9c83-ce6aa9ab28a1",
       "papers_fetched": 9,
-      "pdf_path": "reports/2026/2026-10-10/Asana_cuts_model_costs_76x_in_browser_tests_with_G.pdf",
       "telegram_sent": true,
       "workflow_run_id": "38070007618"
     },
@@ -203,7 +181,6 @@
       "run_at": "2026-10-09T17:00:58.344400Z",
       "top_paper_id": "4a0d56d3-1d1b-5452-82da-ecee676b381f",
       "papers_fetched": 12,
-      "pdf_path": "reports/2026/2026-10-09/Added_Ultrafast_mode_for_GPT-61_Sol_in_the_Respon.pdf",
       "telegram_sent": true,
       "workflow_run_id": "37955455193"
     },
@@ -212,7 +189,6 @@
       "run_at": "2026-10-08T17:01:02.857846Z",
       "top_paper_id": "acaf40f2-f486-5ca8-9536-882029b66dba",
       "papers_fetched": 16,
-      "pdf_path": "reports/2026/2026-10-08/Rally_Up_Gears_of_War_E-Day_Launches_on_GeForc.pdf",
       "telegram_sent": true,
       "workflow_run_id": "37807000835"
     },
@@ -221,7 +197,6 @@
       "run_at": "2026-10-07T17:00:56.650611Z",
       "top_paper_id": "55e47687-789d-5d27-b8cd-f2ce20fa7652",
       "papers_fetched": 16,
-      "pdf_path": "reports/2026/2026-10-07/Released_the_Decisions_API_in_beta_with_gpt-6-luna.pdf",
       "telegram_sent": true,
       "workflow_run_id": "37650061033"
     },
@@ -230,7 +205,6 @@
       "run_at": "2026-10-06T21:29:21.008833Z",
       "top_paper_id": "4be9508d-2b39-5a1d-845b-831c15666a91",
       "papers_fetched": 17,
-      "pdf_path": "reports/2026/2026-10-06/EmbeddingGemma_2_an_open_lightweight_multimodal.pdf",
       "telegram_sent": true,
       "workflow_run_id": "37534169837"
     },
@@ -239,7 +213,6 @@
       "run_at": "2026-10-05T22:23:27.699577Z",
       "top_paper_id": "cd70d423-d6e2-5691-b048-224fa84d6941",
       "papers_fetched": 10,
-      "pdf_path": "reports/2026/2026-10-05/llamacpp_v060_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "37382102468"
     },
@@ -248,7 +221,6 @@
       "run_at": "2026-10-04T17:21:37.069613Z",
       "top_paper_id": "eee2e636-fb51-5f4e-b965-387343f427bd",
       "papers_fetched": 10,
-      "pdf_path": "reports/2026/2026-10-04/Run_Qwen_38_Flash_Next_125B_on_consumer_hardwar.pdf",
       "telegram_sent": true,
       "workflow_run_id": "37220181758"
     },
@@ -257,7 +229,6 @@
       "run_at": "2026-10-03T17:05:49.478027Z",
       "top_paper_id": "44d78bd4-46fb-51dd-98b2-0609bbd4b6b7",
       "papers_fetched": 12,
-      "pdf_path": "reports/2026/2026-10-03/How_NVIDIA_GPUs_Help_Accelerate_OpenAIs_GPT-6_Ast.pdf",
       "telegram_sent": true,
       "workflow_run_id": "37139226332"
     },
@@ -266,7 +237,6 @@
       "run_at": "2026-10-02T20:30:21.200442Z",
       "top_paper_id": "21211411-a76d-518d-85b5-2af7cfa6dcb7",
       "papers_fetched": 12,
-      "pdf_path": "reports/2026/2026-10-02/python-genai_v2280_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "37060953789"
     },
@@ -275,7 +245,6 @@
       "run_at": "2026-10-01T21:40:34.257216Z",
       "top_paper_id": "a0185a63-a05c-567c-94fb-40a4ab57328f",
       "papers_fetched": 7,
-      "pdf_path": "reports/2026/2026-10-01/StreetComplete_on_iOS_is_now_in_public_beta.pdf",
       "telegram_sent": true,
       "workflow_run_id": "36930185274"
     },
@@ -284,7 +253,6 @@
       "run_at": "2026-09-30T18:56:35.814600Z",
       "top_paper_id": "f56d0d5e-11fa-50ee-bb6c-ca46bf5968cd",
       "papers_fetched": 6,
-      "pdf_path": "reports/2026/2026-09-30/anthropic-sdk-python_v1100_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "36762099509"
     },
@@ -293,7 +261,6 @@
       "run_at": "2026-09-29T20:33:25.688243Z",
       "top_paper_id": "7ab62c7d-abc3-53cb-825c-fc85a07ee2fe",
       "papers_fetched": 5,
-      "pdf_path": "reports/2026/2026-09-29/openai-python_v3220_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "36627104662"
     },
@@ -302,7 +269,6 @@
       "run_at": "2026-09-28T21:41:54.440801Z",
       "top_paper_id": "6bdcf939-beae-5b72-9fd6-4a0e1e3152be",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-09-28/anthropic-sdk-python_v190_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "36487762620"
     },
@@ -311,7 +277,6 @@
       "run_at": "2026-09-27T18:08:50.266482Z",
       "top_paper_id": "698b93b1-8f93-5ec6-ac82-3abb6f2d738a",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-09-27/There_are_no_rogue_AI_agents.pdf",
       "telegram_sent": true,
       "workflow_run_id": "36339534358"
     },
@@ -320,7 +285,6 @@
       "run_at": "2026-09-26T19:41:26.148262Z",
       "top_paper_id": "fc5db527-0d29-5732-b06a-42842f9b95b1",
       "papers_fetched": 1,
-      "pdf_path": "reports/2026/2026-09-26/Revealing_the_details_of_how_OpenAI_agents_hacked.pdf",
       "telegram_sent": true,
       "workflow_run_id": "36266893181"
     },
@@ -329,7 +293,6 @@
       "run_at": "2026-09-25T18:20:53.668125Z",
       "top_paper_id": "",
       "papers_fetched": 0,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "36172793608"
     },
@@ -338,7 +301,6 @@
       "run_at": "2026-09-24T18:53:44.094364Z",
       "top_paper_id": "19428e1c-a851-5f9b-8449-adc0f5d6e294",
       "papers_fetched": 5,
-      "pdf_path": "reports/2026/2026-09-24/Hackers_influence_ChatGPT_and_Gemini_to_direct_use.pdf",
       "telegram_sent": true,
       "workflow_run_id": "36044347102"
     },
@@ -347,7 +309,6 @@
       "run_at": "2026-09-23T20:01:49.431726Z",
       "top_paper_id": "7304146e-dad5-560b-b4bd-b18e43f80148",
       "papers_fetched": 4,
-      "pdf_path": "reports/2026/2026-09-23/Claude_discovers_a_novel_enzyme_system_with_CRISPR.pdf",
       "telegram_sent": true,
       "workflow_run_id": "35913155761"
     },
@@ -356,7 +317,6 @@
       "run_at": "2026-09-22T18:37:40.607642Z",
       "top_paper_id": "04e25169-8f11-5a5c-9d16-40a448e08e75",
       "papers_fetched": 8,
-      "pdf_path": "reports/2026/2026-09-22/openai-python_v3180_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "35768353802"
     },
@@ -365,7 +325,6 @@
       "run_at": "2026-09-21T20:53:17.761414Z",
       "top_paper_id": "adf88220-9abf-5f0b-a118-7e41542aa0ab",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-09-21/Amazon_blocks_Metas_new_Muse_AI_agent_from_shoppi.pdf",
       "telegram_sent": true,
       "workflow_run_id": "35653796299"
     },
@@ -374,7 +333,6 @@
       "run_at": "2026-09-20T18:07:21.253581Z",
       "top_paper_id": "d2fee8c9-51bb-58dd-87b4-0d216457b2ab",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-09-20/Qwen-Image-21_Compact_efficient_and_unified_im.pdf",
       "telegram_sent": true,
       "workflow_run_id": "35528009715"
     },
@@ -383,7 +341,6 @@
       "run_at": "2026-09-19T17:05:05.649218Z",
       "top_paper_id": "a18291b7-8bca-53a3-be19-f283d391f366",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-09-19/GPT-6_Astra_Solves_a_WWI_German_Radio_Cipher.pdf",
       "telegram_sent": true,
       "workflow_run_id": "35456944267"
     },
@@ -392,7 +349,6 @@
       "run_at": "2026-09-18T18:10:27.767548Z",
       "top_paper_id": "aa00da19-9818-5924-b96a-f9a8d411ddf9",
       "papers_fetched": 6,
-      "pdf_path": "reports/2026/2026-09-18/anthropic-sdk-python_v170_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "35378559610"
     },
@@ -401,7 +357,6 @@
       "run_at": "2026-09-17T18:02:28.266391Z",
       "top_paper_id": "0606befe-ce9a-52b0-8f40-4e97c575a5ab",
       "papers_fetched": 6,
-      "pdf_path": "reports/2026/2026-09-17/python-genai_v2240_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "35256274717"
     },
@@ -410,7 +365,6 @@
       "run_at": "2026-09-16T19:54:13.102283Z",
       "top_paper_id": "befd0d55-c85a-5239-b42b-a235ba95b48e",
       "papers_fetched": 4,
-      "pdf_path": "reports/2026/2026-09-16/Claude_Cowork_and_chat_are_now_one_Claude.pdf",
       "telegram_sent": true,
       "workflow_run_id": "35143295070"
     },
@@ -419,7 +373,6 @@
       "run_at": "2026-09-15T18:47:11.268822Z",
       "top_paper_id": "f1a5431d-bba0-54c9-8eb9-4ff4d5f4913d",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-09-15/Perplexity_Portable_Computer_Is_Now_Available_on_W.pdf",
       "telegram_sent": true,
       "workflow_run_id": "35009577995"
     },
@@ -428,7 +381,6 @@
       "run_at": "2026-09-14T20:48:10.647588Z",
       "top_paper_id": "257c19c5-b9b5-587b-9afd-8d0f5cd2a2ac",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-09-14/llamacpp_v041_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "34895053976"
     },
@@ -437,7 +389,6 @@
       "run_at": "2026-09-13T18:38:39.210249Z",
       "top_paper_id": "3ad82b30-4e1c-56ae-892d-5207a7b42c5f",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-09-13/David_Sacks_OpenAI_and_Anthropic_Dont_Need_Regul.pdf",
       "telegram_sent": true,
       "workflow_run_id": "34775239826"
     },
@@ -446,7 +397,6 @@
       "run_at": "2026-09-12T19:03:07.011363Z",
       "top_paper_id": "1eedd46e-11e0-5067-89bb-80c6f173fa04",
       "papers_fetched": 1,
-      "pdf_path": "reports/2026/2026-09-12/OpenAI_agents_carried_out_an_undisclosed_attack_on.pdf",
       "telegram_sent": true,
       "workflow_run_id": "34712989940"
     },
@@ -455,7 +405,6 @@
       "run_at": "2026-09-11T18:17:23.444907Z",
       "top_paper_id": "c74fd0d7-e491-518b-9b36-ab8ac90141f1",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-09-11/RTK_reports_token_savings_but_our_cost_benchmarks.pdf",
       "telegram_sent": true,
       "workflow_run_id": "34632388208"
     },
@@ -464,7 +413,6 @@
       "run_at": "2026-09-10T17:34:56.447077Z",
       "top_paper_id": "53142528-7498-5f81-a0cb-ccadb59f8586",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-09-10/Cognition_launches_new_SWE-2_model_Rivaling_Fable.pdf",
       "telegram_sent": true,
       "workflow_run_id": "34509033749"
     },
@@ -473,7 +421,6 @@
       "run_at": "2026-09-09T18:23:51.138699Z",
       "top_paper_id": "b65244e3-f2ac-5a17-9f9a-137363785692",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-09-09/transformers_v5170_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "34388675464"
     },
@@ -482,7 +429,6 @@
       "run_at": "2026-09-08T17:23:29.770209Z",
       "top_paper_id": "cc7c3973-afae-530e-8f76-81561db34e10",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-09-08/Multi-Agents_LLM_Financial_Trading_Framework.pdf",
       "telegram_sent": true,
       "workflow_run_id": "34256749874",
       "previous_run_at": "2026-09-08T04:21:48.327249Z"
@@ -492,7 +438,6 @@
       "run_at": "2026-09-07T23:59:21.288130Z",
       "top_paper_id": null,
       "papers_fetched": 1,
-      "pdf_path": "reports/2026/2026-09-07/Research_acceleration_The_view_inside_OpenAI.pdf",
       "telegram_sent": false,
       "workflow_run_id": "34171809634",
       "previous_run_at": "2026-09-07T21:54:55.679184Z"
@@ -502,7 +447,6 @@
       "run_at": "2026-09-06T23:57:24.404847Z",
       "top_paper_id": "fc4ab9a4-6a1a-5659-8311-1ccd0a3b4758",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-09-06/GPT-6_Astra_on_robot_arms.pdf",
       "telegram_sent": true,
       "workflow_run_id": "34068287903",
       "previous_run_at": "2026-09-06T22:13:14.786293Z"
@@ -512,7 +456,6 @@
       "run_at": "2026-09-05T22:39:10.904351Z",
       "top_paper_id": "278d852e-9df1-5e79-b55c-1a45781f55f5",
       "papers_fetched": 4,
-      "pdf_path": "reports/2026/2026-09-05/Portal_by_Spotify_cut_my_Claude_Code_token_usage_b.pdf",
       "telegram_sent": true,
       "workflow_run_id": "33996500914",
       "previous_run_at": "2026-09-05T20:55:53.916434Z"
@@ -522,7 +465,6 @@
       "run_at": "2026-09-04T19:00:38.797622Z",
       "top_paper_id": "415e66da-59f3-513c-9241-49285b9617ef",
       "papers_fetched": 6,
-      "pdf_path": "reports/2026/2026-09-04/Discovery_of_a_new_OpenAI_agent_message_board.pdf",
       "telegram_sent": true,
       "workflow_run_id": "33908841545"
     },
@@ -531,7 +473,6 @@
       "run_at": "2026-09-03T19:19:18.111548Z",
       "top_paper_id": "ec89200d-923f-58ea-a79d-dff3a808c6c2",
       "papers_fetched": 6,
-      "pdf_path": "reports/2026/2026-09-03/Qwen_38_27B_available_on_Cerebras_at_1500_tokens.pdf",
       "telegram_sent": true,
       "workflow_run_id": "33795669937"
     },
@@ -540,7 +481,6 @@
       "run_at": "2026-09-02T19:24:32.059110Z",
       "top_paper_id": "05548a5d-929b-534f-8800-19217446408e",
       "papers_fetched": 7,
-      "pdf_path": "reports/2026/2026-09-02/python-genai_v2220_released.pdf",
       "telegram_sent": true,
       "workflow_run_id": "33673070365"
     },
@@ -548,7 +488,6 @@
       "date": "2026-09-01",
       "top_paper_id": "0185b40d-73ce-5ffd-a81f-33d89193d9b0",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-09-01/Introducing_agentic_video_understanding_with_Gemin.pdf",
       "telegram_sent": true,
       "workflow_run_id": "33548721165"
     },
@@ -556,7 +495,6 @@
       "date": "2026-08-31",
       "top_paper_id": "86243660-0808-511c-90bd-df34b9fdaba2",
       "papers_fetched": 1,
-      "pdf_path": "reports/2026/2026-08-31/Breaking_Claude_Code_Opus_5_Auto_Mode.pdf",
       "telegram_sent": true,
       "workflow_run_id": "33441084012"
     },
@@ -564,7 +502,6 @@
       "date": "2026-08-30",
       "top_paper_id": "4c501bfe-e601-5206-adaa-1e033f7446da",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-08-30/The_Open_ASR_Leaderboard_Adds_Its_First_Global_Sou.pdf",
       "telegram_sent": true,
       "workflow_run_id": "33331327830"
     },
@@ -572,7 +509,6 @@
       "date": "2026-08-29",
       "top_paper_id": "07c0095b-0429-572e-b86e-5d59fcc59427",
       "papers_fetched": 8,
-      "pdf_path": "reports/2026/2026-08-29/Piloting_the_worlds_first_double-blind_AI_evaluat.pdf",
       "telegram_sent": true,
       "workflow_run_id": "33270576110"
     },
@@ -580,7 +516,6 @@
       "date": "2026-08-28",
       "top_paper_id": "42556744-0b5b-5670-a77d-0b597dc59493",
       "papers_fetched": 10,
-      "pdf_path": "reports/2026/2026-08-28/Build_agentic_creative_workflows_with_Amazon_Quick.pdf",
       "telegram_sent": true,
       "workflow_run_id": "33130879098"
     },
@@ -588,7 +523,6 @@
       "date": "2026-08-26",
       "top_paper_id": "0da123f0-a1a1-5e31-8b99-dfa200a2469f",
       "papers_fetched": 10,
-      "pdf_path": "reports/2026/2026-08-26/Preparing_data_for_supervised_fine-tuning_Part_2.pdf",
       "telegram_sent": true,
       "workflow_run_id": "32990734861"
     },
@@ -596,7 +530,6 @@
       "date": "2026-08-25",
       "top_paper_id": "",
       "papers_fetched": 1,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "32873574453"
     },
@@ -604,7 +537,6 @@
       "date": "2026-08-24",
       "top_paper_id": "6af6bd28-e6e3-5f39-9e8c-dfe4c2d22b9a",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-08-24/FDA_clears_blood_test_to_aid_evaluation_for_Alzhei.pdf",
       "telegram_sent": true,
       "workflow_run_id": "32752525164"
     },
@@ -612,7 +544,6 @@
       "date": "2026-08-23",
       "top_paper_id": null,
       "papers_fetched": 1,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "32654271457"
     },
@@ -620,7 +551,6 @@
       "date": "2026-08-22",
       "top_paper_id": "",
       "papers_fetched": 1,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "32584888391"
     },
@@ -628,7 +558,6 @@
       "date": "2026-08-21",
       "top_paper_id": "",
       "papers_fetched": 1,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "32504070628"
     },
@@ -636,7 +565,6 @@
       "date": "2026-08-20",
       "top_paper_id": "7d6c11eb-4c15-5a4e-ab57-fa4a795c8e0a",
       "papers_fetched": 1,
-      "pdf_path": "reports/2026/2026-08-20/Debate_Training_Reduces_Reward_Hacking_in_RLAIF.pdf",
       "telegram_sent": true,
       "workflow_run_id": "32393229927"
     },
@@ -644,7 +572,6 @@
       "date": "2026-08-19",
       "top_paper_id": "3445b5e2-1e0e-5c68-9afe-b35e59b2aafc",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-08-19/Geolocating_a_random_island_using_geometry_and_CUD.pdf",
       "telegram_sent": true,
       "workflow_run_id": "32276878287"
     },
@@ -652,7 +579,6 @@
       "date": "2026-08-18",
       "top_paper_id": "7ab9d96b-f086-5313-b749-cd188a45f260",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-08-18/The_Benchmarkpocalypse.pdf",
       "telegram_sent": true,
       "workflow_run_id": "32161234319"
     },
@@ -660,7 +586,6 @@
       "date": "2026-08-17",
       "top_paper_id": "",
       "papers_fetched": 1,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "32046126788"
     },
@@ -668,7 +593,6 @@
       "date": "2026-08-16",
       "top_paper_id": null,
       "papers_fetched": 1,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "31961028009"
     },
@@ -676,7 +600,6 @@
       "date": "2026-08-15",
       "top_paper_id": "3e1e2c37-6e6c-5095-912f-418104b1424d",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-08-15/Show_HN_LuaCAD_-_Parametric_CAD_Scripted_in_Lua.pdf",
       "telegram_sent": true,
       "workflow_run_id": "31895699203"
     },
@@ -684,7 +607,6 @@
       "date": "2026-08-14",
       "top_paper_id": "",
       "papers_fetched": 1,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "31821821870"
     },
@@ -692,7 +614,6 @@
       "date": "2026-08-13",
       "top_paper_id": "",
       "papers_fetched": 1,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "31723556346"
     },
@@ -700,7 +621,6 @@
       "date": "2026-08-12",
       "top_paper_id": "9fb0ce44-760a-5b07-a44d-7d18bd40f528",
       "papers_fetched": 1,
-      "pdf_path": "reports/2026/2026-08-12/AI_swarms_are_starting_to_pose_indirect_takeover_r.pdf",
       "telegram_sent": true,
       "workflow_run_id": "31620506563"
     },
@@ -708,7 +628,6 @@
       "date": "2026-08-11",
       "top_paper_id": "",
       "papers_fetched": 2,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "31515488493"
     },
@@ -716,7 +635,6 @@
       "date": "2026-08-10",
       "top_paper_id": "9cb29e96-c26c-57ac-a18d-b1c3edd18dbe",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-08-10/Four_LLM_loss_functions__four_flavors_of_LLM_misa.pdf",
       "telegram_sent": true,
       "workflow_run_id": "31411663372"
     },
@@ -724,7 +642,6 @@
       "date": "2026-08-09",
       "top_paper_id": null,
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-08-09/User_awareness_in_frontier_models.pdf",
       "telegram_sent": false,
       "workflow_run_id": "31326357290"
     },
@@ -732,7 +649,6 @@
       "date": "2026-08-08",
       "top_paper_id": "262b8981-e5e6-51b4-9dc5-fef16474f067",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-08-08/Why_do_models_task_game.pdf",
       "telegram_sent": true,
       "workflow_run_id": "31267480292"
     },
@@ -740,7 +656,6 @@
       "date": "2026-08-07",
       "top_paper_id": "cb6d6bcf-4512-509c-bb5d-42ab6760524d",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-08-07/Responding_to_the_next_frontier_of_critical_cyber.pdf",
       "telegram_sent": true,
       "workflow_run_id": "31200045357"
     },
@@ -748,7 +663,6 @@
       "date": "2026-08-05",
       "top_paper_id": "40ae0095-9074-5434-bd11-5a9a460f02b3",
       "papers_fetched": 3,
-      "pdf_path": "reports/2026/2026-08-05/Returning_to_ARC.pdf",
       "telegram_sent": true,
       "workflow_run_id": "31031513991"
     },
@@ -756,7 +670,6 @@
       "date": "2026-08-04",
       "top_paper_id": "",
       "papers_fetched": 1,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "30936012530"
     },
@@ -764,7 +677,6 @@
       "date": "2026-08-03",
       "top_paper_id": "aced7e44-9028-54fe-b123-4268d6ab4283",
       "papers_fetched": 4,
-      "pdf_path": "reports/2026/2026-08-03/Concrete_Evaluations_to_Investigate_the_OpenAI_Mod.pdf",
       "telegram_sent": true,
       "workflow_run_id": "30838960176"
     },
@@ -772,7 +684,6 @@
       "date": "2026-08-02",
       "top_paper_id": null,
       "papers_fetched": 2,
-      "pdf_path": "",
       "telegram_sent": false,
       "workflow_run_id": "30760016357"
     },
@@ -780,7 +691,6 @@
       "date": "2026-08-01",
       "top_paper_id": "a0193258-37e8-5ffa-bdb4-a3934ae62505",
       "papers_fetched": 2,
-      "pdf_path": "reports/2026/2026-08-01/Ten_advances_in_mathematics_and_theoretical_comput.pdf",
       "telegram_sent": true,
       "workflow_run_id": "30709595329"
     }

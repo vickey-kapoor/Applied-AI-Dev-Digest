@@ -130,11 +130,9 @@ CI needs no secrets and never sends a digest.
 
 ```
 src/fetchers/   one module per source
-src/            ranking, summarizing, article extraction, Telegram, PDF, KV, schedule guard, send claim
+src/            ranking, summarizing, article extraction, Telegram, KV, schedule guard, send claim
 dashboard/      Next.js dashboard (Vercel)
 data/           papers.json, digests.json, schedule_state.json
-reports/        generated PDFs, committed by the daily workflow,
-                partitioned as reports/YYYY/YYYY-MM-DD/
 tests/          pytest suite
 docs/           this file
 main.py         pipeline entry point

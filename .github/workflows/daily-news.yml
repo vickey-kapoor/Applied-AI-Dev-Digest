@@ -193,12 +193,14 @@ jobs:
           KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
         run: python3 -m src.digest_claim release
 
-      - name: Commit and push reports and data
+      - name: Commit and push data
         if: steps.guard.outputs.daily == 'true' && steps.claim.outputs.claimed == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add reports/ data/
+          # data/ only. The pipeline produces no files to keep beyond the JSON
+          # the dashboard reads.
+          git add data/
           # Include the UTC time: scheduler drift can put two runs on one date,
           # and a date-only message makes them indistinguishable in the log.
           git diff --staged --quiet || git commit -m "Add daily research digest for $(date -u +'%d-%b-%Y %H:%M') UTC"

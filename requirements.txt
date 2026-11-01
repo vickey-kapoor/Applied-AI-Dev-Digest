@@ -3,7 +3,6 @@ requests==2.34.2
 python-dotenv==1.2.4
 openai==3.37.0
 feedparser==6.0.14
-fpdf2==2.8.9
 
 # Testing dependencies
 pytest==9.1.1

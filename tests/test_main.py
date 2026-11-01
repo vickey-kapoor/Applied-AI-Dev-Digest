@@ -33,7 +33,6 @@ class TestMain:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.generate_digest_pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers")
     @patch("main.rank_news_ranked")
@@ -50,7 +49,6 @@ class TestMain:
         mock_rank_news_ranked,
         mock_export_papers,
         mock_summarize_release,
-        mock_generate_digest_pdf,
         mock_format_digest_message,
         mock_send_telegram_message,
         mock_export_digest,
@@ -76,7 +74,6 @@ class TestMain:
         mock_rank_news_ranked.return_value = [paper]
         mock_export_papers.return_value = "paper-1"
         mock_summarize_release.return_value = enriched_paper
-        mock_generate_digest_pdf.return_value = "reports/2026/2026-03-13/test.pdf"
         mock_format_digest_message.return_value = "formatted"
         monkeypatch.setenv("GITHUB_RUN_ID", "run-123")
 
@@ -88,7 +85,6 @@ class TestMain:
 
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.generate_digest_pdf")
     @patch("main.summarize_release")
     @patch("main.export_digest")
     @patch("main.export_papers")
@@ -107,7 +103,6 @@ class TestMain:
         mock_export_papers,
         mock_export_digest,
         mock_summarize_release,
-        mock_generate_digest_pdf,
         mock_format_digest_message,
         mock_send_telegram_message,
         env_vars,
@@ -131,7 +126,6 @@ class TestMain:
         mock_rank_news_ranked.return_value = [paper]
         mock_export_papers.return_value = "paper-1"
         mock_summarize_release.return_value = paper
-        mock_generate_digest_pdf.return_value = "reports/2026/2026-03-13/test.pdf"
         mock_format_digest_message.return_value = "formatted"
         mock_send_telegram_message.side_effect = RuntimeError("send failed")
 
@@ -177,7 +171,6 @@ class TestMain:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message", return_value="formatted")
-    @patch("main.generate_digest_pdf", return_value="reports/x.pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers", return_value="paper-1")
     @patch("main.rank_news_ranked")
@@ -194,7 +187,6 @@ class TestMain:
         mock_rank_news_ranked,
         mock_export_papers,
         mock_summarize_release,
-        mock_generate_digest_pdf,
         mock_format_digest_message,
         mock_send_telegram_message,
         mock_export_digest,
@@ -237,7 +229,6 @@ class TestHistoryList:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message", return_value="formatted")
-    @patch("main.generate_digest_pdf", return_value="reports/2026/2026-03-13/test.pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers", return_value="paper-1")
     @patch("main.rank_news_ranked")
@@ -254,7 +245,6 @@ class TestHistoryList:
         mock_rank_news_ranked,
         mock_export_papers,
         mock_summarize_release,
-        mock_generate_digest_pdf,
         mock_format_digest_message,
         mock_send_telegram_message,
         mock_export_digest,
@@ -286,7 +276,6 @@ class TestHistoryList:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message", return_value="formatted")
-    @patch("main.generate_digest_pdf", return_value="reports/2026/2026-03-13/test.pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers", return_value="paper-1")
     @patch("main.rank_news_ranked")
@@ -303,7 +292,6 @@ class TestHistoryList:
         mock_rank_news_ranked,
         mock_export_papers,
         mock_summarize_release,
-        mock_generate_digest_pdf,
         mock_format_digest_message,
         mock_send_telegram_message,
         mock_export_digest,
@@ -454,7 +442,6 @@ class TestQuietDayNotice:
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message", return_value="formatted")
     @patch("main.export_digest")
-    @patch("main.generate_digest_pdf", return_value="reports/x.pdf")
     @patch("main.summarize_release")
     @patch("main.export_papers", return_value="paper-1")
     @patch("main.rank_news_ranked")
@@ -473,7 +460,6 @@ class TestQuietDayNotice:
         mock_rank,
         mock_export_papers,
         mock_summarize,
-        mock_pdf,
         mock_export_digest,
         mock_format,
         mock_send,
@@ -567,7 +553,6 @@ class TestCandidatesAreOpenedBeforeRanking:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.generate_digest_pdf")
     @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="fetched late")
@@ -579,7 +564,7 @@ class TestCandidatesAreOpenedBeforeRanking:
     @patch("main.is_paused", return_value=False)
     def test_the_ranker_receives_items_carrying_article_text(
         self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_attach,
-        _fetch_late, _summarize, _papers, _pdf, _format, _send, _digest, env_vars,
+        _fetch_late, _summarize, _papers, _format, _send, _digest, env_vars,
     ):
         candidates = self._candidates()
         mock_fetch_all.return_value = candidates
@@ -599,7 +584,6 @@ class TestCandidatesAreOpenedBeforeRanking:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.generate_digest_pdf")
     @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="fetched late")
@@ -611,7 +595,7 @@ class TestCandidatesAreOpenedBeforeRanking:
     @patch("main.is_paused", return_value=False)
     def test_the_winner_is_not_opened_a_second_time(
         self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_attach,
-        mock_fetch_late, _summarize, _papers, _pdf, _format, _send, _digest, env_vars,
+        mock_fetch_late, _summarize, _papers, _format, _send, _digest, env_vars,
     ):
         """summarize_release reads the same field the pre-ranking fetch filled."""
         candidates = self._candidates()
@@ -628,7 +612,6 @@ class TestCandidatesAreOpenedBeforeRanking:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.generate_digest_pdf")
     @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="fetched late")
@@ -640,7 +623,7 @@ class TestCandidatesAreOpenedBeforeRanking:
     @patch("main.is_paused", return_value=False)
     def test_a_failure_to_open_the_links_still_sends_a_digest(
         self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, _attach,
-        _fetch_late, _summarize, _papers, _pdf, _format, mock_send, _digest, env_vars,
+        _fetch_late, _summarize, _papers, _format, mock_send, _digest, env_vars,
     ):
         """Ranking on feed summaries is the old behaviour: worse, not broken."""
         mock_fetch_all.return_value = self._candidates()

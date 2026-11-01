@@ -28,4 +28,10 @@ Thumbs.db
 # Logs
 *.log
 
+# The pipeline no longer produces PDFs. These stay so that a stray PDF - an old
+# report restored from history, one dropped in while debugging - is not
+# committed by the daily workflow's "git add".
+*.pdf
+reports/
+
 CLAUDE.md

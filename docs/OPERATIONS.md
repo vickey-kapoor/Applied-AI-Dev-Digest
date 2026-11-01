@@ -110,11 +110,9 @@ mocked, so CI needs no secrets and never sends a digest.
 
 ```
 src/fetchers/   one module per source
-src/            ranking, summarizing, article extraction, Telegram, PDF, KV, schedule guard, send claim
+src/            ranking, summarizing, article extraction, Telegram, KV, schedule guard, send claim
 data/           digests.json (one entry per day, the already-sent record),
                 schedule_state.json (the last date sent)
-reports/        generated PDFs, committed by the daily workflow,
-                partitioned as reports/YYYY/YYYY-MM-DD/
 tests/          pytest suite
 docs/           this file
 main.py         pipeline entry point

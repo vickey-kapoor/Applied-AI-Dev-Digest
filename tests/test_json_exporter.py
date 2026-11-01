@@ -95,7 +95,6 @@ class TestExportDigest:
                     "date": "2026-03-13",
                     "top_paper_id": "",
                     "papers_fetched": 1,
-                    "pdf_path": "",
                     "telegram_sent": False,
                     "workflow_run_id": "",
                 }
@@ -116,7 +115,6 @@ class TestExportDigest:
             json_exporter.export_digest(
                 top_paper_id="paper-1",
                 papers_fetched=5,
-                pdf_path="reports/2026/2026-03-13/test.pdf",
                 telegram_sent=True,
                 workflow_run_id="run-1",
             )

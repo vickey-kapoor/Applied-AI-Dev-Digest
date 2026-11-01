@@ -17,7 +17,6 @@ from src.telegram_sender import (
     format_quiet_day_message,
     send_telegram_message,
 )
-from src.pdf_generator import generate_digest_pdf
 from src.json_exporter import export_digest, get_sent_top_paper_ids, _paper_id_for_item
 
 logger = get_logger(__name__)
@@ -85,7 +84,6 @@ def main():
             export_digest(
                 top_paper_id=None,
                 papers_fetched=0,
-                pdf_path=None,
                 telegram_sent=False,
                 workflow_run_id=os.getenv("GITHUB_RUN_ID", ""),
             )
@@ -168,23 +166,13 @@ def main():
             if "what_shipped" in top_item:
                 logger.info("Generated structured brief")
             if "detailed_summary" in top_item:
-                logger.info("Generated detailed summary for PDF")
+                logger.info("Generated the long-form brief")
         except Exception:
             logger.warning("Could not generate summaries")
 
         # The id recorded for today, and what tomorrow's run compares against
         # when it filters out everything already sent.
         top_paper_id = _paper_id_for_item(top_item)
-
-    # Generate PDF report
-    pdf_path = None
-    if top_item:
-        logger.info("Generating PDF report...")
-        try:
-            pdf_path = generate_digest_pdf(top_item)
-            logger.info("PDF saved: %s", pdf_path)
-        except Exception:
-            logger.warning("Could not generate PDF")
 
     # Send Telegram message (only if we have a new item to send)
     telegram_sent = False
@@ -205,7 +193,6 @@ def main():
         export_digest(
             top_paper_id=top_paper_id,
             papers_fetched=len(items),
-            pdf_path=pdf_path,
             telegram_sent=telegram_sent,
             workflow_run_id=workflow_run_id
         )

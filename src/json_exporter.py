@@ -129,7 +129,6 @@ def get_sent_top_paper_ids() -> set[str]:
 def export_digest(
     top_paper_id: str,
     papers_fetched: int,
-    pdf_path: str = None,
     telegram_sent: bool = False,
     workflow_run_id: str = None
 ):
@@ -139,7 +138,6 @@ def export_digest(
     Args:
         top_paper_id: ID of the top-ranked paper
         papers_fetched: Number of papers fetched
-        pdf_path: Path to generated PDF report
         telegram_sent: Whether Telegram message was sent
         workflow_run_id: GitHub Actions run ID (optional)
 
@@ -165,8 +163,6 @@ def export_digest(
             previous_run_at = digest.get("run_at")
             digest["top_paper_id"] = top_paper_id
             digest["papers_fetched"] = papers_fetched
-            if pdf_path:
-                digest["pdf_path"] = pdf_path
             digest["telegram_sent"] = telegram_sent
             digest["run_at"] = run_at
             if previous_run_at:
@@ -188,7 +184,6 @@ def export_digest(
         "run_at": run_at,
         "top_paper_id": top_paper_id or "",
         "papers_fetched": papers_fetched,
-        "pdf_path": pdf_path or "",
         "telegram_sent": telegram_sent,
         "workflow_run_id": workflow_run_id or ""
     }

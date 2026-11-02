@@ -4,7 +4,12 @@ import json
 
 from openai import OpenAI
 
-from src.ai_text import sanitize_prompt_text
+from src.ai_text import (
+    UNTRUSTED_DATA_RULE,
+    new_block_nonce,
+    sanitize_prompt_text,
+    untrusted_block,
+)
 from src.constants import (
     OPENAI_MODEL_SUMMARY,
     OPENAI_TEMPERATURE,
@@ -141,13 +146,24 @@ def summarize_release(item: dict, api_key: str) -> dict:
     client = OpenAI(api_key=api_key)
     title, source, description, body_label = _prepare_inputs(item)
 
+    # Title, source and body all come from someone else's page. They go inside
+    # markers carrying an id minted for this call, with the rule above them, so
+    # the model is told where the data starts and that it is data. See
+    # src/ai_text.py.
+    nonce = new_block_nonce()
+    item_block = untrusted_block(
+        "ITEM",
+        f"Item title: {title}\nSource: {source}\n{body_label}: {description}",
+        nonce,
+    )
+
     prompt = f"""You are briefing an applied AI engineer: someone who builds production systems on models — serving them, evaluating them, wiring them into agents and products. Write for what they have to decide, not for what is notable about the field.
 Be concrete and factual. No hype, no marketing language. Prefer specifics — model names, numbers, prices, dates — over adjectives.
 If the text below does not state something, say so rather than inventing it. A thin teaser is not licence to guess — write "Not stated" and let the reader click through.
 
-Item title: {title}
-Source: {source}
-{body_label}: {description}
+{UNTRUSTED_DATA_RULE}
+
+{item_block}
 
 Return JSON (no markdown fences):
 {{

@@ -5,7 +5,12 @@ import re
 
 from openai import OpenAI
 
-from src.ai_text import sanitize_prompt_text
+from src.ai_text import (
+    UNTRUSTED_DATA_RULE,
+    new_block_nonce,
+    sanitize_prompt_text,
+    untrusted_block,
+)
 from src.constants import (
     OPENAI_MODEL_RANKING,
     OPENAI_MAX_TOKENS_RANKING,
@@ -280,6 +285,13 @@ def rank_news_ranked(items: list[dict], api_key: str) -> list[dict]:
         for i, r in enumerate(items)
     )
 
+    # The items are third-party text — titles, feed blurbs and the body of
+    # whatever page each one links to. They go inside markers carrying an id
+    # minted for this call, with the rule above them, so that a page cannot
+    # close the block and continue in the prompt's own voice. See src/ai_text.py.
+    nonce = new_block_nonce()
+    items_block = untrusted_block("ITEMS", items_text, nonce)
+
     prompt = f"""You are briefing an applied AI engineer: someone who builds production systems on top of models — serving them, evaluating them, wiring them into agents and products.
 
 Your job is to order today's items by how useful each one is to that person.
@@ -304,8 +316,10 @@ Deprioritize:
 
 Prefer first-party announcements over coverage of them. When two items describe the same thing, pick the one closest to the source.
 
+{UNTRUSTED_DATA_RULE}
+
 Items:
-{items_text}
+{items_block}
 
 First decide, for each item, whether an applied AI engineer should see it at all. Reject anything that is off-domain, pure marketing, a bare version bump, or has nothing they could act on — be willing to reject most of the list, and to reject all of it. A short honest digest beats a padded one.
 

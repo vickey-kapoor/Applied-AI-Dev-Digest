@@ -61,6 +61,29 @@ went with it. All of them are on by default, because a topic that is off also
 drops its keywords from the filter. Bare model-family names ("Claude", "GPT-") are `weak_keywords`, which
 filter but barely tag.
 
+## Untrusted input
+
+Item titles, feed summaries and fetched page bodies are written by whoever got
+an item into a feed or onto Hacker News, so two guards sit between them and
+the rest of the pipeline.
+
+Prompts (`src/ai_text.py`): untrusted text goes inside markers carrying a
+random id minted per call, under a rule telling the model the block is data,
+and `sanitize_prompt_text` strips control, zero-width and bidirectional
+characters, chat-template tokens and markdown fences. Overt override phrasing
+is still replaced and logged at WARNING, so an attempt is visible in the run
+log. Both model replies are constrained by strict JSON schemas
+(`src/openai_call.py`), which is what bounds the damage either way.
+
+Fetching (`src/url_guard.py`): `fetch_article_text` opens only http/https URLs
+whose host resolves entirely to public addresses — loopback, RFC-1918,
+link-local (and so `169.254.169.254`), unique-local and internal-only names
+are refused, as are credentials in the URL and the non-dotted IPv4 spellings
+(`127.1`, `2130706433`). Redirects are followed by the fetcher rather than by
+`requests`, up to `MAX_REDIRECTS`, with the same check on every hop. A refusal
+is the same quiet fallback as an unreachable blog: the item keeps its feed
+summary.
+
 ## Scheduling
 
 `daily-news.yml` polls hourly and `src/schedule_guard.py` decides each tick:
@@ -110,7 +133,7 @@ mocked, so CI needs no secrets and never sends a digest.
 
 ```
 src/fetchers/   one module per source
-src/            ranking, summarizing, article extraction, Telegram, KV, schedule guard, send claim
+src/            ranking, summarizing, article extraction, prompt/URL guards, Telegram, KV, schedule guard, send claim
 data/           digests.json (one entry per day, the already-sent record),
                 schedule_state.json (the last date sent)
 tests/          pytest suite

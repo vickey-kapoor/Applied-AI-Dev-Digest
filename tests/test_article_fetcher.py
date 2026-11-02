@@ -9,14 +9,28 @@ Every failure here must return "" rather than raise, because the caller's
 fallback is that same feed summary and a blog being down must not skip a day.
 """
 
+import socket
 from unittest.mock import MagicMock, patch
 
+import pytest
+
+from src import url_guard
 from src.article_fetcher import (
     MIN_USEFUL_CHARS,
     attach_article_text,
     extract_text,
     fetch_article_text,
 )
+# Captured at import, before conftest's autouse fixture replaces the module
+# attribute: the redirect walk is what these tests exercise, so they need the
+# real thing rather than the "tests must not make real HTTP requests" guard.
+from src.article_fetcher import _get as real_get
+from src.url_guard import MAX_REDIRECTS, UnsafeUrlError
+
+
+def _public_dns(host, port, *args, **kwargs):
+    """Resolve any host to one public address, so no test needs a resolver."""
+    return [(socket.AF_INET, socket.SOCK_STREAM, 6, "", ("93.184.216.34", port or 0))]
 
 LONG = "This sentence carries enough words to count as a real paragraph of body text. "
 
@@ -308,3 +322,112 @@ class TestAttachArticleText:
 
         assert result == [{"title": "a", "summary": "s"}]
         mock_fetch.assert_not_called()
+
+
+class TestSsrfGuard:
+    """Where the fetcher is allowed to connect.
+
+    Candidate URLs are third-party data — feeds, scraped listings, Hacker News,
+    HF Papers — and this job runs with the Telegram, OpenAI and KV secrets in
+    its environment. The guard itself is tested in test_url_guard.py; these
+    tests pin that the fetcher actually consults it, on the URL handed in and
+    on every redirect, and that a refusal is the same quiet fallback as a blog
+    being down.
+    """
+
+    def _redirect(self, location: str, status=302):
+        r = MagicMock()
+        r.status_code = status
+        r.headers = {"Location": location}
+        r.is_redirect = True
+        r.close = MagicMock()
+        return r
+
+    def _page_response(self, body: str):
+        r = MagicMock()
+        r.status_code = 200
+        r.headers = {"Content-Type": "text/html"}
+        r.encoding = "utf-8"
+        r.is_redirect = False
+        r.iter_content = lambda chunk_size=65536, decode_unicode=False: [body]
+        r.__enter__ = lambda s: s
+        r.__exit__ = MagicMock(return_value=False)
+        return r
+
+    @patch("src.article_fetcher.assert_fetchable")
+    @patch("src.article_fetcher.requests.get")
+    def test_every_hop_is_checked_and_requests_does_not_follow(self, mock_get, mock_check):
+        """requests must not follow redirects itself: the guard has to see each one."""
+        mock_get.side_effect = [
+            self._redirect("https://lab.example/final"),
+            self._page_response(_page(f"<article><p>{LONG * 8}</p></article>")),
+        ]
+
+        response = real_get("https://news.example/t/123")
+
+        assert response.status_code == 200
+        assert [call.args[0] for call in mock_check.call_args_list] == [
+            "https://news.example/t/123",
+            "https://lab.example/final",
+        ]
+        for call in mock_get.call_args_list:
+            assert call.kwargs["allow_redirects"] is False
+
+    @patch("src.article_fetcher.assert_fetchable")
+    @patch("src.article_fetcher.requests.get")
+    def test_a_relative_location_is_resolved_against_the_hop(self, mock_get, mock_check):
+        mock_get.side_effect = [
+            self._redirect("/the/post"),
+            self._page_response(_page(f"<p>{LONG * 8}</p>")),
+        ]
+
+        real_get("https://lab.example/news/old")
+
+        assert mock_check.call_args_list[1].args[0] == "https://lab.example/the/post"
+
+    @patch("src.article_fetcher.requests.get")
+    def test_a_redirect_into_a_private_address_is_refused(self, mock_get):
+        """The way around a check made only on the URL that was handed in."""
+        mock_get.return_value = self._redirect("http://169.254.169.254/latest/meta-data/")
+
+        with patch.object(url_guard.socket, "getaddrinfo", _public_dns):
+            with pytest.raises(UnsafeUrlError):
+                real_get("https://lab.example/post")
+
+    @patch("src.article_fetcher.requests.get")
+    def test_a_redirect_loop_runs_out_of_budget(self, mock_get):
+        mock_get.return_value = self._redirect("https://lab.example/again")
+
+        with patch.object(url_guard.socket, "getaddrinfo", _public_dns):
+            with pytest.raises(UnsafeUrlError, match="redirects"):
+                real_get("https://lab.example/post")
+
+        assert mock_get.call_count == MAX_REDIRECTS + 1
+
+    @patch("src.article_fetcher.requests.get")
+    def test_fetch_article_text_swallows_a_refusal_like_any_other_failure(self, mock_get):
+        """A refused URL must not take the digest down: the feed summary stands."""
+        mock_get.return_value = self._redirect("http://127.0.0.1:8000/admin")
+
+        with patch("src.article_fetcher._get", real_get):
+            with patch.object(url_guard.socket, "getaddrinfo", _public_dns):
+                assert fetch_article_text("https://lab.example/post") == ""
+
+    def test_a_private_target_is_rejected_before_any_request(self):
+        """No socket, no resolver: the autouse _get patch would raise if called."""
+        for url in (
+            "http://169.254.169.254/latest/meta-data/",
+            "http://localhost:8000/admin",
+            "http://10.0.0.5/",
+            "http://user:pw@lab.example/post",
+            "http://metadata.google.internal/",
+        ):
+            assert fetch_article_text(url) == ""
+
+    @patch("src.article_fetcher.requests.get")
+    def test_the_reader_proxy_is_not_asked_for_a_private_target(self, mock_get):
+        """The proxy fetches on our behalf, so it is not a way around the guard."""
+        from src.article_fetcher import _fetch_via_reader
+
+        assert _fetch_via_reader("http://169.254.169.254/latest/meta-data/") == ""
+        mock_get.assert_not_called()

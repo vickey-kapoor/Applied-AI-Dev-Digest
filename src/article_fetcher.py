@@ -30,6 +30,7 @@ directly besides — see src/fetchers/openai_changelog_fetcher.py.
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from html.parser import HTMLParser
+from urllib.parse import urljoin
 import html as html_module
 
 import os
@@ -38,6 +39,7 @@ import requests
 
 from src.constants import REQUEST_TIMEOUT, USER_AGENT
 from src.logger import get_logger
+from src.url_guard import MAX_REDIRECTS, UnsafeUrlError, assert_fetchable, check_url_shape
 from src.utils.retry import retry_with_backoff
 
 logger = get_logger(__name__)
@@ -166,12 +168,39 @@ def extract_text(markup: str) -> str:
 
 @retry_with_backoff(exceptions=(requests.RequestException,))
 def _get(url: str) -> requests.Response:
-    return requests.get(
-        url,
-        timeout=REQUEST_TIMEOUT,
-        headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml"},
-        stream=True,
-    )
+    """Fetch a URL, checking every hop, and return the final response.
+
+    Redirects are followed here rather than by requests, because the guard has
+    to see each target: these URLs come from feeds, scraped listings, Hacker
+    News and HF Papers, and a public link that answers 302 to
+    `http://169.254.169.254/...` is how a check done only on the URL handed in
+    gets walked around. Each hop is resolved and rejected unless it is a public
+    address (src/url_guard.py), so the request is made only to hosts worth
+    connecting to.
+
+    Raises UnsafeUrlError for a URL that must not be fetched, which the caller
+    turns into the feed-summary fallback like any other failure.
+    """
+    current = url
+    for _ in range(MAX_REDIRECTS + 1):
+        assert_fetchable(current)
+        response = requests.get(
+            current,
+            timeout=REQUEST_TIMEOUT,
+            headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml"},
+            stream=True,
+            allow_redirects=False,
+        )
+        if not response.is_redirect:
+            return response
+
+        location = response.headers.get("Location", "")
+        response.close()
+        # Relative Locations are the common case, so resolve against the hop
+        # that issued them before the next check.
+        current = urljoin(current, location)
+
+    raise UnsafeUrlError(f"more than {MAX_REDIRECTS} redirects from {url}")
 
 
 # Jina's reader prefixes its output with a few header lines ("Title:",
@@ -190,6 +219,14 @@ def _fetch_via_reader(url: str) -> str:
     applies the same length bounds a direct fetch would.
     """
     if not READER_PROXY_URL:
+        return ""
+
+    try:
+        # The proxy fetches on this project's behalf, so a target that is not
+        # safe to open directly is not safe to ask the proxy for either.
+        check_url_shape(url)
+    except UnsafeUrlError as exc:
+        logger.info("Not asking the reader proxy for %s: %s", url, exc)
         return ""
 
     try:
@@ -226,7 +263,10 @@ def fetch_article_text(url: str) -> str:
     Never raises: the caller's fallback is the RSS summary, and a digest that
     skips a day because a blog was down would be worse than a thin brief.
     """
-    if not url or not url.startswith(("http://", "https://")):
+    try:
+        check_url_shape(url)
+    except UnsafeUrlError as exc:
+        logger.info("Skipping %s: %s", url or "(no URL)", exc)
         return ""
 
     try:
@@ -271,6 +311,10 @@ def fetch_article_text(url: str) -> str:
                 if total >= MAX_DOWNLOAD_BYTES:
                     break
             markup = "".join(chunks)
+    except UnsafeUrlError as exc:
+        # A redirect into a private address, or a chain too long to be real.
+        logger.warning("Refused to fetch %s: %s", url, exc)
+        return ""
     except Exception:
         logger.info("Could not fetch article %s", url)
         return ""

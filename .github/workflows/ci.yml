@@ -1,7 +1,10 @@
 name: CI
 
-# Runs the test suite and static checks on every pull request and on main.
-# The daily digest workflow lives in daily-news.yml and is unaffected by this.
+# Runs the Python test suite on every pull request and on main. The daily
+# digest workflow lives in daily-news.yml and is unaffected by this.
+#
+# There was a second job here for the Vercel dashboard (Node, tsc, ESLint,
+# Vitest). The dashboard is gone and so is the job.
 
 on:
   pull_request:
@@ -42,47 +45,3 @@ jobs:
       # The suite mocks every network and OpenAI call, so no secrets are needed.
       - name: Run tests
         run: pytest
-
-  dashboard:
-    name: Dashboard typecheck and lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    defaults:
-      run:
-        working-directory: dashboard
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7.0.1
-
-      # Floating major, unlike the pinned actions above: this is the first use
-      # of setup-node in the repo and no existing pin to match. Pin to a patch
-      # version once a known-good one has run here.
-      # 22, not 20: jsdom 30 pulls undici 8, which declares
-      # "node": ">=22.19.0" and, at require time on Node 20, reads a
-      # node:zlib zstd export that does not exist there — every vitest worker
-      # failed to start with "Cannot read properties of undefined (reading
-      # 'bind')" before this bump. npm ci does not fail on an unmet engines
-      # field, so the only symptom was the test run.
-      - name: Set up Node
-        uses: actions/setup-node@v7.1.0
-        with:
-          node-version: '22'
-          cache: npm
-          cache-dependency-path: dashboard/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Typecheck
-        run: npx tsc --noEmit
-
-      - name: Lint
-        run: npm run lint
-
-      # Added once dashboard test files existed. Excluded when this workflow
-      # was introduced because vitest exits 1 with no tests to run, which
-      # would have made CI permanently red.
-      - name: Test
-        run: npm test

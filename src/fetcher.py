@@ -325,8 +325,8 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
     # "StreetComplete on iOS is now in public beta" on the phrase "public beta"
     # while dropping DeepMind's "Introducing SynthID Bio" for naming no model.
     #
-    # Tagging still runs on everything, so curated posts keep a topic_id for
-    # the dashboard and for feedback weighting.
+    # Tagging still runs on everything, so a curated post keeps a topic_id:
+    # the digest message shows it.
     if filter_keywords:
         topics = get_active_topics()
         kw_lower = [k.lower() for k in filter_keywords]

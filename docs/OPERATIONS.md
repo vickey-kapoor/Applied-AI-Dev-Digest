@@ -9,9 +9,10 @@ Everything needed to run, schedule and deploy the digest. The [README](../README
    `https://api.telegram.org/bot<TOKEN>/getUpdates`.
 2. **OpenAI** — create an API key at
    [platform.openai.com](https://platform.openai.com/).
-3. **Vercel KV** — in your Vercel project, Storage → Create Database → Upstash
-   KV. Vercel sets `KV_REST_API_URL` and `KV_REST_API_TOKEN`; copy the same
-   values into GitHub Secrets.
+3. **Vercel KV** — Storage → Create Database → Upstash KV in any Vercel
+   project. Copy `KV_REST_API_URL` and `KV_REST_API_TOKEN` into GitHub
+   Secrets. This is the only thing KV is used for: the claim that stops two
+   overlapping runs sending the same digest twice.
 
 **GitHub Secrets** (Settings → Secrets → Actions):
 
@@ -20,14 +21,11 @@ Everything needed to run, schedule and deploy the digest. The [README](../README
 | `TELEGRAM_BOT_TOKEN` | required |
 | `TELEGRAM_CHAT_ID` | required |
 | `OPENAI_API_KEY` | required — ranking and summaries |
-| `KV_REST_API_URL` | optional — enables dynamic topics and the send claim |
-| `KV_REST_API_TOKEN` | optional — enables dynamic topics and the send claim |
+| `KV_REST_API_URL` | required in Actions — the exactly-once send claim |
+| `KV_REST_API_TOKEN` | required in Actions — the exactly-once send claim |
 
 `GITHUB_TOKEN` is provided automatically by Actions. Locally, setting one in
 `.env` only raises the rate limit for release fetching.
-
-**Vercel env vars**: add `KV_REST_API_URL`, `KV_REST_API_TOKEN`,
-`TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` for the dashboard features.
 
 ## Models
 
@@ -57,10 +55,10 @@ top of `src/constants.py`.
 
 Lab feeds are not keyword-filtered (publication venue is the signal); the open
 sources — HN and HF papers — are, and the corporate-news blocklist applies to
-them too. The nine topics are defined in `src/topic_config.py` and mirrored in
-`dashboard/src/lib/topics.ts`; keep the two in sync when editing. All of them
-are on by default, because a topic that is off also drops its keywords from the
-filter. Bare model-family names ("Claude", "GPT-") are `weak_keywords`, which
+them too. The nine topics are defined in `src/topic_config.py`, which is the
+only copy — a TypeScript mirror in the dashboard had to be edited in step and
+went with it. All of them are on by default, because a topic that is off also
+drops its keywords from the filter. Bare model-family names ("Claude", "GPT-") are `weak_keywords`, which
 filter but barely tag.
 
 ## Scheduling
@@ -100,39 +98,21 @@ pip install -r requirements.txt
 cp .env.example .env            # then add your keys
 
 python main.py                  # run the pipeline
-python preview.py               # preview without sending (JSON to stdout)
+python preview.py               # same fetch and ranking, no send (JSON to stdout)
 pytest                          # run the tests
 ```
 
-Dashboard:
-
-```bash
-cd dashboard
-npm install
-npm run dev     # dev server
-npm run build   # production build
-npm run lint    # ESLint
-npm test        # Vitest
-```
-
 **CI** (`.github/workflows/ci.yml`) runs on every PR and on pushes to the
-default branch: `pytest` on Python 3.11, plus `tsc --noEmit`, `npm run lint`
-and `npm test` for the dashboard. Every network and OpenAI call is mocked, so
-CI needs no secrets and never sends a digest.
-
-## Dashboard deployment
-
-1. Connect the repository to Vercel and set the root directory to `dashboard/`.
-2. Add the env vars listed under Setup.
-3. Deploy — Vercel auto-detects Next.js.
+default branch: `pytest` on Python 3.11. Every network and OpenAI call is
+mocked, so CI needs no secrets and never sends a digest.
 
 ## Layout
 
 ```
 src/fetchers/   one module per source
 src/            ranking, summarizing, article extraction, Telegram, KV, schedule guard, send claim
-dashboard/      Next.js dashboard (Vercel)
-data/           papers.json, digests.json, schedule_state.json
+data/           digests.json (one entry per day, the already-sent record),
+                schedule_state.json (the last date sent)
 tests/          pytest suite
 docs/           this file
 main.py         pipeline entry point

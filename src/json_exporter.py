@@ -1,4 +1,10 @@
-"""JSON export utilities for dashboard data."""
+"""The digest's own record of what it has sent.
+
+`digests.json` is one entry per day, and `get_sent_top_paper_ids` reads it back
+so a story cannot be the top pick twice. It is the only JSON the pipeline keeps:
+`papers.json`, a 500-item rolling archive, was written for the Vercel dashboard
+and read by nothing else.
+"""
 
 import json
 import os
@@ -8,10 +14,8 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from src.constants import PAPERS_CAP, DIGEST_CAP_DAYS
+from src.constants import DIGEST_CAP_DAYS
 from src.logger import get_logger
-from src.news_summarizer import SUMMARY_FIELDS
-from src.topic_config import DEFAULT_TOPICS, score_topics
 
 logger = get_logger(__name__)
 
@@ -120,128 +124,6 @@ def get_sent_top_paper_ids() -> set[str]:
         for d in data.get("digests", [])
         if d.get("top_paper_id") and d.get("telegram_sent", False)
     }
-
-
-def export_papers(items: list[dict], ranked_paper: dict = None) -> str:
-    """
-    Export fetched papers to papers.json.
-
-    Args:
-        items: List of digest items from fetch_all
-        ranked_paper: The top-ranked paper (optional, to update ranking score)
-
-    Returns:
-        ID of the top paper if ranked_paper provided
-    """
-    data = load_json("papers.json")
-    if "papers" not in data:
-        data["papers"] = []
-
-    existing_by_identity = {
-        _paper_identity(paper): paper
-        for paper in data["papers"]
-    }
-    existing_by_title = {
-        _identity_title(paper.get("title", "")): paper
-        for paper in data["papers"]
-    }
-    top_paper_id = None
-    now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
-
-    for item in items:
-        identity = _paper_identity(item)
-        normalized_title = _identity_title(item.get("title", ""))
-        existing_paper = existing_by_identity.get(identity) or existing_by_title.get(normalized_title)
-
-        is_top = ranked_paper and identity == _paper_identity(ranked_paper)
-        if existing_paper:
-            if is_top:
-                top_paper_id = existing_paper.get("id")
-            continue
-
-        paper_id = _paper_id_for_item(item)
-        if is_top:
-            top_paper_id = paper_id
-
-        paper = {
-            "id": paper_id,
-            "title": item.get("title", "Untitled"),
-            "summary": (item.get("summary", "") or "")[:1000],
-            "source": item.get("source", "Unknown"),
-            "url": item.get("url", ""),
-            "published_at": item.get("published", item.get("published_at", now.split("T")[0])),
-            "fetched_at": now,
-            "type": item.get("type", "announcement"),
-            "topic_id": item.get("topic_id", ""),
-            "topics": extract_topics(item),
-            "ranking_score": ranked_paper.get("ranking_score", 0) if is_top else 0,
-            "status": "unread"
-        }
-
-        # Persist an explicit identity so _paper_identity round-trips through
-        # the file. Without it every saved changelog row hashed back to
-        # "url:.../docs/changelog", collapsing the identity index to one entry
-        # and leaving _identity_title as the only thing stopping a re-fetch
-        # inside the recency window from appending the same entry again.
-        if item.get("identity"):
-            paper["identity"] = item["identity"]
-
-        # Carry the structured brief when the summarizer has run on this item.
-        # Only the top pick is summarized, so most items won't have these.
-        for field in SUMMARY_FIELDS:
-            value = item.get(field)
-            if value:
-                paper[field] = value
-
-        data["papers"].append(paper)
-        existing_by_identity[identity] = paper
-        existing_by_title[normalized_title] = paper
-
-    # Sort by fetched_at descending
-    data["papers"].sort(key=lambda x: x.get("fetched_at", ""), reverse=True)
-
-    # Keep only last N papers to prevent unbounded growth
-    data["papers"] = data["papers"][:PAPERS_CAP]
-
-    save_json("papers.json", data)
-    logger.info("Exported %d papers to papers.json", len(items))
-
-    return top_paper_id
-
-
-def extract_topics(item: dict) -> list[str]:
-    """Tag an item with display names of the topics its text matches.
-
-    Reads DEFAULT_TOPICS so the tags can never drift from the configured
-    taxonomy, and orders by how well each topic fits rather than by position
-    in that list — so a post carrying one model name and three agent terms
-    reads as agents first. An item already tagged with a topic_id by the
-    fetcher keeps that topic in front.
-    """
-    text = f"{item.get('title', '')} {item.get('summary', '')}"
-    title = item.get("title", "")
-    assigned_id = item.get("topic_id") or ""
-
-    topics: list[str] = []
-    for topic in score_topics(text, None, title):
-        name = topic["name"]
-        if name in topics:
-            continue
-        if topic["id"] == assigned_id:
-            topics.insert(0, name)
-        else:
-            topics.append(name)
-
-    # A topic_id assigned by an earlier run whose keywords have since changed
-    # still names the item's topic, so keep it rather than dropping it.
-    if assigned_id and not any(
-        t["id"] == assigned_id for t in score_topics(text, None, title)
-    ):
-        for topic in DEFAULT_TOPICS:
-            if topic["id"] == assigned_id and topic["name"] not in topics:
-                topics.insert(0, topic["name"])
-
-    return topics[:5]
 
 
 def export_digest(

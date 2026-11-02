@@ -1,10 +1,5 @@
 """Unit tests for topic configuration module."""
 
-from datetime import datetime, timezone
-from unittest.mock import patch
-
-import pytest
-
 from src.topic_config import (
     DEFAULT_TOPICS,
     RETIRED_TOPIC_IDS,
@@ -13,9 +8,6 @@ from src.topic_config import (
     score_topics,
     get_active_topics,
     get_active_keywords,
-    _get_enabled_topics,
-    is_paused,
-    get_feedback_weights,
 )
 
 
@@ -70,12 +62,13 @@ class TestDefaults:
         assert enabled == {t["id"] for t in DEFAULT_TOPICS}
 
 
-class TestGetEnabledTopics:
-    """Tests for _get_enabled_topics logic."""
+class TestGetActiveTopics:
+    """Tests for which topics the digest runs against."""
 
-    def test_returns_defaults_when_kv_is_none(self):
-        topics = _get_enabled_topics(None)
+    def test_every_default_topic_is_active(self):
+        topics = get_active_topics()
         ids = {t["id"] for t in topics}
+        assert len(topics) == 9
         assert "model_releases" in ids
         assert "product_api" in ids
         # Applied topics are on: what the reader can run, and the serving and
@@ -87,29 +80,20 @@ class TestGetEnabledTopics:
         assert "multimodal" in ids
         assert ids.isdisjoint(RETIRED_TOPIC_IDS)
 
-    def test_respects_kv_overrides(self):
-        kv_config = {
-            "model_releases": False,
-            "multimodal": True,
-        }
-        topics = _get_enabled_topics(kv_config)
-        ids = {t["id"] for t in topics}
-        assert "model_releases" not in ids
-        assert "multimodal" in ids
-
-    def test_unknown_keys_in_kv_ignored(self):
-        kv_config = {"unknown_topic": True, "model_releases": True}
-        topics = _get_enabled_topics(kv_config)
-        ids = {t["id"] for t in topics}
-        assert "model_releases" in ids
-        assert "unknown_topic" not in ids
+    def test_a_topic_disabled_in_the_table_drops_out(self):
+        """default_enabled is the only switch now that KV config is gone."""
+        topic = next(t for t in DEFAULT_TOPICS if t["id"] == "multimodal")
+        topic["default_enabled"] = False
+        try:
+            assert "multimodal" not in {t["id"] for t in get_active_topics()}
+        finally:
+            topic["default_enabled"] = True
 
 
 class TestGetActiveKeywords:
     """Tests for get_active_keywords."""
 
-    @patch("src.topic_config._fetch_kv_config", return_value=None)
-    def test_defaults_include_expected_keywords(self, mock_kv):
+    def test_defaults_include_expected_keywords(self):
         keywords = get_active_keywords()
         assert "RLHF" in keywords
         assert "system card" in keywords
@@ -117,8 +101,7 @@ class TestGetActiveKeywords:
         # A weak keyword gates even though it barely tags.
         assert "Claude" in keywords
 
-    @patch("src.topic_config._fetch_kv_config", return_value=None)
-    def test_defaults_exclude_removed_keywords(self, mock_kv):
+    def test_defaults_exclude_removed_keywords(self):
         keywords = get_active_keywords()
         # Measured casualties of substring matching: 3 of 4 "serving" matches
         # were the word *preserving*, and "jailbreak" admitted a Nintendo
@@ -129,142 +112,15 @@ class TestGetActiveKeywords:
         assert "model card" not in keywords
         assert "Blackwell" in keywords
 
-    @patch("src.topic_config._fetch_kv_config")
-    def test_kv_config_can_switch_a_topic_off(self, mock_kv):
-        """KV can disable a topic, removing its keywords from the gate."""
-        mock_kv.return_value = {
-            "multimodal": False,
-        }
-        keywords = get_active_keywords()
-        assert "world simulation" not in keywords
-        assert "Sora" not in keywords
-        assert "benchmark" in keywords
-
-    @patch("src.topic_config._fetch_kv_config", return_value=None)
-    def test_keywords_are_deduplicated(self, mock_kv):
+    def test_keywords_are_deduplicated(self):
         keywords = get_active_keywords()
         assert len(keywords) == len(set(keywords))
 
-    @patch("src.topic_config._fetch_kv_config", return_value=None)
-    def test_no_generic_supplemental_keywords(self, mock_kv):
+    def test_no_generic_supplemental_keywords(self):
         keywords = get_active_keywords()
         assert "model" not in keywords
         assert "release" not in keywords
         assert "launch" not in keywords
-
-
-class TestFetchKvConfig:
-    """Tests for KV fetch error handling."""
-
-    @patch("src.topic_config._fetch_kv_config", return_value=None)
-    def test_graceful_fallback_when_no_kv(self, mock_kv):
-        topics = get_active_topics()
-        assert len(topics) == 9  # every topic is on by default
-        ids = {t["id"] for t in topics}
-        assert "model_releases" in ids
-        keywords = get_active_keywords()
-        assert len(keywords) > 0
-
-
-class TestIsPaused:
-    """Tests for is_paused."""
-
-    @patch("src.topic_config._kv_get", return_value=True)
-    def test_paused_when_true(self, mock_kv):
-        assert is_paused() is True
-
-    @patch("src.topic_config._kv_get", return_value=False)
-    def test_not_paused_when_false(self, mock_kv):
-        assert is_paused() is False
-
-    @patch("src.topic_config._kv_get", return_value=None)
-    def test_not_paused_when_none(self, mock_kv):
-        assert is_paused() is False
-
-    @patch("src.topic_config._kv_get", return_value="true")
-    def test_paused_when_string_true(self, mock_kv):
-        assert is_paused() is True
-
-
-class TestCustomKeywords:
-    """Tests for custom keyword merging."""
-
-    @patch("src.topic_config._kv_get")
-    @patch("src.topic_config._fetch_kv_config", return_value=None)
-    def test_custom_keywords_merged(self, mock_config, mock_kv_get):
-        def side_effect(key):
-            if key == "topics:custom_keywords":
-                return {"model_releases": ["my-custom-kw", "another-one"]}
-            return None
-        mock_kv_get.side_effect = side_effect
-
-        keywords = get_active_keywords()
-        assert "my-custom-kw" in keywords
-        assert "another-one" in keywords
-
-    @patch("src.topic_config._kv_get", return_value=None)
-    @patch("src.topic_config._fetch_kv_config", return_value=None)
-    def test_no_custom_keywords_when_none(self, mock_config, mock_kv_get):
-        keywords = get_active_keywords()
-        assert "my-custom-kw" not in keywords
-
-
-@pytest.fixture
-def kv_env(monkeypatch):
-    """Credentials present, so get_feedback_weights reaches the KV call."""
-    monkeypatch.setenv("KV_REST_API_URL", "https://kv.example.com")
-    monkeypatch.setenv("KV_REST_API_TOKEN", "test-token")
-
-
-def _today() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%d")
-
-
-class TestGetFeedbackWeights:
-    """Tests for get_feedback_weights clamping and filtering."""
-
-    @patch("src.topic_config.kv_client.kv_get_list")
-    def test_positive_feedback_boosts(self, mock_get_list, kv_env):
-        today = _today()
-        mock_get_list.return_value = [
-            {"url": "a", "rating": 1, "topic_id": "model_releases", "date": today},
-            {"url": "b", "rating": 1, "topic_id": "model_releases", "date": today},
-        ]
-
-        weights = get_feedback_weights()
-        assert weights["model_releases"] == 1.1
-
-    @patch("src.topic_config.kv_client.kv_get_list")
-    def test_clamped_at_lower_bound(self, mock_get_list, kv_env):
-        today = _today()
-        mock_get_list.return_value = [
-            {"url": f"u{i}", "rating": -1, "topic_id": "lab_research", "date": today}
-            for i in range(20)
-        ]
-
-        weights = get_feedback_weights()
-        assert weights["lab_research"] == 0.75
-
-    @patch("src.topic_config.kv_client.kv_get_list")
-    def test_clamped_at_upper_bound(self, mock_get_list, kv_env):
-        today = _today()
-        mock_get_list.return_value = [
-            {"url": f"u{i}", "rating": 1, "topic_id": "model_releases", "date": today}
-            for i in range(20)
-        ]
-
-        weights = get_feedback_weights()
-        assert weights["model_releases"] == 1.25
-
-    def test_returns_empty_when_no_kv(self):
-        """kv_client raises without credentials; the weights must degrade to {}."""
-        weights = get_feedback_weights()
-        assert weights == {}
-
-    @patch("src.topic_config.kv_client.kv_get_list", side_effect=OSError("KV down"))
-    def test_returns_empty_when_kv_errors(self, mock_get_list, kv_env):
-        """A KV outage must not stop ranking — weights fall back to neutral."""
-        assert get_feedback_weights() == {}
 
 
 class TestTopicScoring:
@@ -343,7 +199,7 @@ class TestTopicScoring:
         assert best_topic_id(text) == "agents_tooling"
 
     def test_list_order_breaks_a_remaining_tie(self):
-        """Equal score and equal specificity keeps the dashboard's order."""
+        """Equal score and equal specificity keeps the table's order."""
         ids = [t["id"] for t in DEFAULT_TOPICS]
         text = "technical report on inference"  # lab_research vs infrastructure
         ranked = [t["id"] for t in score_topics(text)]

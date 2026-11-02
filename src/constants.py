@@ -114,8 +114,7 @@ OPENAI_MAX_TOKENS_BUNDLE = int(os.getenv("OPENAI_MAX_TOKENS_BUNDLE") or 16000)
 TELEGRAM_API_URL = "https://api.telegram.org/bot{token}/sendMessage"
 TELEGRAM_MAX_MESSAGE_LENGTH = 4096
 
-# Data cap settings
-PAPERS_CAP = 500
+# Data cap settings — how many days of digest records data/digests.json keeps.
 DIGEST_CAP_DAYS = 90
 
 # Thread pool settings
@@ -329,8 +328,3 @@ HN_MAX_STORIES = 5
 # permissive so lab technical reports surface the day they drop.
 HF_MIN_UPVOTES = 20
 HF_MAX_PAPERS = 5
-
-# Dashboard history list (KV key `digest:weekly`) — one entry per digest sent.
-# The Sunday roundup used to clear this list each week; with the roundup gone
-# the append side caps it, so the History page stays a bounded read.
-HISTORY_MAX_ENTRIES = int(os.getenv("HISTORY_MAX_ENTRIES", "90"))

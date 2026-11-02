@@ -10,8 +10,8 @@ from unittest.mock import Mock, patch
 import pytest
 
 from src import json_exporter
-from src.json_exporter import export_papers, export_digest
-from src.constants import PAPERS_CAP, DIGEST_CAP_DAYS
+from src.json_exporter import export_digest
+from src.constants import DIGEST_CAP_DAYS
 
 
 @pytest.fixture
@@ -24,47 +24,6 @@ def data_dir(monkeypatch):
         yield base_dir
     finally:
         shutil.rmtree(base_dir, ignore_errors=True)
-
-
-class TestPapersCapEnforcement:
-    """Tests for papers.json cap enforcement."""
-
-    def test_papers_capped_at_limit(self, data_dir):
-        """Papers should be capped at PAPERS_CAP."""
-        # Pre-populate with PAPERS_CAP papers
-        existing_papers = []
-        for i in range(PAPERS_CAP):
-            existing_papers.append({
-                "id": f"paper-{i}",
-                "title": f"Existing Paper {i}",
-                "summary": f"Summary {i}",
-                "source": "Test",
-                "url": f"https://example.com/paper-{i}",
-                "published_at": f"2026-01-{i % 28 + 1:02d}",
-                "fetched_at": f"2026-01-{i % 28 + 1:02d}T00:00:00Z",
-                "type": "announcement",
-                "topics": [],
-                "ranking_score": 0,
-                "status": "unread",
-            })
-
-        (data_dir / "papers.json").write_text(
-            json.dumps({"papers": existing_papers}), encoding="utf-8"
-        )
-
-        # Add one more paper
-        new_paper = {
-            "title": "Brand New Paper",
-            "summary": "New description",
-            "url": "https://example.com/brand-new",
-            "source": "Test",
-            "published": "2026-03-17",
-            "type": "announcement",
-        }
-        export_papers([new_paper])
-
-        data = json.loads((data_dir / "papers.json").read_text(encoding="utf-8"))
-        assert len(data["papers"]) <= PAPERS_CAP
 
 
 class TestDigestCapEnforcement:
@@ -117,14 +76,12 @@ class TestFullPipelineFlow:
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
     @patch("main.summarize_release")
-    @patch("main.export_papers")
     @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
     def test_pipeline_runs_end_to_end(
         self,
         mock_fetch,
         mock_rank,
-        mock_export_papers,
         mock_summarize,
         mock_format,
         mock_send,
@@ -146,7 +103,6 @@ class TestFullPipelineFlow:
 
         mock_fetch.return_value = [paper]
         mock_rank.return_value = [paper]
-        mock_export_papers.return_value = "paper-1"
         mock_summarize.return_value = enriched
         mock_format.return_value = "formatted message"
 
@@ -155,7 +111,6 @@ class TestFullPipelineFlow:
         # Verify call order
         mock_fetch.assert_called_once()
         mock_rank.assert_called_once()
-        mock_export_papers.assert_called_once()
         mock_summarize.assert_called_once()
         mock_format.assert_called_once()
         mock_send.assert_called_once()

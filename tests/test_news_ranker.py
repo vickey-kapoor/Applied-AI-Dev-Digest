@@ -9,7 +9,6 @@ from src.constants import OPENAI_MAX_TOKENS_RANKING
 from src.news_ranker import (
     RANKING_ARTICLE_CHARS,
     RANKING_SCHEMA,
-    rank_news,
     rank_news_ranked,
     _call_openai_ranking,
     _describe,
@@ -66,46 +65,44 @@ class TestSanitizeText:
 
 
 class TestRankNews:
-    """Tests for news ranking."""
+    """Tests for news ranking. rank_news_ranked is the only ranker: a thin
+    single-pick wrapper over it used to exist for preview.py, which now calls
+    this directly."""
 
     def test_empty_list_raises_error(self):
         """Test that empty list raises ValueError."""
         with pytest.raises(ValueError):
-            rank_news([], "test_api_key")
+            rank_news_ranked([], "test_api_key")
 
     def test_single_paper_returned(self, sample_paper):
-        """Test that single paper is returned directly."""
-        result = rank_news([sample_paper], "test_api_key")
-        assert result == sample_paper
+        """Test that a single paper comes back as a one-item list."""
+        result = rank_news_ranked([sample_paper], "test_api_key")
+        assert result == [sample_paper]
 
-    @patch("src.news_ranker.get_feedback_weights", return_value={})
-    def test_ranking_selects_paper(self, mock_weights, sample_papers, mock_openai_response):
+    def test_ranking_selects_paper(self, sample_papers, mock_openai_response):
         """Test that ranking selects a paper based on AI response."""
         with patch("src.news_ranker.OpenAI") as mock_openai:
             mock_client = Mock()
             mock_client.chat.completions.create.return_value = mock_openai_response
             mock_openai.return_value = mock_client
 
-            result = rank_news(sample_papers, "test_api_key")
+            result = rank_news_ranked(sample_papers, "test_api_key")
 
             # AI returned "1", so first paper should be selected
-            assert result == sample_papers[0]
+            assert result[0] == sample_papers[0]
 
-    @patch("src.news_ranker.get_feedback_weights", return_value={})
-    def test_ranking_handles_ai_error(self, mock_weights, sample_papers):
-        """Test that ranking falls back to first paper on AI error."""
+    def test_ranking_handles_ai_error(self, sample_papers):
+        """Test that ranking falls back to input order on AI error."""
         with patch("src.news_ranker.OpenAI") as mock_openai:
             mock_client = Mock()
             mock_client.chat.completions.create.side_effect = Exception("API Error")
             mock_openai.return_value = mock_client
 
-            result = rank_news(sample_papers, "test_api_key")
+            result = rank_news_ranked(sample_papers, "test_api_key")
 
-            # Should fall back to first paper
-            assert result == sample_papers[0]
+            assert result[0] == sample_papers[0]
 
-    @patch("src.news_ranker.get_feedback_weights", return_value={})
-    def test_ranking_handles_invalid_response(self, mock_weights, sample_papers):
+    def test_ranking_handles_invalid_response(self, sample_papers):
         """Test that ranking handles invalid AI response."""
         with patch("src.news_ranker.OpenAI") as mock_openai:
             mock_response = Mock()
@@ -116,13 +113,11 @@ class TestRankNews:
             mock_client.chat.completions.create.return_value = mock_response
             mock_openai.return_value = mock_client
 
-            result = rank_news(sample_papers, "test_api_key")
+            result = rank_news_ranked(sample_papers, "test_api_key")
 
-            # Should fall back to first paper
-            assert result == sample_papers[0]
+            assert result[0] == sample_papers[0]
 
-    @patch("src.news_ranker.get_feedback_weights", return_value={})
-    def test_ranking_handles_out_of_range(self, mock_weights, sample_papers):
+    def test_ranking_handles_out_of_range(self, sample_papers):
         """Test that ranking handles out-of-range AI response."""
         with patch("src.news_ranker.OpenAI") as mock_openai:
             mock_response = Mock()
@@ -133,13 +128,11 @@ class TestRankNews:
             mock_client.chat.completions.create.return_value = mock_response
             mock_openai.return_value = mock_client
 
-            result = rank_news(sample_papers, "test_api_key")
+            result = rank_news_ranked(sample_papers, "test_api_key")
 
-            # Should fall back to first paper
-            assert result == sample_papers[0]
+            assert result[0] == sample_papers[0]
 
-    @patch("src.news_ranker.get_feedback_weights", return_value={})
-    def test_ranking_sanitizes_input(self, mock_weights, mock_openai_response):
+    def test_ranking_sanitizes_input(self, mock_openai_response):
         """Test that paper content is sanitized before sending to AI."""
         # Need at least 2 papers since single paper returns directly without API call
         paper_with_injection = {
@@ -160,7 +153,7 @@ class TestRankNews:
             mock_client.chat.completions.create.return_value = mock_openai_response
             mock_openai.return_value = mock_client
 
-            rank_news([paper_with_injection, normal_paper], "test_api_key")
+            rank_news_ranked([paper_with_injection, normal_paper], "test_api_key")
 
             # Check that the prompt contains filtered content
             call_args = mock_client.chat.completions.create.call_args
@@ -235,16 +228,35 @@ class TestVerdictParsing:
 
 
 class TestRankNewsNoneContract:
-    def test_returns_none_when_nothing_is_worth_sending(self, monkeypatch):
+    def test_empty_when_nothing_is_worth_sending(self, monkeypatch):
         """main.py must be able to tell "send nothing" from "send the first"."""
-        monkeypatch.setattr("src.news_ranker.rank_news_ranked", lambda items, key: [])
-        assert rank_news([{"title": "x"}, {"title": "y"}], "k") is None
+        monkeypatch.setattr(
+            "src.news_ranker._call_openai_ranking",
+            lambda *a, **k: Mock(
+                choices=[
+                    Mock(
+                        message=Mock(
+                            content=json.dumps(
+                                {
+                                    "keep": [],
+                                    "reject": [
+                                        {"index": 1, "reason": "thin"},
+                                        {"index": 2, "reason": "thin"},
+                                    ],
+                                }
+                            )
+                        ),
+                        finish_reason="stop",
+                    )
+                ]
+            ),
+        )
+        assert rank_news_ranked([{"title": "x"}, {"title": "y"}], "k") == []
 
-    def test_single_item_returns_a_list_from_ranked(self):
-        """The ranked contract is a list; returning the bare dict broke rank_news."""
+    def test_single_item_returns_a_list(self):
+        """The contract is a list, even for one item; callers index it."""
         one = [{"title": "solo", "summary": ""}]
         assert rank_news_ranked(one, "") == one
-        assert rank_news(one, "") == one[0]
 
 
 class TestRankingTokenBudget:
@@ -495,9 +507,8 @@ class TestWhatTheRankerIsShown:
 
         assert "[FILTERED]" in described
 
-    @patch("src.news_ranker.get_feedback_weights", return_value={})
     @patch("src.news_ranker._call_openai_ranking")
-    def test_the_prompt_carries_the_article_text(self, mock_call, _mock_weights):
+    def test_the_prompt_carries_the_article_text(self, mock_call):
         mock_call.return_value = Mock(
             choices=[
                 Mock(

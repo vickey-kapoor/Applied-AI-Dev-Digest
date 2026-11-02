@@ -311,7 +311,7 @@ class TestParsePublished:
         assert result is not None and result.tzinfo is not None
 
     def test_naive_is_treated_as_utc(self):
-        """Blog feeds historically emitted naive strings; papers.json holds some."""
+        """Blog feeds historically emitted naive strings, and still can."""
         result = _parse_published("2026-08-19T12:17:57")
         assert result is not None
         assert result.tzinfo is not None
@@ -430,7 +430,7 @@ def _item(source: str, title: str) -> dict:
 class TestSimilarityDeduplication:
     """One launch arriving from several sources should compete once, not thrice.
 
-    Every case below is drawn from titles actually observed in papers.json.
+    Every case below is drawn from titles actually observed in the feeds.
     The false positives matter more than the true one: a wrong merge silently
     drops a real launch, and the highest-scoring real pair (0.97) is a pair of
     *distinct* SDK releases.

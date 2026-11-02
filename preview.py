@@ -1,4 +1,9 @@
-"""Generate a digest preview without sending to Telegram. Outputs JSON to stdout."""
+"""Generate a digest preview without sending to Telegram. Outputs JSON to stdout.
+
+Runs the same fetch, article-text and ranking path as main.py, so what this
+prints is what the digest would pick. It used to call a second, single-item
+ranker that the pipeline itself had stopped using, and quietly diverged from it.
+"""
 
 import json
 import os
@@ -9,7 +14,8 @@ from dotenv import load_dotenv
 from src.constants import DIGEST_MAX_RESULTS
 from src.topic_config import get_active_keywords
 from src.fetcher import fetch_all
-from src.news_ranker import rank_news
+from src.article_fetcher import attach_article_text
+from src.news_ranker import rank_news_ranked
 from src.news_summarizer import summarize_release
 from src.logger import get_logger
 
@@ -37,9 +43,17 @@ def main():
         json.dump({"error": "No items found"}, sys.stdout)
         sys.exit(0)
 
+    # Open every candidate's link before ranking, as main.py does: the feeds
+    # are not comparable and the ranker judges on what it is shown.
+    try:
+        items = attach_article_text(items)
+    except Exception:
+        pass  # Ranking on feed summaries alone is worse, not broken.
+
     # Rank
     try:
-        top = rank_news(items, openai_key) or items[0]
+        ranked = rank_news_ranked(items, openai_key)
+        top = ranked[0] if ranked else items[0]
     except Exception:
         top = items[0]
 

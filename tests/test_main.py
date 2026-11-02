@@ -5,7 +5,6 @@ from unittest.mock import Mock, patch
 import pytest
 
 import main
-from src.constants import HISTORY_MAX_ENTRIES
 
 
 class TestMain:
@@ -22,32 +21,18 @@ class TestMain:
 
         assert exc_info.value.code == 1
 
-    @patch("main.is_paused", return_value=True)
-    def test_main_exits_early_when_paused(self, mock_paused):
-        """The app should exit cleanly when digest is paused."""
-        with pytest.raises(SystemExit) as exc_info:
-            main.main()
-
-        assert exc_info.value.code == 0
-
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
     @patch("main.summarize_release")
-    @patch("main.export_papers")
     @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
-    @patch("main.is_paused", return_value=False)
     def test_main_uses_summary_bundle(
         self,
-        mock_paused,
         mock_get_active_keywords,
-        mock_increment_stat,
         mock_fetch_all,
         mock_rank_news_ranked,
-        mock_export_papers,
         mock_summarize_release,
         mock_format_digest_message,
         mock_send_telegram_message,
@@ -72,7 +57,6 @@ class TestMain:
 
         mock_fetch_all.return_value = [paper]
         mock_rank_news_ranked.return_value = [paper]
-        mock_export_papers.return_value = "paper-1"
         mock_summarize_release.return_value = enriched_paper
         mock_format_digest_message.return_value = "formatted"
         monkeypatch.setenv("GITHUB_RUN_ID", "run-123")
@@ -87,20 +71,14 @@ class TestMain:
     @patch("main.format_digest_message")
     @patch("main.summarize_release")
     @patch("main.export_digest")
-    @patch("main.export_papers")
     @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
-    @patch("main.is_paused", return_value=False)
     def test_main_exits_when_telegram_send_fails(
         self,
-        mock_paused,
         mock_get_active_keywords,
-        mock_increment_stat,
         mock_fetch_all,
         mock_rank_news_ranked,
-        mock_export_papers,
         mock_export_digest,
         mock_summarize_release,
         mock_format_digest_message,
@@ -111,7 +89,7 @@ class TestMain:
 
         This used to exit 0. The day was then marked as done by the workflow,
         so nothing retried and nothing was sent — a green run with no digest.
-        The recording still happens first, so the dashboard keeps the attempt.
+        The recording still happens first, so the day keeps the attempt.
         """
         paper = {
             "title": "Test Paper",
@@ -124,7 +102,6 @@ class TestMain:
 
         mock_fetch_all.return_value = [paper]
         mock_rank_news_ranked.return_value = [paper]
-        mock_export_papers.return_value = "paper-1"
         mock_summarize_release.return_value = paper
         mock_format_digest_message.return_value = "formatted"
         mock_send_telegram_message.side_effect = RuntimeError("send failed")
@@ -134,8 +111,8 @@ class TestMain:
 
         assert exc_info.value.code == 1
         mock_send_telegram_message.assert_called_once()
-        # Digest still exported even on send failure, so the day is not lost
-        # from the dashboard just because Telegram was unreachable.
+        # Digest still recorded even on send failure, so the day is not lost
+        # just because Telegram was unreachable.
         mock_export_digest.assert_called_once()
         assert mock_export_digest.call_args.kwargs["telegram_sent"] is False
 
@@ -143,10 +120,8 @@ class TestMain:
     @patch("main.export_digest")
     @patch("main.get_active_keywords", return_value=["frontier model"])
     @patch("main.fetch_all", return_value=[])
-    @patch("main.is_paused", return_value=False)
     def test_empty_day_is_recorded(
         self,
-        mock_paused,
         mock_fetch_all,
         mock_get_active_keywords,
         mock_export_digest,
@@ -168,155 +143,6 @@ class TestMain:
         assert kwargs["telegram_sent"] is False
         assert kwargs["workflow_run_id"] == "run-456"
 
-    @patch("main.export_digest")
-    @patch("main.send_telegram_message")
-    @patch("main.format_digest_message", return_value="formatted")
-    @patch("main.summarize_release")
-    @patch("main.export_papers", return_value="paper-1")
-    @patch("main.rank_news_ranked")
-    @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
-    @patch("main.get_active_keywords", return_value=["frontier model"])
-    @patch("main.is_paused", return_value=False)
-    def test_summarized_item_is_what_gets_exported(
-        self,
-        mock_paused,
-        mock_get_active_keywords,
-        mock_increment_stat,
-        mock_fetch_all,
-        mock_rank_news_ranked,
-        mock_export_papers,
-        mock_summarize_release,
-        mock_format_digest_message,
-        mock_send_telegram_message,
-        mock_export_digest,
-        env_vars,
-    ):
-        """papers.json must receive the summarized item, not the raw original."""
-        paper = {
-            "title": "Test Paper",
-            "summary": "Raw RSS description",
-            "url": "https://openai.com/blog/test",
-            "source": "OpenAI",
-            "published": "2024-07-18T00:00:00",
-            "type": "announcement",
-        }
-        enriched = {**paper, "summary": "Generated summary", "what_shipped": "OpenAI shipped X."}
-
-        mock_fetch_all.return_value = [paper]
-        mock_rank_news_ranked.return_value = [paper]
-        mock_summarize_release.return_value = enriched
-
-        main.main()
-
-        exported_items, exported_top = mock_export_papers.call_args[0]
-        assert exported_items == [enriched]
-        assert exported_top is enriched
-        assert exported_items[0]["what_shipped"] == "OpenAI shipped X."
-
-
-class TestHistoryList:
-    """The KV list behind the dashboard's History page.
-
-    The Sunday roundup used to send and then clear this list every week. It
-    was removed, so the append side is now the only thing bounding it — an
-    unbounded list would grow by one entry a day and the History page reads
-    the whole of it.
-    """
-
-    @patch("main.kv_trim_to_last")
-    @patch("main.kv_append")
-    @patch("main.export_digest")
-    @patch("main.send_telegram_message")
-    @patch("main.format_digest_message", return_value="formatted")
-    @patch("main.summarize_release")
-    @patch("main.export_papers", return_value="paper-1")
-    @patch("main.rank_news_ranked")
-    @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
-    @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
-    @patch("main.is_paused", return_value=False)
-    def test_the_append_is_followed_by_a_trim(
-        self,
-        mock_paused,
-        mock_get_active_keywords,
-        mock_increment_stat,
-        mock_fetch_all,
-        mock_rank_news_ranked,
-        mock_export_papers,
-        mock_summarize_release,
-        mock_format_digest_message,
-        mock_send_telegram_message,
-        mock_export_digest,
-        mock_kv_append,
-        mock_kv_trim,
-        env_vars,
-    ):
-        paper = {
-            "title": "Test Paper",
-            "summary": "Test summary",
-            "url": "https://openai.com/blog/test",
-            "source": "OpenAI",
-            "published": "2024-07-18T00:00:00",
-            "type": "announcement",
-        }
-        mock_fetch_all.return_value = [paper]
-        mock_rank_news_ranked.return_value = [paper]
-        mock_summarize_release.return_value = dict(paper)
-
-        main.main()
-
-        mock_kv_append.assert_called_once()
-        assert mock_kv_append.call_args[0][0] == "digest:weekly"
-
-        mock_kv_trim.assert_called_once_with("digest:weekly", HISTORY_MAX_ENTRIES)
-
-    @patch("main.kv_trim_to_last")
-    @patch("main.kv_append", side_effect=RuntimeError("KV not configured"))
-    @patch("main.export_digest")
-    @patch("main.send_telegram_message")
-    @patch("main.format_digest_message", return_value="formatted")
-    @patch("main.summarize_release")
-    @patch("main.export_papers", return_value="paper-1")
-    @patch("main.rank_news_ranked")
-    @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
-    @patch("main.get_active_keywords", return_value=["api", "sdk", "model"])
-    @patch("main.is_paused", return_value=False)
-    def test_a_failed_append_does_not_stop_the_digest(
-        self,
-        mock_paused,
-        mock_get_active_keywords,
-        mock_increment_stat,
-        mock_fetch_all,
-        mock_rank_news_ranked,
-        mock_export_papers,
-        mock_summarize_release,
-        mock_format_digest_message,
-        mock_send_telegram_message,
-        mock_export_digest,
-        mock_kv_append,
-        mock_kv_trim,
-        env_vars,
-    ):
-        """KV is optional for the pipeline, so neither call may be fatal."""
-        paper = {
-            "title": "Test Paper",
-            "summary": "Test summary",
-            "url": "https://openai.com/blog/test",
-            "source": "OpenAI",
-            "published": "2024-07-18T00:00:00",
-            "type": "announcement",
-        }
-        mock_fetch_all.return_value = [paper]
-        mock_rank_news_ranked.return_value = [paper]
-        mock_summarize_release.return_value = dict(paper)
-
-        main.main()
-
-        mock_kv_trim.assert_not_called()
-        mock_send_telegram_message.assert_called_once()
-
 
 class TestQuietDayNotice:
     """A day with nothing to send says so, instead of passing in silence.
@@ -331,10 +157,8 @@ class TestQuietDayNotice:
     @patch("main.export_digest")
     @patch("main.get_active_keywords", return_value=["frontier model"])
     @patch("main.fetch_all", return_value=[])
-    @patch("main.is_paused", return_value=False)
     def test_an_empty_pool_is_announced(
         self,
-        mock_paused,
         mock_fetch_all,
         mock_get_active_keywords,
         mock_export_digest,
@@ -350,18 +174,14 @@ class TestQuietDayNotice:
 
     @patch("main.send_telegram_message")
     @patch("main.export_digest")
-    @patch("main.export_papers", return_value="paper-1")
     @patch("main.get_sent_top_paper_ids")
     @patch("main.fetch_all")
     @patch("main.get_active_keywords", return_value=["frontier model"])
-    @patch("main.is_paused", return_value=False)
     def test_an_all_seen_day_is_announced(
         self,
-        mock_paused,
         mock_get_active_keywords,
         mock_fetch_all,
         mock_sent_ids,
-        mock_export_papers,
         mock_export_digest,
         mock_send,
         env_vars,
@@ -384,20 +204,16 @@ class TestQuietDayNotice:
 
     @patch("main.send_telegram_message")
     @patch("main.export_digest")
-    @patch("main.export_papers", return_value="paper-1")
     @patch("main.rank_news_ranked", return_value=[])
     @patch("main.get_sent_top_paper_ids", return_value=set())
     @patch("main.fetch_all")
     @patch("main.get_active_keywords", return_value=["frontier model"])
-    @patch("main.is_paused", return_value=False)
     def test_a_rejected_pool_is_announced(
         self,
-        mock_paused,
         mock_get_active_keywords,
         mock_fetch_all,
         mock_sent_ids,
         mock_rank,
-        mock_export_papers,
         mock_export_digest,
         mock_send,
         env_vars,
@@ -422,10 +238,8 @@ class TestQuietDayNotice:
     @patch("main.export_digest")
     @patch("main.get_active_keywords", return_value=["frontier model"])
     @patch("main.fetch_all", return_value=[])
-    @patch("main.is_paused", return_value=False)
     def test_a_failed_notice_does_not_fail_the_run(
         self,
-        mock_paused,
         mock_fetch_all,
         mock_get_active_keywords,
         mock_export_digest,
@@ -443,22 +257,16 @@ class TestQuietDayNotice:
     @patch("main.format_digest_message", return_value="formatted")
     @patch("main.export_digest")
     @patch("main.summarize_release")
-    @patch("main.export_papers", return_value="paper-1")
     @patch("main.rank_news_ranked")
     @patch("main.get_sent_top_paper_ids", return_value=set())
     @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["frontier model"])
-    @patch("main.is_paused", return_value=False)
     def test_a_normal_day_sends_no_notice(
         self,
-        mock_paused,
         mock_get_active_keywords,
-        mock_increment,
         mock_fetch_all,
         mock_sent_ids,
         mock_rank,
-        mock_export_papers,
         mock_summarize,
         mock_export_digest,
         mock_format,
@@ -488,27 +296,23 @@ class TestRejectedPoolDoesNotCrash:
 
     `rank_news_ranked` can legitimately return an empty list — it rejects a
     thin pool rather than padding the digest. Everything downstream of the
-    ranker still ran, and the papers.json swap died on `None.get`. The
+    ranker still ran, and the export below died on `None.get`. The
     exception was uncaught, so the workflow step failed and every later tick
     that day repeated it: a red run, no digest, and no explanation.
     """
 
     @patch("main.send_telegram_message")
     @patch("main.export_digest")
-    @patch("main.export_papers", return_value=None)
     @patch("main.rank_news_ranked", return_value=[])
     @patch("main.get_sent_top_paper_ids", return_value=set())
     @patch("main.fetch_all")
     @patch("main.get_active_keywords", return_value=["frontier model"])
-    @patch("main.is_paused", return_value=False)
     def test_the_run_completes(
         self,
-        mock_paused,
         mock_get_active_keywords,
         mock_fetch_all,
         mock_sent_ids,
         mock_rank,
-        mock_export_papers,
         mock_export_digest,
         mock_send,
         env_vars,
@@ -525,9 +329,8 @@ class TestRejectedPoolDoesNotCrash:
 
         main.main()  # must not raise
 
-        # The candidates are still recorded, so the dashboard shows what was
-        # considered rather than an empty day.
-        mock_export_papers.assert_called_once()
+        # The day is still recorded, so it reads as a quiet day rather than a
+        # run that never fired.
         mock_export_digest.assert_called_once()
         assert mock_export_digest.call_args.kwargs["telegram_sent"] is False
         assert mock_export_digest.call_args.kwargs["top_paper_id"] is None
@@ -553,18 +356,15 @@ class TestCandidatesAreOpenedBeforeRanking:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="fetched late")
     @patch("main.attach_article_text")
     @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api"])
-    @patch("main.is_paused", return_value=False)
     def test_the_ranker_receives_items_carrying_article_text(
-        self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_attach,
-        _fetch_late, _summarize, _papers, _format, _send, _digest, env_vars,
+        self, _keywords, mock_fetch_all, mock_rank, mock_attach,
+        _fetch_late, _summarize, _format, _send, _digest, env_vars,
     ):
         candidates = self._candidates()
         mock_fetch_all.return_value = candidates
@@ -584,18 +384,15 @@ class TestCandidatesAreOpenedBeforeRanking:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="fetched late")
     @patch("main.attach_article_text")
     @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api"])
-    @patch("main.is_paused", return_value=False)
     def test_the_winner_is_not_opened_a_second_time(
-        self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, mock_attach,
-        mock_fetch_late, _summarize, _papers, _format, _send, _digest, env_vars,
+        self, _keywords, mock_fetch_all, mock_rank, mock_attach,
+        mock_fetch_late, _summarize, _format, _send, _digest, env_vars,
     ):
         """summarize_release reads the same field the pre-ranking fetch filled."""
         candidates = self._candidates()
@@ -612,18 +409,15 @@ class TestCandidatesAreOpenedBeforeRanking:
     @patch("main.export_digest")
     @patch("main.send_telegram_message")
     @patch("main.format_digest_message")
-    @patch("main.export_papers")
     @patch("main.summarize_release", side_effect=lambda item, key: item)
     @patch("main.fetch_article_text", return_value="fetched late")
     @patch("main.attach_article_text", side_effect=Exception("every host down"))
     @patch("main.rank_news_ranked")
     @patch("main.fetch_all")
-    @patch("main.increment_topic_stat")
     @patch("main.get_active_keywords", return_value=["api"])
-    @patch("main.is_paused", return_value=False)
     def test_a_failure_to_open_the_links_still_sends_a_digest(
-        self, _paused, _keywords, _stats, mock_fetch_all, mock_rank, _attach,
-        _fetch_late, _summarize, _papers, _format, mock_send, _digest, env_vars,
+        self, _keywords, mock_fetch_all, mock_rank, _attach,
+        _fetch_late, _summarize, _format, mock_send, _digest, env_vars,
     ):
         """Ranking on feed summaries is the old behaviour: worse, not broken."""
         mock_fetch_all.return_value = self._candidates()

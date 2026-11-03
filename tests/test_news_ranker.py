@@ -76,10 +76,11 @@ class TestRankNews:
         with pytest.raises(ValueError):
             rank_news_ranked([], "test_api_key")
 
-    def test_single_paper_returned(self, sample_paper):
-        """Test that a single paper comes back as a one-item list."""
-        result = rank_news_ranked([sample_paper], "test_api_key")
-        assert result == [sample_paper]
+    # test_single_paper_returned lived here. It asserted that one item comes
+    # back as a one-item list, which the removed shortcut guaranteed without a
+    # model call. With the shortcut gone that contract depends on the verdict,
+    # so it is tested in TestRankNewsNoneContract below, in both directions
+    # and against a mocked reply, rather than against whatever the network did.
 
     def test_ranking_selects_paper(self, sample_papers, mock_openai_response):
         """Test that ranking selects a paper based on AI response."""
@@ -229,6 +230,13 @@ class TestVerdictParsing:
         assert _parse_verdict('["a", "list"]', 3) is None
 
 
+def _reply(verdict: dict) -> Mock:
+    """A chat-completion response carrying `verdict` as its JSON content."""
+    return Mock(
+        choices=[Mock(message=Mock(content=json.dumps(verdict)), finish_reason="stop")]
+    )
+
+
 class TestRankNewsNoneContract:
     def test_empty_when_nothing_is_worth_sending(self, monkeypatch):
         """main.py must be able to tell "send nothing" from "send the first"."""
@@ -255,10 +263,42 @@ class TestRankNewsNoneContract:
         )
         assert rank_news_ranked([{"title": "x"}, {"title": "y"}], "k") == []
 
-    def test_single_item_returns_a_list(self):
-        """The contract is a list, even for one item; callers index it."""
+    def test_a_single_candidate_is_still_screened(self, monkeypatch):
+        """One item is when the screen matters most, so it is not skipped.
+
+        rank_news_ranked used to return a one-item pool untouched. That made
+        the only editorial gate in the pipeline conditional on the pool being
+        big enough to need one — and the pool was exactly one item on 10 of
+        the 90 days in data/digests.json.
+        """
+        monkeypatch.setattr(
+            "src.news_ranker._call_openai_ranking",
+            lambda *a, **k: _reply(
+                {
+                    "keep": [],
+                    "reject": [{"index": 1, "why": "marketing"}],
+                    "reason": "nothing to act on",
+                }
+            ),
+        )
+        one = [{"title": "Introducing our grid programme", "summary": ""}]
+        assert rank_news_ranked(one, "k") == []
+
+    def test_a_single_candidate_the_model_keeps_is_returned_as_a_list(self, monkeypatch):
+        """The contract is still a list; callers index the first element."""
+        monkeypatch.setattr(
+            "src.news_ranker._call_openai_ranking",
+            lambda *a, **k: _reply(
+                {
+                    "keep": [{"index": 1, "line": "2x throughput"}],
+                    "reject": [],
+                    "reason": "usable today",
+                }
+            ),
+        )
         one = [{"title": "solo", "summary": ""}]
-        assert rank_news_ranked(one, "") == one
+        result = rank_news_ranked(one, "k")
+        assert [r["title"] for r in result] == ["solo"]
 
 
 class TestRankingTokenBudget:

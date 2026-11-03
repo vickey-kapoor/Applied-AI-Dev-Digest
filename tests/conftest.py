@@ -27,6 +27,48 @@ def no_outbound_article_fetches():
         yield
 
 
+@pytest.fixture(autouse=True)
+def no_outbound_model_calls():
+    """Keep the suite off api.openai.com.
+
+    Only the article fetcher was guarded, and the gap was not theoretical: when
+    the single-candidate shortcut was removed from rank_news_ranked,
+    test_single_paper_returned started constructing a real client with
+    "test_api_key", making a request, retrying it twice, and passing anyway —
+    the ranker swallows a failed call and returns date order, which was what
+    that test asserted. It went from instant to 4.4 seconds and nobody failed.
+
+    The client is replaced rather than banned, because a test may legitimately
+    reach the line that builds one while patching the call below it. What
+    raises is the request itself. A test that patches OpenAI or
+    _call_openai_ranking itself does so inside this fixture and wins for its
+    duration.
+    """
+    def _refuse(*args, **kwargs):
+        # pytest.fail, not raise: pytest's Failed is a BaseException, so it
+        # passes through both retry_with_backoff(exceptions=(Exception,)) and
+        # the `except Exception` in rank_news_ranked and summarize_release. An
+        # AssertionError here was retried with real backoff sleeps and then
+        # swallowed, and the ranker returned the input list — so a test
+        # asserting date order could still pass without a verdict, which is
+        # the failure this fixture exists to make impossible.
+        pytest.fail(
+            "tests must not call the model — patch OpenAI or the module's "
+            "_call_openai* helper"
+        )
+
+    def _client(*args, **kwargs):
+        client = Mock()
+        client.chat.completions.create.side_effect = _refuse
+        client.responses.create.side_effect = _refuse
+        return client
+
+    with patch("src.news_ranker.OpenAI", side_effect=_client), patch(
+        "src.news_summarizer.OpenAI", side_effect=_client
+    ):
+        yield
+
+
 @pytest.fixture
 def sample_paper():
     """Sample item dictionary."""

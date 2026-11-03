@@ -212,3 +212,25 @@ class TestTopicScoring:
     def test_only_the_given_topics_are_considered(self):
         only_benchmarks = [t for t in DEFAULT_TOPICS if t["id"] == "benchmarks"]
         assert best_topic_id("Claude Duet", only_benchmarks) == ""
+
+
+class TestPlatformReleaseNoteTagging:
+    """The two platform changelogs are Product & API's main suppliers."""
+
+    def test_the_anthropic_messages_api_is_tagged_like_the_openai_one(self):
+        """"responses api" was listed and "messages api" was not.
+
+        Measured 03-Nov-2026: the release note "Long conversations and agent
+        loops on the Messages API can now send smaller requests and get a
+        lower time to first token with message threads, in beta" reached the
+        candidate pool matching nothing but the weak brand name "Claude", so
+        it was untagged and would have gone out as #Update.
+        """
+        from src.topic_config import best_topic_id, get_active_topics
+
+        text = (
+            "long conversations and agent loops on the messages api can now "
+            "send smaller requests and get a lower time to first token with "
+            "message threads, in beta with the claude developer platform"
+        )
+        assert best_topic_id(text, get_active_topics(), text) == "product_api"

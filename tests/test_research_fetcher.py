@@ -268,7 +268,7 @@ class TestFetchAll:
     @patch("src.fetcher.fetch_anthropic_release_notes")
     def test_the_release_notes_do_not_share_anthropics_per_source_cap(
         self, mock_release_notes, mock_anthropic, mock_blogs, mock_gh, mock_hn,
-        mock_hf, mock_changelog
+        mock_hf, mock_changelog, monkeypatch
     ):
         """Under one source name a busy news week would crowd them out."""
         mock_anthropic.return_value = [
@@ -292,10 +292,132 @@ class TestFetchAll:
             }
             for i in range(3)
         ]
+        # The floor off, so the cap is what this test measures. With it on,
+        # a six-item pool is below DIGEST_MIN_CANDIDATES and nothing is cut.
+        monkeypatch.setattr("src.fetcher.DIGEST_MIN_CANDIDATES", 0)
         sources = [item["source"] for item in fetch_all(max_results=10)]
         # Two of each survive the per-source cap, rather than two in total.
         assert sources.count("Anthropic") == 2
         assert sources.count("Anthropic Platform") == 2
+
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
+    @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
+    @patch("src.fetcher.fetch_github_releases", return_value=[])
+    @patch("src.fetcher.fetch_blog_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes")
+    def test_the_cap_does_not_cut_a_thin_pool_below_the_floor(
+        self, mock_release_notes, mock_anthropic, mock_blogs, mock_gh, mock_hn,
+        mock_hf, mock_changelog, monkeypatch
+    ):
+        """On a thin day the cap is the pool, so the overflow comes back.
+
+        Measured 03-Nov-2026: 13 items inside the recency window, the cap
+        dropped 7 and left 6, and among the 7 was an open-weights voice model
+        — the first thing on the ranking prompt's priority list — dropped for
+        being its source's third item of the day. The ranker is the editorial
+        filter; the cap exists to stop one source dominating a full pool.
+        """
+        monkeypatch.setattr("src.fetcher.DIGEST_MIN_CANDIDATES", 5)
+        mock_release_notes.return_value = [
+            {
+                "title": f"A platform change {i}",
+                "url": f"https://platform.claude.com/docs/en/api/change-{i}",
+                "source": "Anthropic Platform",
+                "summary": "On the API.",
+                "published": _hours_ago(1 + i),
+                "identity": f"anthropic-release-notes:2026-11-03:change-{i}",
+            }
+            for i in range(6)
+        ]
+        items = fetch_all(max_results=20)
+        # Without the floor this would be 2 — the per-source cap. Below the
+        # floor the cap stands down rather than filling to exactly 5: which
+        # items a partial refill keeps is decided by their position in the
+        # overflow, and the sources that overflow are the ones stamping
+        # date-only timestamps, so that order is arbitrary.
+        assert len(items) == 6
+        # The pool it hands on is still newest-first, for the date-order
+        # fallback in the ranker.
+        published = [item["published"] for item in items]
+        assert published == sorted(published, reverse=True)
+
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
+    @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
+    @patch("src.fetcher.fetch_github_releases", return_value=[])
+    @patch("src.fetcher.fetch_blog_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes")
+    def test_the_cap_still_bites_once_the_pool_is_healthy(
+        self, mock_release_notes, mock_anthropic, mock_blogs, mock_gh, mock_hn,
+        mock_hf, mock_changelog, monkeypatch
+    ):
+        """Above the floor one source still cannot take the whole pool."""
+        monkeypatch.setattr("src.fetcher.DIGEST_MIN_CANDIDATES", 2)
+        mock_release_notes.return_value = [
+            {
+                "title": f"A platform change {i}",
+                "url": f"https://platform.claude.com/docs/en/api/change-{i}",
+                "source": "Anthropic Platform",
+                "summary": "On the API.",
+                "published": _hours_ago(1 + i),
+                "identity": f"anthropic-release-notes:2026-11-03:change-{i}",
+            }
+            for i in range(6)
+        ]
+        items = fetch_all(max_results=20)
+        assert len(items) == 2
+
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
+    @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
+    @patch("src.fetcher.fetch_github_releases", return_value=[])
+    @patch("src.fetcher.fetch_blog_posts")
+    @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes")
+    def test_standing_the_cap_down_does_not_truncate_a_source_away(
+        self, mock_release_notes, mock_anthropic, mock_blogs, mock_gh, mock_hn,
+        mock_hf, mock_changelog, monkeypatch
+    ):
+        """A flooding source must not push a quiet one out of the pool.
+
+        One feed with 20 fresh posts and one other source with a single older
+        one gives a capped pool of 3, which is below the floor. Handing the
+        raw list to fetch_all would let max_results keep the 20 newest and
+        drop the second source entirely — the exact harm the cap was built
+        for. The capped survivors are reserved first, so it survives.
+        """
+        monkeypatch.setattr("src.fetcher.DIGEST_MIN_CANDIDATES", 10)
+        mock_blogs.return_value = [
+            {
+                "title": f"A fresh OpenAI post {i}",
+                "url": f"https://openai.com/index/fresh-{i}",
+                "source": "OpenAI",
+                "summary": "A new model.",
+                "published": _hours_ago(1 + i * 0.1),
+            }
+            for i in range(20)
+        ]
+        mock_release_notes.return_value = [
+            {
+                "title": "An older platform change",
+                "url": "https://platform.claude.com/docs/en/api/change-old",
+                "source": "Anthropic Platform",
+                "summary": "On the API.",
+                "published": _hours_ago(60),
+                "identity": "anthropic-release-notes:2026-11-01:change-old",
+            }
+        ]
+        items = fetch_all(max_results=20)
+        sources = [item["source"] for item in items]
+        assert len(items) == 20
+        assert "Anthropic Platform" in sources, (
+            "the quiet source was truncated out of the pool"
+        )
+        # Its two slots plus the one older item are the reserved allocation.
+        assert sources.count("OpenAI") == 19
 
 
 class TestParsePublished:

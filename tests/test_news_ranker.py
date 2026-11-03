@@ -76,10 +76,11 @@ class TestRankNews:
         with pytest.raises(ValueError):
             rank_news_ranked([], "test_api_key")
 
-    def test_single_paper_returned(self, sample_paper):
-        """Test that a single paper comes back as a one-item list."""
-        result = rank_news_ranked([sample_paper], "test_api_key")
-        assert result == [sample_paper]
+    # test_single_paper_returned lived here. It asserted that one item comes
+    # back as a one-item list, which the removed shortcut guaranteed without a
+    # model call. With the shortcut gone that contract depends on the verdict,
+    # so it is tested in TestRankNewsNoneContract below, in both directions
+    # and against a mocked reply, rather than against whatever the network did.
 
     def test_ranking_selects_paper(self, sample_papers, mock_openai_response):
         """Test that ranking selects a paper based on AI response."""

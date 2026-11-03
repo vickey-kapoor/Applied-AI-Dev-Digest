@@ -68,9 +68,16 @@ DEFAULT_TOPICS = [
         # suppliers and two of their entries had already been daily picks
         # while carrying no topic at all ("12-hour prompt caching in the API",
         # "which service tiers projects can use").
+        # "messages api" is the Anthropic counterpart of "responses api" and
+        # was missing: on 03-Nov-2026 the platform release note "Long
+        # conversations and agent loops on the Messages API can now send
+        # smaller requests and get a lower time to first token" reached the
+        # pool matching nothing but the weak brand name "Claude", so it was
+        # untagged and would have rendered as #Update.
         "keywords": [
-            "responses api", "context window", "context length", "deprecat",
-            "prompt caching", "usage tier", "service tier", "legacy api",
+            "responses api", "messages api", "context window", "context length",
+            "deprecat", "prompt caching", "usage tier", "service tier",
+            "legacy api",
         ],
         "default_enabled": True,
     },

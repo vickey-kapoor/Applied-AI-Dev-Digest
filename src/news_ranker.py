@@ -269,10 +269,14 @@ def rank_news_ranked(items: list[dict], api_key: str) -> list[dict]:
     if not items:
         raise ValueError("No items to rank")
 
-    if len(items) == 1:
-        # A list, not the bare item: this function's contract is a list, and
-        # callers index the first element.
-        return list(items)
+    # No shortcut for a single candidate. The screen below — "reject anything
+    # off-domain, pure marketing, a bare version bump, be willing to reject all
+    # of it" — is the only thing standing between a thin day and a digest about
+    # an electricity-grid programme, and a pool of exactly one is when it is
+    # needed most, not when it can be skipped. The pool reached exactly one
+    # item on 10 of the 90 days in data/digests.json. One extra model call on
+    # those days buys the same editorial judgement every other day gets, and a
+    # rejection is a quiet-day notice, which main.py already handles.
 
     client = OpenAI(api_key=api_key)
 

@@ -185,6 +185,17 @@ EXCLUDE_TITLE_PATTERNS = [
 # one such feed held 4 of 10 slots and won the daily pick with a how-to post.
 MAX_ITEMS_PER_SOURCE = int(os.getenv("MAX_ITEMS_PER_SOURCE", "2"))
 
+# A floor the per-source cap will not cut below. The cap was sized against a
+# pool of twenty, where dropping a source's third item costs nothing. On a thin
+# day the cap *is* the pool: measured 02-Nov-2026, 9 items were inside the
+# recency window, the cap dropped 4, the ranker saw 5 and kept 1. Measured
+# 03-Nov-2026, 13 in the window, the cap dropped 7 — including an open-weights
+# voice model, the first thing on the ranking prompt's priority list — and left
+# 6. Below this many candidates the capped overflow is restored, newest-first,
+# so the ranker does the editorial cutting rather than a positional rule.
+# Set to 0 to restore the unconditional cap.
+DIGEST_MIN_CANDIDATES = int(os.getenv("DIGEST_MIN_CANDIDATES", "10"))
+
 # The cap for a source that reports on other people's launches rather than
 # making them (fetcher.AGGREGATOR_SOURCES). Hacker News took 23 of 56 top
 # picks between 29-Aug and 27-Oct-2026 — more than any lab source, on a digest

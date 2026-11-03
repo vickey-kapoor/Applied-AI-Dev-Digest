@@ -370,6 +370,55 @@ class TestFetchAll:
         items = fetch_all(max_results=20)
         assert len(items) == 2
 
+    @patch("src.fetcher.fetch_openai_changelog", return_value=[])
+    @patch("src.fetcher.fetch_huggingface_papers", return_value=[])
+    @patch("src.fetcher.fetch_hackernews_stories", return_value=[])
+    @patch("src.fetcher.fetch_github_releases", return_value=[])
+    @patch("src.fetcher.fetch_blog_posts")
+    @patch("src.fetcher.fetch_anthropic_posts", return_value=[])
+    @patch("src.fetcher.fetch_anthropic_release_notes")
+    def test_standing_the_cap_down_does_not_truncate_a_source_away(
+        self, mock_release_notes, mock_anthropic, mock_blogs, mock_gh, mock_hn,
+        mock_hf, mock_changelog, monkeypatch
+    ):
+        """A flooding source must not push a quiet one out of the pool.
+
+        One feed with 20 fresh posts and one other source with a single older
+        one gives a capped pool of 3, which is below the floor. Handing the
+        raw list to fetch_all would let max_results keep the 20 newest and
+        drop the second source entirely — the exact harm the cap was built
+        for. The capped survivors are reserved first, so it survives.
+        """
+        monkeypatch.setattr("src.fetcher.DIGEST_MIN_CANDIDATES", 10)
+        mock_blogs.return_value = [
+            {
+                "title": f"A fresh OpenAI post {i}",
+                "url": f"https://openai.com/index/fresh-{i}",
+                "source": "OpenAI",
+                "summary": "A new model.",
+                "published": _hours_ago(1 + i * 0.1),
+            }
+            for i in range(20)
+        ]
+        mock_release_notes.return_value = [
+            {
+                "title": "An older platform change",
+                "url": "https://platform.claude.com/docs/en/api/change-old",
+                "source": "Anthropic Platform",
+                "summary": "On the API.",
+                "published": _hours_ago(60),
+                "identity": "anthropic-release-notes:2026-11-01:change-old",
+            }
+        ]
+        items = fetch_all(max_results=20)
+        sources = [item["source"] for item in items]
+        assert len(items) == 20
+        assert "Anthropic Platform" in sources, (
+            "the quiet source was truncated out of the pool"
+        )
+        # Its two slots plus the one older item are the reserved allocation.
+        assert sources.count("OpenAI") == 19
+
 
 class TestParsePublished:
     """Tests for timestamp normalization across the four source formats."""

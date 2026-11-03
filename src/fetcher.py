@@ -89,7 +89,10 @@ def _filter_by_recency(items: list[dict], max_age_hours: int) -> list[dict]:
 
 
 def _cap_per_source(
-    items: list[dict], max_per_source: int, min_candidates: int = 0
+    items: list[dict],
+    max_per_source: int,
+    min_candidates: int = 0,
+    max_results: int | None = None,
 ) -> list[dict]:
     """Limit how many slots any one source can occupy.
 
@@ -115,10 +118,18 @@ def _cap_per_source(
     item of the day while "Introducing the Grid Protectors Program", an
     electricity-grid programme, kept a slot.
 
-    So below that floor the cap stands down entirely and every in-window item
-    goes through. The ranker is the editorial filter and it has to see the
-    pool; the cap exists to stop one source *dominating* a full pool, not to
-    shrink a thin one. `DIGEST_MAX_RESULTS` still bounds what is handed on.
+    So below that floor the cap stands down. The ranker is the editorial filter
+    and it has to see the pool; the cap exists to stop one source *dominating*
+    a full pool, not to shrink a thin one.
+
+    `max_results` is the caller's own bound, and standing the cap down has to
+    respect what that bound then truncates. Returning the raw list would hand
+    `fetch_all` more items than it keeps, and it keeps the newest — so one
+    source with 20 fresh posts and another with a single older one gives a
+    capped pool of 3, stands the cap down, and then truncation drops the
+    second source entirely, which is the exact harm the cap was built for. The
+    capped survivors are therefore reserved first, so every source keeps its
+    allocation, and the overflow fills whatever room is left.
     """
     if max_per_source <= 0:
         return items
@@ -143,25 +154,36 @@ def _cap_per_source(
         logger.info("Dropped %d item(s) over the %d-per-source cap", dropped, max_per_source)
 
     if overflow and len(kept) < min_candidates:
-        # Not "restore enough to reach the floor": which items that keeps is
-        # decided by their position in the overflow, and the sources that
-        # overflow are the ones stamping date-only timestamps (Hugging Face
-        # Daily Papers and the platform release notes both publish at
-        # T00:00:00), so their order inside a day is arbitrary. Filling to
-        # exactly 10 on 03-Nov-2026 restored two HF papers and left the
-        # open-weights voice model behind — the same positional accident the
-        # floor exists to undo. Below the floor the cap has no job to do, so
-        # it stands down and the ranker sees the whole window. The pool is
-        # still bounded by DIGEST_MAX_RESULTS.
+        # Restore up to max_results, not up to the floor. Filling to exactly
+        # the floor sounds tidier and is worse: which overflow items that
+        # keeps is decided by their position, and the sources that overflow
+        # are the ones stamping date-only timestamps (Hugging Face Daily
+        # Papers and the platform release notes both publish at T00:00:00),
+        # so their order inside a day is arbitrary. Tried on 03-Nov-2026, a
+        # floor of 10 restored two HF papers and left the open-weights voice
+        # model behind — the same positional accident the floor exists to
+        # undo. max_results is what the ranker is sized for, so the only cut
+        # left is one the caller was going to make anyway.
+        #
+        # kept goes first and keeps its place: it holds each source's
+        # allocation, so a source with one old item cannot be truncated out
+        # by another source's twenty fresh ones.
+        room = len(items) if max_results is None else max(max_results - len(kept), 0)
+        restored = overflow[:room]
         logger.info(
             "Pool would fall to %d, below the floor of %d — standing the "
-            "%d-per-source cap down and keeping all %d in-window items",
+            "%d-per-source cap down and restoring %d of %d capped item(s)",
             len(kept),
             min_candidates,
             max_per_source,
-            len(items),
+            len(restored),
+            dropped,
         )
-        return list(items)
+        kept += restored
+        # Restored items were taken out of a newest-first list, so appending
+        # them leaves the pool out of date order. Re-sort: "most recent first"
+        # is what the ranker's date-order fallback assumes.
+        kept.sort(key=lambda x: x.get("published", ""), reverse=True)
 
     return kept
 
@@ -408,7 +430,9 @@ def fetch_all(max_results: int = 20, filter_keywords: list[str] | None = None) -
     unique.sort(key=lambda x: x.get("published", ""), reverse=True)
 
     # Cap per source after sorting so each source keeps its freshest items
-    unique = _cap_per_source(unique, MAX_ITEMS_PER_SOURCE, DIGEST_MIN_CANDIDATES)
+    unique = _cap_per_source(
+        unique, MAX_ITEMS_PER_SOURCE, DIGEST_MIN_CANDIDATES, max_results
+    )
     logger.info("After per-source cap: %d items", len(unique))
 
     return unique[:max_results]

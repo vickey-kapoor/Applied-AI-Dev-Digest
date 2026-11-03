@@ -45,7 +45,14 @@ def no_outbound_model_calls():
     duration.
     """
     def _refuse(*args, **kwargs):
-        raise AssertionError(
+        # pytest.fail, not raise: pytest's Failed is a BaseException, so it
+        # passes through both retry_with_backoff(exceptions=(Exception,)) and
+        # the `except Exception` in rank_news_ranked and summarize_release. An
+        # AssertionError here was retried with real backoff sleeps and then
+        # swallowed, and the ranker returned the input list — so a test
+        # asserting date order could still pass without a verdict, which is
+        # the failure this fixture exists to make impossible.
+        pytest.fail(
             "tests must not call the model — patch OpenAI or the module's "
             "_call_openai* helper"
         )

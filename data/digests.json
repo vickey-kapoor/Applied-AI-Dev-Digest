@@ -1,6 +1,14 @@
 {
   "digests": [
     {
+      "date": "2026-11-26",
+      "run_at": "2026-11-26T18:01:47.232417Z",
+      "top_paper_id": "a4badc29-cbd6-5ee7-93ee-2b1dc030b31f",
+      "papers_fetched": 15,
+      "telegram_sent": true,
+      "workflow_run_id": "45872502373"
+    },
+    {
       "date": "2026-11-25",
       "run_at": "2026-11-25T18:01:55.666891Z",
       "top_paper_id": "f2d87bdc-2779-552c-8eee-e498b7953b37",
@@ -710,13 +718,6 @@
       "papers_fetched": 10,
       "telegram_sent": true,
       "workflow_run_id": "33130879098"
-    },
-    {
-      "date": "2026-08-26",
-      "top_paper_id": "0da123f0-a1a1-5e31-8b99-dfa200a2469f",
-      "papers_fetched": 10,
-      "telegram_sent": true,
-      "workflow_run_id": "32990734861"
     }
   ]
 }
